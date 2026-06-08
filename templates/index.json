@@ -9,6 +9,49 @@
  */
 {
   "sections": {
+    "tsukie_hero_banner": {
+      "type": "tsukie-hero-banner",
+      "blocks": {
+        "slide_1": {
+          "type": "slide",
+          "settings": {
+            "image": "shopify://shop_images/Pink_Smocked_Peplum_Top___White_Skirt_Tsukie_Womens_Premium_Clothing_8_08.png",
+            "eyebrow": "SUMMER 2026 COLLECTION",
+            "heading": "Dressed for the woman you already are",
+            "description": "Premium silhouettes crafted for the modern Indian woman — luxurious fabrics, thoughtful fit, and enduring style. Starting at ₹1,499.",
+            "button_text": "SHOP NEW ARRIVALS",
+            "button_url": "/collections/new-arrivals"
+          }
+        },
+        "slide_2": {
+          "type": "slide",
+          "settings": {
+            "image": "shopify://shop_images/Pleated_Short_Sleeve_Shirt_04_2.jpg",
+            "eyebrow": "CHIC & ELEGANT",
+            "heading": "Style in Peplum & Flared Tops",
+            "description": "Discover curated sets and tops designed for comfort, grace, and premium everyday wear.",
+            "button_text": "EXPLORE BEST SELLERS",
+            "button_url": "/collections/all"
+          }
+        },
+        "slide_3": {
+          "type": "slide",
+          "settings": {
+            "eyebrow": "ESSENTIAL LUXURY",
+            "heading": "Timeless Pieces For Your Wardrobe",
+            "description": "Crafted with love, highlighting the natural body shape in sizes from XS to 4XL.",
+            "button_text": "VIEW ALL COLLECTIONS",
+            "button_url": "/collections"
+          }
+        }
+      },
+      "block_order": [
+        "slide_1",
+        "slide_2",
+        "slide_3"
+      ],
+      "settings": {}
+    },
     "custom_liquid_UPURke": {
       "type": "custom-liquid",
       "name": "moving strip",
@@ -412,6 +455,62 @@
         "padding-block-end": 16
       }
     },
+    "divider_seen_on_real_women": {
+      "type": "divider",
+      "name": "Divider",
+      "settings": {
+        "color_scheme": "scheme-e5234ede-d196-4b3b-a9e2-6e7d24b8ca5c",
+        "section_width": "full-width",
+        "thickness": 1,
+        "corner_radius": "square",
+        "width_percent": 100,
+        "alignment_horizontal": "center",
+        "padding-block-start": 16,
+        "padding-block-end": 16
+      }
+    },
+    "tsukie_seen_on_real_women": {
+      "type": "tsukie-seen-on-real-women",
+      "blocks": {
+        "item_1": {
+          "type": "image_item",
+          "settings": {
+            "tag": "@PRIYA_ANAND"
+          }
+        },
+        "item_2": {
+          "type": "video_item",
+          "settings": {
+            "video_url": "",
+            "tag": "@ANJALI.S"
+          }
+        },
+        "item_3": {
+          "type": "image_item",
+          "settings": {
+            "tag": "@MEERA_M"
+          }
+        },
+        "item_4": {
+          "type": "video_item",
+          "settings": {
+            "video_url": "",
+            "tag": "@RIYA.SEN"
+          }
+        }
+      },
+      "block_order": [
+        "item_1",
+        "item_2",
+        "item_3",
+        "item_4"
+      ],
+      "settings": {
+        "eyebrow": "AS SEEN ON YOU",
+        "heading": "Seen on Real Women",
+        "description": "Candid moments of real women styling our timeless silhouettes. Tag us at #TsukieWomen to get featured."
+      }
+    },
     "custom_liquid_MMecBe": {
       "type": "custom-liquid",
       "name": "t:names.custom_liquid",
@@ -474,101 +573,6 @@
         "gradient_direction": "to top",
         "padding-block-start": 0,
         "padding-block-end": 12
-      }
-    },
-    "divider_seen_on_real_women": {
-      "type": "divider",
-      "name": "Divider",
-      "settings": {
-        "color_scheme": "scheme-e5234ede-d196-4b3b-a9e2-6e7d24b8ca5c",
-        "section_width": "full-width",
-        "thickness": 1,
-        "corner_radius": "square",
-        "width_percent": 100,
-        "alignment_horizontal": "center",
-        "padding-block-start": 16,
-        "padding-block-end": 16
-      }
-    },
-    "tsukie_hero_banner": {
-      "type": "tsukie-hero-banner",
-      "blocks": {
-        "slide_1": {
-          "type": "slide",
-          "settings": {
-            "eyebrow": "SUMMER 2026 COLLECTION",
-            "heading": "Dressed for the woman you already are",
-            "description": "Premium silhouettes crafted for the modern Indian woman — luxurious fabrics, thoughtful fit, and enduring style. Starting at ₹1,499.",
-            "button_text": "SHOP NEW ARRIVALS",
-            "button_url": "/collections/new-arrivals"
-          }
-        },
-        "slide_2": {
-          "type": "slide",
-          "settings": {
-            "eyebrow": "CHIC & ELEGANT",
-            "heading": "Style in Peplum & Flared Tops",
-            "description": "Discover curated sets and tops designed for comfort, grace, and premium everyday wear.",
-            "button_text": "EXPLORE BEST SELLERS",
-            "button_url": "/collections/all"
-          }
-        },
-        "slide_3": {
-          "type": "slide",
-          "settings": {
-            "eyebrow": "ESSENTIAL LUXURY",
-            "heading": "Timeless Pieces For Your Wardrobe",
-            "description": "Crafted with love, highlighting the natural body shape in sizes from XS to 4XL.",
-            "button_text": "VIEW ALL COLLECTIONS",
-            "button_url": "/collections"
-          }
-        }
-      },
-      "block_order": [
-        "slide_1",
-        "slide_2",
-        "slide_3"
-      ],
-      "settings": {}
-    },
-    "tsukie_seen_on_real_women": {
-      "type": "tsukie-seen-on-real-women",
-      "blocks": {
-        "item_1": {
-          "type": "image_item",
-          "settings": {
-            "tag": "@PRIYA_ANAND"
-          }
-        },
-        "item_2": {
-          "type": "video_item",
-          "settings": {
-            "tag": "@ANJALI.S"
-          }
-        },
-        "item_3": {
-          "type": "image_item",
-          "settings": {
-            "tag": "@MEERA_M"
-          }
-        },
-        "item_4": {
-          "type": "video_item",
-          "settings": {
-            "tag": "@RIYA.SEN"
-          }
-        }
-      },
-      "block_order": [
-        "item_1",
-        "item_2",
-        "item_3",
-        "item_4"
-      ],
-      "settings": {
-        "eyebrow": "AS SEEN ON YOU",
-        "heading": "Seen on Real Women",
-        "description": "Candid moments of real women styling our timeless silhouettes. Tag us at #TsukieWomen to get featured."
       }
     }
   },
