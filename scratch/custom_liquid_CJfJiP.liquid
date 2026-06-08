@@ -1,0 +1,145 @@
+<style>
+@import url('https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@1,400;1,600&family=Montserrat:wght@300;400;500;600&display=swap');
+
+.tsukie-desc-wrap{
+  background:#fdfbf7;
+  padding:24px 0 28px;
+  border-top:1px solid #e0d9cd;
+}
+.tsukie-desc-inner{
+  max-width:1200px;
+  margin:0 auto;
+  padding:0 20px;
+}
+.tsukie-desc-title{
+  font-family:'Playfair Display',serif;
+  font-size:26px;
+  font-style:italic;
+  color:#1e2a38;
+  margin:0 0 16px;
+  font-weight:600;
+}
+.tsukie-desc-content{
+  font-family:'Montserrat',sans-serif;
+  font-size:13px;
+  line-height:1.7;
+  color:#4a4a4a;
+  position:relative;
+}
+.tsukie-desc-text{
+  overflow:hidden;
+  transition:max-height 0.3s ease;
+}
+.tsukie-desc-text.collapsed{
+  display:-webkit-box;
+  -webkit-line-clamp:2;
+  -webkit-box-orient:vertical;
+  max-height:3.4em; /* 2 lines ka height */
+}
+.tsukie-desc-text p{
+  margin:0 0 12px;
+}
+.tsukie-desc-text p:last-child{
+  margin-bottom:0;
+}
+.tsukie-desc-text ul, .tsukie-desc-text ol{
+  margin:8px 0 12px 20px;
+  padding:0;
+}
+.tsukie-desc-text li{
+  margin-bottom:6px;
+}
+.tsukie-desc-text strong{
+  font-weight:600;
+  color:#1e2a38;
+}
+.tsukie-desc-toggle{
+  font-family:'Montserrat',sans-serif;
+  font-size:12px;
+  font-weight:600;
+  letter-spacing:0.5px;
+  text-transform:uppercase;
+  color:#a08766;
+  background:none;
+  border:none;
+  padding:8px 0 0;
+  cursor:pointer;
+  display:inline-flex;
+  align-items:center;
+  gap:4px;
+}
+.tsukie-desc-toggle:hover{
+  color:#1e2a38;
+}
+.tsukie-desc-toggle .arrow{
+  font-size:10px;
+  transition:transform 0.2s ease;
+}
+.tsukie-desc-toggle.open .arrow{
+  transform:rotate(180deg);
+}
+
+@media(max-width:749px){
+  .tsukie-desc-wrap{ padding:20px 0; }
+  .tsukie-desc-inner{ padding:0 12px; }
+  .tsukie-desc-title{ font-size:22px; margin:0 0 12px; }
+  .tsukie-desc-content{ font-size:12px; }
+  .tsukie-desc-text.collapsed{ max-height:3.2em; }
+  .tsukie-desc-toggle{ font-size:11px; padding:6px 0 0; }
+}
+</style>
+
+<div class="tsukie-desc-wrap">
+  <div class="tsukie-desc-inner">
+    <h2 class="tsukie-desc-title">Description</h2>
+    
+    {% if product.description != blank %}
+      <div class="tsukie-desc-content">
+        <div class="tsukie-desc-text collapsed" id="tsukie-desc-{{ section.id }}">
+          {{ product.description }}
+        </div>
+        
+        <button class="tsukie-desc-toggle" id="tsukie-toggle-{{ section.id }}">
+          <span class="toggle-text">Read More</span>
+          <span class="arrow">▼</span>
+        </button>
+      </div>
+    {% endif %}
+    
+  </div>
+</div>
+
+<script>
+document.addEventListener('DOMContentLoaded', function() {
+  const descText = document.getElementById('tsukie-desc-{{ section.id }}');
+  const toggleBtn = document.getElementById('tsukie-toggle-{{ section.id }}');
+  
+  if(descText && toggleBtn){
+    // Check karo description 2 lines se zyada hai ya nahi
+    const isOverflowing = descText.scrollHeight > descText.clientHeight + 5;
+    
+    if(!isOverflowing){
+      toggleBtn.style.display = 'none'; // Chhota description hai to button hide kar do
+      descText.classList.remove('collapsed');
+    }
+    
+    toggleBtn.addEventListener('click', function() {
+      const isCollapsed = descText.classList.contains('collapsed');
+      
+      if(isCollapsed){
+        descText.classList.remove('collapsed');
+        descText.style.maxHeight = descText.scrollHeight + 'px';
+        toggleBtn.classList.add('open');
+        toggleBtn.querySelector('.toggle-text').textContent = 'Read Less';
+      } else {
+        descText.classList.add('collapsed');
+        descText.style.maxHeight = null;
+        toggleBtn.classList.remove('open');
+        toggleBtn.querySelector('.toggle-text').textContent = 'Read More';
+        // Smooth scroll up jab close kare
+        descText.scrollIntoView({ behavior: 'smooth', block: 'nearest' });
+      }
+    });
+  }
+});
+</script>

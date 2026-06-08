@@ -1,0 +1,127 @@
+<style>
+@import url('https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@1,400;1,600&family=Montserrat:wght@300;400;500;600&display=swap');
+
+.tsukie-reviews-jdgm{
+  background:#fdfbf7;
+  padding:28px 0;
+  border-top:1px solid #e0d9cd;
+}
+.tsukie-reviews-jdgm-inner{
+  max-width:1200px;
+  margin:0 auto;
+  padding:0 20px;
+}
+.tsukie-reviews-title{
+  font-family:'Playfair Display',serif;
+  font-size:26px;
+  font-style:italic;
+  color:#1e2a38;
+  margin:0 0 20px;
+  font-weight:600;
+}
+.tsukie-no-reviews{
+  background:#f5f1ea;
+  border:1px solid #e0d9cd;
+  border-radius:6px;
+  padding:40px 20px;
+  text-align:center;
+  display:none;
+}
+.tsukie-no-reviews.show{ display:block; }
+.tsukie-no-reviews-icon{ font-size:48px; color:#d4c5a9; margin-bottom:12px; }
+.tsukie-no-reviews-text{
+  font-family:'Montserrat',sans-serif;
+  font-size:14px;
+  color:#5a5a5a;
+  margin:0 0 20px;
+}
+.tsukie-write-review-btn{
+  font-family:'Montserrat',sans-serif;
+  font-size:11px;
+  letter-spacing:1px;
+  text-transform:uppercase;
+  background:#1e2a38;
+  color:#fdfbf7;
+  border:none;
+  padding:12px 28px;
+  border-radius:4px;
+  font-weight:600;
+  cursor:pointer;
+  text-decoration:none;
+  display:inline-block;
+}
+.tsukie-write-review-btn:hover{ background:#a08766; color:#fdfbf7; }
+
+/* Judge.me Override */
+.jdgm-widget{ display:block!important; }
+.jdgm-rev-widg{ padding:0!important; margin:0!important; border:none!important; }
+.jdgm-rev-widg__title{ display:none!important; }
+.jdgm-rev-widg__summary{
+  background:#f5f1ea!important;
+  border:1px solid #e0d9cd!important;
+  border-radius:6px!important;
+  padding:20px!important;
+  margin-bottom:20px!important;
+}
+.jdgm-rev-widg__summary-stars{ color:#a08766!important; font-size:14px!important; }
+.jdgm-rev-widg__summary-average{
+  font-family:'Playfair Display',serif!important;
+  font-size:42px!important;
+  color:#1e2a38!important;
+  font-weight:600!important;
+}
+.jdgm-rev{ background:#f5f1ea!important; border:1px solid #e0d9cd!important; border-radius:6px!important; padding:16px!important; margin-bottom:12px!important; }
+.jdgm-rev__author{ font-family:'Montserrat',sans-serif!important; font-size:13px!important; font-weight:600!important; color:#1e2a38!important; }
+.jdgm-rev__rating{ color:#a08766!important; font-size:12px!important; }
+.jdgm-rev__body{ font-family:'Montserrat',sans-serif!important; font-size:12px!important; line-height:1.6!important; color:#4a4a4a!important; margin-top:8px!important; }
+
+@media(max-width:749px){
+  .tsukie-reviews-jdgm{ padding:20px 0; }
+  .tsukie-reviews-jdgm-inner{ padding:0 12px; }
+  .tsukie-reviews-title{ font-size:22px; margin:0 0 14px; }
+  .tsukie-no-reviews{ padding:30px 16px; }
+}
+</style>
+
+<div class="tsukie-reviews-jdgm">
+  <div class="tsukie-reviews-jdgm-inner">
+    <h2 class="tsukie-reviews-title">Customer Reviews</h2>
+    
+    <div id="judgeme_product_reviews" class="jdgm-widget jdgm-review-widget" data-id="{{ product.id }}"></div>
+    
+    <div class="tsukie-no-reviews" id="tsukie-no-reviews-{{ product.id }}">
+      <div class="tsukie-no-reviews-icon">☆</div>
+      <p class="tsukie-no-reviews-text">No reviews yet. Be the first to review this product!</p>
+      <!-- Fallback: Direct link to Judge.me review page -->
+      <a href="https://judge.me/reviews/new?product_id={{ product.id }}&shop_domain={{ shop.permanent_domain }}" 
+         class="tsukie-write-review-btn jdgm-write-rev-link" 
+         target="_blank">
+        Write a Review
+      </a>
+    </div>
+    
+  </div>
+</div>
+
+<script>
+document.addEventListener('DOMContentLoaded', function() {
+  setTimeout(function() {
+    const widget = document.querySelector('#judgeme_product_reviews .jdgm-rev-widg');
+    const noReviews = document.querySelector('#tsukie-no-reviews-{{ product.id }}');
+    
+    if (!widget || widget.querySelectorAll('.jdgm-rev').length === 0) {
+      if(noReviews) noReviews.classList.add('show');
+    }
+    
+    // Agar Judge.me JS load hai to modal kholo, warna direct link kaam karega
+    if (window.jdgm && window.jdgm.openWriteReviewModal) {
+      document.querySelectorAll('.jdgm-write-rev-link').forEach(function(btn) {
+        btn.addEventListener('click', function(e) {
+          e.preventDefault();
+          window.jdgm.openWriteReviewModal({{ product.id }});
+        });
+      });
+    }
+  }, 2000);
+});
+</script>

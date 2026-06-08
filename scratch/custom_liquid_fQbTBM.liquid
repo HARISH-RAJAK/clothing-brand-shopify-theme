@@ -1,0 +1,84 @@
+<style>
+@import url('https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@1,400;1,600&family=Cormorant+Garamond:ital@1&display=swap');
+
+.tsukie-section-header{
+  text-align:center;
+  padding:60px 40px 48px;
+  background:linear-gradient(180deg, #fff 0%, #f5f1ea 100%);
+  position:relative;
+  overflow:hidden;
+}
+.tsukie-section-header::before{
+  content:'';
+  position:absolute;
+  top:0;
+  left:50%;
+  transform:translateX(-50%);
+  width:200px;
+  height:200px;
+  background:radial-gradient(circle, rgba(160,135,102,0.08) 0%, transparent 70%);
+  pointer-events:none;
+}
+.tsukie-header-eyebrow{
+  font-size:11px;
+  letter-spacing:4px;
+  text-transform:uppercase;
+  color:#a08766;
+  margin:0 0 16px;
+  font-weight:600;
+  position:relative;
+}
+.tsukie-header-title{
+  font-family:'Playfair Display',serif;
+  font-size:58px;
+  font-weight:600;
+  font-style:italic;
+  margin:0 0 20px;
+  background:linear-gradient(135deg, #1e2a38 0%, #a08766 30%, #c9a77c 50%, #a08766 70%, #1e2a38 100%);
+  -webkit-background-clip:text;
+  -webkit-text-fill-color:transparent;
+  background-clip:text;
+  line-height:1.1;
+  position:relative;
+}
+.tsukie-header-divider{
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  gap:12px;
+  margin:0 auto;
+}
+.tsukie-header-line{
+  width:80px;
+  height:1px;
+  background:linear-gradient(90deg, transparent, #a08766, transparent);
+}
+.tsukie-header-icon{
+  font-size:14px;
+  color:#a08766;
+}
+.tsukie-header-subtitle{
+  font-family:'Cormorant Garamond',serif;
+  font-size:18px;
+  font-style:italic;
+  color:#6b6b6b;
+  margin:16px 0 0;
+  letter-spacing:0.5px;
+}
+@media(max-width:749px){
+.tsukie-section-header{padding:50px 20px 40px}
+.tsukie-header-title{font-size:40px}
+.tsukie-header-subtitle{font-size:16px}
+}
+</style>
+
+<div class="tsukie-section-header">
+  <p class="tsukie-header-eyebrow">Complete The Look</p>
+  <h2 class="tsukie-header-title">You May Also Adore</h2>
+  <div class="tsukie-header-divider">
+    <span class="tsukie-header-line"></span>
+    <span class="tsukie-header-icon">✦</span>
+    <span class="tsukie-header-line"></span>
+  </div>
+  <p class="tsukie-header-subtitle">Handpicked pieces that complement your style</p>
+</div>
