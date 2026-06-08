@@ -1,0 +1,328 @@
+<style>
+@import url('https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@1,400;1,600&family=Montserrat:wght@400;500;600&display=swap');
+
+.tsukie-hero-slider {
+  position: relative;
+  width: 100%;
+  height: 600px;
+  overflow: hidden;
+  background-color: #f5f1ea;
+}
+.tsukie-hero-slides {
+  width: 100%;
+  height: 100%;
+  position: relative;
+}
+.tsukie-hero-slide {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  opacity: 0;
+  transition: opacity 1s ease-in-out;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background-size: cover;
+  background-position: center;
+  z-index: 1;
+}
+.tsukie-hero-slide.is-active {
+  opacity: 1;
+  z-index: 2;
+}
+.tsukie-hero-slide::before {
+  content: '';
+  position: absolute;
+  top: 0; left: 0; right: 0; bottom: 0;
+  background: rgba(0,0,0,0.25);
+  z-index: 1;
+}
+.tsukie-hero-slide-content {
+  position: relative;
+  z-index: 2;
+  text-align: center;
+  color: #ffffff;
+  max-width: 800px;
+  padding: 0 20px;
+  transform: translateY(20px);
+  transition: transform 0.8s ease;
+}
+.tsukie-hero-slide.is-active .tsukie-hero-slide-content {
+  transform: translateY(0);
+}
+.tsukie-hero-slide-eyebrow {
+  font-family: 'Montserrat', sans-serif;
+  font-size: 12px;
+  letter-spacing: 4px;
+  text-transform: uppercase;
+  margin: 0 0 16px;
+  font-weight: 600;
+  color: #d4c5a9;
+}
+.tsukie-hero-slide-title {
+  font-family: 'Playfair Display', serif;
+  font-size: 56px;
+  font-style: italic;
+  font-weight: 600;
+  line-height: 1.15;
+  margin: 0 0 24px;
+  color: #ffffff;
+}
+.tsukie-hero-slide-desc {
+  font-family: 'Montserrat', sans-serif;
+  font-size: 15px;
+  line-height: 1.7;
+  max-width: 600px;
+  margin: 0 auto 36px;
+  color: #e5e5e5;
+}
+.tsukie-hero-slide-cta {
+  display: inline-block;
+  background: #1e2a38;
+  color: #d4c5a9;
+  padding: 16px 40px;
+  font-family: 'Montserrat', sans-serif;
+  font-size: 12px;
+  letter-spacing: 2px;
+  text-transform: uppercase;
+  text-decoration: none;
+  font-weight: 600;
+  border: none;
+  transition: all 0.3s ease;
+}
+.tsukie-hero-slide-cta:hover {
+  background: #2a3a4a;
+  transform: translateY(-2px);
+}
+.tsukie-slider-btn {
+  position: absolute;
+  top: 50%;
+  transform: translateY(-50%);
+  width: 48px;
+  height: 48px;
+  background: rgba(255,255,255,0.15);
+  border: 1px solid rgba(255,255,255,0.25);
+  backdrop-filter: blur(4px);
+  color: #ffffff;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  z-index: 10;
+  transition: all 0.3s ease;
+  font-size: 20px;
+}
+.tsukie-slider-btn:hover {
+  background: rgba(255,255,255,0.3);
+  color: #d4c5a9;
+}
+.tsukie-slider-btn--prev { left: 30px; }
+.tsukie-slider-btn--next { right: 30px; }
+.tsukie-slider-dots {
+  position: absolute;
+  bottom: 30px;
+  left: 50%;
+  transform: translateX(-50%);
+  display: flex;
+  gap: 12px;
+  z-index: 10;
+}
+.tsukie-slider-dot {
+  width: 8px;
+  height: 8px;
+  border-radius: 50%;
+  background: rgba(255,255,255,0.4);
+  cursor: pointer;
+  transition: all 0.3s ease;
+}
+.tsukie-slider-dot.is-active {
+  background: #d4c5a9;
+  transform: scale(1.2);
+}
+@media(max-width: 749px) {
+  .tsukie-hero-slider { height: 450px; }
+  .tsukie-hero-slide-title { font-size: 34px; margin: 0 0 16px; }
+  .tsukie-hero-slide-desc { font-size: 13px; margin: 0 auto 24px; }
+  .tsukie-hero-slide-eyebrow { font-size: 10px; margin: 0 0 12px; }
+  .tsukie-hero-slide-cta { padding: 12px 30px; font-size: 11px; }
+  .tsukie-slider-btn { width: 36px; height: 36px; font-size: 16px; }
+  .tsukie-slider-btn--prev { left: 15px; }
+  .tsukie-slider-btn--next { right: 15px; }
+}
+</style>
+
+<div class="tsukie-hero-slider" id="tsukie-hero-{{ section.id }}">
+  <div class="tsukie-hero-slides">
+    {% for block in section.blocks %}
+      <div class="tsukie-hero-slide {% if forloop.first %}is-active{% endif %}"
+        {% if block.settings.image %}
+          style="background-image: url('{{ block.settings.image | image_url: width: 1920 }}');"
+        {% endif %}
+        {{ block.shopify_attributes }}
+      >
+        <div class="tsukie-hero-slide-content">
+          {% if block.settings.eyebrow != blank %}
+            <p class="tsukie-hero-slide-eyebrow">{{ block.settings.eyebrow }}</p>
+          {% endif %}
+          {% if block.settings.heading != blank %}
+            <h2 class="tsukie-hero-slide-title">{{ block.settings.heading }}</h2>
+          {% endif %}
+          {% if block.settings.description != blank %}
+            <p class="tsukie-hero-slide-desc">{{ block.settings.description }}</p>
+          {% endif %}
+          {% if block.settings.button_text != blank %}
+            <a href="{{ block.settings.button_url }}" class="tsukie-hero-slide-cta">{{ block.settings.button_text }}</a>
+          {% endif %}
+        </div>
+      </div>
+    {% endfor %}
+  </div>
+
+  {% if section.blocks.size > 1 %}
+    <button class="tsukie-slider-btn tsukie-slider-btn--prev" aria-label="Previous Slide">&#8249;</button>
+    <button class="tsukie-slider-btn tsukie-slider-btn--next" aria-label="Next Slide">&#8250;</button>
+
+    <div class="tsukie-slider-dots">
+      {% for block in section.blocks %}
+        <span class="tsukie-slider-dot {% if forloop.first %}is-active{% endif %}" data-index="{{ forloop.index0 }}"></span>
+      {% endfor %}
+    </div>
+  {% endif %}
+</div>
+
+<script>
+document.addEventListener('DOMContentLoaded', function() {
+  var slider = document.getElementById('tsukie-hero-{{ section.id }}');
+  if (!slider) return;
+
+  var slides = slider.querySelectorAll('.tsukie-hero-slide');
+  var dots = slider.querySelectorAll('.tsukie-slider-dot');
+  var prevBtn = slider.querySelector('.tsukie-slider-btn--prev');
+  var nextBtn = slider.querySelector('.tsukie-slider-btn--next');
+
+  if (slides.length < 2) return;
+
+  var currentIndex = 0;
+  var slideInterval;
+
+  function showSlide(index) {
+    slides[currentIndex].classList.remove('is-active');
+    if (dots[currentIndex]) dots[currentIndex].classList.remove('is-active');
+    currentIndex = (index + slides.length) % slides.length;
+    slides[currentIndex].classList.add('is-active');
+    if (dots[currentIndex]) dots[currentIndex].classList.add('is-active');
+  }
+
+  function startAutoPlay() {
+    stopAutoPlay();
+    slideInterval = setInterval(function() { showSlide(currentIndex + 1); }, 5000);
+  }
+
+  function stopAutoPlay() {
+    if (slideInterval) clearInterval(slideInterval);
+  }
+
+  if (prevBtn) prevBtn.addEventListener('click', function() { showSlide(currentIndex - 1); startAutoPlay(); });
+  if (nextBtn) nextBtn.addEventListener('click', function() { showSlide(currentIndex + 1); startAutoPlay(); });
+
+  dots.forEach(function(dot) {
+    dot.addEventListener('click', function() {
+      showSlide(parseInt(this.getAttribute('data-index'), 10));
+      startAutoPlay();
+    });
+  });
+
+  slider.addEventListener('mouseenter', stopAutoPlay);
+  slider.addEventListener('mouseleave', startAutoPlay);
+
+  startAutoPlay();
+});
+</script>
+
+{% schema %}
+{
+  "name": "Tsukie Hero Banner",
+  "tag": "section",
+  "class": "tsukie-hero-section",
+  "max_blocks": 6,
+  "settings": [],
+  "blocks": [
+    {
+      "type": "slide",
+      "name": "Slide",
+      "settings": [
+        {
+          "type": "image_picker",
+          "id": "image",
+          "label": "Background Image"
+        },
+        {
+          "type": "text",
+          "id": "eyebrow",
+          "label": "Eyebrow Text",
+          "default": "SUMMER 2026 COLLECTION"
+        },
+        {
+          "type": "text",
+          "id": "heading",
+          "label": "Heading",
+          "default": "Dressed for the woman you already are"
+        },
+        {
+          "type": "textarea",
+          "id": "description",
+          "label": "Description",
+          "default": "Premium silhouettes crafted for the modern Indian woman."
+        },
+        {
+          "type": "text",
+          "id": "button_text",
+          "label": "Button Text",
+          "default": "SHOP NOW"
+        },
+        {
+          "type": "url",
+          "id": "button_url",
+          "label": "Button Link"
+        }
+      ]
+    }
+  ],
+  "presets": [
+    {
+      "name": "Tsukie Hero Banner",
+      "blocks": [
+        {
+          "type": "slide",
+          "settings": {
+            "eyebrow": "SUMMER 2026 COLLECTION",
+            "heading": "Dressed for the woman you already are",
+            "description": "Premium silhouettes crafted for the modern Indian woman — luxurious fabrics, thoughtful fit, and enduring style.",
+            "button_text": "SHOP NEW ARRIVALS"
+          }
+        },
+        {
+          "type": "slide",
+          "settings": {
+            "eyebrow": "CHIC & ELEGANT",
+            "heading": "Style in Peplum & Flared Tops",
+            "description": "Discover curated sets and tops designed for comfort, grace, and premium everyday wear.",
+            "button_text": "EXPLORE BEST SELLERS"
+          }
+        },
+        {
+          "type": "slide",
+          "settings": {
+            "eyebrow": "ESSENTIAL LUXURY",
+            "heading": "Timeless Pieces For Your Wardrobe",
+            "description": "Crafted with love, highlighting the natural body shape in sizes from XS to 4XL.",
+            "button_text": "VIEW ALL COLLECTIONS"
+          }
+        }
+      ]
+    }
+  ]
+}
+{% endschema %}

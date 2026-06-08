@@ -9,17 +9,6 @@
  */
 {
   "sections": {
-    "custom_liquid_39iRXh": {
-      "type": "custom-liquid",
-      "name": "hero",
-      "settings": {
-        "custom_liquid": "<style>\n.tsukie-hero-slider {\n  position: relative;\n  width: 100vw;\n  left: 50%;\n  right: 50%;\n  margin-left: -50vw;\n  margin-right: -50vw;\n  height: 600px;\n  overflow: hidden;\n  background-color: #f5f1ea;\n}\n.tsukie-hero-slides {\n  width: 100%;\n  height: 100%;\n  position: relative;\n}\n.tsukie-hero-slide {\n  position: absolute;\n  top: 0;\n  left: 0;\n  width: 100%;\n  height: 100%;\n  opacity: 0;\n  transition: opacity 1s ease-in-out;\n  display: flex;\n  align-items: center;\n  justify-content: center;\n  background-size: cover;\n  background-position: center;\n  z-index: 1;\n}\n.tsukie-hero-slide.is-active {\n  opacity: 1;\n  z-index: 2;\n}\n.tsukie-hero-slide::before {\n  content: '';\n  position: absolute;\n  top: 0;\n  left: 0;\n  right: 0;\n  bottom: 0;\n  background: rgba(0,0,0,0.25);\n  z-index: 1;\n}\n.tsukie-hero-slide-content {\n  position: relative;\n  z-index: 2;\n  text-align: center;\n  color: #ffffff;\n  max-width: 800px;\n  padding: 0 20px;\n  transform: translateY(20px);\n  transition: transform 0.8s ease;\n}\n.tsukie-hero-slide.is-active .tsukie-hero-slide-content {\n  transform: translateY(0);\n}\n.tsukie-hero-slide-eyebrow {\n  font-family: 'Montserrat', sans-serif;\n  font-size: 12px;\n  letter-spacing: 4px;\n  text-transform: uppercase;\n  margin: 0 0 16px;\n  font-weight: 600;\n  color: #d4c5a9;\n}\n.tsukie-hero-slide-title {\n  font-family: 'Playfair Display', serif;\n  font-size: 56px;\n  font-style: italic;\n  font-weight: 600;\n  line-height: 1.15;\n  margin: 0 0 24px;\n  color: #ffffff;\n}\n.tsukie-hero-slide-desc {\n  font-family: 'Montserrat', sans-serif;\n  font-size: 15px;\n  line-height: 1.7;\n  max-width: 600px;\n  margin: 0 auto 36px;\n  color: #e5e5e5;\n}\n.tsukie-hero-slide-cta {\n  display: inline-block;\n  background: #1e2a38;\n  color: #d4c5a9;\n  padding: 16px 40px;\n  font-family: 'Montserrat', sans-serif;\n  font-size: 12px;\n  letter-spacing: 2px;\n  text-transform: uppercase;\n  text-decoration: none;\n  font-weight: 600;\n  border: none;\n  transition: all 0.3s ease;\n}\n.tsukie-hero-slide-cta:hover {\n  background: #2a3a4a;\n  transform: translateY(-2px);\n}\n.tsukie-slider-btn {\n  position: absolute;\n  top: 50%;\n  transform: translateY(-50%);\n  width: 48px;\n  height: 48px;\n  background: rgba(255,255,255,0.15);\n  border: 1px solid rgba(255,255,255,0.25);\n  backdrop-filter: blur(4px);\n  color: #ffffff;\n  display: flex;\n  align-items: center;\n  justify-content: center;\n  cursor: pointer;\n  z-index: 10;\n  transition: all 0.3s ease;\n  font-size: 20px;\n}\n.tsukie-slider-btn:hover {\n  background: rgba(255,255,255,0.3);\n  color: #d4c5a9;\n}\n.tsukie-slider-btn--prev { left: 30px; }\n.tsukie-slider-btn--next { right: 30px; }\n.tsukie-slider-dots {\n  position: absolute;\n  bottom: 30px;\n  left: 50%;\n  transform: translateX(-50%);\n  display: flex;\n  gap: 12px;\n  z-index: 10;\n}\n.tsukie-slider-dot {\n  width: 8px;\n  height: 8px;\n  border-radius: 50%;\n  background: rgba(255,255,255,0.4);\n  cursor: pointer;\n  transition: all 0.3s ease;\n}\n.tsukie-slider-dot.is-active {\n  background: #d4c5a9;\n  transform: scale(1.2);\n}\n@media(max-width: 749px) {\n  .tsukie-hero-slider { height: 450px; }\n  .tsukie-hero-slide-title { font-size: 34px; margin: 0 0 16px; }\n  .tsukie-hero-slide-desc { font-size: 13px; margin: 0 auto 24px; }\n  .tsukie-hero-slide-eyebrow { font-size: 10px; margin: 0 0 12px; }\n  .tsukie-hero-slide-cta { padding: 12px 30px; font-size: 11px; }\n  .tsukie-slider-btn { width: 36px; height: 36px; font-size: 16px; }\n  .tsukie-slider-btn--prev { left: 15px; }\n  .tsukie-slider-btn--next { right: 15px; }\n}\n</style>\n\n<div class=\"tsukie-hero-slider\">\n  <div class=\"tsukie-hero-slides\">\n    <div class=\"tsukie-hero-slide is-active\" style=\"background-image: url('{{ 'hero_banner_1.png' | asset_url }}');\">\n      <div class=\"tsukie-hero-slide-content\">\n        <p class=\"tsukie-hero-slide-eyebrow\">SUMMER 2026 COLLECTION</p>\n        <h1 class=\"tsukie-hero-slide-title\">Dressed for the woman you already are</h1>\n        <p class=\"tsukie-hero-slide-desc\">\n          Premium silhouettes crafted for the modern Indian woman — luxurious fabrics, thoughtful fit, and enduring style. Starting at ₹1,499.\n        </p>\n        <a href=\"/collections/new-arrivals\" class=\"tsukie-hero-slide-cta\">SHOP NEW ARRIVALS</a>\n      </div>\n    </div>\n    \n    <div class=\"tsukie-hero-slide\" style=\"background-image: url('{{ 'hero_banner_2.png' | asset_url }}');\">\n      <div class=\"tsukie-hero-slide-content\">\n        <p class=\"tsukie-hero-slide-eyebrow\">CHIC & ELEGANT</p>\n        <h2 class=\"tsukie-hero-slide-title\" style=\"margin: 0 0 24px;\">Style in Peplum & Flared Tops</h2>\n        <p class=\"tsukie-hero-slide-desc\">\n          Discover curated sets and tops designed for comfort, grace, and premium everyday wear.\n        </p>\n        <a href=\"/collections/all\" class=\"tsukie-hero-slide-cta\">EXPLORE BEST SELLERS</a>\n      </div>\n    </div>\n    \n    <div class=\"tsukie-hero-slide\" style=\"background-image: url('{{ 'hero_banner_3.png' | asset_url }}');\">\n      <div class=\"tsukie-hero-slide-content\">\n        <p class=\"tsukie-hero-slide-eyebrow\">ESSENTIAL LUXURY</p>\n        <h2 class=\"tsukie-hero-slide-title\" style=\"margin: 0 0 24px;\">Timeless Pieces For Your Wardrobe</h2>\n        <p class=\"tsukie-hero-slide-desc\">\n          Crafted with love, highlighting the natural body shape in sizes from XS to 4XL.\n        </p>\n        <a href=\"/collections\" class=\"tsukie-hero-slide-cta\">VIEW ALL COLLECTIONS</a>\n      </div>\n    </div>\n  </div>\n  \n  <button class=\"tsukie-slider-btn tsukie-slider-btn--prev\" aria-label=\"Previous Slide\">‹</button>\n  <button class=\"tsukie-slider-btn tsukie-slider-btn--next\" aria-label=\"Next Slide\">›</button>\n  \n  <div class=\"tsukie-slider-dots\">\n    <span class=\"tsukie-slider-dot is-active\" data-index=\"0\"></span>\n    <span class=\"tsukie-slider-dot\" data-index=\"1\"></span>\n    <span class=\"tsukie-slider-dot\" data-index=\"2\"></span>\n  </div>\n</div>\n\n<script>\ndocument.addEventListener('DOMContentLoaded', function() {\n  const slider = document.querySelector('.tsukie-hero-slider');\n  if (!slider) return;\n  \n  const slides = slider.querySelectorAll('.tsukie-hero-slide');\n  const dots = slider.querySelectorAll('.tsukie-slider-dot');\n  const prevBtn = slider.querySelector('.tsukie-slider-btn--prev');\n  const nextBtn = slider.querySelector('.tsukie-slider-btn--next');\n  \n  let currentIndex = 0;\n  let slideInterval;\n  \n  function showSlide(index) {\n    slides[currentIndex].classList.remove('is-active');\n    dots[currentIndex].classList.remove('is-active');\n    \n    currentIndex = (index + slides.length) % slides.length;\n    \n    slides[currentIndex].classList.add('is-active');\n    dots[currentIndex].classList.add('is-active');\n  }\n  \n  function nextSlide() {\n    showSlide(currentIndex + 1);\n  }\n  \n  function prevSlide() {\n    showSlide(currentIndex - 1);\n  }\n  \n  function startAutoPlay() {\n    stopAutoPlay();\n    slideInterval = setInterval(nextSlide, 5000);\n  }\n  \n  function stopAutoPlay() {\n    if (slideInterval) clearInterval(slideInterval);\n  }\n  \n  prevBtn.addEventListener('click', () => { prevSlide(); startAutoPlay(); });\n  nextBtn.addEventListener('click', () => { nextSlide(); startAutoPlay(); });\n  \n  dots.forEach(dot => {\n    dot.addEventListener('click', function() {\n      const index = parseInt(this.getAttribute('data-index'), 10);\n      showSlide(index);\n      startAutoPlay();\n    });\n  });\n  \n  slider.addEventListener('mouseenter', stopAutoPlay);\n  slider.addEventListener('mouseleave', startAutoPlay);\n  \n  startAutoPlay();\n});\n</script>",
-        "color_scheme": "scheme-e5234ede-d196-4b3b-a9e2-6e7d24b8ca5c",
-        "section_width": "page-width",
-        "padding-block-start": 0,
-        "padding-block-end": 0
-      }
-    },
     "custom_liquid_UPURke": {
       "type": "custom-liquid",
       "name": "moving strip",
@@ -487,13 +476,6 @@
         "padding-block-end": 12
       }
     },
-    "custom_liquid_seen_on_real_women": {
-      "type": "custom-liquid",
-      "name": "Seen on Real Women",
-      "settings": {
-        "custom_liquid": "<style>\n.tsukie-real-women {\n  background: #fdfbf7;\n  padding: 80px 0;\n  text-align: center;\n}\n.tsukie-real-women-inner {\n  max-width: 1400px;\n  margin: 0 auto;\n  padding: 0 40px;\n}\n.tsukie-real-women-head {\n  margin-bottom: 45px;\n}\n.tsukie-real-women-eyebrow {\n  font-family: 'Montserrat', sans-serif;\n  font-size: 11px;\n  letter-spacing: 3px;\n  text-transform: uppercase;\n  color: #a08766;\n  margin: 0 0 12px;\n  font-weight: 500;\n}\n.tsukie-real-women-heading {\n  font-family: 'Playfair Display', serif;\n  font-size: 52px;\n  font-style: italic;\n  font-weight: 600;\n  line-height: 1.15;\n  margin: 0 0 16px;\n  color: #1e2a38;\n}\n.tsukie-real-women-desc {\n  font-family: 'Cormorant Garamond', serif;\n  font-size: 18px;\n  font-style: italic;\n  color: #5a5a5a;\n  max-width: 600px;\n  margin: 0 auto;\n  line-height: 1.5;\n}\n.tsukie-real-women-grid {\n  display: grid;\n  grid-template-columns: repeat(4, 1fr);\n  gap: 24px;\n  margin-bottom: 30px;\n}\n.tsukie-real-women-item {\n  position: relative;\n  overflow: hidden;\n  aspect-ratio: 3/4;\n  background: #eaeaea;\n}\n.tsukie-real-women-img, .tsukie-real-women-video {\n  width: 100%;\n  height: 100%;\n  object-fit: cover;\n  display: block;\n  transition: transform 0.5s ease;\n}\n.tsukie-real-women-item:hover .tsukie-real-women-img,\n.tsukie-real-women-item:hover .tsukie-real-women-video {\n  transform: scale(1.04);\n}\n.tsukie-real-women-tag {\n  position: absolute;\n  bottom: 15px;\n  left: 15px;\n  background: rgba(30, 42, 56, 0.75);\n  color: #d4c5a9;\n  padding: 6px 12px;\n  font-family: 'Montserrat', sans-serif;\n  font-size: 10px;\n  font-weight: 500;\n  letter-spacing: 1px;\n  z-index: 2;\n  backdrop-filter: blur(2px);\n}\n.tsukie-real-women-play {\n  position: absolute;\n  top: 15px;\n  right: 15px;\n  background: rgba(255, 255, 255, 0.2);\n  border: 1px solid rgba(255, 255, 255, 0.4);\n  width: 28px;\n  height: 28px;\n  border-radius: 50%;\n  display: flex;\n  align-items: center;\n  justify-content: center;\n  color: #fff;\n  font-size: 10px;\n  backdrop-filter: blur(2px);\n  z-index: 2;\n  pointer-events: none;\n}\n\n@media(max-width: 989px) {\n  .tsukie-real-women-grid {\n    grid-template-columns: repeat(2, 1fr);\n    gap: 16px;\n  }\n  .tsukie-real-women-heading {\n    font-size: 40px;\n  }\n}\n@media(max-width: 749px) {\n  .tsukie-real-women {\n    padding: 50px 0;\n  }\n  .tsukie-real-women-inner {\n    padding: 0 16px;\n  }\n  .tsukie-real-women-heading {\n    font-size: 36px;\n  }\n  .tsukie-real-women-desc {\n    font-size: 16px;\n  }\n  .tsukie-real-women-grid {\n    gap: 12px;\n  }\n}\n</style>\n\n<div class=\"tsukie-real-women\">\n  <div class=\"tsukie-real-women-inner\">\n    <div class=\"tsukie-real-women-head\">\n      <p class=\"tsukie-real-women-eyebrow\">AS SEEN ON YOU</p>\n      <h2 class=\"tsukie-real-women-heading\">Seen on Real Women</h2>\n      <p class=\"tsukie-real-women-desc\">Candid moments of real women styling our timeless silhouettes. Tag us at #TsukieWomen to get featured.</p>\n    </div>\n    \n    <div class=\"tsukie-real-women-grid\">\n      <!-- Item 1: Static Image 1 -->\n      <div class=\"tsukie-real-women-item\">\n        <img class=\"tsukie-real-women-img\" src=\"{{ 'real_women_1.png' | asset_url }}\" alt=\"Seen on Real Women 1\" loading=\"lazy\">\n        <span class=\"tsukie-real-women-tag\">@PRIYA_ANAND</span>\n      </div>\n      \n      <!-- Item 2: Video 1 -->\n      <div class=\"tsukie-real-women-item\">\n        <video class=\"tsukie-real-women-video\" autoplay loop muted playsinline>\n          <source src=\"https://player.vimeo.com/external/371433846.sd.mp4?s=236da2f3c02cba73e421097828f10129023405f0&profile_id=165&oauth2_token_id=57447761\" type=\"video/mp4\">\n        </video>\n        <span class=\"tsukie-real-women-play\">▶</span>\n        <span class=\"tsukie-real-women-tag\">@ANJALI.S</span>\n      </div>\n      \n      <!-- Item 3: Static Image 2 -->\n      <div class=\"tsukie-real-women-item\">\n        <img class=\"tsukie-real-women-img\" src=\"{{ 'real_women_2.png' | asset_url }}\" alt=\"Seen on Real Women 2\" loading=\"lazy\">\n        <span class=\"tsukie-real-women-tag\">@MEERA_M</span>\n      </div>\n      \n      <!-- Item 4: Video 2 -->\n      <div class=\"tsukie-real-women-item\">\n        <video class=\"tsukie-real-women-video\" autoplay loop muted playsinline>\n          <source src=\"https://player.vimeo.com/external/409223788.sd.mp4?s=d4f40d6cdcc67e817e0892095f9227ca7b587000&profile_id=165&oauth2_token_id=57447761\" type=\"video/mp4\">\n        </video>\n        <span class=\"tsukie-real-women-play\">▶</span>\n        <span class=\"tsukie-real-women-tag\">@RIYA.SEN</span>\n      </div>\n    </div>\n  </div>\n</div>"
-      }
-    },
     "divider_seen_on_real_women": {
       "type": "divider",
       "name": "Divider",
@@ -507,10 +489,91 @@
         "padding-block-start": 16,
         "padding-block-end": 16
       }
+    },
+    "tsukie_hero_banner": {
+      "type": "tsukie-hero-banner",
+      "blocks": {
+        "slide_1": {
+          "type": "slide",
+          "settings": {
+            "eyebrow": "SUMMER 2026 COLLECTION",
+            "heading": "Dressed for the woman you already are",
+            "description": "Premium silhouettes crafted for the modern Indian woman — luxurious fabrics, thoughtful fit, and enduring style. Starting at ₹1,499.",
+            "button_text": "SHOP NEW ARRIVALS",
+            "button_url": "/collections/new-arrivals"
+          }
+        },
+        "slide_2": {
+          "type": "slide",
+          "settings": {
+            "eyebrow": "CHIC & ELEGANT",
+            "heading": "Style in Peplum & Flared Tops",
+            "description": "Discover curated sets and tops designed for comfort, grace, and premium everyday wear.",
+            "button_text": "EXPLORE BEST SELLERS",
+            "button_url": "/collections/all"
+          }
+        },
+        "slide_3": {
+          "type": "slide",
+          "settings": {
+            "eyebrow": "ESSENTIAL LUXURY",
+            "heading": "Timeless Pieces For Your Wardrobe",
+            "description": "Crafted with love, highlighting the natural body shape in sizes from XS to 4XL.",
+            "button_text": "VIEW ALL COLLECTIONS",
+            "button_url": "/collections"
+          }
+        }
+      },
+      "block_order": [
+        "slide_1",
+        "slide_2",
+        "slide_3"
+      ],
+      "settings": {}
+    },
+    "tsukie_seen_on_real_women": {
+      "type": "tsukie-seen-on-real-women",
+      "blocks": {
+        "item_1": {
+          "type": "image_item",
+          "settings": {
+            "tag": "@PRIYA_ANAND"
+          }
+        },
+        "item_2": {
+          "type": "video_item",
+          "settings": {
+            "tag": "@ANJALI.S"
+          }
+        },
+        "item_3": {
+          "type": "image_item",
+          "settings": {
+            "tag": "@MEERA_M"
+          }
+        },
+        "item_4": {
+          "type": "video_item",
+          "settings": {
+            "tag": "@RIYA.SEN"
+          }
+        }
+      },
+      "block_order": [
+        "item_1",
+        "item_2",
+        "item_3",
+        "item_4"
+      ],
+      "settings": {
+        "eyebrow": "AS SEEN ON YOU",
+        "heading": "Seen on Real Women",
+        "description": "Candid moments of real women styling our timeless silhouettes. Tag us at #TsukieWomen to get featured."
+      }
     }
   },
   "order": [
-    "custom_liquid_39iRXh",
+    "tsukie_hero_banner",
     "custom_liquid_UPURke",
     "custom_liquid_MMTjep",
     "product_list_fa6P9H",
@@ -529,7 +592,7 @@
     "custom_liquid_GaLWNF",
     "divider_PHttNk",
     "divider_seen_on_real_women",
-    "custom_liquid_seen_on_real_women",
+    "tsukie_seen_on_real_women",
     "custom_liquid_MMecBe",
     "1780660222ceb4784a"
   ]

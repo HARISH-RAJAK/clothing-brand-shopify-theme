@@ -1,0 +1,248 @@
+<style>
+@import url('https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@1,400;1,600&family=Cormorant+Garamond:ital@1&family=Montserrat:wght@400;500;600&display=swap');
+
+.tsukie-real-women {
+  background: #fdfbf7;
+  padding: 80px 0;
+  text-align: center;
+}
+.tsukie-real-women-inner {
+  max-width: 1400px;
+  margin: 0 auto;
+  padding: 0 40px;
+}
+.tsukie-real-women-head {
+  margin-bottom: 45px;
+}
+.tsukie-real-women-eyebrow {
+  font-family: 'Montserrat', sans-serif;
+  font-size: 11px;
+  letter-spacing: 3px;
+  text-transform: uppercase;
+  color: #a08766;
+  margin: 0 0 12px;
+  font-weight: 500;
+}
+.tsukie-real-women-heading {
+  font-family: 'Playfair Display', serif;
+  font-size: 52px;
+  font-style: italic;
+  font-weight: 600;
+  line-height: 1.15;
+  margin: 0 0 16px;
+  color: #1e2a38;
+}
+.tsukie-real-women-desc {
+  font-family: 'Cormorant Garamond', serif;
+  font-size: 18px;
+  font-style: italic;
+  color: #5a5a5a;
+  max-width: 600px;
+  margin: 0 auto;
+  line-height: 1.5;
+}
+.tsukie-real-women-grid {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 24px;
+  margin-bottom: 30px;
+}
+.tsukie-real-women-item {
+  position: relative;
+  overflow: hidden;
+  aspect-ratio: 3/4;
+  background: #eaeaea;
+}
+.tsukie-real-women-img,
+.tsukie-real-women-video {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  display: block;
+  transition: transform 0.5s ease;
+}
+.tsukie-real-women-item:hover .tsukie-real-women-img,
+.tsukie-real-women-item:hover .tsukie-real-women-video {
+  transform: scale(1.04);
+}
+.tsukie-real-women-tag {
+  position: absolute;
+  bottom: 15px;
+  left: 15px;
+  background: rgba(30, 42, 56, 0.75);
+  color: #d4c5a9;
+  padding: 6px 12px;
+  font-family: 'Montserrat', sans-serif;
+  font-size: 10px;
+  font-weight: 500;
+  letter-spacing: 1px;
+  z-index: 2;
+  backdrop-filter: blur(2px);
+}
+.tsukie-real-women-play {
+  position: absolute;
+  top: 15px;
+  right: 15px;
+  background: rgba(255, 255, 255, 0.2);
+  border: 1px solid rgba(255, 255, 255, 0.4);
+  width: 28px;
+  height: 28px;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: #fff;
+  font-size: 10px;
+  backdrop-filter: blur(2px);
+  z-index: 2;
+  pointer-events: none;
+}
+
+@media(max-width: 989px) {
+  .tsukie-real-women-grid {
+    grid-template-columns: repeat(2, 1fr);
+    gap: 16px;
+  }
+  .tsukie-real-women-heading { font-size: 40px; }
+}
+@media(max-width: 749px) {
+  .tsukie-real-women { padding: 50px 0; }
+  .tsukie-real-women-inner { padding: 0 16px; }
+  .tsukie-real-women-heading { font-size: 36px; }
+  .tsukie-real-women-desc { font-size: 16px; }
+  .tsukie-real-women-grid { gap: 12px; }
+}
+</style>
+
+<div class="tsukie-real-women">
+  <div class="tsukie-real-women-inner">
+    <div class="tsukie-real-women-head">
+      <p class="tsukie-real-women-eyebrow">{{ section.settings.eyebrow }}</p>
+      <h2 class="tsukie-real-women-heading">{{ section.settings.heading }}</h2>
+      <p class="tsukie-real-women-desc">{{ section.settings.description }}</p>
+    </div>
+
+    {% if section.blocks.size > 0 %}
+    <div class="tsukie-real-women-grid">
+      {% for block in section.blocks %}
+        <div class="tsukie-real-women-item" {{ block.shopify_attributes }}>
+          {% if block.type == 'image_item' %}
+            {% if block.settings.image %}
+              <img class="tsukie-real-women-img"
+                src="{{ block.settings.image | image_url: width: 800 }}"
+                alt="{{ block.settings.tag | default: 'Seen on Real Women' }}"
+                loading="lazy"
+              >
+            {% else %}
+              {{ 'lifestyle-1' | placeholder_svg_tag: 'tsukie-real-women-img' }}
+            {% endif %}
+
+          {% elsif block.type == 'video_item' %}
+            {% if block.settings.video_url != blank %}
+              <video class="tsukie-real-women-video" autoplay loop muted playsinline>
+                <source src="{{ block.settings.video_url }}" type="video/mp4">
+              </video>
+              <span class="tsukie-real-women-play">&#9654;</span>
+            {% elsif block.settings.shopify_video != blank %}
+              {{ block.settings.shopify_video | video_tag: autoplay: true, loop: true, muted: true, class: 'tsukie-real-women-video' }}
+              <span class="tsukie-real-women-play">&#9654;</span>
+            {% else %}
+              {{ 'lifestyle-2' | placeholder_svg_tag: 'tsukie-real-women-img' }}
+            {% endif %}
+          {% endif %}
+
+          {% if block.settings.tag != blank %}
+            <span class="tsukie-real-women-tag">{{ block.settings.tag }}</span>
+          {% endif %}
+        </div>
+      {% endfor %}
+    </div>
+    {% endif %}
+  </div>
+</div>
+
+{% schema %}
+{
+  "name": "Seen on Real Women",
+  "tag": "section",
+  "class": "tsukie-real-women-section",
+  "max_blocks": 8,
+  "settings": [
+    {
+      "type": "text",
+      "id": "eyebrow",
+      "label": "Eyebrow Text",
+      "default": "AS SEEN ON YOU"
+    },
+    {
+      "type": "text",
+      "id": "heading",
+      "label": "Heading",
+      "default": "Seen on Real Women"
+    },
+    {
+      "type": "textarea",
+      "id": "description",
+      "label": "Description",
+      "default": "Candid moments of real women styling our timeless silhouettes. Tag us at #TsukieWomen to get featured."
+    }
+  ],
+  "blocks": [
+    {
+      "type": "image_item",
+      "name": "Image",
+      "settings": [
+        {
+          "type": "image_picker",
+          "id": "image",
+          "label": "Image"
+        },
+        {
+          "type": "text",
+          "id": "tag",
+          "label": "Instagram Handle / Tag",
+          "default": "@USERNAME"
+        }
+      ]
+    },
+    {
+      "type": "video_item",
+      "name": "Video",
+      "settings": [
+        {
+          "type": "url",
+          "id": "video_url",
+          "label": "Video URL (MP4 link)"
+        },
+        {
+          "type": "video",
+          "id": "shopify_video",
+          "label": "Or Upload Video (Shopify hosted)"
+        },
+        {
+          "type": "text",
+          "id": "tag",
+          "label": "Instagram Handle / Tag",
+          "default": "@USERNAME"
+        }
+      ]
+    }
+  ],
+  "presets": [
+    {
+      "name": "Seen on Real Women",
+      "settings": {
+        "eyebrow": "AS SEEN ON YOU",
+        "heading": "Seen on Real Women",
+        "description": "Candid moments of real women styling our timeless silhouettes. Tag us at #TsukieWomen to get featured."
+      },
+      "blocks": [
+        { "type": "image_item", "settings": { "tag": "@PRIYA_ANAND" } },
+        { "type": "video_item", "settings": { "tag": "@ANJALI.S" } },
+        { "type": "image_item", "settings": { "tag": "@MEERA_M" } },
+        { "type": "video_item", "settings": { "tag": "@RIYA.SEN" } }
+      ]
+    }
+  ]
+}
+{% endschema %}
