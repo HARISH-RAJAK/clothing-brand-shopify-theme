@@ -12,6 +12,17 @@
     "tsukie_hero_banner": {
       "type": "tsukie-hero-banner",
       "blocks": {
+        "slide_3": {
+          "type": "slide",
+          "settings": {
+            "image": "shopify://shop_images/website_Banner_2.png",
+            "eyebrow": "ESSENTIAL LUXURY",
+            "heading": "Timeless Pieces For Your Wardrobe",
+            "description": "Crafted with love, highlighting the natural body shape in sizes from XS to 4XL.",
+            "button_text": "VIEW ALL COLLECTIONS",
+            "button_url": "/collections"
+          }
+        },
         "slide_1": {
           "type": "slide",
           "settings": {
@@ -26,30 +37,19 @@
         "slide_2": {
           "type": "slide",
           "settings": {
-            "image": "shopify://shop_images/Pleated_Short_Sleeve_Shirt_04_2.jpg",
+            "image": "shopify://shop_images/Website_Banner.png",
             "eyebrow": "CHIC & ELEGANT",
             "heading": "Style in Peplum & Flared Tops",
             "description": "Discover curated sets and tops designed for comfort, grace, and premium everyday wear.",
             "button_text": "EXPLORE BEST SELLERS",
             "button_url": "/collections/all"
           }
-        },
-        "slide_3": {
-          "type": "slide",
-          "settings": {
-            "image": "shopify://shop_images/High_Neck_Structured_A-Line_Midi_Dress_Tsukie_Womens_Premium_Clothing_Maroon_3_b3a6fb1f-6679-4c08-a020-fdcb469323c4.jpg",
-            "eyebrow": "ESSENTIAL LUXURY",
-            "heading": "Timeless Pieces For Your Wardrobe",
-            "description": "Crafted with love, highlighting the natural body shape in sizes from XS to 4XL.",
-            "button_text": "VIEW ALL COLLECTIONS",
-            "button_url": "/collections"
-          }
         }
       },
       "block_order": [
+        "slide_3",
         "slide_1",
-        "slide_2",
-        "slide_3"
+        "slide_2"
       ],
       "settings": {}
     },
