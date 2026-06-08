@@ -204,17 +204,28 @@
                       or item.selling_plan_allocation != null
                     -%}
                       {%- if item.product.has_only_default_variant == false and item.item_components.size == 0 -%}
-                        <dl class="cart-items__variants">
+                        <!-- Cart item editable variants wrapper -->
+                        <div class="cart-item-selectors" data-line="{{ forloop.index }}" data-current-variant="{{ item.variant_id }}">
                           {%- for option in item.options_with_values -%}
-                            <div class="cart-items__variant">
-                              <dt class="visually-hidden">{{ option.name }}:</dt>
-                              <dd>
-                                {{- option.value -}}
-                                {%- if forloop.last != true %},&nbsp;{% endif -%}
-                              </dd>
+                            {%- assign option_index_0 = forloop.index0 -%}
+                            <div class="cart-item-selector-wrapper">
+                              <label class="cart-item-selector-label">{{ option.name }}:</label>
+                              <select class="cart-item-select" data-option-index="{{ option_index_0 }}" onchange="tsukieCartOptionChange(this)">
+                                {%- for value in option.values -%}
+                                  {%- assign selected = false -%}
+                                  {%- if item.variant.options[option_index_0] == value -%}
+                                    {%- assign selected = true -%}
+                                  {%- endif -%}
+                                  <option value="{{ value | escape }}" {% if selected %}selected{% endif %}>{{ value }}</option>
+                                {%- endfor -%}
+                              </select>
                             </div>
                           {%- endfor -%}
-                        </dl>
+                          
+                          <script type="application/json" class="cart-item-variants-json">
+                            {{ item.product.variants | json }}
+                          </script>
+                        </div>
                       {%- endif -%}
 
                       {%- liquid
@@ -929,5 +940,39 @@
       filter: none;
       opacity: 1;
     }
+  }
+
+  /* Cart Option Selector Custom Styles */
+  .cart-item-selectors {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 8px;
+    margin-top: 8px;
+  }
+  .cart-item-selector-wrapper {
+    display: flex;
+    align-items: center;
+    gap: 4px;
+  }
+  .cart-item-selector-label {
+    font-family: var(--cart-primary-font-family);
+    font-size: 11px;
+    color: rgb(var(--color-foreground-rgb) / var(--opacity-70));
+    text-transform: uppercase;
+  }
+  .cart-item-select {
+    font-family: var(--cart-primary-font-family);
+    font-size: 11px;
+    padding: 2px 6px;
+    border: 1px solid #e0d9cd;
+    background: #fff;
+    color: #1e2a38;
+    cursor: pointer;
+    outline: none;
+    border-radius: 2px;
+    transition: border-color 0.2s ease;
+  }
+  .cart-item-select:hover {
+    border-color: #1e2a38;
   }
 {% endstylesheet %}

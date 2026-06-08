@@ -206,6 +206,77 @@ class CartItemsComponent extends Component {
   }
 
   /**
+   * Updates the variant at a specific line item.
+   * @param {number} line - The line item number (1-indexed).
+   * @param {number} variantId - The new variant ID to set.
+   */
+  updateVariant(line, variantId) {
+    this.#disableCartItems();
+    const { cartTotal } = this.refs;
+    const cartItemsComponents = document.querySelectorAll('cart-items-component');
+    const sectionsToUpdate = new Set([this.sectionId]);
+    cartItemsComponents.forEach((item) => {
+      if (item instanceof HTMLElement && item.dataset.sectionId) {
+        sectionsToUpdate.add(item.dataset.sectionId);
+      }
+    });
+
+    // We get the current quantity of that line item
+    const row = this.refs.cartItemRows[line - 1];
+    const qtyInput = row?.querySelector('quantity-selector-component input');
+    const quantity = qtyInput ? parseInt(qtyInput.value, 10) : 1;
+
+    const body = JSON.stringify({
+      line: line,
+      id: variantId,
+      quantity: quantity,
+      sections: Array.from(sectionsToUpdate).join(','),
+      sections_url: window.location.pathname,
+    });
+
+    cartTotal?.shimmer();
+
+    fetch(`${Theme.routes.cart_change_url}`, fetchConfig('json', { body }))
+      .then((response) => response.text())
+      .then((responseText) => {
+        const parsedResponseText = JSON.parse(responseText);
+        resetShimmer(this);
+
+        if (parsedResponseText.errors) {
+          this.#handleCartError(line, parsedResponseText);
+          return;
+        }
+
+        const newSectionHTML = new DOMParser().parseFromString(
+          parsedResponseText.sections[this.sectionId],
+          'text/html'
+        );
+
+        const newCartHiddenItemCount = newSectionHTML.querySelector('[ref="cartItemCount"]')?.textContent;
+        const newCartItemCount = newCartHiddenItemCount ? parseInt(newCartHiddenItemCount, 10) : 0;
+
+        this.#updateQuantitySelectors(parsedResponseText);
+
+        this.dispatchEvent(
+          new CartUpdateEvent(parsedResponseText, this.sectionId, {
+            itemCount: newCartItemCount,
+            source: 'cart-items-component',
+            sections: parsedResponseText.sections,
+          })
+        );
+
+        morphSection(this.sectionId, parsedResponseText.sections[this.sectionId], { mode: this.isDrawer ? 'hydration' : 'full' });
+        this.#updateCartQuantitySelectorButtonStates();
+      })
+      .catch((error) => {
+        console.error(error);
+      })
+      .finally(() => {
+        this.#enableCartItems();
+      });
+  }
+
+  /**
    * Handles the discount update.
    * @param {DiscountUpdateEvent} event - The event.
    */
@@ -332,3 +403,35 @@ class CartItemsComponent extends Component {
 if (!customElements.get('cart-items-component')) {
   customElements.define('cart-items-component', CartItemsComponent);
 }
+
+// Global handler for cart variant selector option changes
+window.tsukieCartOptionChange = function(selectEl) {
+  const container = selectEl.closest('.cart-item-selectors');
+  if (!container) return;
+  
+  const line = parseInt(container.getAttribute('data-line'), 10);
+  const selects = container.querySelectorAll('.cart-item-select');
+  const variantsJson = JSON.parse(container.querySelector('.cart-item-variants-json').textContent);
+  
+  const selectedOptions = [];
+  selects.forEach(select => {
+    const index = parseInt(select.getAttribute('data-option-index'), 10);
+    selectedOptions[index] = select.value;
+  });
+  
+  const matchedVariant = variantsJson.find(v => {
+    return (!v.option1 || v.option1 === selectedOptions[0]) &&
+           (!v.option2 || v.option2 === selectedOptions[1]) &&
+           (!v.option3 || v.option3 === selectedOptions[2]);
+  });
+  
+  if (matchedVariant) {
+    const currentVariantId = parseInt(container.getAttribute('data-current-variant'), 10);
+    if (matchedVariant.id !== currentVariantId) {
+      const cartComponent = document.querySelector('cart-items-component');
+      if (cartComponent && typeof cartComponent.updateVariant === 'function') {
+        cartComponent.updateVariant(line, matchedVariant.id);
+      }
+    }
+  }
+};
