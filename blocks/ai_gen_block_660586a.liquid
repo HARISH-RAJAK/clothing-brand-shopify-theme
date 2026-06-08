@@ -1,0 +1,743 @@
+{% doc %}
+  @prompt
+    <style>
+    .tsukie-trust-badges{
+      display:grid;
+      grid-template-columns:repeat(3,1fr);
+      border:1px solid #e5e5e5;
+      margin:24px 0 32px;
+    }
+    .tsukie-trust-item{
+      padding:20px 16px;
+      text-align:center;
+      border-right:1px solid #e5e5e5;
+    }
+    .tsukie-trust-item:last-child{
+      border-right:none;
+    }
+    .tsukie-trust-icon{
+      font-size:20px;
+      color:#a08766;
+      margin-bottom:8px;
+      display:block;
+    }
+    .tsukie-trust-title{
+      font-size:11px;
+      letter-spacing:1.5px;
+      text-transform:uppercase;
+      color:#1a1a1a;
+      font-weight:500;
+      margin:0 0 4px;
+    }
+    .tsukie-trust-subtitle{
+      font-size:11px;
+      color:#6b6b6b;
+      margin:0;
+    }
+    .tsukie-accordion{
+      border-top:1px solid #e5e5e5;
+    }
+    .tsukie-accordion-item{
+      border-bottom:1px solid #e5e5e5;
+    }
+    .tsukie-accordion-btn{
+      width:100%;
+      background:none;
+      border:none;
+      padding:18px 0;
+      display:flex;
+      justify-content:space-between;
+      align-items:center;
+      cursor:pointer;
+      font-size:12px;
+      letter-spacing:1.5px;
+      text-transform:uppercase;
+      color:#1a1a1a;
+      font-weight:500;
+    }
+    .tsukie-accordion-icon{
+      font-size:16px;
+      transition:transform 0.3s ease;
+    }
+    .tsukie-accordion-item.active .tsukie-accordion-icon{
+      transform:rotate(45deg);
+    }
+    .tsukie-accordion-content{
+      max-height:0;
+      overflow:hidden;
+      transition:max-height 0.3s ease;
+      font-size:13px;
+      line-height:1.7;
+      color:#6b6b6b;
+    }
+    .tsukie-accordion-item.active .tsukie-accordion-content{
+      max-height:500px;
+      padding-bottom:18px;
+    }
+    .tsukie-accordion-grid{
+      display:grid;
+      grid-template-columns:1fr 1fr;
+      gap:20px 40px;
+    }
+    .tsukie-accordion-label{
+      font-size:11px;
+      letter-spacing:1px;
+      text-transform:uppercase;
+      color:#a08766;
+      margin:0 0 4px;
+    }
+    .tsukie-accordion-value{
+      font-size:13px;
+      color:#1a1a1a;
+      margin:0;
+    }
+    @media(max-width:749px){
+    .tsukie-trust-badges{grid-template-columns:1fr}
+    .tsukie-trust-item{border-right:none;border-bottom:1px solid #e5e5e5}
+    .tsukie-trust-item:last-child{border-bottom:none}
+    .tsukie-accordion-grid{grid-template-columns:1fr;gap:16px}
+    }
+    </style>
+    
+    <div class="tsukie-trust-badges">
+      <div class="tsukie-trust-item">
+        <span class="tsukie-trust-icon">✦</span>
+        <p class="tsukie-trust-title">PREMIUM FABRIC</p>
+        <p class="tsukie-trust-subtitle">
+          {%- if product.metafields.custom.fabric -%}
+            {{ product.metafields.custom.fabric }}
+          {%- else -%}
+            100% Viscose
+          {%- endif -%}
+        </p>
+      </div>
+      <div class="tsukie-trust-item">
+        <span class="tsukie-trust-icon">↺</span>
+        <p class="tsukie-trust-title">EASY EXCHANGE</p>
+        <p class="tsukie-trust-subtitle">14 days</p>
+      </div>
+      <div class="tsukie-trust-item">
+        <span class="tsukie-trust-icon">⛨</span>
+        <p class="tsukie-trust-title">SECURE PAYMENT</p>
+        <p class="tsukie-trust-subtitle">UPI · Cards · COD</p>
+      </div>
+    </div>
+    
+    <div class="tsukie-accordion">
+      <div class="tsukie-accordion-item">
+        <button type="button" class="tsukie-accordion-btn" onclick="this.parentElement.classList.toggle('active')">
+          WHY YOU'LL LOVE IT
+          <span class="tsukie-accordion-icon">+</span>
+        </button>
+        <div class="tsukie-accordion-content">
+          {%- if product.metafields.custom.why_love_it -%}
+            {{ product.metafields.custom.why_love_it | metafield_tag }}
+          {%- else -%}
+            <p>Crafted for the modern woman who values comfort without compromising on style. This piece transitions effortlessly from work to weekend.</p>
+          {%- endif -%}
+        </div>
+      </div>
+      
+      <div class="tsukie-accordion-item">
+        <button type="button" class="tsukie-accordion-btn" onclick="this.parentElement.classList.toggle('active')">
+          FABRIC & CARE
+          <span class="tsukie-accordion-icon">+</span>
+        </button>
+        <div class="tsukie-accordion-content">
+          {%- if product.metafields.custom.fabric_care -%}
+            {{ product.metafields.custom.fabric_care | metafield_tag }}
+          {%- else -%}
+            <p><strong>Material:</strong> 100% Viscose<br>
+            <strong>Care:</strong> Machine wash cold, gentle cycle. Do not bleach. Line dry in shade. Iron on low heat if needed.</p>
+          {%- endif -%}
+        </div>
+      </div>
+      
+      <div class="tsukie-accordion-item">
+        <button type="button" class="tsukie-accordion-btn" onclick="this.parentElement.classList.toggle('active')">
+          SHIPPING & RETURNS
+          <span class="tsukie-accordion-icon">+</span>
+        </button>
+        <div class="tsukie-accordion-content">
+          <div class="tsukie-accordion-grid">
+            <div>
+              <p class="tsukie-accordion-label">STANDARD DELIVERY</p>
+              <p class="tsukie-accordion-value">4–6 business days · Free above ₹1,999</p>
+            </div>
+            <div>
+              <p class="tsukie-accordion-label">EXPRESS DELIVERY</p>
+              <p class="tsukie-accordion-value">1–2 business days · ₹149</p>
+            </div>
+            <div>
+              <p class="tsukie-accordion-label">RETURNS</p>
+              <p class="tsukie-accordion-value">14 days from delivery · Free pickup</p>
+            </div>
+            <div>
+              <p class="tsukie-accordion-label">EXCHANGE</p>
+              <p class="tsukie-accor
+{% enddoc %}
+{% assign ai_gen_id = block.id | replace: '_', '' | downcase %}
+
+{% style %}
+  .tsukie-product-details-{{ ai_gen_id }} {
+    display: block;
+    width: {{ block.settings.desktop_width_percent }}%;
+    max-width: 100%;
+  }
+
+  .tsukie-trust-badges-{{ ai_gen_id }} {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    border: 1px solid {{ block.settings.border_color }};
+    margin: {{ block.settings.section_spacing }}px 0;
+  }
+
+  .tsukie-trust-item-{{ ai_gen_id }} {
+    padding: {{ block.settings.badge_padding }}px;
+    text-align: center;
+    border-right: 1px solid {{ block.settings.border_color }};
+  }
+
+  .tsukie-trust-item-{{ ai_gen_id }}:last-child {
+    border-right: none;
+  }
+
+  .tsukie-trust-icon-{{ ai_gen_id }} {
+    font-size: {{ block.settings.icon_size }}px;
+    color: {{ block.settings.icon_color }};
+    margin-bottom: 8px;
+    display: block;
+  }
+
+  .tsukie-trust-title-{{ ai_gen_id }} {
+    font-size: {{ block.settings.badge_title_size }}px;
+    letter-spacing: {{ block.settings.title_letter_spacing }}px;
+    text-transform: uppercase;
+    color: {{ block.settings.title_color }};
+    font-weight: 500;
+    margin: 0 0 4px;
+  }
+
+  .tsukie-trust-subtitle-{{ ai_gen_id }} {
+    font-size: {{ block.settings.badge_subtitle_size }}px;
+    color: {{ block.settings.subtitle_color }};
+    margin: 0;
+  }
+
+  .tsukie-accordion-{{ ai_gen_id }} {
+    border-top: 1px solid {{ block.settings.border_color }};
+  }
+
+  .tsukie-accordion-item-{{ ai_gen_id }} {
+    border-bottom: 1px solid {{ block.settings.border_color }};
+  }
+
+  .tsukie-accordion-btn-{{ ai_gen_id }} {
+    width: 100%;
+    background: none;
+    border: none;
+    padding: {{ block.settings.accordion_padding }}px 0;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    cursor: pointer;
+    font-size: {{ block.settings.accordion_title_size }}px;
+    letter-spacing: {{ block.settings.title_letter_spacing }}px;
+    text-transform: uppercase;
+    color: {{ block.settings.title_color }};
+    font-weight: 500;
+  }
+
+  .tsukie-accordion-icon-{{ ai_gen_id }} {
+    font-size: {{ block.settings.accordion_icon_size }}px;
+    transition: transform 0.3s ease;
+  }
+
+  .tsukie-accordion-item-{{ ai_gen_id }}.active .tsukie-accordion-icon-{{ ai_gen_id }} {
+    transform: rotate(45deg);
+  }
+
+  .tsukie-accordion-content-{{ ai_gen_id }} {
+    max-height: 0;
+    overflow: hidden;
+    transition: max-height 0.3s ease;
+    font-size: {{ block.settings.accordion_content_size }}px;
+    line-height: 1.7;
+    color: {{ block.settings.subtitle_color }};
+  }
+
+  .tsukie-accordion-item-{{ ai_gen_id }}.active .tsukie-accordion-content-{{ ai_gen_id }} {
+    max-height: 500px;
+    padding-bottom: {{ block.settings.accordion_padding }}px;
+  }
+
+  .tsukie-accordion-grid-{{ ai_gen_id }} {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 20px 40px;
+  }
+
+  .tsukie-accordion-label-{{ ai_gen_id }} {
+    font-size: {{ block.settings.grid_label_size }}px;
+    letter-spacing: 1px;
+    text-transform: uppercase;
+    color: {{ block.settings.icon_color }};
+    margin: 0 0 4px;
+  }
+
+  .tsukie-accordion-value-{{ ai_gen_id }} {
+    font-size: {{ block.settings.grid_value_size }}px;
+    color: {{ block.settings.title_color }};
+    margin: 0;
+  }
+
+  @media (max-width: 749px) {
+    .tsukie-trust-badges-{{ ai_gen_id }} {
+      grid-template-columns: 1fr;
+    }
+    .tsukie-trust-item-{{ ai_gen_id }} {
+      border-right: none;
+      border-bottom: 1px solid {{ block.settings.border_color }};
+    }
+    .tsukie-trust-item-{{ ai_gen_id }}:last-child {
+      border-bottom: none;
+    }
+    .tsukie-accordion-grid-{{ ai_gen_id }} {
+      grid-template-columns: 1fr;
+      gap: 16px;
+    }
+  }
+{% endstyle %}
+
+<product-details-{{ ai_gen_id }} class="tsukie-product-details-{{ ai_gen_id }}" {{ block.shopify_attributes }}>
+  <div class="tsukie-trust-badges-{{ ai_gen_id }}">
+    <div class="tsukie-trust-item-{{ ai_gen_id }}">
+      <span class="tsukie-trust-icon-{{ ai_gen_id }}">{{ block.settings.badge_1_icon }}</span>
+      <p class="tsukie-trust-title-{{ ai_gen_id }}">{{ block.settings.badge_1_title }}</p>
+      <p class="tsukie-trust-subtitle-{{ ai_gen_id }}">
+        {%- if product.metafields.custom.fabric -%}
+          {{ product.metafields.custom.fabric }}
+        {%- else -%}
+          {{ block.settings.badge_1_subtitle }}
+        {%- endif -%}
+      </p>
+    </div>
+    <div class="tsukie-trust-item-{{ ai_gen_id }}">
+      <span class="tsukie-trust-icon-{{ ai_gen_id }}">{{ block.settings.badge_2_icon }}</span>
+      <p class="tsukie-trust-title-{{ ai_gen_id }}">{{ block.settings.badge_2_title }}</p>
+      <p class="tsukie-trust-subtitle-{{ ai_gen_id }}">{{ block.settings.badge_2_subtitle }}</p>
+    </div>
+    <div class="tsukie-trust-item-{{ ai_gen_id }}">
+      <span class="tsukie-trust-icon-{{ ai_gen_id }}">{{ block.settings.badge_3_icon }}</span>
+      <p class="tsukie-trust-title-{{ ai_gen_id }}">{{ block.settings.badge_3_title }}</p>
+      <p class="tsukie-trust-subtitle-{{ ai_gen_id }}">{{ block.settings.badge_3_subtitle }}</p>
+    </div>
+  </div>
+
+  <div class="tsukie-accordion-{{ ai_gen_id }}">
+    <div class="tsukie-accordion-item-{{ ai_gen_id }}">
+      <button type="button" class="tsukie-accordion-btn-{{ ai_gen_id }}" data-accordion-toggle>
+        {{ block.settings.accordion_1_title }}
+        <span class="tsukie-accordion-icon-{{ ai_gen_id }}">+</span>
+      </button>
+      <div class="tsukie-accordion-content-{{ ai_gen_id }}">
+        {%- if product.metafields.custom.why_love_it -%}
+          {{ product.metafields.custom.why_love_it | metafield_tag }}
+        {%- else -%}
+          {{ block.settings.accordion_1_content }}
+        {%- endif -%}
+      </div>
+    </div>
+
+    <div class="tsukie-accordion-item-{{ ai_gen_id }}">
+      <button type="button" class="tsukie-accordion-btn-{{ ai_gen_id }}" data-accordion-toggle>
+        {{ block.settings.accordion_2_title }}
+        <span class="tsukie-accordion-icon-{{ ai_gen_id }}">+</span>
+      </button>
+      <div class="tsukie-accordion-content-{{ ai_gen_id }}">
+        {%- if product.metafields.custom.fabric_care -%}
+          {{ product.metafields.custom.fabric_care | metafield_tag }}
+        {%- else -%}
+          {{ block.settings.accordion_2_content }}
+        {%- endif -%}
+      </div>
+    </div>
+
+    <div class="tsukie-accordion-item-{{ ai_gen_id }}">
+      <button type="button" class="tsukie-accordion-btn-{{ ai_gen_id }}" data-accordion-toggle>
+        {{ block.settings.accordion_3_title }}
+        <span class="tsukie-accordion-icon-{{ ai_gen_id }}">+</span>
+      </button>
+      <div class="tsukie-accordion-content-{{ ai_gen_id }}">
+        <div class="tsukie-accordion-grid-{{ ai_gen_id }}">
+          <div>
+            <p class="tsukie-accordion-label-{{ ai_gen_id }}">{{ block.settings.shipping_1_label }}</p>
+            <p class="tsukie-accordion-value-{{ ai_gen_id }}">{{ block.settings.shipping_1_value }}</p>
+          </div>
+          <div>
+            <p class="tsukie-accordion-label-{{ ai_gen_id }}">{{ block.settings.shipping_2_label }}</p>
+            <p class="tsukie-accordion-value-{{ ai_gen_id }}">{{ block.settings.shipping_2_value }}</p>
+          </div>
+          <div>
+            <p class="tsukie-accordion-label-{{ ai_gen_id }}">{{ block.settings.shipping_3_label }}</p>
+            <p class="tsukie-accordion-value-{{ ai_gen_id }}">{{ block.settings.shipping_3_value }}</p>
+          </div>
+          <div>
+            <p class="tsukie-accordion-label-{{ ai_gen_id }}">{{ block.settings.shipping_4_label }}</p>
+            <p class="tsukie-accordion-value-{{ ai_gen_id }}">{{ block.settings.shipping_4_value }}</p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</product-details-{{ ai_gen_id }}>
+
+<script>
+  (function() {
+    class ProductDetails{{ ai_gen_id }} extends HTMLElement {
+      constructor() {
+        super();
+      }
+
+      connectedCallback() {
+        this.accordionButtons = this.querySelectorAll('[data-accordion-toggle]');
+        this.setupEventListeners();
+      }
+
+      setupEventListeners() {
+        this.accordionButtons.forEach((button) => {
+          button.addEventListener('click', () => {
+            const accordionItem = button.parentElement;
+            accordionItem.classList.toggle('active');
+          });
+        });
+      }
+    }
+
+    customElements.define('product-details-{{ ai_gen_id }}', ProductDetails{{ ai_gen_id }});
+  })();
+</script>
+
+{% schema %}
+{
+  "name": "Product details",
+  "tag": null,
+  "settings": [
+    {
+      "type": "range",
+      "id": "desktop_width_percent",
+      "label": "Desktop width",
+      "min": 50,
+      "max": 100,
+      "step": 5,
+      "unit": "%",
+      "default": 100
+    },
+    {
+      "type": "header",
+      "content": "Trust badges"
+    },
+    {
+      "type": "text",
+      "id": "badge_1_icon",
+      "label": "Badge 1 icon",
+      "default": "✦"
+    },
+    {
+      "type": "text",
+      "id": "badge_1_title",
+      "label": "Badge 1 title",
+      "default": "PREMIUM FABRIC"
+    },
+    {
+      "type": "text",
+      "id": "badge_1_subtitle",
+      "label": "Badge 1 subtitle",
+      "default": "100% Viscose"
+    },
+    {
+      "type": "text",
+      "id": "badge_2_icon",
+      "label": "Badge 2 icon",
+      "default": "↺"
+    },
+    {
+      "type": "text",
+      "id": "badge_2_title",
+      "label": "Badge 2 title",
+      "default": "EASY EXCHANGE"
+    },
+    {
+      "type": "text",
+      "id": "badge_2_subtitle",
+      "label": "Badge 2 subtitle",
+      "default": "14 days"
+    },
+    {
+      "type": "text",
+      "id": "badge_3_icon",
+      "label": "Badge 3 icon",
+      "default": "⛨"
+    },
+    {
+      "type": "text",
+      "id": "badge_3_title",
+      "label": "Badge 3 title",
+      "default": "SECURE PAYMENT"
+    },
+    {
+      "type": "text",
+      "id": "badge_3_subtitle",
+      "label": "Badge 3 subtitle",
+      "default": "UPI · Cards · COD"
+    },
+    {
+      "type": "header",
+      "content": "Accordion 1"
+    },
+    {
+      "type": "text",
+      "id": "accordion_1_title",
+      "label": "Title",
+      "default": "WHY YOU'LL LOVE IT"
+    },
+    {
+      "type": "richtext",
+      "id": "accordion_1_content",
+      "label": "Content",
+      "default": "<p>Crafted for the modern woman who values comfort without compromising on style. This piece transitions effortlessly from work to weekend.</p>"
+    },
+    {
+      "type": "header",
+      "content": "Accordion 2"
+    },
+    {
+      "type": "text",
+      "id": "accordion_2_title",
+      "label": "Title",
+      "default": "FABRIC & CARE"
+    },
+    {
+      "type": "richtext",
+      "id": "accordion_2_content",
+      "label": "Content",
+      "default": "<p><strong>Material:</strong> 100% Viscose<br><strong>Care:</strong> Machine wash cold, gentle cycle. Do not bleach. Line dry in shade. Iron on low heat if needed.</p>"
+    },
+    {
+      "type": "header",
+      "content": "Accordion 3"
+    },
+    {
+      "type": "text",
+      "id": "accordion_3_title",
+      "label": "Title",
+      "default": "SHIPPING & RETURNS"
+    },
+    {
+      "type": "text",
+      "id": "shipping_1_label",
+      "label": "Shipping option 1 label",
+      "default": "STANDARD DELIVERY"
+    },
+    {
+      "type": "text",
+      "id": "shipping_1_value",
+      "label": "Shipping option 1 value",
+      "default": "4–6 business days · Free above ₹1,999"
+    },
+    {
+      "type": "text",
+      "id": "shipping_2_label",
+      "label": "Shipping option 2 label",
+      "default": "EXPRESS DELIVERY"
+    },
+    {
+      "type": "text",
+      "id": "shipping_2_value",
+      "label": "Shipping option 2 value",
+      "default": "1–2 business days · ₹149"
+    },
+    {
+      "type": "text",
+      "id": "shipping_3_label",
+      "label": "Returns label",
+      "default": "RETURNS"
+    },
+    {
+      "type": "text",
+      "id": "shipping_3_value",
+      "label": "Returns value",
+      "default": "14 days from delivery · Free pickup"
+    },
+    {
+      "type": "text",
+      "id": "shipping_4_label",
+      "label": "Exchange label",
+      "default": "EXCHANGE"
+    },
+    {
+      "type": "text",
+      "id": "shipping_4_value",
+      "label": "Exchange value",
+      "default": "Size & color swaps available"
+    },
+    {
+      "type": "header",
+      "content": "Style"
+    },
+    {
+      "type": "color",
+      "id": "border_color",
+      "label": "Border color",
+      "default": "#e5e5e5"
+    },
+    {
+      "type": "color",
+      "id": "icon_color",
+      "label": "Icon color",
+      "default": "#a08766"
+    },
+    {
+      "type": "color",
+      "id": "title_color",
+      "label": "Title color",
+      "default": "#1a1a1a"
+    },
+    {
+      "type": "color",
+      "id": "subtitle_color",
+      "label": "Subtitle color",
+      "default": "#6b6b6b"
+    },
+    {
+      "type": "range",
+      "id": "section_spacing",
+      "label": "Section spacing",
+      "min": 0,
+      "max": 60,
+      "step": 4,
+      "unit": "px",
+      "default": 24
+    },
+    {
+      "type": "range",
+      "id": "badge_padding",
+      "label": "Badge padding",
+      "min": 8,
+      "max": 40,
+      "step": 4,
+      "unit": "px",
+      "default": 20
+    },
+    {
+      "type": "range",
+      "id": "accordion_padding",
+      "label": "Accordion padding",
+      "min": 8,
+      "max": 40,
+      "step": 2,
+      "unit": "px",
+      "default": 18
+    },
+    {
+      "type": "header",
+      "content": "Typography"
+    },
+    {
+      "type": "range",
+      "id": "icon_size",
+      "label": "Icon size",
+      "min": 12,
+      "max": 40,
+      "step": 2,
+      "unit": "px",
+      "default": 20
+    },
+    {
+      "type": "range",
+      "id": "badge_title_size",
+      "label": "Badge title size",
+      "min": 8,
+      "max": 20,
+      "step": 1,
+      "unit": "px",
+      "default": 11
+    },
+    {
+      "type": "range",
+      "id": "badge_subtitle_size",
+      "label": "Badge subtitle size",
+      "min": 8,
+      "max": 20,
+      "step": 1,
+      "unit": "px",
+      "default": 11
+    },
+    {
+      "type": "range",
+      "id": "accordion_title_size",
+      "label": "Accordion title size",
+      "min": 8,
+      "max": 20,
+      "step": 1,
+      "unit": "px",
+      "default": 12
+    },
+    {
+      "type": "range",
+      "id": "accordion_content_size",
+      "label": "Accordion content size",
+      "min": 10,
+      "max": 20,
+      "step": 1,
+      "unit": "px",
+      "default": 13
+    },
+    {
+      "type": "range",
+      "id": "accordion_icon_size",
+      "label": "Accordion icon size",
+      "min": 12,
+      "max": 32,
+      "step": 2,
+      "unit": "px",
+      "default": 16
+    },
+    {
+      "type": "range",
+      "id": "grid_label_size",
+      "label": "Grid label size",
+      "min": 8,
+      "max": 16,
+      "step": 1,
+      "unit": "px",
+      "default": 11
+    },
+    {
+      "type": "range",
+      "id": "grid_value_size",
+      "label": "Grid value size",
+      "min": 10,
+      "max": 20,
+      "step": 1,
+      "unit": "px",
+      "default": 13
+    },
+    {
+      "type": "range",
+      "id": "title_letter_spacing",
+      "label": "Title letter spacing",
+      "min": 0,
+      "max": 3,
+      "step": 0.5,
+      "unit": "px",
+      "default": 1.5
+    }
+  ],
+  "presets": [
+    {
+      "name": "Product details"
+    }
+  ]
+}
+{% endschema %}
