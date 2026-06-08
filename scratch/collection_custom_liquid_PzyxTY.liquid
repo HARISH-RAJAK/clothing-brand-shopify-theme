@@ -1,0 +1,132 @@
+<style>
+@import url('https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@1,400;1,600&family=Montserrat:wght@300;400;500;600&display=swap');
+
+.tsukie-collection-hero{
+  background:#f5f1ea;
+  padding:80px 0 70px;
+  position:relative;
+  overflow:hidden;
+}
+.tsukie-collection-inner{
+  max-width:1400px;
+  margin:0 auto;
+  padding:0 40px;
+  position:relative;
+  z-index:2;
+}
+.tsukie-collection-breadcrumb{
+  font-size:11px;
+  letter-spacing:2px;
+  text-transform:uppercase;
+  color:#a08766;
+  margin:0 0 20px;
+  font-weight:500;
+  font-family:'Montserrat',sans-serif;
+}
+.tsukie-collection-breadcrumb a{
+  color:#a08766;
+  text-decoration:none;
+}
+.tsukie-collection-breadcrumb span{
+  margin:0 8px;
+  color:#c4b59d;
+}
+.tsukie-collection-content{
+  display:flex;
+  align-items:flex-end;
+  justify-content:space-between;
+  gap:40px;
+}
+.tsukie-collection-text{
+  flex:1;
+}
+.tsukie-collection-title{
+  font-family:'Playfair Display',serif;
+  font-size:68px;
+  line-height:1;
+  font-weight:600;
+  font-style:italic;
+  margin:0 0 16px;
+  background:linear-gradient(135deg, #1e2a38 0%, #a08766 30%, #c9a77c 50%, #a08766 70%, #1e2a38 100%);
+  -webkit-background-clip:text;
+  -webkit-text-fill-color:transparent;
+  background-clip:text;
+}
+.tsukie-collection-desc{
+  font-size:15px;
+  line-height:1.7;
+  color:#6b6b6b;
+  margin:0;
+  max-width:520px;
+  font-family:'Montserrat',sans-serif;
+}
+.tsukie-collection-count{
+  font-size:12px;
+  letter-spacing:2px;
+  text-transform:uppercase;
+  color:#1a1a1a;
+  font-weight:500;
+  white-space:nowrap;
+  padding-bottom:8px;
+  border-bottom:1px solid #1a1a1a;
+  font-family:'Montserrat',sans-serif;
+}
+.tsukie-collection-image{
+  position:absolute;
+  right:0;
+  top:0;
+  bottom:0;
+  width:35%;
+  opacity:0.15;
+}
+.tsukie-collection-image img{
+  width:100%;
+  height:100%;
+  object-fit:cover;
+}
+@media(max-width:989px){
+.tsukie-collection-content{flex-direction:column;align-items:flex-start;gap:20px}
+.tsukie-collection-image{display:none}
+}
+@media(max-width:749px){
+.tsukie-collection-hero{padding:60px 0 50px}
+.tsukie-collection-inner{padding:0 20px}
+.tsukie-collection-title{font-size:48px}
+.tsukie-collection-desc{font-size:14px}
+}
+</style>
+
+<div class="tsukie-collection-hero">
+  {% if collection.image %}
+  <div class="tsukie-collection-image">
+    <img 
+      src="{{ collection.image | image_url: width: 800 }}" 
+      alt="{{ collection.title | escape }}"
+      loading="lazy"
+    >
+  </div>
+  {% endif %}
+  
+  <div class="tsukie-collection-inner">
+    <div class="tsukie-collection-breadcrumb">
+      <a href="/">Home</a>
+      <span>/</span>
+      <a href="/collections">Shop All</a>
+      <span>/</span>
+      {{ collection.title }}
+    </div>
+    
+    <div class="tsukie-collection-content">
+      <div class="tsukie-collection-text">
+        <h1 class="tsukie-collection-title">{{ collection.title }}</h1>
+        {% if collection.description != blank %}
+        <p class="tsukie-collection-desc">{{ collection.description | strip_html | truncate: 180 }}</p>
+        {% endif %}
+      </div>
+      
+      <div class="tsukie-collection-count">
+        {{ collection.products_count }} {% if collection.products_count == 1 %}Item{% else %}Items{% endif %}
+      </div>
+    </div>
+  </div>
+</div>

@@ -48,6 +48,28 @@ export default class PaginatedList extends Component {
     this.#fetchPage('previous');
     this.#observeViewMore();
 
+    const { loadMoreButton } = this.refs;
+    if (loadMoreButton) {
+      const nextPage = this.#getPage('next');
+      if (!nextPage || !this.#shouldUsePage(nextPage)) {
+        loadMoreButton.style.display = 'none';
+      }
+      loadMoreButton.addEventListener('click', (e) => {
+        e.preventDefault();
+        loadMoreButton.classList.add('loading');
+        loadMoreButton.disabled = true;
+        this.#renderNextPage().then(() => {
+          loadMoreButton.classList.remove('loading');
+          loadMoreButton.disabled = false;
+          
+          const afterNextPage = this.#getPage('next');
+          if (!afterNextPage || !this.#shouldUsePage(afterNextPage)) {
+            loadMoreButton.style.display = 'none';
+          }
+        });
+      });
+    }
+
     // Listen for filter updates to clear cached pages
     document.addEventListener(ThemeEvents.FilterUpdate, this.#handleFilterUpdate);
   }
@@ -332,6 +354,16 @@ export default class PaginatedList extends Component {
 
         // Fetch the next page
         this.#fetchPage('next');
+
+        const { loadMoreButton } = this.refs;
+        if (loadMoreButton) {
+          const nextPage = this.#getPage('next');
+          if (nextPage && this.#shouldUsePage(nextPage)) {
+            loadMoreButton.style.display = 'inline-block';
+          } else {
+            loadMoreButton.style.display = 'none';
+          }
+        }
       }
     });
 

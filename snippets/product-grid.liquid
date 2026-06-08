@@ -160,7 +160,15 @@
         {{ children }}
       </ul>
       {% if enable_infinite_scroll != false %}
-        <span ref="viewMoreNext"></span>
+        {% if template.name == 'collection' or template.name == 'search' %}
+          <div class="tsukie-load-more-container" style="text-align: center; margin: 40px 0 20px; width: 100%; display: block; clear: both;">
+            <button class="tsukie-load-more-btn" ref="loadMoreButton" type="button">Load More</button>
+          </div>
+          {% comment %} Keep an invisible element for previous page load, if they scroll up {% endcomment %}
+          <span ref="viewMorePrevious" style="display:none;"></span>
+        {% else %}
+          <span ref="viewMoreNext"></span>
+        {% endif %}
       {% else %}
         {% render 'pagination-controls', paginate: paginate %}
       {% endif %}
@@ -219,5 +227,30 @@
 
   .main-collection-grid__empty-title {
     margin: 0;
+  }
+
+  .tsukie-load-more-btn {
+    display: inline-block;
+    background: #1e2a38;
+    color: #d4c5a9;
+    padding: 16px 40px;
+    font-family: 'Montserrat', sans-serif;
+    font-size: 12px;
+    letter-spacing: 2px;
+    text-transform: uppercase;
+    text-decoration: none;
+    font-weight: 600;
+    border: none;
+    cursor: pointer;
+    transition: all 0.3s ease;
+  }
+  .tsukie-load-more-btn:hover {
+    background: #2a3a4a;
+    transform: translateY(-2px);
+    color: #d4c5a9;
+  }
+  .tsukie-load-more-btn.loading {
+    opacity: 0.6;
+    cursor: not-allowed;
   }
 {% endstylesheet %}

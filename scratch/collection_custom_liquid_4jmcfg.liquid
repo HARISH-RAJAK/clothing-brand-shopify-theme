@@ -1,0 +1,106 @@
+<style>
+.tsukie-ticker{
+  background:#1e2a38;
+  width:100vw;
+  position:relative;
+  left:50%;
+  right:50%;
+  margin-left:-50vw;
+  margin-right:-50vw;
+  overflow:hidden;
+  padding:18px 0;
+}
+.tsukie-ticker-track{
+  display:flex;
+  width:fit-content;
+  animation:tsukie-scroll 30s linear infinite;
+}
+.tsukie-ticker-content{
+  display:flex;
+  align-items:center;
+  white-space:nowrap;
+}
+.tsukie-ticker-item{
+  display:flex;
+  align-items:center;
+  color:#d4c5a9;
+  font-size:11px;
+  letter-spacing:2.5px;
+  text-transform:uppercase;
+  font-weight:500;
+  padding:0 60px;
+  position:relative;
+}
+.tsukie-ticker-item:after{
+  content:'';
+  position:absolute;
+  right:0;
+  top:50%;
+  transform:translateY(-50%);
+  width:1px;
+  height:14px;
+  background:rgba(212,197,169,0.2);
+}
+.tsukie-ticker-icon{
+  margin-right:10px;
+  font-size:10px;
+}
+@keyframes tsukie-scroll{
+  0%{transform:translateX(0)}
+  100%{transform:translateX(-50%)}
+}
+.tsukie-ticker:hover .tsukie-ticker-track{
+  animation-play-state:paused;
+}
+@media(max-width:749px){
+.tsukie-ticker{padding:14px 0}
+.tsukie-ticker-item{font-size:10px;padding:0 40px}
+}
+</style>
+
+<div class="tsukie-ticker">
+  <div class="tsukie-ticker-track">
+    <!-- Set 1 -->
+    <div class="tsukie-ticker-content">
+      <div class="tsukie-ticker-item">
+        <span class="tsukie-ticker-icon">✦</span> PREMIUM FABRICS
+      </div>
+      <div class="tsukie-ticker-item">
+        <span class="tsukie-ticker-icon">✦</span> EASY RETURNS
+      </div>
+      <div class="tsukie-ticker-item">
+        <span class="tsukie-ticker-icon">✦</span> SECURE PAYMENTS
+      </div>
+      <div class="tsukie-ticker-item">
+        <span class="tsukie-ticker-icon">✦</span> FREE SHIPPING ₹1,999+
+      </div>
+      <div class="tsukie-ticker-item">
+        <span class="tsukie-ticker-icon">✦</span> 12,000+ HAPPY CUSTOMERS
+      </div>
+      <div class="tsukie-ticker-item">
+        <span class="tsukie-ticker-icon">✦</span> SIZE INCLUSIVE XS-4XL
+      </div>
+    </div>
+    <!-- Set 2 - Duplicate for seamless loop -->
+    <div class="tsukie-ticker-content">
+      <div class="tsukie-ticker-item">
+        <span class="tsukie-ticker-icon">✦</span> PREMIUM FABRICS
+      </div>
+      <div class="tsukie-ticker-item">
+        <span class="tsukie-ticker-icon">✦</span> EASY RETURNS
+      </div>
+      <div class="tsukie-ticker-item">
+        <span class="tsukie-ticker-icon">✦</span> SECURE PAYMENTS
+      </div>
+      <div class="tsukie-ticker-item">
+        <span class="tsukie-ticker-icon">✦</span> FREE SHIPPING ₹1,999+
+      </div>
+      <div class="tsukie-ticker-item">
+        <span class="tsukie-ticker-icon">✦</span> 12,000+ HAPPY CUSTOMERS
+      </div>
+      <div class="tsukie-ticker-item">
+        <span class="tsukie-ticker-icon">✦</span> SIZE INCLUSIVE XS-4XL
+      </div>
+    </div>
+  </div>
+</div>

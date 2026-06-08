@@ -1,0 +1,266 @@
+<style>
+@import url('https://fonts.googleapis.com/css2?family=Montserrat:wght@300;400;500;600&display=swap');
+
+.tsukie-collection-toolbar{
+  background:#f5f1ea;
+  border-bottom:1px solid #e0d9cd;
+  position:relative;
+  z-index:9;
+  margin-bottom:0;
+}
+.tsukie-toolbar-inner{
+  max-width:1400px;
+  margin:0 auto;
+  padding:0 40px;
+  display:flex;
+  justify-content:space-between;
+  align-items:center;
+  min-height:58px;
+  gap:24px;
+}
+.tsukie-filters-left{
+  display:flex;
+  align-items:center;
+  gap:24px;
+}
+.tsukie-filter-wrapper{
+  display:flex;
+  align-items:center;
+  gap:8px;
+}
+.tsukie-filter-label{
+  font-size:12px;
+  color:#1e2a38;
+  letter-spacing:1.5px;
+  text-transform:uppercase;
+  font-weight:600;
+  font-family:'Montserrat',sans-serif;
+}
+.tsukie-filter-select{
+  border:none;
+  background:transparent;
+  font-size:12px;
+  color:#1e2a38;
+  letter-spacing:1.5px;
+  text-transform:uppercase;
+  font-weight:600;
+  cursor:pointer;
+  padding:0;
+  font-family:'Montserrat',sans-serif;
+}
+.tsukie-filter-select:focus{
+  outline:none;
+}
+.tsukie-toolbar-right{
+  display:flex;
+  align-items:center;
+  gap:24px;
+}
+.tsukie-items-text{
+  font-size:12px;
+  color:#5a5a5a;
+  letter-spacing:0.5px;
+  font-family:'Montserrat',sans-serif;
+}
+.tsukie-items-text strong{
+  color:#1e2a38;
+  font-weight:600;
+}
+.tsukie-sort-wrapper{
+  display:flex;
+  align-items:center;
+  gap:8px;
+}
+.tsukie-sort-label{
+  font-size:12px;
+  color:#1e2a38;
+  letter-spacing:1.5px;
+  text-transform:uppercase;
+  font-weight:600;
+  font-family:'Montserrat',sans-serif;
+}
+.tsukie-sort-select{
+  border:none;
+  background:transparent;
+  font-size:12px;
+  color:#1e2a38;
+  letter-spacing:1.5px;
+  text-transform:uppercase;
+  font-weight:600;
+  cursor:pointer;
+  padding:0;
+  font-family:'Montserrat',sans-serif;
+}
+.tsukie-sort-select:focus{
+  outline:none;
+}
+
+/* Mobile Responsive Fix */
+@media(max-width:749px){
+.tsukie-collection-toolbar{
+  z-index:5;
+}
+.tsukie-toolbar-inner{
+  padding:12px 16px;
+  flex-direction:column;
+  gap:0;
+  min-height:auto;
+}
+.tsukie-filters-left{
+  width:100%;
+  justify-content:space-between;
+  padding-bottom:12px;
+  border-bottom:1px solid #e0d9cd;
+  gap:12px;
+}
+.tsukie-filter-wrapper{
+  flex:1;
+  flex-direction:column;
+  align-items:flex-start;
+  gap:4px;
+}
+.tsukie-filter-label{
+  font-size:10px;
+  letter-spacing:1px;
+}
+.tsukie-filter-select{
+  font-size:11px;
+  width:100%;
+  letter-spacing:0.5px;
+}
+.tsukie-toolbar-right{
+  width:100%;
+  justify-content:space-between;
+  padding-top:12px;
+  gap:12px;
+}
+.tsukie-items-text{
+  font-size:11px;
+}
+.tsukie-sort-wrapper{
+  flex-direction:column;
+  align-items:flex-end;
+  gap:4px;
+}
+.tsukie-sort-label{
+  font-size:10px;
+  letter-spacing:1px;
+}
+.tsukie-sort-select{
+  font-size:11px;
+  text-align:right;
+  letter-spacing:0.5px;
+}
+}
+
+@media(max-width:380px){
+.tsukie-filters-left{
+  flex-direction:column;
+  gap:10px;
+  padding-bottom:10px;
+}
+.tsukie-filter-wrapper{
+  width:100%;
+  flex-direction:row;
+  justify-content:space-between;
+}
+.tsukie-filter-select{
+  width:auto;
+}
+}
+</style>
+
+<div class="tsukie-collection-toolbar">
+  <div class="tsukie-toolbar-inner">
+    <div class="tsukie-filters-left">
+      <div class="tsukie-filter-wrapper">
+        <span class="tsukie-filter-label">AVAILABILITY:</span>
+        <select class="tsukie-filter-select" id="tsukieAvailSelect">
+          <option value="">ALL</option>
+          <option value="1">IN STOCK</option>
+          <option value="0">OUT OF STOCK</option>
+        </select>
+      </div>
+
+      <div class="tsukie-filter-wrapper">
+        <span class="tsukie-filter-label">PRICE:</span>
+        <select class="tsukie-filter-select" id="tsukiePriceSelect">
+          <option value="">ALL PRICES</option>
+          <option value="0-999">UNDER ₹999</option>
+          <option value="999-1999">₹999 - ₹1,999</option>
+          <option value="1999-4999">₹1,999 - ₹4,999</option>
+          <option value="4999-">ABOVE ₹4,999</option>
+        </select>
+      </div>
+    </div>
+
+    <div class="tsukie-toolbar-right">
+      <span class="tsukie-items-text"><strong>{{ collection.products_count }}</strong> ITEMS</span>
+      <div class="tsukie-sort-wrapper">
+        <span class="tsukie-sort-label">SORT:</span>
+        <select class="tsukie-sort-select" id="tsukieSortSelect">
+          <option value="">FEATURED</option>
+          <option value="best-selling">BEST SELLING</option>
+          <option value="price-ascending">PRICE: LOW TO HIGH</option>
+          <option value="price-descending">PRICE: HIGH TO LOW</option>
+          <option value="created-descending">NEWEST</option>
+        </select>
+      </div>
+    </div>
+  </div>
+</div>
+
+<script>
+// Availability Filter
+document.getElementById('tsukieAvailSelect').addEventListener('change', function(){
+  const url = new URL(window.location);
+  if(this.value) {
+    url.searchParams.set('filter.v.availability', this.value);
+  } else {
+    url.searchParams.delete('filter.v.availability');
+  }
+  window.location = url.toString();
+});
+
+// Price Filter
+document.getElementById('tsukiePriceSelect').addEventListener('change', function(){
+  const url = new URL(window.location);
+  if(this.value){
+    const [min, max] = this.value.split('-');
+    url.searchParams.set('filter.v.price.gte', min);
+    if(max) url.searchParams.set('filter.v.price.lte', max);
+    else url.searchParams.delete('filter.v.price.lte');
+  } else {
+    url.searchParams.delete('filter.v.price.gte');
+    url.searchParams.delete('filter.v.price.lte');
+  }
+  window.location = url.toString();
+});
+
+// Sort
+document.getElementById('tsukieSortSelect').addEventListener('change', function(){
+  const url = new URL(window.location);
+  if(this.value) url.searchParams.set('sort_by', this.value);
+  else url.searchParams.delete('sort_by');
+  window.location = url.toString();
+});
+
+// Set active values on load
+(function(){
+  const params = new URLSearchParams(window.location.search);
+  
+  const avail = params.get('filter.v.availability');
+  if(avail) document.getElementById('tsukieAvailSelect').value = avail;
+  
+  const priceMin = params.get('filter.v.price.gte');
+  const priceMax = params.get('filter.v.price.lte');
+  if(priceMin){
+    let priceVal = priceMin + '-';
+    if(priceMax) priceVal = priceMin + '-' + priceMax;
+    document.getElementById('tsukiePriceSelect').value = priceVal;
+  }
+  
+  const sort = params.get('sort_by');
+  if(sort) document.getElementById('tsukieSortSelect').value = sort;
+})();
+</script>
