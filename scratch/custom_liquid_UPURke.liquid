@@ -1,0 +1,78 @@
+<style>
+.tsukie-marquee{
+  background:#d4c5a9;
+  overflow:hidden;
+  padding:18px 0;
+  width:100vw;
+  position:relative;
+  left:50%;
+  right:50%;
+  margin-left:-50vw;
+  margin-right:-50vw;
+}
+.tsukie-marquee-track{
+  display:flex;
+  width:max-content;
+  animation:tsukie-scroll 25s linear infinite;
+}
+.tsukie-marquee-content{
+  display:flex;
+  align-items:center;
+  gap:60px;
+  padding-right:60px;
+}
+.tsukie-marquee-text{
+  color:#1a1a1a;
+  font-size:12px;
+  letter-spacing:2.5px;
+  text-transform:uppercase;
+  font-weight:500;
+  white-space:nowrap;
+}
+.tsukie-marquee-dot{
+  width:4px;
+  height:4px;
+  background:#1a1a1a;
+  transform:rotate(45deg);
+  flex-shrink:0;
+}
+@keyframes tsukie-scroll{
+  0%{transform:translateX(0)}
+  100%{transform:translateX(-50%)}
+}
+@media(max-width:749px){
+.tsukie-marquee{padding:14px 0}
+.tsukie-marquee-content{gap:40px;padding-right:40px}
+.tsukie-marquee-text{font-size:11px;letter-spacing:2px}
+}
+</style>
+
+<div class="tsukie-marquee">
+  <div class="tsukie-marquee-track">
+    <div class="tsukie-marquee-content">
+      <span class="tsukie-marquee-text">FREE RETURN</span>
+      <span class="tsukie-marquee-dot"></span>
+      <span class="tsukie-marquee-text">AFFORDABLE LUXURY</span>
+      <span class="tsukie-marquee-dot"></span>
+      <span class="tsukie-marquee-text">PREMIUM QUALITY</span>
+      <span class="tsukie-marquee-dot"></span>
+      <span class="tsukie-marquee-text">INCLUSIVE SIZING XS-4XL</span>
+      <span class="tsukie-marquee-dot"></span>
+      <span class="tsukie-marquee-text">MADE FOR YOU</span>
+      <span class="tsukie-marquee-dot"></span>
+    </div>
+    <!-- Duplicate for seamless loop -->
+    <div class="tsukie-marquee-content">
+      <span class="tsukie-marquee-text">FREE RETURN</span>
+      <span class="tsukie-marquee-dot"></span>
+      <span class="tsukie-marquee-text">AFFORDABLE LUXURY</span>
+      <span class="tsukie-marquee-dot"></span>
+      <span class="tsukie-marquee-text">PREMIUM QUALITY</span>
+      <span class="tsukie-marquee-dot"></span>
+      <span class="tsukie-marquee-text">INCLUSIVE SIZING XS-4XL</span>
+      <span class="tsukie-marquee-dot"></span>
+      <span class="tsukie-marquee-text">MADE FOR YOU</span>
+      <span class="tsukie-marquee-dot"></span>
+    </div>
+  </div>
+</div>

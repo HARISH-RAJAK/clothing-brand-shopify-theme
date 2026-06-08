@@ -1,0 +1,116 @@
+<style>
+.tsukie-collections-grid{
+  display:grid;
+  grid-template-columns:repeat(3,1fr);
+  gap:24px;
+}
+.tsukie-collection-card{
+  position:relative;
+  display:block;
+  text-decoration:none;
+  overflow:hidden;
+}
+.tsukie-collection-img{
+  width:100%;
+  aspect-ratio:3/4;
+  object-fit:cover;
+  display:block;
+  transition:transform 0.5s ease;
+}
+.tsukie-collection-card:hover .tsukie-collection-img{
+  transform:scale(1.04);
+}
+.tsukie-collection-overlay{
+  position:absolute;
+  bottom:0;
+  left:0;
+  right:0;
+  background:linear-gradient(transparent, rgba(0,0,0,0.5));
+  padding:60px 24px 24px;
+}
+.tsukie-collection-title{
+  font-family:'Playfair Display',serif;
+  font-size:24px;
+  font-style:italic;
+  margin:0;
+  font-weight:400;
+  background:linear-gradient(135deg, #d4c5a9 0%, #e8dcc5 50%, #d4c5a9 100%);
+  -webkit-background-clip:text;
+  -webkit-text-fill-color:transparent;
+  background-clip:text;
+  text-shadow:0 2px 12px rgba(0,0,0,0.4);
+}
+
+@media(max-width:989px){
+  .tsukie-collections-grid{
+    grid-template-columns:repeat(2,1fr);
+  }
+}
+
+@media(max-width:749px){
+  .tsukie-collections-grid{
+    display:flex;
+    gap:16px;
+    overflow-x:auto;
+    scroll-snap-type:x mandatory;
+    -webkit-overflow-scrolling:touch;
+    scrollbar-width:none;
+    margin:0 -20px;
+    padding:0 20px;
+  }
+  .tsukie-collections-grid::-webkit-scrollbar{
+    display:none;
+  }
+  .tsukie-collection-card{
+    flex:0 0 75%;
+    scroll-snap-align:start;
+  }
+  .tsukie-collection-title{
+    font-size:22px;
+  }
+  .tsukie-collection-overlay{
+    padding:50px 20px 20px;
+  }
+}
+</style>
+
+<div class="tsukie-collections-grid">
+  <!-- Collection 1 -->
+  <a href="/collections/dresses" class="tsukie-collection-card">
+    <img 
+      src="{{ collections['dresses'].image | image_url: width: 800 }}" 
+      alt="Dresses"
+      class="tsukie-collection-img"
+      loading="lazy"
+    >
+    <div class="tsukie-collection-overlay">
+      <h3 class="tsukie-collection-title">Dresses</h3>
+    </div>
+  </a>
+  
+  <!-- Collection 2 -->
+  <a href="/collections/coord-sets" class="tsukie-collection-card">
+    <img 
+      src="{{ collections['Skirts'].image | image_url: width: 800 }}" 
+      alt="Skirts"
+      class="tsukie-collection-img"
+      loading="lazy"
+    >
+    <div class="tsukie-collection-overlay">
+      <h3 class="tsukie-collection-title">Skirts</h3>
+    </div>
+  </a>
+  
+  <!-- Collection 3 -->
+  <a href="/collections/tops" class="tsukie-collection-card">
+    <img 
+      src="{{ collections['tops'].image | image_url: width: 800 }}" 
+      alt="Tops"
+      class="tsukie-collection-img"
+      loading="lazy"
+    >
+    <div class="tsukie-collection-overlay">
+      <h3 class="tsukie-collection-title">Tops & Blouses</h3>
+    </div>
+  </a>
+</div>

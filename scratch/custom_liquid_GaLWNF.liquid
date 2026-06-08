@@ -1,0 +1,307 @@
+<style>
+@import url('https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@1,400&family=Cormorant+Garamond:ital@1&family=Montserrat:wght@400;500;600&display=swap');
+
+.tsukie-testimonials{
+  background:#f5f1ea;
+  padding:80px 0;
+}
+.tsukie-testimonials-inner{
+  max-width:1400px;
+  margin:0 auto;
+  padding:0 40px;
+}
+.tsukie-testimonials-header{
+  display:flex;
+  justify-content:space-between;
+  align-items:flex-end;
+  margin-bottom:50px;
+}
+.tsukie-testimonials-left{}
+.tsukie-testimonials-eyebrow{
+  color:#a08766;
+  font-size:10px;
+  letter-spacing:2.5px;
+  text-transform:uppercase;
+  margin:0 0 14px;
+  font-weight:500;
+  font-family:'Montserrat',sans-serif;
+}
+.tsukie-testimonials-heading{
+  font-family:'Playfair Display',serif;
+  font-size:52px;
+  line-height:1.05;
+  font-weight:400;
+  font-style:italic;
+  margin:0;
+  background:linear-gradient(135deg, #a08766 0%, #c9a77c 50%, #a08766 100%);
+  -webkit-background-clip:text;
+  -webkit-text-fill-color:transparent;
+  background-clip:text;
+  padding-bottom:3px;
+}
+.tsukie-testimonials-right{
+  text-align:right;
+}
+.tsukie-rating-number{
+  font-family:'Playfair Display',serif;
+  font-size:52px;
+  line-height:1;
+  font-weight:400;
+  color:#1e2a38;
+  margin:0 0 6px;
+}
+.tsukie-stars{
+  color:#a08766;
+  font-size:13px;
+  letter-spacing:3px;
+  margin-bottom:6px;
+}
+.tsukie-rating-text{
+  color:#6b6b6b;
+  font-size:10px;
+  letter-spacing:1.5px;
+  text-transform:uppercase;
+  margin:0;
+  font-family:'Montserrat',sans-serif;
+}
+.tsukie-testimonials-grid{
+  display:grid;
+  grid-template-columns:repeat(3,1fr);
+  gap:20px;
+}
+.tsukie-testimonial-card{
+  background:#ffffff;
+  padding:36px 28px;
+  border-radius:8px;
+  position:relative;
+  box-shadow:0 2px 12px rgba(160,135,102,0.08);
+}
+.tsukie-quote-stars{
+  color:#c9a77c;
+  font-size:11px;
+  letter-spacing:2px;
+  margin-bottom:20px;
+}
+.tsukie-quote-text{
+  font-family:'Cormorant Garamond',serif;
+  font-size:15px;
+  line-height:1.65;
+  color:#3a3a3a;
+  margin:0 0 28px;
+  font-style:italic;
+  min-height:130px;
+}
+.tsukie-testimonial-footer{
+  display:flex;
+  align-items:center;
+  justify-content:space-between;
+  padding-top:20px;
+  border-top:1px solid #f0ebe3;
+  gap:8px;
+}
+.tsukie-customer-info{
+  display:flex;
+  align-items:center;
+  gap:10px;
+  flex:1;
+  min-width:0;
+}
+.tsukie-avatar{
+  width:40px;
+  height:40px;
+  border-radius:50%;
+  background:linear-gradient(135deg, #a08766 0%, #c9a77c 100%);
+  color:#fff;
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  font-size:13px;
+  font-weight:600;
+  letter-spacing:1px;
+  flex-shrink:0;
+  font-family:'Montserrat',sans-serif;
+}
+.tsukie-customer-details{
+  min-width:0;
+  flex:1;
+}
+.tsukie-customer-name{
+  font-size:13px;
+  font-weight:600;
+  color:#1e2a38;
+  margin:0 0 2px;
+  font-family:'Montserrat',sans-serif;
+  white-space:nowrap;
+  overflow:hidden;
+  text-overflow:ellipsis;
+}
+.tsukie-customer-meta{
+  font-size:11px;
+  color:#8a8a8a;
+  margin:0;
+  font-family:'Montserrat',sans-serif;
+  white-space:nowrap;
+  overflow:hidden;
+  text-overflow:ellipsis;
+}
+.tsukie-verified{
+  color:#a08766;
+  font-size:9px;
+  letter-spacing:1.5px;
+  text-transform:uppercase;
+  font-weight:600;
+  display:flex;
+  align-items:center;
+  gap:3px;
+  font-family:'Montserrat',sans-serif;
+  flex-shrink:0;
+}
+
+@media(max-width:989px){
+  .tsukie-testimonials-header{flex-direction:column;align-items:flex-start;gap:28px}
+  .tsukie-testimonials-right{text-align:left}
+  .tsukie-testimonials-grid{grid-template-columns:repeat(2,1fr)}
+  .tsukie-quote-text{min-height:auto}
+}
+
+@media(max-width:749px){
+  .tsukie-testimonials{padding:28px 0}
+  .tsukie-testimonials-inner{padding:0 14px}
+  .tsukie-testimonials-header{margin-bottom:18px;gap:14px}
+  .tsukie-testimonials-heading{font-size:28px}
+  .tsukie-rating-number{font-size:28px}
+  .tsukie-testimonials-eyebrow{font-size:9px;margin:0 0 6px}
+  .tsukie-rating-text{font-size:9px}
+  .tsukie-stars{font-size:10px;margin-bottom:3px}
+  
+  .tsukie-testimonials-grid{
+    display:flex;
+    gap:10px;
+    overflow-x:auto;
+    scroll-snap-type:x mandatory;
+    -webkit-overflow-scrolling:touch;
+    scrollbar-width:none;
+    margin:0 -14px;
+    padding:0 14px 4px;
+  }
+  .tsukie-testimonials-grid::-webkit-scrollbar{display:none}
+  
+  .tsukie-testimonial-card{
+    flex:0 0 47%;
+    scroll-snap-align:start;
+    padding:16px 12px;
+  }
+  .tsukie-quote-stars{font-size:8px;margin-bottom:8px}
+  .tsukie-quote-text{
+    font-size:11px;
+    line-height:1.4;
+    margin:0 0 12px;
+    min-height:70px;
+  }
+  .tsukie-testimonial-footer{
+    padding-top:10px;
+    gap:6px;
+  }
+  .tsukie-customer-info{gap:8px}
+  .tsukie-avatar{width:26px;height:26px;font-size:9px}
+  .tsukie-customer-name{font-size:10px;margin:0 0 1px}
+  .tsukie-customer-meta{font-size:8px}
+  .tsukie-verified{font-size:6px;gap:2px}
+  .tsukie-verified svg{width:8px;height:8px}
+}
+
+@media(max-width:374px){
+  .tsukie-testimonial-card{flex:0 0 47%;padding:14px 10px}
+  .tsukie-quote-text{font-size:10px;min-height:65px;line-height:1.35}
+  .tsukie-customer-name{font-size:9px}
+  .tsukie-customer-meta{font-size:7px}
+}
+</style>
+
+<div class="tsukie-testimonials">
+  <div class="tsukie-testimonials-inner">
+    <div class="tsukie-testimonials-header">
+      <div class="tsukie-testimonials-left">
+        <p class="tsukie-testimonials-eyebrow">12,000+ HAPPY CUSTOMERS</p>
+        <h2 class="tsukie-testimonials-heading">What They're Saying</h2>
+      </div>
+      
+      <div class="tsukie-testimonials-right">
+        <div class="tsukie-rating-number">4.8</div>
+        <div class="tsukie-stars">★★★★★</div>
+        <p class="tsukie-rating-text">BASED ON 2,400+ VERIFIED REVIEWS</p>
+      </div>
+    </div>
+    
+    <div class="tsukie-testimonials-grid">
+      <!-- Testimonial 01 -->
+      <div class="tsukie-testimonial-card">
+        <div class="tsukie-quote-stars">★★★★★</div>
+        <p class="tsukie-quote-text">
+          "The Valentina dress is everything I wanted — it fits so perfectly and the fabric is softer than anything I've ever owned. I've already ordered two more colours."
+        </p>
+        <div class="tsukie-testimonial-footer">
+          <div class="tsukie-customer-info">
+            <div class="tsukie-avatar">PA</div>
+            <div class="tsukie-customer-details">
+              <p class="tsukie-customer-name">Priya Anand</p>
+              <p class="tsukie-customer-meta">Mumbai · Verified Buyer</p>
+            </div>
+          </div>
+          <span class="tsukie-verified">
+            <svg width="12" height="12" viewBox="0 0 24 24" fill="currentColor">
+              <path d="M9 12l2 2 4-4m5.618-4.016A11.955 11.955 0 0112 2.944a11.955 0 01-8.618 3.04A12.02 0 003 9c0 5.591 3.824 10.29 9 11.622 5.176-1.332 9-6.03 9-11.622 0-1.042-.133-2.052-.382-3.016z"/>
+            </svg>
+            VERIFIED
+          </span>
+        </div>
+      </div>
+      
+      <!-- Testimonial 02 -->
+      <div class="tsukie-testimonial-card">
+        <div class="tsukie-quote-stars">★★★★★</div>
+        <p class="tsukie-quote-text">
+          "Finally a brand that understands what women actually want — beautiful clothes that are comfortable AND stylish. The coord set I bought got so many compliments at work."
+        </p>
+        <div class="tsukie-testimonial-footer">
+          <div class="tsukie-customer-info">
+            <div class="tsukie-avatar">RK</div>
+            <div class="tsukie-customer-details">
+              <p class="tsukie-customer-name">Riya Kapoor</p>
+              <p class="tsukie-customer-meta">Delhi · Verified Buyer</p>
+            </div>
+          </div>
+          <span class="tsukie-verified">
+            <svg width="12" height="12" viewBox="0 0 24 24" fill="currentColor">
+              <path d="M9 12l2 2 4-4m5.618-4.016A11.955 11.955 0 0112 2.944a11.955 0 01-8.618 3.04A12.02 0 003 9c0 5.591 3.824 10.29 9 11.622 5.176-1.332 9-6.03 9-11.622 0-1.042-.133-2.052-.382-3.016z"/>
+            </svg>
+            VERIFIED
+          </span>
+        </div>
+      </div>
+      
+      <!-- Testimonial 03 -->
+      <div class="tsukie-testimonial-card">
+        <div class="tsukie-quote-stars">★★★★★</div>
+        <p class="tsukie-quote-text">
+          "I'm a size 2XL and honestly cried when I saw how well the dress fit. No compromise, no stretching — just a perfectly proportioned design. This is what inclusivity actually looks like."
+        </p>
+        <div class="tsukie-testimonial-footer">
+          <div class="tsukie-customer-info">
+            <div class="tsukie-avatar">NS</div>
+            <div class="tsukie-customer-details">
+              <p class="tsukie-customer-name">Neha Sharma</p>
+              <p class="tsukie-customer-meta">Bangalore · Verified Buyer</p>
+            </div>
+          </div>
+          <span class="tsukie-verified">
+            <svg width="12" height="12" viewBox="0 0 24 24" fill="currentColor">
+              <path d="M9 12l2 2 4-4m5.618-4.016A11.955 0 0112 2.944a11.955 0 01-8.618 3.04A12.02 0 003 9c0 5.591 3.824 10.29 9 11.622 5.176-1.332 9-6.03 9-11.622 0-1.042-.133-2.052-.382-3.016z"/>
+            </svg>
+            VERIFIED
+          </span>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

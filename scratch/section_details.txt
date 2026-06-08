@@ -1,0 +1,578 @@
+Homepage Section Order:
+['custom_liquid_39iRXh', 'custom_liquid_UPURke', 'custom_liquid_MMTjep', 'product_list_fa6P9H', 'custom_liquid_nJYiF7', 'custom_liquid_YqjbNx', 'divider_kiV6J7', 'custom_liquid_pLiMzL', 'custom_liquid_nc9Wf6', 'divider_dEc8gw', 'custom_liquid_izaKX4', 'custom_liquid_ywjAVh', 'custom_liquid_8xRgKx', 'divider_GnTJkP', 'custom_liquid_dQUmQ6', 'divider_pJajAD', 'custom_liquid_GaLWNF', 'divider_PHttNk', 'custom_liquid_MMecBe', '1780660222ceb4784a']
+
+=================== Section: custom_liquid_39iRXh ===================
+Name: hero
+Type: custom-liquid
+Content Length: 2213 chars
+First 20 lines of custom liquid:
+  <style>
+  .tsukie-hero{
+    background:#f5f1ea;
+    padding:120px 0 100px;
+    text-align:center;
+    color:#1a1a1a;
+    width:100vw;
+    position:relative;
+    left:50%;
+    right:50%;
+    margin-left:-50vw;
+    margin-right:-50vw;
+  }
+  .tsukie-hero-inner{
+    max-width:800px;
+    margin:0 auto;
+    padding:0 20px;
+  }
+  .tsukie-hero-eyebrow{
+    color:#a08766;
+Headings/HTML elements:
+  <div class="tsukie-hero">
+  <div class="tsukie-hero-inner">
+  <p class="tsukie-hero-eyebrow">SUMMER 2026 COLLECTION</p>
+  <h1 class="tsukie-hero-heading">
+  </h1>
+  <p class="tsukie-hero-desc">
+  <div class="tsukie-hero-cta">
+  <a href="/collections/new-arrivals" class="tsukie-btn-primary">SHOP NEW ARRIVALS</a>
+  <a href="/pages/about-us" class="tsukie-btn-text">OUR STORY →</a>
+
+=================== Section: custom_liquid_UPURke ===================
+Name: moving strip
+Type: custom-liquid
+Content Length: 2269 chars
+First 20 lines of custom liquid:
+  <style>
+  .tsukie-marquee{
+    background:#d4c5a9;
+    overflow:hidden;
+    padding:18px 0;
+    width:100vw;
+    position:relative;
+    left:50%;
+    right:50%;
+    margin-left:-50vw;
+    margin-right:-50vw;
+  }
+  .tsukie-marquee-track{
+    display:flex;
+    width:max-content;
+    animation:tsukie-scroll 25s linear infinite;
+  }
+  .tsukie-marquee-content{
+    display:flex;
+    align-items:center;
+Headings/HTML elements:
+  <div class="tsukie-marquee">
+  <div class="tsukie-marquee-track">
+  <div class="tsukie-marquee-content">
+  <span class="tsukie-marquee-text">FREE RETURN</span>
+  <span class="tsukie-marquee-dot"></span>
+  <span class="tsukie-marquee-text">AFFORDABLE LUXURY</span>
+  <span class="tsukie-marquee-dot"></span>
+  <span class="tsukie-marquee-text">PREMIUM QUALITY</span>
+  <span class="tsukie-marquee-dot"></span>
+  <span class="tsukie-marquee-text">INCLUSIVE SIZING XS-4XL</span>
+  <span class="tsukie-marquee-dot"></span>
+  <span class="tsukie-marquee-text">MADE FOR YOU</span>
+  <span class="tsukie-marquee-dot"></span>
+  <div class="tsukie-marquee-content">
+  <span class="tsukie-marquee-text">FREE RETURN</span>
+  <span class="tsukie-marquee-dot"></span>
+  <span class="tsukie-marquee-text">AFFORDABLE LUXURY</span>
+  <span class="tsukie-marquee-dot"></span>
+  <span class="tsukie-marquee-text">PREMIUM QUALITY</span>
+  <span class="tsukie-marquee-dot"></span>
+
+=================== Section: custom_liquid_MMTjep ===================
+Name: t:names.custom_liquid
+Type: custom-liquid
+Content Length: 2141 chars
+First 20 lines of custom liquid:
+  <style>
+  @import url('https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@1,400;1,600&family=Cormorant+Garamond:ital@1&display=swap');
+  
+  .tsukie-collection-head{
+    background:#f5f1ea;
+    padding:60px 40px 45px;
+    text-align:center;
+    border-bottom:1px solid #e0d9cd;
+    position:relative;
+    margin-bottom:40px;
+  }
+  .tsukie-collection-eyebrow{
+    font-size:11px;
+    letter-spacing:4px;
+    text-transform:uppercase;
+    color:#a08766;
+    margin:0 0 14px;
+    font-weight:600;
+  }
+  .tsukie-collection-title{
+Headings/HTML elements:
+  <div class="tsukie-collection-head">
+  <p class="tsukie-collection-eyebrow">Curated With Love</p>
+  <h1 class="tsukie-collection-title">{{ collection.title | default: 'Our Collection' }}</h1>
+  <p class="tsukie-collection-desc">{{ collection.description | strip_html | truncate: 120 }}</p>
+  <p class="tsukie-collection-desc">Timeless pieces designed for the modern woman</p>
+  <div class="tsukie-collection-divider">
+  <span class="tsukie-divider-line"></span>
+  <span class="tsukie-divider-icon">✦</span>
+  <span class="tsukie-divider-line"></span>
+
+=================== Section: product_list_fa6P9H ===================
+Name: Featured collection
+Type: product-list
+Content Length: 0 chars
+First 20 lines of custom liquid:
+  
+
+=================== Section: custom_liquid_nJYiF7 ===================
+Name: t:names.custom_liquid
+Type: custom-liquid
+Content Length: 1832 chars
+First 20 lines of custom liquid:
+  <style>
+  @import url('https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@1,400;1,600&family=Montserrat:wght@400;500&display=swap');
+  
+  .tsukie-newarrivals-head{
+    background:#f5f1ea;
+    padding:60px 0 50px;
+    text-align:center;
+  }
+  .tsukie-newarrivals-inner{
+    max-width:1400px;
+    margin:0 auto;
+    padding:0 40px;
+  }
+  .tsukie-newarrivals-eyebrow{
+    color:#a08766;
+    font-size:10px;
+    letter-spacing:2.5px;
+    text-transform:uppercase;
+    margin:0 0 12px;
+    font-weight:500;
+Headings/HTML elements:
+  <div class="tsukie-newarrivals-head">
+  <div class="tsukie-newarrivals-inner">
+  <p class="tsukie-newarrivals-eyebrow">JUST DROPPED</p>
+  <h2 class="tsukie-newarrivals-heading">New Arrivals</h2>
+  <p class="tsukie-newarrivals-subtext">
+
+=================== Section: custom_liquid_YqjbNx ===================
+Name: new seller product cards
+Type: custom-liquid
+Content Length: 7006 chars
+First 20 lines of custom liquid:
+  <style>
+  @import url('https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@1,400&family=Montserrat:wght@400;500;600&display=swap');
+  
+  .tsukie-newarrivals-section{
+    background:#f5f1ea;
+    padding:80px 0 100px;
+  }
+  .tsukie-newarrivals-inner{
+    max-width:1400px;
+    margin:0 auto;
+    padding:0 40px;
+  }
+  .tsukie-newarrivals-grid{
+    display:grid;
+    grid-template-columns:repeat(3,1fr);
+    gap:32px;
+    margin-bottom:48px;
+  }
+  .tsukie-product-card{
+    position:relative;
+Headings/HTML elements:
+  <div class="tsukie-newarrivals-section">
+  <div class="tsukie-newarrivals-inner">
+  <div class="tsukie-newarrivals-grid">
+  <div class="tsukie-product-card">
+  <div class="tsukie-product-media">
+  <a href="{{ product.url }}" class="tsukie-product-link">
+  <span class="tsukie-product-badge tsukie-product-badge--new">NEW</span>
+  <span class="tsukie-product-badge tsukie-product-badge--low">LOW STOCK</span>
+  <span class="tsukie-product-badge tsukie-product-badge--sale">SALE</span>
+  class="tsukie-product-img"
+  <button type="submit" class="tsukie-quick-add-btn" {% unless product.selected_or_first_available_variant.available %}disabled{% endunless %}>
+  <div class="tsukie-product-info">
+  <a href="{{ product.url }}" class="tsukie-product-link">
+  <h3 class="tsukie-product-title">{{ product.title }}</h3>
+  <div class="tsukie-color-swatches">
+  class="tsukie-color-swatch {% if forloop.first %}is-active{% endif %}"
+  <div class="tsukie-product-price">
+  <span class="tsukie-product-price--compare">{{ product.compare_at_price | money }}</span>
+  <div class="tsukie-viewall-wrapper">
+  <a href="{{ collections.new-arrivals.url }}" class="tsukie-viewall-btn">VIEW ALL</a>
+
+=================== Section: divider_kiV6J7 ===================
+Name: t:names.divider_section
+Type: divider
+Content Length: 0 chars
+First 20 lines of custom liquid:
+  
+
+=================== Section: custom_liquid_pLiMzL ===================
+Name: shop by collection
+Type: custom-liquid
+Content Length: 1847 chars
+First 20 lines of custom liquid:
+  <style>
+  @import url('https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@1,400;1,600&family=Montserrat:wght@400;500&display=swap');
+  
+  .tsukie-collection-head{
+    background:#f5f1ea;
+    padding:35px 0 30px;
+    text-align:center;
+  }
+  .tsukie-collection-inner{
+    max-width:1400px;
+    margin:0 auto;
+    padding:0 40px;
+  }
+  .tsukie-collection-eyebrow{
+    color:#a08766;
+    font-size:10px;
+    letter-spacing:2.5px;
+    text-transform:uppercase;
+    margin:0 0 8px;
+    font-weight:500;
+Headings/HTML elements:
+  <div class="tsukie-collection-head">
+  <div class="tsukie-collection-inner">
+  <p class="tsukie-collection-eyebrow">CURATED FOR YOU</p>
+  <h2 class="tsukie-collection-heading">Shop by Collection</h2>
+  <p class="tsukie-collection-subtext">
+
+=================== Section: custom_liquid_nc9Wf6 ===================
+Name: t:names.custom_liquid
+Type: custom-liquid
+Content Length: 2729 chars
+First 20 lines of custom liquid:
+  <style>
+  .tsukie-collections-grid{
+    display:grid;
+    grid-template-columns:repeat(3,1fr);
+    gap:24px;
+  }
+  .tsukie-collection-card{
+    position:relative;
+    display:block;
+    text-decoration:none;
+    overflow:hidden;
+  }
+  .tsukie-collection-img{
+    width:100%;
+    aspect-ratio:3/4;
+    object-fit:cover;
+    display:block;
+    transition:transform 0.5s ease;
+  }
+  .tsukie-collection-card:hover .tsukie-collection-img{
+Headings/HTML elements:
+  <div class="tsukie-collections-grid">
+  <a href="/collections/dresses" class="tsukie-collection-card">
+  class="tsukie-collection-img"
+  <div class="tsukie-collection-overlay">
+  <h3 class="tsukie-collection-title">Dresses</h3>
+  <a href="/collections/coord-sets" class="tsukie-collection-card">
+  class="tsukie-collection-img"
+  <div class="tsukie-collection-overlay">
+  <h3 class="tsukie-collection-title">Skirts</h3>
+  <a href="/collections/tops" class="tsukie-collection-card">
+  class="tsukie-collection-img"
+  <div class="tsukie-collection-overlay">
+  <h3 class="tsukie-collection-title">Tops & Blouses</h3>
+
+=================== Section: divider_dEc8gw ===================
+Name: t:names.divider_section
+Type: divider
+Content Length: 0 chars
+First 20 lines of custom liquid:
+  
+
+=================== Section: custom_liquid_izaKX4 ===================
+Name: t:names.custom_liquid
+Type: custom-liquid
+Content Length: 1838 chars
+First 20 lines of custom liquid:
+  <style>
+  @import url('https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@1,400;1,600&family=Montserrat:wght@400;500&display=swap');
+  
+  .tsukie-bestsellers-head{
+    background:#f5f1ea;
+    padding:80px 0 0;
+    text-align:center;
+  }
+  .tsukie-bestsellers-inner{
+    max-width:1400px;
+    margin:0 auto;
+    padding:0 40px;
+  }
+  .tsukie-bestsellers-header{
+    text-align:center;
+    margin-bottom:45px;
+  }
+  .tsukie-bestsellers-eyebrow{
+    color:#a08766;
+    font-size:11px;
+Headings/HTML elements:
+  <div class="tsukie-bestsellers-head">
+  <div class="tsukie-bestsellers-inner">
+  <div class="tsukie-bestsellers-header">
+  <p class="tsukie-bestsellers-eyebrow">CUSTOMER FAVOURITES</p>
+  <h2 class="tsukie-bestsellers-heading">Best Sellers</h2>
+  <p class="tsukie-bestsellers-subtext">
+
+=================== Section: custom_liquid_ywjAVh ===================
+Name: best seller
+Type: custom-liquid
+Content Length: 6855 chars
+First 20 lines of custom liquid:
+  <style>
+  @import url('https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@1,400&family=Montserrat:wght@400;500;600&display=swap');
+  
+  .tsukie-bestsellers-grid-section{
+    background:#f5f1ea;
+    padding:0 0 100px;
+  }
+  .tsukie-bestsellers-inner{
+    max-width:1400px;
+    margin:0 auto;
+    padding:0 40px;
+  }
+  .tsukie-bestsellers-grid{
+    display:grid;
+    grid-template-columns:repeat(4,1fr);
+    gap:32px;
+    margin-bottom:48px;
+  }
+  .tsukie-product-card{
+    position:relative;
+Headings/HTML elements:
+  <div class="tsukie-bestsellers-grid-section">
+  <div class="tsukie-bestsellers-inner">
+  <div class="tsukie-bestsellers-grid">
+  <div class="tsukie-product-card">
+  <div class="tsukie-product-media">
+  <a href="{{ product.url }}" class="tsukie-product-link">
+  <span class="tsukie-product-badge">#1 BESTSELLER</span>
+  <span class="tsukie-product-badge tsukie-product-badge--low">LOW STOCK</span>
+  <span class="tsukie-product-badge tsukie-product-badge--sale">SALE</span>
+  class="tsukie-product-img"
+  <button type="submit" class="tsukie-quick-add-btn" {% unless product.selected_or_first_available_variant.available %}disabled{% endunless %}>
+  <div class="tsukie-product-info">
+  <a href="{{ product.url }}" class="tsukie-product-link">
+  <h3 class="tsukie-product-title">{{ product.title }}</h3>
+  <div class="tsukie-color-swatches">
+  class="tsukie-color-swatch {% if forloop.first %}is-active{% endif %}"
+  <div class="tsukie-product-price">
+  <span class="tsukie-product-price--compare">{{ product.compare_at_price | money }}</span>
+  <div class="tsukie-viewall-wrapper">
+  <a href="{{ collections.all.url }}" class="tsukie-viewall-btn">VIEW ALL</a>
+
+=================== Section: custom_liquid_8xRgKx ===================
+Name: t:names.custom_liquid
+Type: custom-liquid
+Content Length: 4958 chars
+First 20 lines of custom liquid:
+  <style>
+  .tsukie-bestsellers{background:#f5f1ea;padding:100px 0}
+  .tsukie-bestsellers-inner{max-width:1400px;margin:0 auto;padding:0 40px}
+  .tsukie-bestsellers-header{text-align:center;margin-bottom:60px}
+  .tsukie-bestsellers-eyebrow{color:#a08766;font-size:11px;letter-spacing:3px;text-transform:uppercase;margin:0 0 24px;font-weight:500}
+  .tsukie-bestsellers-heading{font-family:'Times New Roman',serif;font-size:64px;line-height:1.1;font-weight:400;margin:0 0 28px;color:#1a1a1a}
+  .tsukie-bestsellers-subtext{font-size:15px;line-height:1.7;color:#6b6b6b;margin:0 auto;max-width:580px}
+  .tsukie-bestsellers-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:32px}
+  .tsukie-product-card{position:relative}
+  .tsukie-product-link{text-decoration:none;display:block}
+  .tsukie-product-media{position:relative;overflow:hidden;background:#fff;aspect-ratio:3/4}
+  .tsukie-product-img{width:100%;height:100%;object-fit:cover;transition:transform 0.5s ease;display:block}
+  .tsukie-product-card:hover .tsukie-product-img{transform:scale(1.05)}
+  .tsukie-product-badge{position:absolute;top:12px;left:12px;background:#1e2a38;color:#d4c5a9;font-size:10px;letter-spacing:1.5px;text-transform:uppercase;padding:6px 12px;font-weight:500;z-index:2}
+  .tsukie-product-badge--low{background:#8b4513}
+  .tsukie-product-badge--sale{background:#a08766}
+  .tsukie-quick-add-btn{position:absolute;bottom:0;left:0;right:0;background:#1e2a38;color:#d4c5a9;text-align:center;padding:14px;font-size:11px;letter-spacing:2px;text-transform:uppercase;border:none;cursor:pointer;transform:translateY(100%);transition:transform 0.3s ease;width:100%}
+  .tsukie-product-card:hover .tsukie-quick-add-btn{transform:translateY(0)}
+  .tsukie-product-info{margin-top:16px}
+  .tsukie-product-title{font-family:'Times New Roman',serif;font-size:16px;color:#1a1a1a;margin:0 0 8px;font-weight:400}
+Headings/HTML elements:
+  <div class="tsukie-bestsellers">
+  <div class="tsukie-bestsellers-inner">
+  <div class="tsukie-bestsellers-header">
+  <p class="tsukie-bestsellers-eyebrow">CUSTOMER FAVOURITES</p>
+  <h2 class="tsukie-bestsellers-heading">Best Sellers</h2>
+  <p class="tsukie-bestsellers-subtext">
+  <div class="tsukie-bestsellers-grid">
+  <div class="tsukie-product-card">
+  <div class="tsukie-product-media">
+  <a href="{{ product.url }}" class="tsukie-product-link">
+  <span class="tsukie-product-badge">#1 BESTSELLER</span>
+  <span class="tsukie-product-badge tsukie-product-badge--low">LOW STOCK</span>
+  <span class="tsukie-product-badge tsukie-product-badge--sale">SALE</span>
+  class="tsukie-product-img"
+  <button type="submit" class="tsukie-quick-add-btn" {% unless product.selected_or_first_available_variant.available %}disabled{% endunless %}>
+  <div class="tsukie-product-info">
+  <a href="{{ product.url }}" class="tsukie-product-link">
+  <h3 class="tsukie-product-title">{{ product.title }}</h3>
+  <div class="tsukie-product-price">
+  <span class="tsukie-product-price--compare">{{ product.compare_at_price | money }}</span>
+
+=================== Section: divider_GnTJkP ===================
+Name: t:names.divider_section
+Type: divider
+Content Length: 0 chars
+First 20 lines of custom liquid:
+  
+
+=================== Section: custom_liquid_dQUmQ6 ===================
+Name: why women loves us
+Type: custom-liquid
+Content Length: 5250 chars
+First 20 lines of custom liquid:
+  <style>
+  @import url('https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@1,400&family=Montserrat:wght@400;500;600&display=swap');
+  
+  .tsukie-promise{
+    background:#1e2a38;
+    padding:50px 0;
+    text-align:center;
+    color:#fff;
+    width:100vw;
+    position:relative;
+    left:50%;
+    right:50%;
+    margin-left:-50vw;
+    margin-right:-50vw;
+  }
+  .tsukie-promise-inner{
+    max-width:1200px;
+    margin:0 auto;
+    padding:0 40px;
+  }
+Headings/HTML elements:
+  <div class="tsukie-promise">
+  <div class="tsukie-promise-inner">
+  <p class="tsukie-promise-eyebrow">THE TSUKIE PROMISE</p>
+  <h2 class="tsukie-promise-heading">
+  </h2>
+  <p class="tsukie-promise-desc">
+  <div class="tsukie-promise-grid">
+  <div class="tsukie-promise-card">
+  <span class="tsukie-promise-number">01</span>
+  <svg class="tsukie-promise-icon" viewBox="0 0 24 24">
+  <h3 class="tsukie-promise-title">Premium Fabric</h3>
+  <p class="tsukie-promise-text">
+  <div class="tsukie-promise-card">
+  <span class="tsukie-promise-number">02</span>
+  <svg class="tsukie-promise-icon" viewBox="0 0 24 24">
+  <h3 class="tsukie-promise-title">Real Body Fit</h3>
+  <p class="tsukie-promise-text">
+  <div class="tsukie-promise-card">
+  <span class="tsukie-promise-number">03</span>
+  <svg class="tsukie-promise-icon" viewBox="0 0 24 24">
+
+=================== Section: divider_pJajAD ===================
+Name: t:names.divider_section
+Type: divider
+Content Length: 0 chars
+First 20 lines of custom liquid:
+  
+
+=================== Section: custom_liquid_GaLWNF ===================
+Name: t:names.custom_liquid
+Type: custom-liquid
+Content Length: 9163 chars
+First 20 lines of custom liquid:
+  <style>
+  @import url('https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@1,400&family=Cormorant+Garamond:ital@1&family=Montserrat:wght@400;500;600&display=swap');
+  
+  .tsukie-testimonials{
+    background:#f5f1ea;
+    padding:80px 0;
+  }
+  .tsukie-testimonials-inner{
+    max-width:1400px;
+    margin:0 auto;
+    padding:0 40px;
+  }
+  .tsukie-testimonials-header{
+    display:flex;
+    justify-content:space-between;
+    align-items:flex-end;
+    margin-bottom:50px;
+  }
+  .tsukie-testimonials-left{}
+  .tsukie-testimonials-eyebrow{
+Headings/HTML elements:
+  <div class="tsukie-testimonials">
+  <div class="tsukie-testimonials-inner">
+  <div class="tsukie-testimonials-header">
+  <div class="tsukie-testimonials-left">
+  <p class="tsukie-testimonials-eyebrow">12,000+ HAPPY CUSTOMERS</p>
+  <h2 class="tsukie-testimonials-heading">What They're Saying</h2>
+  <div class="tsukie-testimonials-right">
+  <div class="tsukie-rating-number">4.8</div>
+  <div class="tsukie-stars">★★★★★</div>
+  <p class="tsukie-rating-text">BASED ON 2,400+ VERIFIED REVIEWS</p>
+  <div class="tsukie-testimonials-grid">
+  <div class="tsukie-testimonial-card">
+  <div class="tsukie-quote-stars">★★★★★</div>
+  <p class="tsukie-quote-text">
+  <div class="tsukie-testimonial-footer">
+  <div class="tsukie-customer-info">
+  <div class="tsukie-avatar">PA</div>
+  <div class="tsukie-customer-details">
+  <p class="tsukie-customer-name">Priya Anand</p>
+  <p class="tsukie-customer-meta">Mumbai · Verified Buyer</p>
+
+=================== Section: divider_PHttNk ===================
+Name: t:names.divider_section
+Type: divider
+Content Length: 0 chars
+First 20 lines of custom liquid:
+  
+
+=================== Section: custom_liquid_MMecBe ===================
+Name: t:names.custom_liquid
+Type: custom-liquid
+Content Length: 2933 chars
+First 20 lines of custom liquid:
+  <style>
+  @import url('https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@1,400;1,600&family=Cormorant+Garamond:ital@1&family=Montserrat:wght@300;400;500;600&display=swap');
+  
+  .tsukie-insta-section{
+    background:#fdfbf7;
+    padding:35px 0 40px;
+    text-align:center;
+    width:100%;
+  }
+  .tsukie-insta-inner{
+    width:100%;
+    padding:0 20px;
+  }
+  .tsukie-insta-heading{
+    font-family:'Playfair Display',serif;
+    font-size:48px;
+    font-style:italic;
+    font-weight:600;
+    margin:0 0 8px;
+    background:linear-gradient(135deg, #a08766 0%, #c9a77c 50%, #a08766 100%);
+Headings/HTML elements:
+  <div class="tsukie-insta-section">
+  <div class="tsukie-insta-inner">
+  <p class="tsukie-insta-subheading">Follow Our Journey</p>
+  <h2 class="tsukie-insta-heading">Style in Motion</h2>
+  <div class="tsukie-insta-divider">
+  <span class="tsukie-insta-line"></span>
+  <span class="tsukie-insta-line"></span>
+  <p class="tsukie-insta-desc">See how real women style Tsukie. Tag us to be featured.</p>
+  <a href="https://instagram.com/yourhandle" target="_blank" class="tsukie-insta-handle">
+
+=================== Section: 1780660222ceb4784a ===================
+Name: None
+Type: _blocks
+Content Length: 0 chars
+First 20 lines of custom liquid:
+  

@@ -1,0 +1,240 @@
+<style>
+@import url('https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@1,400&family=Montserrat:wght@400;500;600&display=swap');
+
+.tsukie-bestsellers-grid-section{
+  background:#f5f1ea;
+  padding:0 0 100px;
+}
+.tsukie-bestsellers-inner{
+  max-width:1400px;
+  margin:0 auto;
+  padding:0 40px;
+}
+.tsukie-bestsellers-grid{
+  display:grid;
+  grid-template-columns:repeat(4,1fr);
+  gap:32px;
+  margin-bottom:48px;
+}
+.tsukie-product-card{
+  position:relative;
+}
+.tsukie-product-link{
+  text-decoration:none;
+  display:block;
+}
+.tsukie-product-media{
+  position:relative;
+  overflow:hidden;
+  background:#fff;
+  aspect-ratio:3/4;
+}
+.tsukie-product-img{
+  width:100%;
+  height:100%;
+  object-fit:cover;
+  transition:transform 0.5s ease;
+  display:block;
+}
+.tsukie-product-card:hover .tsukie-product-img{
+  transform:scale(1.05);
+}
+.tsukie-product-badge{
+  position:absolute;
+  top:12px;
+  left:12px;
+  background:#1e2a38;
+  color:#d4c5a9;
+  font-size:10px;
+  letter-spacing:1.5px;
+  text-transform:uppercase;
+  padding:6px 12px;
+  font-weight:500;
+  z-index:2;
+}
+.tsukie-product-badge--low{background:#8b4513}
+.tsukie-product-badge--sale{background:#a08766}
+.tsukie-quick-add-btn{
+  position:absolute;
+  bottom:0;
+  left:0;
+  right:0;
+  background:#1e2a38;
+  color:#d4c5a9;
+  text-align:center;
+  padding:14px;
+  font-size:11px;
+  letter-spacing:2px;
+  text-transform:uppercase;
+  border:none;
+  cursor:pointer;
+  transform:translateY(100%);
+  transition:transform 0.3s ease;
+  width:100%;
+}
+.tsukie-product-card:hover .tsukie-quick-add-btn{
+  transform:translateY(0);
+}
+.tsukie-product-info{
+  margin-top:16px;
+}
+.tsukie-product-title{
+  font-family:'Playfair Display',serif;
+  font-size:16px;
+  color:#1a1a1a;
+  margin:0 0 8px;
+  font-weight:400;
+  line-height:1.3;
+}
+.tsukie-color-swatches{
+  display:flex;
+  gap:6px;
+  margin:0 0 10px;
+  align-items:center;
+}
+.tsukie-color-swatch{
+  width:18px;
+  height:18px;
+  border-radius:50%;
+  border:1px solid #c9c9c9;
+  cursor:default;
+  flex-shrink:0;
+  box-sizing:border-box;
+}
+.tsukie-color-swatch.is-active{
+  border:2px solid #1e2a38;
+}
+.tsukie-product-price{
+  font-size:15px;
+  color:#1a1a1a;
+  font-family:'Montserrat',sans-serif;
+}
+.tsukie-product-price--compare{
+  color:#999;
+  text-decoration:line-through;
+  margin-left:8px;
+}
+.tsukie-viewall-wrapper{
+  text-align:center;
+}
+.tsukie-viewall-btn{
+  display:inline-block;
+  background:#1e2a38;
+  color:#d4c5a9;
+  padding:16px 48px;
+  font-size:12px;
+  letter-spacing:2.5px;
+  text-transform:uppercase;
+  text-decoration:none;
+  font-weight:500;
+  transition:all 0.3s ease;
+  border:none;
+}
+.tsukie-viewall-btn:hover{
+  background:#2a3a4a;
+  transform:translateY(-2px);
+}
+
+@media(max-width:989px){
+  .tsukie-bestsellers-grid{grid-template-columns:repeat(2,1fr);gap:24px}
+}
+@media(max-width:749px){
+  .tsukie-bestsellers-grid-section{padding:0 0 60px}
+  .tsukie-bestsellers-inner{padding:0 16px}
+  .tsukie-bestsellers-grid{
+    display:flex;
+    gap:14px;
+    overflow-x:auto;
+    scroll-snap-type:x mandatory;
+    -webkit-overflow-scrolling:touch;
+    scrollbar-width:none;
+    margin:0 -16px 32px;
+    padding:0 16px;
+  }
+  .tsukie-bestsellers-grid::-webkit-scrollbar{display:none}
+  .tsukie-product-card{
+    flex:0 0 68%;
+    scroll-snap-align:start;
+  }
+  .tsukie-quick-add-btn{transform:translateY(0);padding:11px;font-size:10px}
+  .tsukie-color-swatch{width:15px;height:15px}
+  .tsukie-product-title{font-size:14px}
+  .tsukie-product-info{margin-top:10px}
+  .tsukie-product-price{font-size:14px}
+  .tsukie-viewall-btn{padding:13px 32px;font-size:11px;width:100%;max-width:280px}
+}
+</style>
+
+<div class="tsukie-bestsellers-grid-section">
+  <div class="tsukie-bestsellers-inner">
+    <div class="tsukie-bestsellers-grid">
+      {% for product in collections.all.products limit: 4 %}
+      <div class="tsukie-product-card">
+        <div class="tsukie-product-media">
+          <a href="{{ product.url }}" class="tsukie-product-link">
+            {% if forloop.first %}
+            <span class="tsukie-product-badge">#1 BESTSELLER</span>
+            {% elsif product.selected_or_first_available_variant.inventory_quantity < 5 and product.selected_or_first_available_variant.inventory_quantity > 0 %}
+            <span class="tsukie-product-badge tsukie-product-badge--low">LOW STOCK</span>
+            {% elsif product.compare_at_price > product.price %}
+            <span class="tsukie-product-badge tsukie-product-badge--sale">SALE</span>
+            {% endif %}
+            
+            {% if product.featured_image %}
+            <img 
+              src="{{ product.featured_image | image_url: width: 600 }}" 
+              alt="{{ product.title | escape }}"
+              class="tsukie-product-img"
+              loading="lazy"
+            >
+            {% else %}
+            {{ 'product-1' | placeholder_svg_tag: 'tsukie-product-img' }}
+            {% endif %}
+          </a>
+          
+          {% form 'product', product %}
+            <input type="hidden" name="id" value="{{ product.selected_or_first_available_variant.id }}">
+            <button type="submit" class="tsukie-quick-add-btn" {% unless product.selected_or_first_available_variant.available %}disabled{% endunless %}>
+              {% if product.selected_or_first_available_variant.available %}QUICK ADD{% else %}SOLD OUT{% endif %}
+            </button>
+          {% endform %}
+        </div>
+        
+        <div class="tsukie-product-info">
+          <a href="{{ product.url }}" class="tsukie-product-link">
+            <h3 class="tsukie-product-title">{{ product.title }}</h3>
+          </a>
+          
+          {% assign color_option = product.options_with_values | where: 'name', 'Color' | first %}
+          {% unless color_option %}
+            {% assign color_option = product.options_with_values | where: 'name', 'Colour' | first %}
+          {% endunless %}
+          
+          {% if color_option and color_option.values.size > 1 %}
+          <div class="tsukie-color-swatches">
+            {% for value in color_option.values limit: 4 %}
+              <span 
+                class="tsukie-color-swatch {% if forloop.first %}is-active{% endif %}" 
+                style="background-color: {{ value | downcase }};"
+                title="{{ value }}"
+              ></span>
+            {% endfor %}
+          </div>
+          {% endif %}
+          
+          <div class="tsukie-product-price">
+            {{ product.price | money }}
+            {% if product.compare_at_price > product.price %}
+            <span class="tsukie-product-price--compare">{{ product.compare_at_price | money }}</span>
+            {% endif %}
+          </div>
+        </div>
+      </div>
+      {% endfor %}
+    </div>
+    
+    <div class="tsukie-viewall-wrapper">
+      <a href="{{ collections.all.url }}" class="tsukie-viewall-btn">VIEW ALL</a>
+    </div>
+  </div>
+</div>

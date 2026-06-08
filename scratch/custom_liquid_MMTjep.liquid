@@ -1,0 +1,77 @@
+<style>
+@import url('https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@1,400;1,600&family=Cormorant+Garamond:ital@1&display=swap');
+
+.tsukie-collection-head{
+  background:#f5f1ea;
+  padding:60px 40px 45px;
+  text-align:center;
+  border-bottom:1px solid #e0d9cd;
+  position:relative;
+  margin-bottom:40px;
+}
+.tsukie-collection-eyebrow{
+  font-size:11px;
+  letter-spacing:4px;
+  text-transform:uppercase;
+  color:#a08766;
+  margin:0 0 14px;
+  font-weight:600;
+}
+.tsukie-collection-title{
+  font-family:'Playfair Display',serif;
+  font-size:58px;
+  font-weight:600;
+  font-style:italic;
+  margin:0 0 20px;
+  background:linear-gradient(135deg, #1e2a38 0%, #a08766 25%, #c9a77c 50%, #a08766 75%, #1e2a38 100%);
+  -webkit-background-clip:text;
+  -webkit-text-fill-color:transparent;
+  background-clip:text;
+  line-height:1.1;
+}
+.tsukie-collection-desc{
+  font-family:'Cormorant Garamond',serif;
+  font-size:18px;
+  font-style:italic;
+  color:#5a5a5a;
+  margin:0 0 24px;
+  letter-spacing:0.3px;
+}
+.tsukie-collection-divider{
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  gap:14px;
+  max-width:320px;
+  margin:0 auto;
+}
+.tsukie-divider-line{
+  flex:1;
+  height:1px;
+  background:linear-gradient(90deg, transparent, #a08766, transparent);
+}
+.tsukie-divider-icon{
+  font-size:16px;
+  color:#a08766;
+}
+@media(max-width:749px){
+.tsukie-collection-head{padding:45px 20px 35px}
+.tsukie-collection-title{font-size:38px}
+.tsukie-collection-desc{font-size:16px}
+}
+</style>
+
+<div class="tsukie-collection-head">
+  <p class="tsukie-collection-eyebrow">Curated With Love</p>
+  <h1 class="tsukie-collection-title">{{ collection.title | default: 'Our Collection' }}</h1>
+  {% if collection.description != blank %}
+    <p class="tsukie-collection-desc">{{ collection.description | strip_html | truncate: 120 }}</p>
+  {% else %}
+    <p class="tsukie-collection-desc">Timeless pieces designed for the modern woman</p>
+  {% endif %}
+  <div class="tsukie-collection-divider">
+    <span class="tsukie-divider-line"></span>
+    <span class="tsukie-divider-icon">✦</span>
+    <span class="tsukie-divider-line"></span>
+  </div>
+</div>
