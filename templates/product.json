@@ -378,18 +378,18 @@
     "1780906260f9fcf915": {
       "type": "_blocks",
       "blocks": {
-        "judge_me_reviews_review_widget_MPcA3d": {
+        "judge_me_reviews_review_widget_tMCenA": {
           "type": "shopify://apps/judge-me-reviews/blocks/review_widget/61ccd3b1-a9f2-4160-9fe9-4fec8413e5d8",
           "settings": {
-            "review_data": "reviews",
+            "review_data": "real_data",
             "max_width": 1200,
             "show_shop_reviews": false,
-            "empty_state": "other_products_reviews"
+            "empty_state": "empty_widget"
           }
         }
       },
       "block_order": [
-        "judge_me_reviews_review_widget_MPcA3d"
+        "judge_me_reviews_review_widget_tMCenA"
       ],
       "settings": {
         "content_direction": "row",
