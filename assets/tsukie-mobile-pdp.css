@@ -3,26 +3,64 @@
    Desktop layout is 100% untouched.
    ========================================================================== */
 
+/* -----------------------------------------------------------------------
+   GLOBAL: Prevent any horizontal overflow on mobile (fixes reviews bleed)
+   ----------------------------------------------------------------------- */
+@media screen and (max-width: 749px) {
+  body,
+  .shopify-section {
+    overflow-x: hidden !important;
+  }
+
+  /* Fix any reviews widget / app widget overflowing */
+  .shopify-section > * {
+    max-width: 100vw !important;
+    box-sizing: border-box !important;
+  }
+
+  /* Reviews app common containers (Judge.me, Stamped, etc.) */
+  .jdgm-widget,
+  .jdgm-rev-widg,
+  .stamped-container,
+  .spr-container,
+  [class*="review"],
+  [class*="jdgm"],
+  [class*="stamped"],
+  [class*="spr-"] {
+    max-width: 100% !important;
+    overflow-x: hidden !important;
+    box-sizing: border-box !important;
+  }
+
+  /* Tables inside reviews (often cause overflow) */
+  .shopify-section table {
+    table-layout: fixed !important;
+    max-width: 100% !important;
+    overflow-x: auto !important;
+    display: block !important;
+  }
+}
+
+
+/* -----------------------------------------------------------------------
+   1. PRODUCT MEDIA GALLERY — Dawn native carousel
+      Hide arrows + thumbnails, keep swipe + dots
+   ----------------------------------------------------------------------- */
 @media screen and (max-width: 749px) {
 
-  /* -----------------------------------------------------------------------
-     1. PRODUCT MEDIA GALLERY — Dawn native (media-gallery / slideshow)
-        Hide arrows + thumbnails, keep swipe + dots
-     ----------------------------------------------------------------------- */
-
-  /* Hide prev/next arrows in media gallery on mobile */
+  /* Hide prev/next arrows */
   media-gallery slideshow-arrows,
   media-gallery .slideshow-arrows {
     display: none !important;
   }
 
-  /* Hide desktop thumbnail strip on mobile */
+  /* Hide desktop thumbnail strip */
   media-gallery slideshow-controls[thumbnails],
   media-gallery .media-gallery__mobile-controls--thumbnails {
     display: none !important;
   }
 
-  /* Show mobile dot controls */
+  /* Show mobile dots */
   media-gallery .media-gallery__mobile-controls--dots {
     display: flex !important;
     justify-content: center !important;
@@ -46,30 +84,66 @@
     background: #1e2a38 !important;
     transform: scale(1.3) !important;
   }
+}
 
 
-  /* -----------------------------------------------------------------------
-     2. "YOU MAY ALSO ADORE" Recommendations — Mobile Fix
-        DO NOT touch .grid display. Let Dawn's slideshow-component handle scroll.
-        Only hide arrows. Widen cards to 70% so 1.5 are visible.
-     ----------------------------------------------------------------------- */
+/* -----------------------------------------------------------------------
+   2. "YOU MAY ALSO ADORE" Recommendations — Mobile
+      Ensure slideshow-slides is scrollable, hide arrows only.
+   ----------------------------------------------------------------------- */
+@media screen and (max-width: 749px) {
 
-  /* Hide only the prev/next arrow buttons — keep slide JS intact */
+  /* Hide arrow buttons ONLY */
   .product-recommendations slideshow-arrows,
   .product-recommendations .slideshow-arrows,
   .product-recommendations .slideshow-control {
     display: none !important;
   }
 
-  /* Give the carousel left padding so first card starts inset */
-  .product-recommendations .resource-list__carousel slideshow-slides {
-    padding-inline-start: 15px !important;
-    padding-inline-end: 15px !important;
+  /* Make the slideshow slides container scrollable if not already */
+  .product-recommendations slideshow-slides {
+    overflow-x: auto !important;
+    -webkit-overflow-scrolling: touch !important;
+    scrollbar-width: none !important;
+    padding-inline: 15px !important;
+    scroll-snap-type: x mandatory !important;
+  }
+  .product-recommendations slideshow-slides::-webkit-scrollbar {
+    display: none !important;
   }
 
-  /* Each slide card = 70% of viewport → 1.5 cards visible */
-  .product-recommendations .resource-list__carousel .resource-list__slide {
+  /* Override slideshow-component overflow if it clips content */
+  .product-recommendations slideshow-component,
+  .product-recommendations .resource-list__carousel {
+    overflow: visible !important;
+  }
+
+  /* Each slide = 70% so 1.5 peek */
+  .product-recommendations .resource-list__slide {
     width: 70vw !important;
+    min-width: 0 !important;
     max-width: 70vw !important;
+    scroll-snap-align: start !important;
+  }
+}
+
+
+/* -----------------------------------------------------------------------
+   3. SPEED — Critical render path optimizations
+   ----------------------------------------------------------------------- */
+
+/* Reduce animation complexity on mobile (saves CPU) */
+@media screen and (max-width: 749px) {
+  .tsukie-hero-slide {
+    transition: opacity 0.5s ease !important; /* was 1s */
+  }
+  .tsukie-real-women-img,
+  .tsukie-real-women-video {
+    transition: none !important; /* disable scale on mobile scroll */
+  }
+  .tsukie-thumb,
+  .tsukie-size-btn,
+  .tsukie-btn {
+    transition: background 0.15s ease !important;
   }
 }
