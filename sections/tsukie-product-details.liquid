@@ -1327,6 +1327,26 @@
 </section>
 
 <script>
+// Save product to Recently Viewed in localStorage
+(function() {
+  var currentId = '{{ product.id }}';
+  var currentHandle = '{{ product.handle }}';
+  if (currentId && currentHandle) {
+    try {
+      var viewed = JSON.parse(localStorage.getItem('viewedProducts') || '[]');
+      // Remove old entries for this product (handle-based objects or plain string IDs)
+      viewed = viewed.filter(function(x) {
+        if (typeof x === 'object' && x.handle) return x.handle !== currentHandle;
+        if (typeof x === 'string') return x !== currentId;
+        return true;
+      });
+      viewed.unshift({ id: currentId, handle: currentHandle });
+      if (viewed.length > 10) viewed = viewed.slice(0, 10);
+      localStorage.setItem('viewedProducts', JSON.stringify(viewed));
+    } catch(e) { /* silent */ }
+  }
+})();
+
 let tsukieCurrentImage = 0;
 
 // Size Guide Modal JS

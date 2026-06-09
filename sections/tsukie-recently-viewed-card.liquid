@@ -1,0 +1,17 @@
+{%- comment -%}
+  Helper section for Recently Viewed Products.
+  Renders a single product card when fetched via Section Rendering API.
+  URL: /products/<handle>?section_id=tsukie-recently-viewed-card
+{%- endcomment -%}
+
+<div class="tsukie-rv-card-wrapper">
+  {% render 'tsukie-product-card', product: product %}
+</div>
+
+{% schema %}
+{
+  "name": "RV Card Helper",
+  "tag": "div",
+  "settings": []
+}
+{% endschema %}

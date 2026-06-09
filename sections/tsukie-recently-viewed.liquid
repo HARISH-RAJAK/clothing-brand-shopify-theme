@@ -1,16 +1,9 @@
 <div class="tsukie-recently-viewed" id="tsukie-recently-viewed-{{ section.id }}" style="display: none;">
-  {% if search.performed and search.results.size > 0 %}
-    <div class="recently-viewed-inner" style="max-width: 1400px; margin: 0 auto; padding: 80px 40px; background: #f5f1ea;">
-      <h2>{{ section.settings.heading }}</h2>
-      <ul class="product-grid" style="display:grid; grid-template-columns: repeat(4, 1fr); gap: 32px; list-style:none; padding:0; margin:0;">
-        {% for product in search.results limit: 10 %}
-          <li class="product-grid__item" data-product-id="{{ product.id }}" style="list-style:none;">
-            {% render 'tsukie-product-card', product: product %}
-          </li>
-        {% endfor %}
-      </ul>
-    </div>
-  {% endif %}
+  <div class="recently-viewed-inner" style="max-width: 1400px; margin: 0 auto; padding: 80px 40px; background: #f5f1ea;">
+    <h2>{{ section.settings.heading }}</h2>
+    <ul class="product-grid" style="display:grid; grid-template-columns: repeat(4, 1fr); gap: 32px; list-style:none; padding:0; margin:0;">
+    </ul>
+  </div>
 </div>
 
 <style>
@@ -120,73 +113,81 @@
     var container = document.getElementById('tsukie-recently-viewed-{{ section.id }}');
     if (!container) return;
 
-    var viewedProducts = JSON.parse(localStorage.getItem('viewedProducts') || '[]');
-    
-    // If we are on a product page, filter out the current product
-    var currentProductId = '{{ product.id }}';
-    if (currentProductId) {
-      viewedProducts = viewedProducts.filter(function(id) {
-        return id !== currentProductId;
+    var viewedRaw = localStorage.getItem('viewedProducts');
+    if (!viewedRaw) return;
+
+    var viewedProducts;
+    try {
+      viewedProducts = JSON.parse(viewedRaw);
+    } catch(e) { return; }
+
+    if (!Array.isArray(viewedProducts) || viewedProducts.length === 0) return;
+
+    // If on a product page, filter out the current product
+    var currentHandle = '{{ product.handle }}';
+    if (currentHandle) {
+      viewedProducts = viewedProducts.filter(function(item) {
+        if (typeof item === 'object' && item.handle) return item.handle !== currentHandle;
+        if (typeof item === 'string') return true; // old format, keep but won't be used
+        return true;
       });
     }
 
-    if (viewedProducts.length === 0) return;
-
-    // Build search query for those IDs
-    var queryParts = viewedProducts.map(function(id) {
-      return 'id:' + id;
+    // Only take items that have handle info (new format: {id, handle})
+    var validItems = viewedProducts.filter(function(item) {
+      return typeof item === 'object' && item.handle;
     });
-    var query = queryParts.join('+OR+');
 
-    var url = '/search?q=' + query + '&type=product&section_id=tsukie-recently-viewed';
-    
-    fetch(url)
-      .then(function(res) { return res.text(); })
-      .then(function(html) {
-        if (html.trim().length > 0) {
+    if (validItems.length === 0) return;
+
+    // Limit to 4 products
+    validItems = validItems.slice(0, 4);
+
+    var grid = container.querySelector('.product-grid');
+    if (!grid) return;
+
+    var loadedCount = 0;
+    var totalToLoad = validItems.length;
+    var cardElements = new Array(totalToLoad);
+
+    validItems.forEach(function(item, index) {
+      // Use Section Rendering API: fetch product page with our card section
+      var productUrl = '/products/' + item.handle + '?section_id=tsukie-recently-viewed-card';
+
+      fetch(productUrl)
+        .then(function(res) { return res.text(); })
+        .then(function(html) {
           var parser = new DOMParser();
           var doc = parser.parseFromString(html, 'text/html');
-          var newContent = doc.querySelector('.tsukie-recently-viewed');
-          if (newContent) {
-            var grid = newContent.querySelector('.product-grid');
-            if (grid) {
-              var items = Array.prototype.slice.call(grid.querySelectorAll('.product-grid__item'));
-              
-              // Sort items based on the order in viewedProducts
-              items.sort(function(a, b) {
-                var idA = a.getAttribute('data-product-id');
-                var idB = b.getAttribute('data-product-id');
-                var indexA = viewedProducts.indexOf(idA);
-                var indexB = viewedProducts.indexOf(idB);
-                
-                // If not found (should not happen), put at the end
-                if (indexA === -1) indexA = 999;
-                if (indexB === -1) indexB = 999;
-                
-                return indexA - indexB;
-              });
-              
-              // Clear grid and append only the first 4 items
-              grid.innerHTML = '';
-              var count = 0;
-              items.forEach(function(item) {
-                if (count < 4) {
-                  grid.appendChild(item);
-                  count++;
-                }
-              });
-
-              if (count > 0) {
-                container.innerHTML = newContent.innerHTML;
-                container.style.display = 'block';
+          var card = doc.querySelector('.tsukie-rv-card-wrapper');
+          if (card) {
+            cardElements[index] = card.innerHTML;
+          }
+        })
+        .catch(function(err) {
+          console.warn('Recently viewed fetch error for ' + item.handle, err);
+        })
+        .finally(function() {
+          loadedCount++;
+          if (loadedCount === totalToLoad) {
+            // All fetches done, render in order
+            var hasCards = false;
+            cardElements.forEach(function(cardHtml) {
+              if (cardHtml) {
+                var li = document.createElement('li');
+                li.className = 'product-grid__item';
+                li.style.listStyle = 'none';
+                li.innerHTML = cardHtml;
+                grid.appendChild(li);
+                hasCards = true;
               }
+            });
+            if (hasCards) {
+              container.style.display = 'block';
             }
           }
-        }
-      })
-      .catch(function(err) {
-        console.error('Error fetching recently viewed products:', err);
-      });
+        });
+    });
   }
 
   if (document.readyState === 'loading') {
