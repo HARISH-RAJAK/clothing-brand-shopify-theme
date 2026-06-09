@@ -476,6 +476,7 @@
         "item_1": {
           "type": "image_item",
           "settings": {
+            "image": "shopify://shop_images/Women_s_Waist-Tie_Shirt_Top_04.jpg",
             "tag": "@PRIYA_ANAND"
           }
         },
@@ -483,12 +484,14 @@
           "type": "video_item",
           "settings": {
             "video_url": "",
+            "shopify_video": "shopify://files/videos/moast-AQMyhXNwLmUSlwmknQZpd-iYevGigGMDg1bAdBEG2h0yVTfTC7MP8f1SRkmSaZ1XmxjqNg_nDbGmAFzn2fm9OpeAqGKJC4OPM4SRQ88.mp4",
             "tag": "@ANJALI.S"
           }
         },
         "item_3": {
           "type": "image_item",
           "settings": {
+            "image": "shopify://shop_images/Pink_Smocked_Peplum_Top_Tsukie_Womens_Premium_Clothing_2.jpg",
             "tag": "@MEERA_M"
           }
         },
@@ -496,6 +499,7 @@
           "type": "video_item",
           "settings": {
             "video_url": "",
+            "shopify_video": "shopify://files/videos/moast-AQMBBXoIJekeIJRYD4YvUKM6NZHdgTkoFH7jJVNUTOh3gafgAlvc-sEauAgZkrCU_q1ZsDVgtMJS6zgIGJfVQq9VzW4B4Vc0S9Fng3U.mp4",
             "tag": "@RIYA.SEN"
           }
         }
