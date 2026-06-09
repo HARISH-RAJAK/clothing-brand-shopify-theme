@@ -1,6 +1,4 @@
 <style>
-@import url('https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@1,400;1,600&family=Cormorant+Garamond:ital@1&family=Montserrat:wght@400;500;600&display=swap');
-
 .tsukie-real-women {
   background: #fdfbf7;
   padding: 80px 0;
@@ -107,10 +105,26 @@
 }
 @media(max-width: 749px) {
   .tsukie-real-women { padding: 50px 0; }
-  .tsukie-real-women-inner { padding: 0 16px; }
+  .tsukie-real-women-inner { padding: 0; }
+  .tsukie-real-women-head { padding: 0 16px; }
   .tsukie-real-women-heading { font-size: 36px; }
   .tsukie-real-women-desc { font-size: 16px; }
-  .tsukie-real-women-grid { gap: 12px; }
+  .tsukie-real-women-grid {
+    display: flex;
+    gap: 12px;
+    overflow-x: auto;
+    scroll-snap-type: x mandatory;
+    -webkit-overflow-scrolling: touch;
+    scrollbar-width: none;
+    margin: 0;
+    padding: 0 16px 8px;
+  }
+  .tsukie-real-women-grid::-webkit-scrollbar { display: none; }
+  .tsukie-real-women-item {
+    flex: 0 0 70%;
+    scroll-snap-align: start;
+    aspect-ratio: 9/16;
+  }
 }
 </style>
 
@@ -131,6 +145,8 @@
               <img class="tsukie-real-women-img"
                 src="{{ block.settings.image | image_url: width: 800 }}"
                 alt="{{ block.settings.tag | default: 'Seen on Real Women' }}"
+                width="{{ block.settings.image.width }}"
+                height="{{ block.settings.image.height }}"
                 loading="lazy"
               >
             {% else %}

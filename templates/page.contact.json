@@ -1,1 +1,168 @@
-{"sections":{"custom_liquid_UEQKH4":{"type":"custom-liquid","name":"t:names.custom_liquid","settings":{"custom_liquid":"<style>\n@import url('https:\/\/fonts.googleapis.com\/css2?family=Playfair+Display:ital,wght@1,400;1,600&family=Cormorant+Garamond:ital@1&family=Montserrat:wght@300;400;500;600&display=swap');\n\n.tsukie-contact-hero{\n  background:#f5f1ea;\n  padding:70px 40px 60px;\n  text-align:center;\n}\n.tsukie-contact-eyebrow{\n  font-family:'Montserrat',sans-serif;\n  font-size:11px;\n  letter-spacing:4px;\n  text-transform:uppercase;\n  color:#a08766;\n  margin:0 0 18px;\n  font-weight:600;\n}\n.tsukie-contact-title{\n  font-family:'Playfair Display',serif;\n  font-size:64px;\n  font-weight:600;\n  font-style:italic;\n  margin:0 0 24px;\n  background:linear-gradient(135deg, #1e2a38 0%, #a08766 30%, #c9a77c 50%, #a08766 70%, #1e2a38 100%);\n  -webkit-background-clip:text;\n  -webkit-text-fill-color:transparent;\n  background-clip:text;\n  line-height:1.1;\n}\n.tsukie-contact-subtitle{\n  font-family:'Cormorant Garamond',serif;\n  font-size:20px;\n  font-style:italic;\n  color:#5a5a5a;\n  margin:0 0 30px;\n  line-height:1.6;\n}\n.tsukie-contact-divider{\n  display:flex;\n  align-items:center;\n  justify-content:center;\n  gap:14px;\n  max-width:340px;\n  margin:0 auto;\n}\n.tsukie-contact-line{\n  flex:1;\n  height:1px;\n  background:linear-gradient(90deg, transparent, #a08766, transparent);\n}\n.tsukie-contact-icon{\n  font-size:18px;\n  color:#a08766;\n}\n@media(max-width:749px){\n.tsukie-contact-hero{padding:50px 20px 45px}\n.tsukie-contact-title{font-size:42px}\n.tsukie-contact-subtitle{font-size:18px}\n}\n<\/style>\n\n<div class=\"tsukie-contact-hero\">\n  <p class=\"tsukie-contact-eyebrow\">Get In Touch<\/p>\n  <h1 class=\"tsukie-contact-title\">Contact Us<\/h1>\n  <p class=\"tsukie-contact-subtitle\">We'd love to hear from you<\/p>\n  <div class=\"tsukie-contact-divider\">\n    <span class=\"tsukie-contact-line\"><\/span>\n    <span class=\"tsukie-contact-icon\">✦<\/span>\n    <span class=\"tsukie-contact-line\"><\/span>\n  <\/div>\n<\/div>","color_scheme":"scheme-e5234ede-d196-4b3b-a9e2-6e7d24b8ca5c","section_width":"full-width","padding-block-start":0,"padding-block-end":0}},"main":{"type":"main-page","blocks":{"title":{"type":"text","name":"t:names.title","settings":{"text":"<h1>{{ closest.page.title }}<\/h1>","width":"100%","max_width":"normal","alignment":"center","type_preset":"h2","font":"var(--font-primary--family)","font_size":"","line_height":"normal","letter_spacing":"normal","case":"none","wrap":"pretty","color":"","background":false,"background_color":"#00000026","corner_radius":0,"padding-block-start":0,"padding-block-end":0,"padding-inline-start":0,"padding-inline-end":0},"blocks":{}},"content":{"type":"text","name":"t:names.content","settings":{"text":"{{ closest.page.content }}","width":"100%","max_width":"narrow","alignment":"center","type_preset":"rte","font":"var(--font-primary--family)","font_size":"","line_height":"normal","letter_spacing":"normal","case":"none","wrap":"pretty","color":"","background":false,"background_color":"#00000026","corner_radius":0,"padding-block-start":0,"padding-block-end":0,"padding-inline-start":0,"padding-inline-end":0},"blocks":{}}},"block_order":["title","content"],"disabled":true,"settings":{"content_direction":"column","gap":32,"color_scheme":"scheme-e5234ede-d196-4b3b-a9e2-6e7d24b8ca5c","padding-block-start":40,"padding-block-end":0}},"form":{"type":"section","blocks":{"contact_form_UwiCkQ":{"type":"contact-form","settings":{"width":"custom","custom_width":50,"width_mobile":"custom","custom_width_mobile":100,"inherit_color_scheme":true,"color_scheme":"","padding-block-start":32,"padding-block-end":32,"padding-inline-start":32,"padding-inline-end":32},"blocks":{"submit-button":{"type":"contact-form-submit-button","static":true,"settings":{"label":"Submit","style_class":"button","width":"fit-content","custom_width":100,"width_mobile":"fit-content","custom_width_mobile":100},"blocks":{}}},"block_order":[]}},"block_order":["contact_form_UwiCkQ"],"name":"t:names.contact_form","settings":{"content_direction":"column","vertical_on_mobile":true,"horizontal_alignment":"flex-start","vertical_alignment":"center","align_baseline":false,"horizontal_alignment_flex_direction_column":"center","vertical_alignment_flex_direction_column":"center","gap":24,"section_width":"full-width","section_height":"","section_height_custom":50,"color_scheme":"scheme-e5234ede-d196-4b3b-a9e2-6e7d24b8ca5c","background_media":"none","video_position":"cover","background_image_position":"cover","border":"solid","border_width":1,"border_opacity":20,"border_radius":8,"toggle_overlay":false,"overlay_color":"#edb5b526","overlay_style":"solid","gradient_direction":"to top","padding-block-start":16,"padding-block-end":10}},"custom_liquid_GjhaJB":{"type":"custom-liquid","name":"t:names.custom_liquid","settings":{"custom_liquid":"{% comment %}\n  Contact Page Address Section - Reduced Padding\n{% endcomment %}\n\n<style>\n@import url('https:\/\/fonts.googleapis.com\/css2?family=Montserrat:wght@400;500&display=swap');\n\n.tsukie-contact-address{\n  background:#f5f1ea;\n  padding:40px 20px;\n  text-align:center;\n}\n.tsukie-address-block{\n  max-width:600px;\n  margin:0 auto;\n}\n.tsukie-address-label{\n  font-family:'Montserrat',sans-serif;\n  font-size:11px;\n  letter-spacing:2px;\n  text-transform:uppercase;\n  color:#a08766;\n  font-weight:500;\n  margin-bottom:16px;\n}\n.tsukie-address-text{\n  font-family:'Montserrat',sans-serif;\n  font-size:14px;\n  line-height:1.8;\n  color:#1e2a38;\n  font-weight:400;\n  letter-spacing:0.5px;\n}\n.tsukie-address-text p{\n  margin:0 0 6px;\n}\n\n@media(max-width:749px){\n  .tsukie-contact-address{\n    padding:30px 20px;\n  }\n  .tsukie-address-text{\n    font-size:13px;\n  }\n}\n<\/style>\n\n<div class=\"tsukie-contact-address\">\n  <div class=\"tsukie-address-block\">\n    <div class=\"tsukie-address-label\">Our Location<\/div>\n    <div class=\"tsukie-address-text\">\n      <p>301\/C, Abhishek Complex, Asarwa Road<\/p>\n      <p>Ahmedabad, Gujarat – 380016<\/p>\n      <p>India<\/p>\n    <\/div>\n  <\/div>\n<\/div>","color_scheme":"scheme-e5234ede-d196-4b3b-a9e2-6e7d24b8ca5c","section_width":"full-width","padding-block-start":0,"padding-block-end":0}}},"order":["custom_liquid_UEQKH4","main","form","custom_liquid_GjhaJB"]}
+{
+  "sections": {
+    "custom_liquid_UEQKH4": {
+      "type": "custom-liquid",
+      "name": "t:names.custom_liquid",
+      "settings": {
+        "custom_liquid": "<style>\n.tsukie-contact-hero{\n  background:#f5f1ea;\n  padding:70px 40px 60px;\n  text-align:center;\n}\n.tsukie-contact-eyebrow{\n  font-family:'Montserrat',sans-serif;\n  font-size:11px;\n  letter-spacing:4px;\n  text-transform:uppercase;\n  color:#a08766;\n  margin:0 0 18px;\n  font-weight:600;\n}\n.tsukie-contact-title{\n  font-family:'Playfair Display',serif;\n  font-size:64px;\n  font-weight:600;\n  font-style:italic;\n  margin:0 0 24px;\n  background:linear-gradient(135deg, #1e2a38 0%, #a08766 30%, #c9a77c 50%, #a08766 70%, #1e2a38 100%);\n  -webkit-background-clip:text;\n  -webkit-text-fill-color:transparent;\n  background-clip:text;\n  line-height:1.1;\n}\n.tsukie-contact-subtitle{\n  font-family:'Cormorant Garamond',serif;\n  font-size:20px;\n  font-style:italic;\n  color:#5a5a5a;\n  margin:0 0 30px;\n  line-height:1.6;\n}\n.tsukie-contact-divider{\n  display:flex;\n  align-items:center;\n  justify-content:center;\n  gap:14px;\n  max-width:340px;\n  margin:0 auto;\n}\n.tsukie-contact-line{\n  flex:1;\n  height:1px;\n  background:linear-gradient(90deg, transparent, #a08766, transparent);\n}\n.tsukie-contact-icon{\n  font-size:18px;\n  color:#a08766;\n}\n@media(max-width:749px){\n.tsukie-contact-hero{padding:50px 20px 45px}\n.tsukie-contact-title{font-size:42px}\n.tsukie-contact-subtitle{font-size:18px}\n}\n</style>\n\n<div class=\"tsukie-contact-hero\">\n  <p class=\"tsukie-contact-eyebrow\">Get In Touch</p>\n  <h1 class=\"tsukie-contact-title\">Contact Us</h1>\n  <p class=\"tsukie-contact-subtitle\">We'd love to hear from you</p>\n  <div class=\"tsukie-contact-divider\">\n    <span class=\"tsukie-contact-line\"></span>\n    <span class=\"tsukie-contact-icon\">✦</span>\n    <span class=\"tsukie-contact-line\"></span>\n  </div>\n</div>",
+        "color_scheme": "scheme-e5234ede-d196-4b3b-a9e2-6e7d24b8ca5c",
+        "section_width": "full-width",
+        "padding-block-start": 0,
+        "padding-block-end": 0
+      }
+    },
+    "main": {
+      "type": "main-page",
+      "blocks": {
+        "title": {
+          "type": "text",
+          "name": "t:names.title",
+          "settings": {
+            "text": "<h1>{{ closest.page.title }}</h1>",
+            "width": "100%",
+            "max_width": "normal",
+            "alignment": "center",
+            "type_preset": "h2",
+            "font": "var(--font-primary--family)",
+            "font_size": "",
+            "line_height": "normal",
+            "letter_spacing": "normal",
+            "case": "none",
+            "wrap": "pretty",
+            "color": "",
+            "background": false,
+            "background_color": "#00000026",
+            "corner_radius": 0,
+            "padding-block-start": 0,
+            "padding-block-end": 0,
+            "padding-inline-start": 0,
+            "padding-inline-end": 0
+          },
+          "blocks": {}
+        },
+        "content": {
+          "type": "text",
+          "name": "t:names.content",
+          "settings": {
+            "text": "{{ closest.page.content }}",
+            "width": "100%",
+            "max_width": "narrow",
+            "alignment": "center",
+            "type_preset": "rte",
+            "font": "var(--font-primary--family)",
+            "font_size": "",
+            "line_height": "normal",
+            "letter_spacing": "normal",
+            "case": "none",
+            "wrap": "pretty",
+            "color": "",
+            "background": false,
+            "background_color": "#00000026",
+            "corner_radius": 0,
+            "padding-block-start": 0,
+            "padding-block-end": 0,
+            "padding-inline-start": 0,
+            "padding-inline-end": 0
+          },
+          "blocks": {}
+        }
+      },
+      "block_order": [
+        "title",
+        "content"
+      ],
+      "disabled": true,
+      "settings": {
+        "content_direction": "column",
+        "gap": 32,
+        "color_scheme": "scheme-e5234ede-d196-4b3b-a9e2-6e7d24b8ca5c",
+        "padding-block-start": 40,
+        "padding-block-end": 0
+      }
+    },
+    "form": {
+      "type": "section",
+      "blocks": {
+        "contact_form_UwiCkQ": {
+          "type": "contact-form",
+          "settings": {
+            "width": "custom",
+            "custom_width": 50,
+            "width_mobile": "custom",
+            "custom_width_mobile": 100,
+            "inherit_color_scheme": true,
+            "color_scheme": "",
+            "padding-block-start": 32,
+            "padding-block-end": 32,
+            "padding-inline-start": 32,
+            "padding-inline-end": 32
+          },
+          "blocks": {
+            "submit-button": {
+              "type": "contact-form-submit-button",
+              "static": true,
+              "settings": {
+                "label": "Submit",
+                "style_class": "button",
+                "width": "fit-content",
+                "custom_width": 100,
+                "width_mobile": "fit-content",
+                "custom_width_mobile": 100
+              },
+              "blocks": {}
+            }
+          },
+          "block_order": []
+        }
+      },
+      "block_order": [
+        "contact_form_UwiCkQ"
+      ],
+      "name": "t:names.contact_form",
+      "settings": {
+        "content_direction": "column",
+        "vertical_on_mobile": true,
+        "horizontal_alignment": "flex-start",
+        "vertical_alignment": "center",
+        "align_baseline": false,
+        "horizontal_alignment_flex_direction_column": "center",
+        "vertical_alignment_flex_direction_column": "center",
+        "gap": 24,
+        "section_width": "full-width",
+        "section_height": "",
+        "section_height_custom": 50,
+        "color_scheme": "scheme-e5234ede-d196-4b3b-a9e2-6e7d24b8ca5c",
+        "background_media": "none",
+        "video_position": "cover",
+        "background_image_position": "cover",
+        "border": "solid",
+        "border_width": 1,
+        "border_opacity": 20,
+        "border_radius": 8,
+        "toggle_overlay": false,
+        "overlay_color": "#edb5b526",
+        "overlay_style": "solid",
+        "gradient_direction": "to top",
+        "padding-block-start": 16,
+        "padding-block-end": 10
+      }
+    },
+    "custom_liquid_GjhaJB": {
+      "type": "custom-liquid",
+      "name": "t:names.custom_liquid",
+      "settings": {
+        "custom_liquid": "{% comment %}\n  Contact Page Address Section - Reduced Padding\n{% endcomment %}\n\n<style>\n.tsukie-contact-address{\n  background:#f5f1ea;\n  padding:40px 20px;\n  text-align:center;\n}\n.tsukie-address-block{\n  max-width:600px;\n  margin:0 auto;\n}\n.tsukie-address-label{\n  font-family:'Montserrat',sans-serif;\n  font-size:11px;\n  letter-spacing:2px;\n  text-transform:uppercase;\n  color:#a08766;\n  font-weight:500;\n  margin-bottom:16px;\n}\n.tsukie-address-text{\n  font-family:'Montserrat',sans-serif;\n  font-size:14px;\n  line-height:1.8;\n  color:#1e2a38;\n  font-weight:400;\n  letter-spacing:0.5px;\n}\n.tsukie-address-text p{\n  margin:0 0 6px;\n}\n\n@media(max-width:749px){\n  .tsukie-contact-address{\n    padding:30px 20px;\n  }\n  .tsukie-address-text{\n    font-size:13px;\n  }\n}\n</style>\n\n<div class=\"tsukie-contact-address\">\n  <div class=\"tsukie-address-block\">\n    <div class=\"tsukie-address-label\">Our Location</div>\n    <div class=\"tsukie-address-text\">\n      <p>301/C, Abhishek Complex, Asarwa Road</p>\n      <p>Ahmedabad, Gujarat – 380016</p>\n      <p>India</p>\n    </div>\n  </div>\n</div>",
+        "color_scheme": "scheme-e5234ede-d196-4b3b-a9e2-6e7d24b8ca5c",
+        "section_width": "full-width",
+        "padding-block-start": 0,
+        "padding-block-end": 0
+      }
+    }
+  },
+  "order": [
+    "custom_liquid_UEQKH4",
+    "main",
+    "form",
+    "custom_liquid_GjhaJB"
+  ]
+}

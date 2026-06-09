@@ -514,7 +514,7 @@
         <div class="tsukie-thumbnails" id="tsukie-thumbs-list">
           {% for image in product.images %}
             <div class="tsukie-thumb {% if forloop.first %}active{% endif %}" data-alt="{{ image.alt | escape }}" data-img-id="{{ image.id }}" onclick="tsukieChangeImage('{{ image | img_url: '1000x' }}', {{ forloop.index0 }})">
-              <img src="{{ image | img_url: '200x' }}" alt="{{ product.title | escape }}" loading="lazy">
+              <img src="{{ image | img_url: '200x' }}" alt="{{ product.title | escape }}" width="{{ image.width }}" height="{{ image.height }}" loading="lazy">
             </div>
           {% endfor %}
         </div>
@@ -535,7 +535,7 @@
               {% endunless %}
             {% endfor %}
           </div>
-          <img id="tsukie-main-img" src="{{ product.featured_image | img_url: '1000x' }}" alt="{{ product.title | escape }}">
+          <img id="tsukie-main-img" src="{{ product.featured_image | img_url: '1000x' }}" alt="{{ product.title | escape }}" width="{{ product.featured_image.width }}" height="{{ product.featured_image.height }}" loading="eager" fetchpriority="high">
           <button class="tsukie-carousel-nav prev" type="button" onclick="tsukiePrevImage()">
             <svg fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M15 19l-7-7 7-7"></path></svg>
           </button>

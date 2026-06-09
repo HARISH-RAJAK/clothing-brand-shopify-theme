@@ -1,1 +1,287 @@
-{"sections":{"custom_liquid_KNHcQx":{"type":"custom-liquid","name":"t:names.custom_liquid","settings":{"custom_liquid":"<style>\n@import url('https:\/\/fonts.googleapis.com\/css2?family=Playfair+Display:ital,wght@1,400;1,600&family=Cormorant+Garamond:ital@1&family=Montserrat:wght@300;400;500;600&display=swap');\n\n.tsukie-404-wrap{\n  background:#fdfbf7;\n  min-height:70vh;\n  display:flex;\n  align-items:center;\n  justify-content:center;\n  padding:80px 40px;\n}\n.tsukie-404-inner{\n  text-align:center;\n  max-width:600px;\n}\n.tsukie-404-number{\n  font-family:'Playfair Display',serif;\n  font-size:140px;\n  font-weight:600;\n  font-style:italic;\n  margin:0 0 20px;\n  line-height:1;\n  background:linear-gradient(135deg, #1e2a38 0%, #a08766 30%, #c9a77c 50%, #a08766 70%, #1e2a38 100%);\n  -webkit-background-clip:text;\n  -webkit-text-fill-color:transparent;\n  background-clip:text;\n}\n.tsukie-404-title{\n  font-family:'Playfair Display',serif;\n  font-size:42px;\n  font-style:italic;\n  color:#1e2a38;\n  margin:0 0 18px;\n  font-weight:600;\n}\n.tsukie-404-text{\n  font-family:'Montserrat',sans-serif;\n  font-size:15px;\n  line-height:1.8;\n  color:#5a5a5a;\n  margin:0 0 40px;\n}\n.tsukie-404-divider{\n  display:flex;\n  align-items:center;\n  justify-content:center;\n  gap:14px;\n  max-width:300px;\n  margin:0 auto 40px;\n}\n.tsukie-404-line{\n  flex:1;\n  height:1px;\n  background:linear-gradient(90deg, transparent, #a08766, transparent);\n}\n.tsukie-404-icon{\n  font-size:18px;\n  color:#a08766;\n}\n.tsukie-404-buttons{\n  display:flex;\n  gap:16px;\n  justify-content:center;\n  flex-wrap:wrap;\n}\n.tsukie-404-btn{\n  padding:16px 38px;\n  font-family:'Montserrat',sans-serif;\n  font-size:12px;\n  letter-spacing:2px;\n  text-transform:uppercase;\n  font-weight:600;\n  text-decoration:none;\n  border-radius:2px;\n  transition:all 0.3s ease;\n  display:inline-block;\n}\n.tsukie-404-btn-primary{\n  background:#0f1a24;\n  color:#d4c5a9;\n  border:1.5px solid #0f1a24;\n}\n.tsukie-404-btn-primary:hover{\n  background:#1e2a38;\n  border-color:#1e2a38;\n  transform:translateY(-2px);\n  box-shadow:0 8px 20px rgba(15,26,36,0.25);\n}\n.tsukie-404-btn-secondary{\n  background:transparent;\n  color:#1e2a38;\n  border:1.5px solid #a08766;\n}\n.tsukie-404-btn-secondary:hover{\n  background:#f5f1ea;\n  border-color:#1e2a38;\n  transform:translateY(-2px);\n}\n.tsukie-404-suggestions{\n  margin-top:60px;\n  padding-top:50px;\n  border-top:1px solid #e0d9cd;\n}\n.tsukie-404-suggestions h3{\n  font-family:'Cormorant Garamond',serif;\n  font-size:22px;\n  font-style:italic;\n  color:#1e2a38;\n  margin:0 0 24px;\n  font-weight:600;\n}\n.tsukie-404-links{\n  display:flex;\n  gap:24px;\n  justify-content:center;\n  flex-wrap:wrap;\n}\n.tsukie-404-link{\n  font-family:'Montserrat',sans-serif;\n  font-size:13px;\n  letter-spacing:1.5px;\n  text-transform:uppercase;\n  color:#a08766;\n  text-decoration:none;\n  font-weight:600;\n  transition:color 0.3s ease;\n}\n.tsukie-404-link:hover{\n  color:#1e2a38;\n}\n@media(max-width:749px){\n.tsukie-404-wrap{padding:60px 20px;min-height:60vh}\n.tsukie-404-number{font-size:100px}\n.tsukie-404-title{font-size:32px}\n.tsukie-404-text{font-size:14px}\n.tsukie-404-buttons{flex-direction:column}\n.tsukie-404-btn{width:100%}\n}\n<\/style>\n\n<div class=\"tsukie-404-wrap\">\n  <div class=\"tsukie-404-inner\">\n    <h1 class=\"tsukie-404-number\">404<\/h1>\n    <h2 class=\"tsukie-404-title\">Page Not Found<\/h2>\n    \n    <div class=\"tsukie-404-divider\">\n      <span class=\"tsukie-404-line\"><\/span>\n      <span class=\"tsukie-404-icon\">✦<\/span>\n      <span class=\"tsukie-404-line\"><\/span>\n    <\/div>\n    \n    <p class=\"tsukie-404-text\">The link may be incorrect, or the page has been removed. Let's get you back to discovering something beautiful.<\/p>\n    \n    <div class=\"tsukie-404-buttons\">\n      <a href=\"\/collections\/all\" class=\"tsukie-404-btn tsukie-404-btn-primary\">Continue Shopping<\/a>\n      <a href=\"\/\" class=\"tsukie-404-btn tsukie-404-btn-secondary\">Back To Home<\/a>\n    <\/div>\n\n    <div class=\"tsukie-404-suggestions\">\n      <h3>Discover Something New<\/h3>\n      <div class=\"tsukie-404-links\">\n        <a href=\"\/collections\/new-arrivals\" class=\"tsukie-404-link\">New Arrivals<\/a>\n        <a href=\"\/collections\/best-sellers\" class=\"tsukie-404-link\">Best Sellers<\/a>\n        <a href=\"\/collections\/sale\" class=\"tsukie-404-link\">Sale<\/a>\n        <a href=\"\/pages\/contact\" class=\"tsukie-404-link\">Contact Us<\/a>\n      <\/div>\n    <\/div>\n  <\/div>\n<\/div>","color_scheme":"scheme-e5234ede-d196-4b3b-a9e2-6e7d24b8ca5c","section_width":"full-width","padding-block-start":0,"padding-block-end":0}},"main":{"type":"main-404","blocks":{"text_GqmVFf":{"type":"text","name":"t:names.text","settings":{"text":"<h1>Page not found<\/h1>","width":"100%","max_width":"normal","alignment":"center","type_preset":"h3","font":"var(--font-primary--family)","font_size":"","line_height":"normal","letter_spacing":"normal","case":"none","wrap":"pretty","color":"","background":false,"background_color":"#00000026","corner_radius":0,"padding-block-start":0,"padding-block-end":0,"padding-inline-start":0,"padding-inline-end":0},"blocks":{}},"text_Ua9XAW":{"type":"text","name":"t:names.text","settings":{"text":"<p>The link may be incorrect, or the page has been removed. <\/p>","width":"100%","max_width":"normal","alignment":"center","type_preset":"rte","font":"var(--font-primary--family)","font_size":"","line_height":"normal","letter_spacing":"normal","case":"none","wrap":"pretty","color":"","background":false,"background_color":"#00000026","corner_radius":0,"padding-block-start":0,"padding-block-end":16,"padding-inline-start":0,"padding-inline-end":0},"blocks":{}},"button_PAQMwR":{"type":"button","name":"t:names.button","settings":{"label":"Continue shopping","link":"shopify:\/\/collections\/all","open_in_new_tab":false,"style_class":"button","width":"fit-content","custom_width":100,"width_mobile":"fit-content","custom_width_mobile":100},"blocks":{}}},"block_order":["text_GqmVFf","text_Ua9XAW","button_PAQMwR"],"disabled":true,"settings":{"content_direction":"column","section_width":"page-width","section_height":"small","horizontal_alignment_flex_direction_column":"center","vertical_alignment_flex_direction_column":"center","gap":20,"color_scheme":"scheme-e5234ede-d196-4b3b-a9e2-6e7d24b8ca5c","padding-block-start":100,"padding-block-end":100}},"product_list_iA96Tq":{"type":"product-list","blocks":{"static-header":{"type":"_product-list-content","static":true,"settings":{"content_direction":"column","vertical_on_mobile":true,"horizontal_alignment":"flex-start","vertical_alignment":"center","align_baseline":false,"horizontal_alignment_flex_direction_column":"flex-start","vertical_alignment_flex_direction_column":"center","gap":12,"width":"fill","custom_width":100,"width_mobile":"fill","custom_width_mobile":100,"height":"fit","custom_height":100,"inherit_color_scheme":true,"color_scheme":"","background_media":"none","video_position":"cover","background_image_position":"cover","border":"none","border_width":1,"border_opacity":100,"border_radius":0,"padding-block-start":0,"padding-block-end":0,"padding-inline-start":0,"padding-inline-end":0},"blocks":{"text_WJEa9Q":{"type":"text","name":"t:names.text","settings":{"text":"<p>Discover something new<\/p>","width":"fit-content","max_width":"normal","alignment":"left","type_preset":"h4","font":"var(--font-primary--family)","font_size":"","line_height":"normal","letter_spacing":"normal","case":"none","wrap":"pretty","color":"","background":false,"background_color":"#00000026","corner_radius":0,"padding-block-start":0,"padding-block-end":0,"padding-inline-start":0,"padding-inline-end":0},"blocks":{}}},"block_order":["text_WJEa9Q"]},"static-product-card":{"type":"_product-card","name":"t:names.product_card","static":true,"settings":{"product_card_gap":4,"inherit_color_scheme":true,"color_scheme":"","border":"none","border_width":1,"border_opacity":100,"border_radius":0,"padding-block-start":0,"padding-block-end":0,"padding-inline-start":0,"padding-inline-end":0},"blocks":{"product_card_gallery_wxYqE3":{"type":"_product-card-gallery","name":"t:names.product_card_media","settings":{"image_ratio":"adapt","border":"none","border_width":1,"border_opacity":100,"border_radius":0,"padding-block-start":0,"padding-block-end":0,"padding-inline-start":0,"padding-inline-end":0},"blocks":{}},"product_title_83YMDL":{"type":"product-title","name":"t:names.product_title","settings":{"width":"100%","max_width":"normal","alignment":"left","type_preset":"rte","font":"var(--font-body--family)","font_size":"1rem","line_height":"normal","letter_spacing":"normal","case":"none","wrap":"pretty","color":"var(--color-foreground)","background":false,"background_color":"#00000026","corner_radius":0,"padding-block-start":4,"padding-block-end":0,"padding-inline-start":0,"padding-inline-end":0},"blocks":{}},"price_A6DYPt":{"type":"price","name":"t:names.product_price","settings":{"show_sale_price_first":true,"show_installments":false,"show_tax_info":false,"type_preset":"h6","width":"100%","alignment":"left","font":"var(--font-body--family)","font_size":"1rem","line_height":"normal","letter_spacing":"normal","case":"none","color":"var(--color-foreground)","padding-block-start":0,"padding-block-end":0,"padding-inline-start":0,"padding-inline-end":0},"blocks":{}}},"block_order":["product_card_gallery_wxYqE3","product_title_83YMDL","price_A6DYPt"]}},"name":"Featured collection","settings":{"collection":"all","layout_type":"grid","carousel_on_mobile":false,"max_products":4,"columns":4,"mobile_columns":"2","mobile_card_size":"60cqw","columns_gap":12,"rows_gap":24,"icons_style":"arrow","icons_shape":"none","section_width":"page-width","horizontal_alignment":"center","gap":36,"color_scheme":"scheme-e5234ede-d196-4b3b-a9e2-6e7d24b8ca5c","padding-block-start":48,"padding-block-end":48}}},"order":["custom_liquid_KNHcQx","main","product_list_iA96Tq"]}
+{
+  "sections": {
+    "custom_liquid_KNHcQx": {
+      "type": "custom-liquid",
+      "name": "t:names.custom_liquid",
+      "settings": {
+        "custom_liquid": "<style>\n.tsukie-404-wrap{\n  background:#fdfbf7;\n  min-height:70vh;\n  display:flex;\n  align-items:center;\n  justify-content:center;\n  padding:80px 40px;\n}\n.tsukie-404-inner{\n  text-align:center;\n  max-width:600px;\n}\n.tsukie-404-number{\n  font-family:'Playfair Display',serif;\n  font-size:140px;\n  font-weight:600;\n  font-style:italic;\n  margin:0 0 20px;\n  line-height:1;\n  background:linear-gradient(135deg, #1e2a38 0%, #a08766 30%, #c9a77c 50%, #a08766 70%, #1e2a38 100%);\n  -webkit-background-clip:text;\n  -webkit-text-fill-color:transparent;\n  background-clip:text;\n}\n.tsukie-404-title{\n  font-family:'Playfair Display',serif;\n  font-size:42px;\n  font-style:italic;\n  color:#1e2a38;\n  margin:0 0 18px;\n  font-weight:600;\n}\n.tsukie-404-text{\n  font-family:'Montserrat',sans-serif;\n  font-size:15px;\n  line-height:1.8;\n  color:#5a5a5a;\n  margin:0 0 40px;\n}\n.tsukie-404-divider{\n  display:flex;\n  align-items:center;\n  justify-content:center;\n  gap:14px;\n  max-width:300px;\n  margin:0 auto 40px;\n}\n.tsukie-404-line{\n  flex:1;\n  height:1px;\n  background:linear-gradient(90deg, transparent, #a08766, transparent);\n}\n.tsukie-404-icon{\n  font-size:18px;\n  color:#a08766;\n}\n.tsukie-404-buttons{\n  display:flex;\n  gap:16px;\n  justify-content:center;\n  flex-wrap:wrap;\n}\n.tsukie-404-btn{\n  padding:16px 38px;\n  font-family:'Montserrat',sans-serif;\n  font-size:12px;\n  letter-spacing:2px;\n  text-transform:uppercase;\n  font-weight:600;\n  text-decoration:none;\n  border-radius:2px;\n  transition:all 0.3s ease;\n  display:inline-block;\n}\n.tsukie-404-btn-primary{\n  background:#0f1a24;\n  color:#d4c5a9;\n  border:1.5px solid #0f1a24;\n}\n.tsukie-404-btn-primary:hover{\n  background:#1e2a38;\n  border-color:#1e2a38;\n  transform:translateY(-2px);\n  box-shadow:0 8px 20px rgba(15,26,36,0.25);\n}\n.tsukie-404-btn-secondary{\n  background:transparent;\n  color:#1e2a38;\n  border:1.5px solid #a08766;\n}\n.tsukie-404-btn-secondary:hover{\n  background:#f5f1ea;\n  border-color:#1e2a38;\n  transform:translateY(-2px);\n}\n.tsukie-404-suggestions{\n  margin-top:60px;\n  padding-top:50px;\n  border-top:1px solid #e0d9cd;\n}\n.tsukie-404-suggestions h3{\n  font-family:'Cormorant Garamond',serif;\n  font-size:22px;\n  font-style:italic;\n  color:#1e2a38;\n  margin:0 0 24px;\n  font-weight:600;\n}\n.tsukie-404-links{\n  display:flex;\n  gap:24px;\n  justify-content:center;\n  flex-wrap:wrap;\n}\n.tsukie-404-link{\n  font-family:'Montserrat',sans-serif;\n  font-size:13px;\n  letter-spacing:1.5px;\n  text-transform:uppercase;\n  color:#a08766;\n  text-decoration:none;\n  font-weight:600;\n  transition:color 0.3s ease;\n}\n.tsukie-404-link:hover{\n  color:#1e2a38;\n}\n@media(max-width:749px){\n.tsukie-404-wrap{padding:60px 20px;min-height:60vh}\n.tsukie-404-number{font-size:100px}\n.tsukie-404-title{font-size:32px}\n.tsukie-404-text{font-size:14px}\n.tsukie-404-buttons{flex-direction:column}\n.tsukie-404-btn{width:100%}\n}\n</style>\n\n<div class=\"tsukie-404-wrap\">\n  <div class=\"tsukie-404-inner\">\n    <h1 class=\"tsukie-404-number\">404</h1>\n    <h2 class=\"tsukie-404-title\">Page Not Found</h2>\n    \n    <div class=\"tsukie-404-divider\">\n      <span class=\"tsukie-404-line\"></span>\n      <span class=\"tsukie-404-icon\">✦</span>\n      <span class=\"tsukie-404-line\"></span>\n    </div>\n    \n    <p class=\"tsukie-404-text\">The link may be incorrect, or the page has been removed. Let's get you back to discovering something beautiful.</p>\n    \n    <div class=\"tsukie-404-buttons\">\n      <a href=\"/collections/all\" class=\"tsukie-404-btn tsukie-404-btn-primary\">Continue Shopping</a>\n      <a href=\"/\" class=\"tsukie-404-btn tsukie-404-btn-secondary\">Back To Home</a>\n    </div>\n\n    <div class=\"tsukie-404-suggestions\">\n      <h3>Discover Something New</h3>\n      <div class=\"tsukie-404-links\">\n        <a href=\"/collections/new-arrivals\" class=\"tsukie-404-link\">New Arrivals</a>\n        <a href=\"/collections/best-sellers\" class=\"tsukie-404-link\">Best Sellers</a>\n        <a href=\"/collections/sale\" class=\"tsukie-404-link\">Sale</a>\n        <a href=\"/pages/contact\" class=\"tsukie-404-link\">Contact Us</a>\n      </div>\n    </div>\n  </div>\n</div>",
+        "color_scheme": "scheme-e5234ede-d196-4b3b-a9e2-6e7d24b8ca5c",
+        "section_width": "full-width",
+        "padding-block-start": 0,
+        "padding-block-end": 0
+      }
+    },
+    "main": {
+      "type": "main-404",
+      "blocks": {
+        "text_GqmVFf": {
+          "type": "text",
+          "name": "t:names.text",
+          "settings": {
+            "text": "<h1>Page not found</h1>",
+            "width": "100%",
+            "max_width": "normal",
+            "alignment": "center",
+            "type_preset": "h3",
+            "font": "var(--font-primary--family)",
+            "font_size": "",
+            "line_height": "normal",
+            "letter_spacing": "normal",
+            "case": "none",
+            "wrap": "pretty",
+            "color": "",
+            "background": false,
+            "background_color": "#00000026",
+            "corner_radius": 0,
+            "padding-block-start": 0,
+            "padding-block-end": 0,
+            "padding-inline-start": 0,
+            "padding-inline-end": 0
+          },
+          "blocks": {}
+        },
+        "text_Ua9XAW": {
+          "type": "text",
+          "name": "t:names.text",
+          "settings": {
+            "text": "<p>The link may be incorrect, or the page has been removed. </p>",
+            "width": "100%",
+            "max_width": "normal",
+            "alignment": "center",
+            "type_preset": "rte",
+            "font": "var(--font-primary--family)",
+            "font_size": "",
+            "line_height": "normal",
+            "letter_spacing": "normal",
+            "case": "none",
+            "wrap": "pretty",
+            "color": "",
+            "background": false,
+            "background_color": "#00000026",
+            "corner_radius": 0,
+            "padding-block-start": 0,
+            "padding-block-end": 16,
+            "padding-inline-start": 0,
+            "padding-inline-end": 0
+          },
+          "blocks": {}
+        },
+        "button_PAQMwR": {
+          "type": "button",
+          "name": "t:names.button",
+          "settings": {
+            "label": "Continue shopping",
+            "link": "shopify://collections/all",
+            "open_in_new_tab": false,
+            "style_class": "button",
+            "width": "fit-content",
+            "custom_width": 100,
+            "width_mobile": "fit-content",
+            "custom_width_mobile": 100
+          },
+          "blocks": {}
+        }
+      },
+      "block_order": [
+        "text_GqmVFf",
+        "text_Ua9XAW",
+        "button_PAQMwR"
+      ],
+      "disabled": true,
+      "settings": {
+        "content_direction": "column",
+        "section_width": "page-width",
+        "section_height": "small",
+        "horizontal_alignment_flex_direction_column": "center",
+        "vertical_alignment_flex_direction_column": "center",
+        "gap": 20,
+        "color_scheme": "scheme-e5234ede-d196-4b3b-a9e2-6e7d24b8ca5c",
+        "padding-block-start": 100,
+        "padding-block-end": 100
+      }
+    },
+    "product_list_iA96Tq": {
+      "type": "product-list",
+      "blocks": {
+        "static-header": {
+          "type": "_product-list-content",
+          "static": true,
+          "settings": {
+            "content_direction": "column",
+            "vertical_on_mobile": true,
+            "horizontal_alignment": "flex-start",
+            "vertical_alignment": "center",
+            "align_baseline": false,
+            "horizontal_alignment_flex_direction_column": "flex-start",
+            "vertical_alignment_flex_direction_column": "center",
+            "gap": 12,
+            "width": "fill",
+            "custom_width": 100,
+            "width_mobile": "fill",
+            "custom_width_mobile": 100,
+            "height": "fit",
+            "custom_height": 100,
+            "inherit_color_scheme": true,
+            "color_scheme": "",
+            "background_media": "none",
+            "video_position": "cover",
+            "background_image_position": "cover",
+            "border": "none",
+            "border_width": 1,
+            "border_opacity": 100,
+            "border_radius": 0,
+            "padding-block-start": 0,
+            "padding-block-end": 0,
+            "padding-inline-start": 0,
+            "padding-inline-end": 0
+          },
+          "blocks": {
+            "text_WJEa9Q": {
+              "type": "text",
+              "name": "t:names.text",
+              "settings": {
+                "text": "<p>Discover something new</p>",
+                "width": "fit-content",
+                "max_width": "normal",
+                "alignment": "left",
+                "type_preset": "h4",
+                "font": "var(--font-primary--family)",
+                "font_size": "",
+                "line_height": "normal",
+                "letter_spacing": "normal",
+                "case": "none",
+                "wrap": "pretty",
+                "color": "",
+                "background": false,
+                "background_color": "#00000026",
+                "corner_radius": 0,
+                "padding-block-start": 0,
+                "padding-block-end": 0,
+                "padding-inline-start": 0,
+                "padding-inline-end": 0
+              },
+              "blocks": {}
+            }
+          },
+          "block_order": [
+            "text_WJEa9Q"
+          ]
+        },
+        "static-product-card": {
+          "type": "_product-card",
+          "name": "t:names.product_card",
+          "static": true,
+          "settings": {
+            "product_card_gap": 4,
+            "inherit_color_scheme": true,
+            "color_scheme": "",
+            "border": "none",
+            "border_width": 1,
+            "border_opacity": 100,
+            "border_radius": 0,
+            "padding-block-start": 0,
+            "padding-block-end": 0,
+            "padding-inline-start": 0,
+            "padding-inline-end": 0
+          },
+          "blocks": {
+            "product_card_gallery_wxYqE3": {
+              "type": "_product-card-gallery",
+              "name": "t:names.product_card_media",
+              "settings": {
+                "image_ratio": "adapt",
+                "border": "none",
+                "border_width": 1,
+                "border_opacity": 100,
+                "border_radius": 0,
+                "padding-block-start": 0,
+                "padding-block-end": 0,
+                "padding-inline-start": 0,
+                "padding-inline-end": 0
+              },
+              "blocks": {}
+            },
+            "product_title_83YMDL": {
+              "type": "product-title",
+              "name": "t:names.product_title",
+              "settings": {
+                "width": "100%",
+                "max_width": "normal",
+                "alignment": "left",
+                "type_preset": "rte",
+                "font": "var(--font-body--family)",
+                "font_size": "1rem",
+                "line_height": "normal",
+                "letter_spacing": "normal",
+                "case": "none",
+                "wrap": "pretty",
+                "color": "var(--color-foreground)",
+                "background": false,
+                "background_color": "#00000026",
+                "corner_radius": 0,
+                "padding-block-start": 4,
+                "padding-block-end": 0,
+                "padding-inline-start": 0,
+                "padding-inline-end": 0
+              },
+              "blocks": {}
+            },
+            "price_A6DYPt": {
+              "type": "price",
+              "name": "t:names.product_price",
+              "settings": {
+                "show_sale_price_first": true,
+                "show_installments": false,
+                "show_tax_info": false,
+                "type_preset": "h6",
+                "width": "100%",
+                "alignment": "left",
+                "font": "var(--font-body--family)",
+                "font_size": "1rem",
+                "line_height": "normal",
+                "letter_spacing": "normal",
+                "case": "none",
+                "color": "var(--color-foreground)",
+                "padding-block-start": 0,
+                "padding-block-end": 0,
+                "padding-inline-start": 0,
+                "padding-inline-end": 0
+              },
+              "blocks": {}
+            }
+          },
+          "block_order": [
+            "product_card_gallery_wxYqE3",
+            "product_title_83YMDL",
+            "price_A6DYPt"
+          ]
+        }
+      },
+      "name": "Featured collection",
+      "settings": {
+        "collection": "all",
+        "layout_type": "grid",
+        "carousel_on_mobile": false,
+        "max_products": 4,
+        "columns": 4,
+        "mobile_columns": "2",
+        "mobile_card_size": "60cqw",
+        "columns_gap": 12,
+        "rows_gap": 24,
+        "icons_style": "arrow",
+        "icons_shape": "none",
+        "section_width": "page-width",
+        "horizontal_alignment": "center",
+        "gap": 36,
+        "color_scheme": "scheme-e5234ede-d196-4b3b-a9e2-6e7d24b8ca5c",
+        "padding-block-start": 48,
+        "padding-block-end": 48
+      }
+    }
+  },
+  "order": [
+    "custom_liquid_KNHcQx",
+    "main",
+    "product_list_iA96Tq"
+  ]
+}

@@ -13,7 +13,7 @@
                   <span class="tsukie-product-badge" style="position:absolute; top:12px; left:12px; background:#1e2a38; color:#d4c5a9; font-size:10px; letter-spacing:1.5px; text-transform:uppercase; padding:6px 12px; font-weight:600; border-radius:2px; z-index:2;">Bestsellers</span>
                   
                   {% if product.featured_image %}
-                    <img src="{{ product.featured_image | image_url: width: 400 }}" alt="{{ product.title | escape }}" style="width:100%; height:100%; object-fit:cover; display:block; transition:transform 0.5s ease;" loading="lazy">
+                    <img src="{{ product.featured_image | image_url: width: 400 }}" alt="{{ product.title | escape }}" width="{{ product.featured_image.width }}" height="{{ product.featured_image.height }}" style="width:100%; height:100%; object-fit:cover; display:block; transition:transform 0.5s ease;" loading="lazy">
                   {% else %}
                     {{ 'product-1' | placeholder_svg_tag: 'placeholder-svg' }}
                   {% endif %}
@@ -92,6 +92,13 @@
   }
 }
 @media(max-width: 749px) {
+  #tsukie-recently-viewed-{{ section.id }} .tsukie-product-badge {
+    font-size: 7px !important;
+    padding: 3px 6px !important;
+    letter-spacing: 1px !important;
+    top: 6px !important;
+    left: 6px !important;
+  }
   #tsukie-recently-viewed-{{ section.id }} .recently-viewed-inner {
     padding: 50px 16px !important;
   }
