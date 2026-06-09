@@ -6,7 +6,7 @@
 @media screen and (max-width: 749px) {
 
   /* -----------------------------------------------------------------------
-     1. PRODUCT MEDIA GALLERY — Swipe + Dots
+     1. PRODUCT MEDIA GALLERY — Swipe + Dots (Dawn native gallery)
      ----------------------------------------------------------------------- */
 
   /* Hide desktop arrows on mobile */
@@ -81,8 +81,13 @@
 
 
   /* -----------------------------------------------------------------------
-     2. PRODUCT RECOMMENDATIONS — Horizontal Scroll (1.5 cards visible)
+     2. PRODUCT RECOMMENDATIONS — Fix visibility + Horizontal Scroll
      ----------------------------------------------------------------------- */
+
+  /* CRITICAL: Override Dawn's hidden--mobile so products are visible */
+  .product-recommendations .resource-list.hidden--mobile {
+    display: flex !important;
+  }
 
   /* Hide arrows in recommendations */
   .product-recommendations .slideshow-arrows,
@@ -100,9 +105,10 @@
     scroll-snap-type: x mandatory !important;
     -webkit-overflow-scrolling: touch !important;
     gap: 16px !important;
-    padding: 0 15px !important;
+    padding: 0 16px 8px !important;
     scrollbar-width: none !important;
     flex-wrap: nowrap !important;
+    align-items: flex-start !important;
   }
   .product-recommendations .resource-list--grid::-webkit-scrollbar,
   .product-recommendations .resource-list::-webkit-scrollbar {
@@ -113,6 +119,7 @@
   .product-recommendations .resource-list__item {
     flex: 0 0 70% !important;
     max-width: 70% !important;
+    min-width: 0 !important;
     scroll-snap-align: start !important;
   }
 

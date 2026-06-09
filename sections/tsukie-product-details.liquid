@@ -1349,6 +1349,54 @@
 
 let tsukieCurrentImage = 0;
 
+// Touch Swipe Support for Mobile Gallery
+(function() {
+  function initTouchSwipe() {
+    var mainImg = document.querySelector('.tsukie-main-image');
+    if (!mainImg) return;
+
+    var touchStartX = 0;
+    var touchStartY = 0;
+    var isDragging = false;
+
+    mainImg.addEventListener('touchstart', function(e) {
+      touchStartX = e.touches[0].clientX;
+      touchStartY = e.touches[0].clientY;
+      isDragging = false;
+    }, { passive: true });
+
+    mainImg.addEventListener('touchmove', function(e) {
+      if (!isDragging) {
+        var dx = Math.abs(e.touches[0].clientX - touchStartX);
+        var dy = Math.abs(e.touches[0].clientY - touchStartY);
+        // Only swipe if horizontal movement is dominant
+        if (dx > dy && dx > 8) {
+          isDragging = true;
+        }
+      }
+    }, { passive: true });
+
+    mainImg.addEventListener('touchend', function(e) {
+      if (!isDragging) return;
+      var deltaX = e.changedTouches[0].clientX - touchStartX;
+      // Min 40px swipe to trigger
+      if (Math.abs(deltaX) < 40) return;
+      if (deltaX < 0) {
+        tsukieNextImage(); // swipe left = next
+      } else {
+        tsukiePrevImage(); // swipe right = prev
+      }
+      isDragging = false;
+    }, { passive: true });
+  }
+
+  if (document.readyState === 'loading') {
+    document.addEventListener('DOMContentLoaded', initTouchSwipe);
+  } else {
+    initTouchSwipe();
+  }
+})();
+
 // Size Guide Modal JS
 function tsukieOpenSizeGuide(e) {
   if (e) e.preventDefault();
