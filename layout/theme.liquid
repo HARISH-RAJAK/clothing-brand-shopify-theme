@@ -137,5 +137,88 @@
     {% if settings.quick_add or settings.mobile_quick_add %}
       {% render 'quick-add-modal' %}
     {% endif %}
+
+    <!-- Global Tsukie Size Guide Modal -->
+    <div class="tsukie-size-guide-modal" id="tsukie-size-guide-modal" style="display:none;">
+      <div class="tsukie-size-guide-modal-overlay" onclick="tsukieCloseSizeGuide()"></div>
+      <div class="tsukie-size-guide-modal-content">
+        <button class="tsukie-size-guide-modal-close" onclick="tsukieCloseSizeGuide()">&times;</button>
+        <h3 class="tsukie-size-guide-modal-title">Size Guide</h3>
+        <div class="tsukie-size-guide-table-wrap">
+          <table>
+            <thead>
+              <tr>
+                <th>Size</th>
+                <th>Bust (in)</th>
+                <th>Waist (in)</th>
+                <th>Hips (in)</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td>XS</td>
+                <td>32</td>
+                <td>26</td>
+                <td>36</td>
+              </tr>
+              <tr>
+                <td>S</td>
+                <td>34</td>
+                <td>28</td>
+                <td>38</td>
+              </tr>
+              <tr>
+                <td>M</td>
+                <td>36</td>
+                <td>30</td>
+                <td>40</td>
+              </tr>
+              <tr>
+                <td>L</td>
+                <td>38</td>
+                <td>32</td>
+                <td>42</td>
+              </tr>
+              <tr>
+                <td>XL</td>
+                <td>40</td>
+                <td>34</td>
+                <td>44</td>
+              </tr>
+              <tr>
+                <td>XXL</td>
+                <td>42</td>
+                <td>36</td>
+                <td>46</td>
+              </tr>
+              <tr>
+                <td>3XL</td>
+                <td>44</td>
+                <td>38</td>
+                <td>48</td>
+              </tr>
+              <tr>
+                <td>4XL</td>
+                <td>46</td>
+                <td>40</td>
+                <td>50</td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+    </div>
+
+    <script>
+      function tsukieOpenSizeGuide(e) {
+        if (e) e.preventDefault();
+        const modal = document.getElementById('tsukie-size-guide-modal');
+        if (modal) modal.classList.add('open');
+      }
+      function tsukieCloseSizeGuide() {
+        const modal = document.getElementById('tsukie-size-guide-modal');
+        if (modal) modal.classList.remove('open');
+      }
+    </script>
   </body>
 </html>

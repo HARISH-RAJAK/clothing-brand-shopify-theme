@@ -1,3 +1,5 @@
+@import url('https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,500;0,600;0,700;1,300;1,400;1,500;1,600;1,700&family=Montserrat:ital,wght@0,100..900;1,100..900&display=swap');
+
 * {
   box-sizing: border-box;
 }
@@ -4911,7 +4913,7 @@ ul.product-grid,
   background: #1E2A38 !important;
   color: #FDFBF7 !important;
   font-family: 'Montserrat', sans-serif !important;
-  font-size: 10px !important;
+  font-size: 11px !important;
   letter-spacing: 1.5px !important;
   padding: 4px 8px !important;
   font-weight: 600 !important;
@@ -4935,7 +4937,7 @@ ul.product-grid,
 
 .product-details .variant-option-legend__name {
   font-family: 'Montserrat', sans-serif !important;
-  font-size: 11px !important;
+  font-size: 12px !important;
   letter-spacing: 1.5px !important;
   text-transform: uppercase !important;
   color: #1E2A38 !important;
@@ -5057,7 +5059,7 @@ ul.product-grid,
   font-family: 'Montserrat', sans-serif !important;
   font-size: 12px !important;
   font-weight: 500 !important;
-  color: #a08766 !important;
+  color: #1E2A38 !important;
   display: inline-flex !important;
   align-items: center !important;
   gap: 6px !important;
@@ -5129,7 +5131,7 @@ ul.product-grid,
 }
 
 .product-details .tsukie-verified {
-  border: 1px solid #e0d9cd !important;
+  border: 1px solid #1E2A38 !important;
   padding: 4px 10px !important;
   font-family: 'Montserrat', sans-serif !important;
   font-size: 10px !important;
@@ -5281,6 +5283,14 @@ ul.product-grid,
 
 /* 12. Mobile Gallery Overrides */
 @media (max-width: 749px) {
+  .product-details .variant-option__button-label--has-swatch {
+    width: 28px !important;
+    height: 28px !important;
+    min-width: 28px !important;
+  }
+  .product-details .variant-option--buttons:not(.variant-option--swatches) .variant-option__button-label {
+    height: 44px !important;
+  }
   .slideshow-controls__thumbnail-badge {
     display: none !important;
   }
