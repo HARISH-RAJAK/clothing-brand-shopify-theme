@@ -76,11 +76,15 @@
             ref="fieldsets[]"
             {{ option_id_attribute }}
           >
-            <legend>
-              {{ product_option.name | escape -}}
-              {%- if variant_style == 'swatch' -%}
-                <span class="variant-option__swatch-value">{{ product_option.selected_value }}</span>
-              {%- endif %}
+            <legend class="variant-option-legend">
+              <span class="variant-option-legend__left">
+                <span class="variant-option-legend__name">{{ product_option.name | upcase }}</span>
+                {%- if product_option.name == 'Size' or product_option.name == 'Size/Fits' or product_option.name == 'Fit' -%}
+                  <span class="variant-option-legend__divider">|</span>
+                  <a href="#" class="tsukie-size-guide-link" onclick="tsukieOpenSizeGuide(event)">SIZE GUIDE</a>
+                {%- endif -%}
+              </span>
+              <span class="variant-option-legend__value">{{ product_option.selected_value }}</span>
             </legend>
             {%- for product_option_value in product_option.values -%}
               {% if product_option_value.size > longest_value and option_id_attribute %}
@@ -128,7 +132,8 @@
                   {% render 'swatch',
                     swatch: product_option_value.swatch,
                     variant_image: featured_media,
-                    mode: 'unscaled'
+                    mode: 'unscaled',
+                    label: product_option_value
                   %}
                 {% else %}
                   {% if product_option_value.available == true %}

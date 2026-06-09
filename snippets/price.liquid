@@ -15,8 +15,10 @@
   assign compare_at_price = selected_variant.compare_at_price
 
   assign show_compare_price = false
+  assign save_percent = 0
   if compare_at_price > price
     assign show_compare_price = true
+    assign save_percent = compare_at_price | minus: price | times: 100 | divided_by: compare_at_price
   endif
 
   if product_resource == blank
@@ -123,6 +125,9 @@
           <span class="visually-hidden">{{ 'content.price_sale' | t }}&nbsp;</span>
           <span class="price-item--sale price">{{ price | default: '&nbsp;' }}</span>
         </span>
+      {% endif %}
+      {% if save_percent > 0 %}
+        <span class="price-save-badge">SAVE {{ save_percent }}%</span>
       {% endif %}
     </div>
   {% endif %}

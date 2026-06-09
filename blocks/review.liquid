@@ -87,20 +87,10 @@
       {% endif %}
     </div>
 
-    {%- if block_settings.show_number or block_settings.stars_style == 'single' -%}
-      <p class="rating-count {{ block_settings.type_preset }}">
-        {%- if block_settings.stars_style == 'single' -%}
-          <span aria-hidden="true">{{- rating | round: 1 }}</span>
-        {%- endif -%}
-        {%- if block_settings.stars_style == 'single' and block_settings.show_number -%}
-          <span class="rating-count-separator">|</span>
-        {%- endif -%}
-        {%- if block_settings.show_number -%}
-          {{- rating_count }}
-          {{ 'content.reviews' | t }}
-        {%- endif -%}
-      </p>
-    {%- endif -%}
+    <p class="rating-count {{ block_settings.type_preset }}">
+      {{ rating | round: 1 }} <span class="rating-count-text">{{ rating_count }} {{ 'content.reviews' | t }}</span>
+    </p>
+    <div class="tsukie-verified">VERIFIED PURCHASE</div>
   </div>
 {%- endif -%}
 

@@ -11,6 +11,7 @@
   "sections": {
     "product_details": {
       "type": "tsukie-product-details",
+      "disabled": true,
       "settings": {
         "show_size_guide": true,
         "show_inventory_urgency": true,
@@ -99,115 +100,51 @@
             "padding-inline-end": 0
           },
           "blocks": {
-            "group_icgrde": {
-              "type": "group",
-              "name": "Header",
+            "product_title": {
+              "type": "product-title",
               "settings": {
-                "content_direction": "column",
-                "vertical_on_mobile": true,
-                "horizontal_alignment": "flex-start",
-                "vertical_alignment": "center",
-                "align_baseline": false,
-                "horizontal_alignment_flex_direction_column": "flex-start",
-                "vertical_alignment_flex_direction_column": "center",
-                "gap": 12,
-                "width": "fill",
-                "custom_width": 100,
-                "width_mobile": "fill",
-                "custom_width_mobile": 100,
-                "height": "fit",
-                "custom_height": 100,
-                "inherit_color_scheme": true,
-                "color_scheme": "",
-                "background_media": "none",
-                "video_position": "cover",
-                "background_image_position": "cover",
-                "border": "none",
-                "border_width": 1,
-                "border_opacity": 100,
-                "border_radius": 0,
-                "toggle_overlay": false,
-                "overlay_color": "#00000026",
-                "overlay_style": "solid",
-                "gradient_direction": "to top",
-                "link": "",
-                "open_in_new_tab": false,
-                "placeholder": "",
-                "padding-block-start": 0,
-                "padding-block-end": 0,
-                "padding-inline-start": 0,
-                "padding-inline-end": 0
-              },
-              "blocks": {
-                "text_xrnftG": {
-                  "type": "text",
-                  "name": "Product title",
-                  "settings": {
-                    "text": "<h3>{{ closest.product.title }}</h3>",
-                    "width": "100%",
-                    "max_width": "normal",
-                    "alignment": "left",
-                    "type_preset": "h3",
-                    "font": "var(--font-primary--family)",
-                    "font_size": "",
-                    "line_height": "normal",
-                    "letter_spacing": "normal",
-                    "case": "none",
-                    "wrap": "pretty",
-                    "color": "",
-                    "background": false,
-                    "background_color": "#00000026",
-                    "corner_radius": 0,
-                    "padding-block-start": 0,
-                    "padding-block-end": 0,
-                    "padding-inline-start": 0,
-                    "padding-inline-end": 0
-                  },
-                  "blocks": {}
-                },
-                "price_tVjtKg": {
-                  "type": "price",
-                  "settings": {
-                    "show_sale_price_first": true,
-                    "show_installments": false,
-                    "show_tax_info": false,
-                    "type_preset": "paragraph",
-                    "width": "100%",
-                    "alignment": "left",
-                    "font": "var(--font-body--family)",
-                    "font_size": "1rem",
-                    "line_height": "normal",
-                    "letter_spacing": "normal",
-                    "case": "none",
-                    "color": "var(--color-foreground)",
-                    "padding-block-start": 4,
-                    "padding-block-end": 0,
-                    "padding-inline-start": 0,
-                    "padding-inline-end": 0
-                  },
-                  "blocks": {}
-                }
-              },
-              "block_order": [
-                "text_xrnftG",
-                "price_tVjtKg"
-              ]
+                "type_preset": "h1",
+                "width": "100%",
+                "max_width": "none",
+                "alignment": "left"
+              }
             },
-            "divider_VJhene": {
+            "reviews": {
+              "type": "review",
+              "settings": {
+                "stars_style": "outline",
+                "show_number": true,
+                "rating_color": "foreground",
+                "type_preset": "paragraph"
+              }
+            },
+            "price": {
+              "type": "price",
+              "settings": {
+                "show_sale_price_first": true,
+                "show_installments": false,
+                "show_tax_info": false,
+                "type_preset": "paragraph",
+                "width": "100%",
+                "alignment": "left"
+              }
+            },
+            "divider": {
               "type": "_divider",
-              "name": "t:names.divider",
               "settings": {
                 "thickness": 1,
                 "corner_radius": "square",
                 "width_percent": 100,
                 "padding-block-start": 0,
-                "padding-block-end": 0
-              },
-              "blocks": {}
+                "padding-block-end": 12
+              }
             },
-            "variant_picker_38HkTF": {
+            "trust_badges": {
+              "type": "trust-badges",
+              "settings": {}
+            },
+            "variant_picker": {
               "type": "variant-picker",
-              "name": "t:names.product_variant_picker",
               "settings": {
                 "variant_style": "buttons",
                 "show_swatches": true,
@@ -216,10 +153,9 @@
                 "padding-block-end": 8,
                 "padding-inline-start": 0,
                 "padding-inline-end": 0
-              },
-              "blocks": {}
+              }
             },
-            "buy_buttons_eYQEYi": {
+            "buy_buttons": {
               "type": "buy-buttons",
               "settings": {
                 "stacking": true,
@@ -234,82 +170,99 @@
                 "quantity": {
                   "type": "quantity",
                   "static": true,
-                  "settings": {},
-                  "blocks": {}
+                  "settings": {}
                 },
                 "add-to-cart": {
                   "type": "add-to-cart",
                   "static": true,
                   "settings": {
                     "style_class": "button"
-                  },
-                  "blocks": {}
+                  }
                 },
                 "accelerated-checkout": {
                   "type": "accelerated-checkout",
                   "static": true,
-                  "settings": {},
-                  "blocks": {}
+                  "settings": {}
                 }
               },
               "block_order": []
             },
-            "ai_gen_block_660586a_mxHViW": {
-              "type": "ai_gen_block_660586a",
+            "product_accordions": {
+              "type": "accordion",
               "settings": {
-                "desktop_width_percent": 100,
-                "badge_1_icon": "✦",
-                "badge_1_title": "PREMIUM FABRIC",
-                "badge_1_subtitle": "100% Viscose",
-                "badge_2_icon": "↺",
-                "badge_2_title": "EASY EXCHANGE",
-                "badge_2_subtitle": "14 days",
-                "badge_3_icon": "⛨",
-                "badge_3_title": "SECURE PAYMENT",
-                "badge_3_subtitle": "UPI · Cards · COD",
-                "accordion_1_title": "WHY YOU'LL LOVE IT",
-                "accordion_1_content": "<p>Crafted for the modern woman who values comfort without compromising on style. This piece transitions effortlessly from work to weekend.</p>",
-                "accordion_2_title": "FABRIC & CARE",
-                "accordion_2_content": "<p><strong>Material:</strong> 100% Viscose<br/><strong>Care:</strong> Machine wash cold, gentle cycle. Do not bleach. Line dry in shade. Iron on low heat if needed.</p>",
-                "accordion_3_title": "SHIPPING & RETURNS",
-                "shipping_1_label": "STANDARD DELIVERY",
-                "shipping_1_value": "4–6 business days · Free above ₹1,999",
-                "shipping_2_label": "EXPRESS DELIVERY",
-                "shipping_2_value": "1–2 business days · ₹149",
-                "shipping_3_label": "RETURNS",
-                "shipping_3_value": "14 days from delivery · Free pickup",
-                "shipping_4_label": "EXCHANGE",
-                "shipping_4_value": "Size & color swaps available",
-                "border_color": "#e5e5e5",
-                "icon_color": "#a08766",
-                "title_color": "#1a1a1a",
-                "subtitle_color": "#6b6b6b",
-                "section_spacing": 24,
-                "badge_padding": 20,
-                "accordion_padding": 18,
-                "icon_size": 20,
-                "badge_title_size": 11,
-                "badge_subtitle_size": 11,
-                "accordion_title_size": 12,
-                "accordion_content_size": 13,
-                "accordion_icon_size": 16,
-                "grid_label_size": 11,
-                "grid_value_size": 13,
-                "title_letter_spacing": 1.5
+                "icon": "plus",
+                "dividers": true
               },
-              "blocks": {}
+              "blocks": {
+                "accordion_row_description": {
+                  "type": "_accordion-row",
+                  "settings": {
+                    "heading": "Why You'll Love It"
+                  },
+                  "blocks": {
+                    "desc_content": {
+                      "type": "product-description",
+                      "settings": {}
+                    }
+                  },
+                  "block_order": [
+                    "desc_content"
+                  ]
+                },
+                "accordion_row_fabric": {
+                  "type": "_accordion-row",
+                  "settings": {
+                    "heading": "Fabric & Care"
+                  },
+                  "blocks": {
+                    "fabric_content": {
+                      "type": "text",
+                      "settings": {
+                        "text": "<p>{{ closest.product.metafields.custom.fabric_care | default: 'Dry clean only. Do not tumble dry. Iron on low heat.' }}</p>"
+                      }
+                    }
+                  },
+                  "block_order": [
+                    "fabric_content"
+                  ]
+                },
+                "accordion_row_shipping": {
+                  "type": "_accordion-row",
+                  "settings": {
+                    "heading": "Shipping & Returns"
+                  },
+                  "blocks": {
+                    "shipping_content": {
+                      "type": "text",
+                      "settings": {
+                        "text": "<p>Free shipping on orders above ₹1,999. Easy 14-day returns and exchanges. Delivery within 5-7 business days across India.</p>"
+                      }
+                    }
+                  },
+                  "block_order": [
+                    "shipping_content"
+                  ]
+                }
+              },
+              "block_order": [
+                "accordion_row_description",
+                "accordion_row_fabric",
+                "accordion_row_shipping"
+              ]
             }
           },
           "block_order": [
-            "group_icgrde",
-            "divider_VJhene",
-            "variant_picker_38HkTF",
-            "buy_buttons_eYQEYi",
-            "ai_gen_block_660586a_mxHViW"
+            "product_title",
+            "reviews",
+            "price",
+            "divider",
+            "trust_badges",
+            "variant_picker",
+            "buy_buttons",
+            "product_accordions"
           ]
         }
       },
-      "disabled": true,
       "settings": {
         "content_width": "content-center-aligned",
         "desktop_media_position": "left",

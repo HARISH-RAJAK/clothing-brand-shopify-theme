@@ -25,6 +25,33 @@
     assign swatch_value = 'rgb(' | append: swatch.color.rgb | append: ')'
   endif
 
+  if swatch_value == null and label != blank
+    assign label_handle = label | handleize
+    if label_handle == 'white'
+      assign swatch_value = '#ffffff'
+    elsif label_handle == 'black'
+      assign swatch_value = '#000000'
+    elsif label_handle == 'navy' or label_handle == 'dark-navy' or label_handle == 'navy-blue'
+      assign swatch_value = '#1e2a38'
+    elsif label_handle == 'beige'
+      assign swatch_value = '#f5f1ea'
+    elsif label_handle == 'cream'
+      assign swatch_value = '#fdfbf7'
+    elsif label_handle == 'gold'
+      assign swatch_value = '#a08766'
+    elsif label_handle == 'sand'
+      assign swatch_value = '#e0d9cd'
+    elsif label_handle == 'rose' or label_handle == 'pink'
+      assign swatch_value = '#e8d8ce'
+    elsif label_handle == 'sage' or label_handle == 'olive' or label_handle == 'green'
+      assign swatch_value = '#8a9a86'
+    elsif label_handle == 'grey' or label_handle == 'gray'
+      assign swatch_value = '#808080'
+    else
+      assign swatch_value = label_handle
+    endif
+  endif
+
   case mode
     when 'unscaled'
       assign extra_classes = extra_classes | append: ' swatch--unscaled'

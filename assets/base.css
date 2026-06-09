@@ -4848,3 +4848,575 @@ ul.product-grid,
     padding-bottom: 72px !important; /* 72px mobile */
   }
 }
+
+/* ==========================================================================
+   Tsukie Native Product Page Custom Styling Overrides (Dawn Blocks Migration)
+   ========================================================================== */
+
+/* 1. Title & Subtitle Styling */
+.product-details .product-title,
+.product-details h1,
+.product-details .view-product-title a {
+  font-family: 'Cormorant Garamond', serif !important;
+  font-weight: 300 !important;
+  color: #1E2A38 !important;
+  font-size: 42px !important;
+  margin-bottom: 16px !important;
+  line-height: 1.2 !important;
+}
+@media (max-width: 749px) {
+  .product-details .product-title,
+  .product-details h1,
+  .product-details .view-product-title a {
+    font-size: 32px !important;
+  }
+}
+
+.product-details .product-subtitle,
+.product-details .product__text {
+  font-family: 'Montserrat', sans-serif !important;
+  font-size: 13px !important;
+  color: #666 !important;
+  margin: 0 0 16px !important;
+  font-weight: 300 !important;
+}
+
+/* 2. Price Styling */
+.product-details .price,
+.product-details .price-item--sale {
+  font-family: 'Montserrat', sans-serif !important;
+  font-weight: 500 !important;
+  color: #1E2A38 !important;
+  font-size: 28px !important;
+}
+@media (max-width: 749px) {
+  .product-details .price,
+  .product-details .price-item--sale {
+    font-size: 24px !important;
+  }
+}
+
+.product-details .compare-at-price,
+.product-details .price-item--regular {
+  font-family: 'Montserrat', sans-serif !important;
+  font-weight: 400 !important;
+  text-decoration: line-through !important;
+  color: #1E2A38 !important;
+  opacity: 0.5 !important;
+  font-size: 16px !important;
+  margin-left: 12px !important;
+}
+
+.product-details .price-save-badge {
+  background: #1E2A38 !important;
+  color: #FDFBF7 !important;
+  font-family: 'Montserrat', sans-serif !important;
+  font-size: 10px !important;
+  letter-spacing: 1.5px !important;
+  padding: 4px 8px !important;
+  font-weight: 600 !important;
+  text-transform: uppercase !important;
+  margin-left: 12px !important;
+  display: inline-block !important;
+  vertical-align: middle !important;
+}
+
+/* 3. Variant Picker - Legends */
+.product-details .variant-option-legend {
+  display: flex !important;
+  justify-content: space-between !important;
+  align-items: center !important;
+  width: 100% !important;
+  margin-bottom: 12px !important;
+  float: none !important;
+  border: none !important;
+  padding: 0 !important;
+}
+
+.product-details .variant-option-legend__name {
+  font-family: 'Montserrat', sans-serif !important;
+  font-size: 11px !important;
+  letter-spacing: 1.5px !important;
+  text-transform: uppercase !important;
+  color: #1E2A38 !important;
+  font-weight: 700 !important;
+}
+
+.product-details .variant-option-legend__divider {
+  color: #d4c5a9 !important;
+  margin: 0 8px !important;
+}
+
+.product-details .tsukie-size-guide-link {
+  color: #a08766 !important;
+  text-decoration: underline !important;
+  font-size: 11px !important;
+  font-family: 'Montserrat', sans-serif !important;
+  text-transform: uppercase !important;
+  font-weight: 600 !important;
+  letter-spacing: 1px !important;
+  cursor: pointer !important;
+}
+
+.product-details .variant-option-legend__value {
+  font-family: 'Montserrat', sans-serif !important;
+  font-size: 11px !important;
+  color: #666 !important;
+  font-weight: 400 !important;
+}
+
+/* 4. Variant Picker - Color Swatches */
+.product-details .variant-option--swatches {
+  display: flex !important;
+  gap: 10px !important;
+  flex-wrap: wrap !important;
+}
+
+.product-details .variant-option__button-label--has-swatch {
+  border-radius: 50% !important;
+  border: 1px solid #A08766 !important;
+  width: 32px !important;
+  height: 32px !important;
+  min-width: 32px !important;
+  padding: 0 !important;
+  display: inline-flex !important;
+  align-items: center !important;
+  justify-content: center !important;
+  background: transparent !important;
+  overflow: visible !important;
+  cursor: pointer !important;
+  transition: all 0.2s !important;
+  margin: 0 !important;
+}
+
+.product-details .variant-option__button-label--has-swatch input[type="radio"] {
+  position: absolute !important;
+  opacity: 0 !important;
+  width: 0 !important;
+  height: 0 !important;
+}
+
+.product-details .variant-option__button-label--has-swatch .swatch {
+  width: 100% !important;
+  height: 100% !important;
+  border-radius: 50% !important;
+  border: none !important;
+  margin: 0 !important;
+}
+
+.product-details .variant-option__button-label--has-swatch:has(input[type="radio"]:checked) {
+  box-shadow: 0 0 0 2px #FDFBF7, 0 0 0 4px #1E2A38 !important;
+  border-color: #1E2A38 !important;
+}
+
+/* 5. Variant Picker - Size Buttons */
+.product-details .variant-option--buttons:not(.variant-option--swatches) {
+  display: flex !important;
+  gap: 8px !important;
+  flex-wrap: wrap !important;
+}
+
+.product-details .variant-option--buttons:not(.variant-option--swatches) .variant-option__button-label {
+  background: #FDFBF7 !important;
+  border: 1px solid #A08766 !important;
+  height: 48px !important;
+  min-width: 48px !important;
+  display: inline-flex !important;
+  align-items: center !important;
+  justify-content: center !important;
+  padding: 0 16px !important;
+  font-family: 'Montserrat', sans-serif !important;
+  font-size: 11px !important;
+  font-weight: 500 !important;
+  color: #1E2A38 !important;
+  cursor: pointer !important;
+  transition: all 0.2s !important;
+  border-radius: 0 !important;
+}
+
+.product-details .variant-option--buttons:not(.variant-option--swatches) .variant-option__button-label:hover {
+  border-color: #1E2A38 !important;
+}
+
+.product-details .variant-option--buttons:not(.variant-option--swatches) .variant-option__button-label:has(input[type="radio"]:checked) {
+  background: #1E2A38 !important;
+  color: #FDFBF7 !important;
+  border-color: #1E2A38 !important;
+}
+
+.product-details .variant-option--buttons:not(.variant-option--swatches) .variant-option__button-label:has(input[type="radio"][aria-disabled="true"]),
+.product-details .variant-option--buttons:not(.variant-option--swatches) .variant-option__button-label:has(input[type="radio"][disabled]),
+.product-details .variant-option--buttons:not(.variant-option--swatches) .variant-option__button-label.disabled {
+  opacity: 0.3 !important;
+  cursor: not-allowed !important;
+  text-decoration: line-through !important;
+}
+
+/* 6. Stock Inventory Indicator */
+.product-details .tsukie-low-stock {
+  font-family: 'Montserrat', sans-serif !important;
+  font-size: 12px !important;
+  font-weight: 500 !important;
+  color: #a08766 !important;
+  display: inline-flex !important;
+  align-items: center !important;
+  gap: 6px !important;
+  margin-top: 12px !important;
+}
+
+/* 7. Trust Badges styling */
+.tsukie-trust-badges-wrapper {
+  width: 100% !important;
+  margin: 14px 0 !important;
+}
+.tsukie-trust-badges {
+  display: flex !important;
+  flex-wrap: wrap !important;
+  justify-content: flex-start !important;
+  gap: 12px !important;
+  width: 100% !important;
+}
+.tsukie-trust-badge {
+  display: inline-flex !important;
+  align-items: center !important;
+  justify-content: center !important;
+  flex: 0 0 auto !important;
+  width: fit-content !important;
+}
+.tsukie-trust-badge img {
+  height: 18px !important;
+  width: auto !important;
+  object-fit: contain !important;
+  image-rendering: -webkit-optimize-contrast !important;
+}
+
+/* 8. Reviews Styling */
+.product-details .rating-wrapper {
+  display: flex !important;
+  align-items: center !important;
+  gap: 12px !important;
+  margin-bottom: 20px !important;
+  padding-bottom: 20px !important;
+  border-bottom: 1px solid #e0d9cd !important;
+  flex-wrap: wrap !important;
+  float: none !important;
+}
+
+.product-details .rating {
+  display: flex !important;
+  gap: 2px !important;
+}
+
+.product-details .rating .stars {
+  width: 14px !important;
+  height: 14px !important;
+  color: #1e2a38 !important;
+  fill: #1e2a38 !important;
+}
+
+.product-details .rating-count {
+  font-family: 'Montserrat', sans-serif !important;
+  font-size: 13px !important;
+  color: #1e2a38 !important;
+  font-weight: 500 !important;
+  margin: 0 !important;
+}
+
+.product-details .rating-count-text {
+  color: #666 !important;
+  font-weight: 400 !important;
+  margin-left: 4px !important;
+}
+
+.product-details .tsukie-verified {
+  border: 1px solid #e0d9cd !important;
+  padding: 4px 10px !important;
+  font-family: 'Montserrat', sans-serif !important;
+  font-size: 10px !important;
+  letter-spacing: 1px !important;
+  text-transform: uppercase !important;
+  color: #666 !important;
+  margin-left: auto !important;
+}
+@media (max-width: 749px) {
+  .product-details .tsukie-verified {
+    margin-left: 0 !important;
+  }
+}
+
+/* 9. Quantity Selector Styling */
+.product-details .quantity {
+  height: 48px !important;
+  border: 1px solid #A08766 !important;
+  display: inline-flex !important;
+  align-items: center !important;
+  border-radius: 0 !important;
+}
+
+.product-details .quantity__input {
+  font-family: 'Montserrat', sans-serif !important;
+  font-weight: 600 !important;
+  font-size: 14px !important;
+  color: #1E2A38 !important;
+  height: 100% !important;
+  background: transparent !important;
+  border: none !important;
+  padding: 0 !important;
+}
+
+.product-details .quantity__button {
+  width: 48px !important;
+  height: 100% !important;
+  display: inline-flex !important;
+  align-items: center !important;
+  justify-content: center !important;
+  background: transparent !important;
+  border: none !important;
+  color: #1E2A38 !important;
+  cursor: pointer !important;
+}
+
+/* 10. Buy Buttons Styling */
+.product-details .product-form__buttons {
+  display: grid !important;
+  grid-template-columns: 1fr 1fr !important;
+  gap: 12px !important;
+  margin-bottom: 24px !important;
+}
+@media (max-width: 749px) {
+  .product-details .product-form__buttons {
+    grid-template-columns: 1fr !important;
+  }
+}
+
+.product-details .product-form__submit,
+.product-details .shopify-payment-button__button {
+  height: 52px !important;
+  font-family: 'Montserrat', sans-serif !important;
+  font-size: 14px !important;
+  letter-spacing: 1.5px !important;
+  text-transform: uppercase !important;
+  font-weight: 600 !important;
+  border-radius: 0 !important;
+  display: inline-flex !important;
+  align-items: center !important;
+  justify-content: center !important;
+  box-sizing: border-box !important;
+  transition: all 0.2s !important;
+}
+
+.product-details .product-form__submit {
+  background: #FDFBF7 !important;
+  color: #1E2A38 !important;
+  border: 1px solid #1E2A38 !important;
+}
+.product-details .product-form__submit:hover {
+  background: #1E2A38 !important;
+  color: #FDFBF7 !important;
+}
+
+.product-details .shopify-payment-button__button--unbranded {
+  background: #1E2A38 !important;
+  color: #FDFBF7 !important;
+  border: none !important;
+}
+.product-details .shopify-payment-button__button--unbranded:hover {
+  background: transparent !important;
+  color: #1E2A38 !important;
+  border: 1px solid #1E2A38 !important;
+}
+
+/* 11. Collapsible Accordions / Descriptions */
+.product-details .accordion {
+  border-top: 1px solid #e0d9cd !important;
+  margin: 0 !important;
+  padding: 0 !important;
+}
+
+.product-details details {
+  border-bottom: 1px solid #e0d9cd !important;
+  margin: 0 !important;
+}
+
+.product-details summary {
+  padding: 20px 0 !important;
+  display: flex !important;
+  justify-content: space-between !important;
+  align-items: center !important;
+  cursor: pointer !important;
+  font-family: 'Montserrat', sans-serif !important;
+  font-size: 11px !important;
+  letter-spacing: 2px !important;
+  text-transform: uppercase !important;
+  color: #1e2a38 !important;
+  font-weight: 500 !important;
+  list-style: none !important;
+}
+
+.product-details summary::-webkit-details-marker {
+  display: none !important;
+}
+
+.product-details summary::after {
+  content: '+' !important;
+  font-size: 18px !important;
+  transition: transform 0.3s !important;
+  display: inline-block !important;
+  line-height: 1 !important;
+  color: #1e2a38 !important;
+}
+
+.product-details details[open] summary::after {
+  content: '+' !important;
+  transform: rotate(45deg) !important;
+}
+
+.product-details .accordion__content {
+  padding-bottom: 20px !important;
+  font-family: 'Montserrat', sans-serif !important;
+  font-size: 13px !important;
+  line-height: 1.8 !important;
+  color: #666 !important;
+}
+
+/* 12. Mobile Gallery Overrides */
+@media (max-width: 749px) {
+  .slideshow-controls__thumbnail-badge {
+    display: none !important;
+  }
+  slideshow-slides {
+    pointer-events: none !important;
+  }
+  slideshow-controls {
+    pointer-events: auto !important;
+  }
+  .media-gallery__mobile-controls--thumbnails {
+    width: 100% !important;
+    margin-top: 10px !important;
+  }
+  .media-gallery__mobile-controls--thumbnails .slideshow-controls__thumbnails-container {
+    display: flex !important;
+    flex-direction: row !important;
+    overflow-x: auto !important;
+    scrollbar-width: none !important;
+  }
+  .media-gallery__mobile-controls--thumbnails .slideshow-controls__thumbnails {
+    display: inline-flex !important;
+    flex-direction: row !important;
+    gap: 8px !important;
+    padding: 4px 0 !important;
+    margin: 0 !important;
+  }
+  .media-gallery__mobile-controls--thumbnails .slideshow-control {
+    width: 60px !important;
+    height: 60px !important;
+    min-width: 60px !important;
+    border-radius: 0 !important;
+  }
+  
+  .media-gallery__mobile-controls--dots {
+    position: absolute !important;
+    bottom: 12px !important;
+    left: 50% !important;
+    transform: translateX(-50%) !important;
+    width: auto !important;
+    z-index: 10 !important;
+    pointer-events: auto !important;
+  }
+  .media-gallery__mobile-controls--dots .slideshow-controls__dots {
+    background: rgba(30, 42, 56, 0.6) !important;
+    padding: 6px 12px !important;
+    border-radius: 20px !important;
+  }
+  .media-gallery__mobile-controls--dots .slideshow-controls__dots button::after {
+    background-color: #FDFBF7 !important;
+    opacity: 0.5 !important;
+  }
+  .media-gallery__mobile-controls--dots .slideshow-controls__dots button[aria-selected="true"]::after {
+    opacity: 1 !important;
+  }
+}
+
+/* 13. Size Guide Modal */
+.tsukie-size-guide-modal {
+  position: fixed !important;
+  top: 0 !important;
+  left: 0 !important;
+  width: 100vw !important;
+  height: 100vh !important;
+  z-index: 10000 !important;
+  display: flex !important;
+  align-items: center !important;
+  justify-content: center !important;
+}
+.tsukie-size-guide-modal-overlay {
+  position: absolute !important;
+  top: 0 !important;
+  left: 0 !important;
+  width: 100% !important;
+  height: 100% !important;
+  background: rgba(30, 42, 56, 0.6) !important;
+  backdrop-filter: blur(4px) !important;
+}
+.tsukie-size-guide-modal-content {
+  position: relative !important;
+  background: #fdfbf7 !important;
+  border: 2px solid #d4c5a9 !important;
+  border-radius: 8px !important;
+  width: 90% !important;
+  max-width: 500px !important;
+  padding: 30px !important;
+  box-shadow: 0 10px 30px rgba(0,0,0,0.15) !important;
+  z-index: 10001 !important;
+}
+.tsukie-size-guide-modal-close {
+  position: absolute !important;
+  top: 15px !important;
+  right: 15px !important;
+  background: none !important;
+  border: none !important;
+  font-size: 24px !important;
+  cursor: pointer !important;
+  color: #1e2a38 !important;
+  line-height: 1 !important;
+  padding: 0 !important;
+  transition: color 0.2s !important;
+}
+.tsukie-size-guide-modal-close:hover {
+  color: #a08766 !important;
+}
+.tsukie-size-guide-modal-title {
+  font-family: 'Cormorant Garamond', serif !important;
+  font-size: 26px !important;
+  font-style: italic !important;
+  font-weight: 600 !important;
+  color: #1e2a38 !important;
+  margin: 0 0 20px !important;
+  text-align: center !important;
+}
+.tsukie-size-guide-table-wrap {
+  overflow-x: auto !important;
+}
+.tsukie-size-guide-table-wrap table {
+  width: 100% !important;
+  border-collapse: collapse !important;
+  font-family: 'Montserrat', sans-serif !important;
+  font-size: 13px !important;
+}
+.tsukie-size-guide-table-wrap th, 
+.tsukie-size-guide-table-wrap td {
+  padding: 12px !important;
+  border: 1px solid #e0d9cd !important;
+  text-align: center !important;
+}
+.tsukie-size-guide-table-wrap th {
+  background: #1e2a38 !important;
+  color: #d4c5a9 !important;
+  font-weight: 600 !important;
+  text-transform: uppercase !important;
+  font-size: 11px !important;
+  letter-spacing: 1px !important;
+}
+.tsukie-size-guide-table-wrap tr:nth-child(even) {
+  background: rgba(212, 197, 169, 0.1) !important;
+}

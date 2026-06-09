@@ -413,18 +413,26 @@
           -%}
         {% endif %}
 
-        {% if render_mobile_slideshow_controls %}
-          {%- render 'slideshow-controls',
-            class: 'desktop:hidden media-gallery__mobile-controls',
-            style: block_settings.slideshow_mobile_controls_style,
-            item_count: sorted_media.size,
-            thumbnails: sorted_media,
-            controls_on_media: mobile_controls_on_media,
-            pagination_position: 'center',
-            aspect_ratio: block_settings.aspect_ratio,
-            thumbnail_radius: block_settings.thumbnail_radius
-          -%}
-        {% endif %}
+        {%- comment -%}
+          Always render both dots (on media) and thumbnails (below media) on mobile for Tsukie.
+        {%- endcomment -%}
+        {%- render 'slideshow-controls',
+          class: 'desktop:hidden media-gallery__mobile-controls media-gallery__mobile-controls--dots',
+          style: 'dots',
+          item_count: sorted_media.size,
+          controls_on_media: true,
+          pagination_position: 'center'
+        -%}
+        {%- render 'slideshow-controls',
+          class: 'desktop:hidden media-gallery__mobile-controls media-gallery__mobile-controls--thumbnails',
+          style: 'thumbnails',
+          item_count: sorted_media.size,
+          thumbnails: sorted_media,
+          controls_on_media: false,
+          pagination_position: 'center',
+          aspect_ratio: block_settings.aspect_ratio,
+          thumbnail_radius: block_settings.thumbnail_radius
+        -%}
       {% endcapture %}
     {% endif %}
 
