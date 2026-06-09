@@ -1,0 +1,162 @@
+{%- comment -%}
+  Tsukie Standardized Product Card Snippet
+  Usage: {% render 'tsukie-product-card', product: product %}
+{%- endcomment -%}
+
+{%- liquid
+  assign variant_to_link = product.selected_or_first_available_variant
+  assign onboarding = false
+  if product == empty or product == blank
+    assign onboarding = true
+  endif
+
+  # Resolve Badge Text and Class
+  assign badge_text = ''
+  assign badge_class = ''
+  
+  for tag in product.tags
+    assign tag_downcase = tag | downcase
+    if tag_downcase == 'bestseller' or tag_downcase == 'best seller'
+      assign badge_text = 'BESTSELLER'
+      assign badge_class = 'tsukie-product-badge--bestseller'
+      break
+    elsif tag_downcase == 'new'
+      assign badge_text = 'NEW'
+      assign badge_class = 'tsukie-product-badge--new'
+      break
+    elsif tag_downcase == 'sale'
+      assign badge_text = 'SALE'
+      assign badge_class = 'tsukie-product-badge--sale'
+      break
+    endif
+  endfor
+
+  if badge_text == blank
+    for tag in product.tags
+      unless tag contains 'filter' or tag contains 'meta-' or tag contains 'custom-' or tag == 'all' or tag == 'All'
+        assign badge_text = tag | upcase
+        assign badge_class = 'tsukie-product-badge--custom'
+        break
+      endunless
+    endfor
+  endif
+
+  if product.selected_or_first_available_variant.inventory_management and product.selected_or_first_available_variant.inventory_quantity < 5 and product.selected_or_first_available_variant.inventory_quantity > 0 and product.selected_or_first_available_variant.available
+    assign badge_text = 'LOW STOCK'
+    assign badge_class = 'tsukie-product-badge--low'
+  endif
+
+  unless product.available
+    assign badge_text = 'SOLD OUT'
+    assign badge_class = 'tsukie-product-badge--soldout'
+  endunless
+-%}
+
+<div class="tsukie-product-card" data-product-id="{{ product.id }}">
+  <div class="tsukie-product-media">
+    <a href="{{ variant_to_link.url }}" class="tsukie-product-link">
+      {%- if badge_text != blank -%}
+        <span class="tsukie-product-badge {{ badge_class }}">{{ badge_text }}</span>
+      {%- endif -%}
+
+      {%- if product.featured_image -%}
+        <div class="tsukie-product-images">
+          <img
+            src="{{ product.featured_image | image_url: width: 600 }}"
+            alt="{{ product.title | escape }}"
+            class="tsukie-product-img tsukie-product-img--featured"
+            loading="lazy"
+            width="{{ product.featured_image.width }}"
+            height="{{ product.featured_image.height }}"
+          >
+          {%- if product.images[1] != blank -%}
+            <img
+              src="{{ product.images[1] | image_url: width: 600 }}"
+              alt="{{ product.title | escape }}"
+              class="tsukie-product-img tsukie-product-img--secondary"
+              loading="lazy"
+              width="{{ product.images[1].width }}"
+              height="{{ product.images[1].height }}"
+            >
+          {%- endif -%}
+        </div>
+      {%- else -%}
+        {{ 'product-1' | placeholder_svg_tag: 'tsukie-product-img' }}
+      {%- endif -%}
+    </a>
+
+    {%- if product.available -%}
+      {%- form 'product', product, class: 'tsukie-quick-add-form' -%}
+        <input type="hidden" name="id" value="{{ variant_to_link.id }}">
+        <button type="submit" class="tsukie-quick-add-btn">
+          QUICK ADD
+        </button>
+      {%- endform -%}
+    {%- else -%}
+      <button class="tsukie-quick-add-btn" disabled>
+        SOLD OUT
+      </button>
+    {%- endif -%}
+  </div>
+
+  <div class="tsukie-product-info">
+    <a href="{{ variant_to_link.url }}" class="tsukie-product-link">
+      <h3 class="tsukie-product-title">{{ product.title }}</h3>
+    </a>
+
+    {%- liquid
+      assign color_option = product.options_with_values | where: 'name', 'Color' | first
+      if color_option == blank
+        assign color_option = product.options_with_values | where: 'name', 'Colour' | first
+      endif
+    -%}
+
+    <div class="tsukie-product-price {% if color_option and color_option.values.size > 1 %}has-swatches{% endif %}">
+      {{ product.price | money }}
+      {%- if product.compare_at_price > product.price -%}
+        <span class="tsukie-product-price--compare">{{ product.compare_at_price | money }}</span>
+      {%- endif -%}
+    </div>
+
+    {%- if color_option and color_option.values.size > 1 -%}
+      <div class="tsukie-color-swatches">
+        {%- for value in color_option.values limit: 4 -%}
+          {%- liquid
+            assign bg_color = value | downcase | replace: ' ', ''
+            case bg_color
+              when 'navyblue' or 'navy'
+                assign bg_color = '#001935'
+              when 'offwhite'
+                assign bg_color = '#faf6f0'
+              when 'beige'
+                assign bg_color = '#ebdcc7'
+              when 'black'
+                assign bg_color = '#111111'
+              when 'white'
+                assign bg_color = '#ffffff'
+              when 'olive' or 'olivegreen'
+                assign bg_color = '#556b2f'
+              when 'rust'
+                assign bg_color = '#b76e50'
+              when 'dustypink' or 'rose'
+                assign bg_color = '#dcaeaf'
+              when 'mustard'
+                assign bg_color = '#e1ad01'
+              when 'lavender'
+                assign bg_color = '#e6e6fa'
+              when 'grey' or 'gray'
+                assign bg_color = '#808080'
+              when 'skyblue' or 'blue'
+                assign bg_color = '#87ceeb'
+            endcase
+          -%}
+          <span
+            class="tsukie-color-swatch {% if forloop.first %}is-active{% endif %}"
+            style="background-color: {{ bg_color }};"
+            title="{{ value }}"
+          ></span>
+        {%- endfor -%}
+      </div>
+    {%- endif -%}
+  </div>
+</div>

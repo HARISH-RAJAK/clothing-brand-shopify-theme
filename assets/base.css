@@ -4554,3 +4554,297 @@ product-recommendations:has([data-has-recommendations='false']) {
     width:100% !important;
   }
 }
+
+/* Tsukie Standardized Product Cards Global Overrides */
+
+.tsukie-product-card {
+  position: relative !important;
+  display: flex !important;
+  flex-direction: column !important;
+  height: 100% !important;
+  background: transparent !important;
+  box-shadow: none !important;
+  border: none !important;
+  padding: 0 !important;
+  margin: 0 !important;
+  box-sizing: border-box !important;
+}
+
+.tsukie-product-link {
+  text-decoration: none !important;
+  color: inherit !important;
+  display: block !important;
+}
+
+.tsukie-product-media {
+  position: relative !important;
+  overflow: hidden !important;
+  background: #fdfbf7 !important;
+  aspect-ratio: 3/4 !important;
+  width: 100% !important;
+}
+
+.tsukie-product-images {
+  position: relative !important;
+  width: 100% !important;
+  height: 100% !important;
+}
+
+.tsukie-product-img {
+  width: 100% !important;
+  height: 100% !important;
+  object-fit: cover !important;
+  display: block !important;
+  transition: transform 0.6s cubic-bezier(0.25, 1, 0.5, 1), opacity 0.6s cubic-bezier(0.25, 1, 0.5, 1) !important;
+}
+
+.tsukie-product-img--featured {
+  position: relative !important;
+  z-index: 1 !important;
+}
+
+.tsukie-product-img--secondary {
+  position: absolute !important;
+  top: 0 !important;
+  left: 0 !important;
+  width: 100% !important;
+  height: 100% !important;
+  opacity: 0 !important;
+  z-index: 2 !important;
+  transform: scale(1) !important;
+}
+
+/* Double Image Hover Transition */
+.tsukie-product-card:hover .tsukie-product-img--featured {
+  transform: scale(1.05) !important;
+}
+
+.tsukie-product-card:hover .tsukie-product-img--secondary {
+  opacity: 1 !important;
+  transform: scale(1.05) !important;
+}
+
+/* Badges styling */
+.tsukie-product-badge {
+  position: absolute !important;
+  top: 12px !important;
+  left: 12px !important;
+  background: #1e2a38 !important;
+  color: #fdfbf7 !important;
+  font-family: 'Cormorant Garamond', serif !important;
+  font-weight: 300 !important;
+  font-size: 10px !important;
+  letter-spacing: 1px !important;
+  text-transform: uppercase !important;
+  padding: 4px 10px !important;
+  z-index: 5 !important;
+  border-radius: 0 !important;
+  line-height: 1.2 !important;
+}
+
+/* Make mobile bestseller badge smaller */
+@media (max-width: 749px) {
+  .tsukie-product-badge {
+    top: 8px !important;
+    left: 8px !important;
+    font-size: 8px !important;
+    padding: 3px 6px !important;
+    letter-spacing: 0.5px !important;
+    max-width: 80% !important;
+  }
+}
+
+/* Quick Add Button styling */
+.tsukie-quick-add-form {
+  margin: 0 !important;
+}
+
+.tsukie-quick-add-btn {
+  position: absolute !important;
+  bottom: 0 !important;
+  left: 0 !important;
+  right: 0 !important;
+  background: #1e2a38 !important;
+  color: #fdfbf7 !important;
+  text-align: center !important;
+  padding: 14px !important;
+  font-size: 11px !important;
+  letter-spacing: 2px !important;
+  text-transform: uppercase !important;
+  border: none !important;
+  cursor: pointer !important;
+  transform: translateY(100%) !important;
+  transition: transform 0.3s cubic-bezier(0.25, 1, 0.5, 1), background-color 0.2s ease !important;
+  width: 100% !important;
+  z-index: 4 !important;
+  font-family: 'Montserrat', sans-serif !important;
+  font-weight: 600 !important;
+  line-height: 1.2 !important;
+}
+
+.tsukie-quick-add-btn:hover {
+  background: #a08766 !important;
+}
+
+.tsukie-quick-add-btn:disabled {
+  background: #cccccc !important;
+  color: #666666 !important;
+  cursor: not-allowed !important;
+}
+
+.tsukie-product-card:hover .tsukie-quick-add-btn {
+  transform: translateY(0) !important;
+}
+
+/* Mobile Quick Add visible always */
+@media (max-width: 749px) {
+  .tsukie-quick-add-btn {
+    transform: translateY(0) !important;
+    padding: 10px !important;
+    font-size: 9px !important;
+    letter-spacing: 1px !important;
+  }
+}
+
+/* Product Information Block */
+.tsukie-product-info {
+  margin-top: 20px !important; /* 20px desktop */
+  display: flex !important;
+  flex-direction: column !important;
+  gap: 0 !important;
+  align-items: flex-start !important;
+  width: 100% !important;
+}
+
+@media (max-width: 749px) {
+  .tsukie-product-info {
+    margin-top: 16px !important; /* 16px mobile */
+  }
+}
+
+/* Title Styling */
+.tsukie-product-title {
+  font-family: 'Cormorant Garamond', serif !important;
+  font-weight: 300 !important;
+  color: #1e2a38 !important;
+  font-size: 19px !important; /* 19px desktop */
+  line-height: 1.3 !important;
+  margin: 0 0 12px 0 !important; /* 12px margin between name and price */
+  letter-spacing: normal !important;
+  text-transform: none !important;
+}
+
+@media (max-width: 749px) {
+  .tsukie-product-title {
+    font-size: 17px !important; /* 17px mobile */
+    margin-bottom: 12px !important;
+  }
+}
+
+/* Price Styling */
+.tsukie-product-price {
+  font-family: 'Montserrat', sans-serif !important;
+  font-weight: 500 !important;
+  color: #1e2a38 !important;
+  font-size: 15px !important;
+  margin: 0 !important;
+}
+
+/* If color swatches exist, the margin between price and swatches is 12px */
+.tsukie-product-price.has-swatches {
+  margin-bottom: 12px !important;
+}
+
+.tsukie-product-price--compare {
+  font-family: 'Montserrat', sans-serif !important;
+  font-weight: 500 !important;
+  color: #1e2a38 !important;
+  opacity: 0.5 !important;
+  text-decoration: line-through !important;
+  margin-left: 8px !important;
+  display: inline-block !important;
+}
+
+/* Color Swatches styling */
+.tsukie-color-swatches {
+  display: flex !important;
+  gap: 8px !important;
+  margin: 0 !important;
+  align-items: center !important;
+}
+
+.tsukie-color-swatch {
+  width: 16px !important;
+  height: 16px !important;
+  border-radius: 50% !important;
+  cursor: pointer !important;
+  border: 1.5px solid #a08766 !important; /* Gold borders */
+  padding: 1.5px !important;
+  background-clip: content-box !important;
+  display: inline-block !important;
+  box-sizing: border-box !important;
+  transition: border-color 0.2s ease !important;
+}
+
+.tsukie-color-swatch.is-active {
+  border-color: #1e2a38 !important; /* Navy active border */
+}
+
+/* Global Product Grids layout enforcement */
+ul.product-grid,
+.product-grid,
+.resource-list--grid {
+  display: grid !important;
+  grid-template-columns: repeat(4, 1fr) !important; /* 4 columns desktop */
+  gap: 32px !important; /* 32px gap desktop */
+  list-style: none !important;
+  padding: 0 !important;
+  margin: 0 !important;
+  flex-wrap: unset !important;
+}
+
+/* Mobile responsive grids */
+@media (max-width: 989px) {
+  ul.product-grid,
+  .product-grid,
+  .resource-list--grid {
+    grid-template-columns: repeat(3, 1fr) !important; /* 3 columns tablet */
+    gap: 24px !important; /* 24px gap tablet */
+  }
+}
+
+@media (max-width: 749px) {
+  ul.product-grid,
+  .product-grid,
+  .resource-list--grid {
+    grid-template-columns: repeat(2, 1fr) !important; /* 2 columns mobile */
+    gap: 16px !important; /* 16px gap mobile */
+    overflow-x: hidden !important;
+  }
+  
+  /* Prevent horizontal scroll */
+  .product-grid-container, 
+  .grid-wrapper, 
+  .main-collection-grid {
+    overflow-x: hidden !important;
+  }
+}
+
+/* Global padding for sections containing product grid */
+.tsukie-bestsellers,
+.tsukie-recently-viewed-section-wrapper,
+.product-grid-container,
+.product-recommendations-wrapper,
+.section-has-product-grid {
+  padding-bottom: 96px !important; /* 96px desktop */
+}
+
+@media (max-width: 749px) {
+  .tsukie-bestsellers,
+  .tsukie-recently-viewed-section-wrapper,
+  .product-grid-container,
+  .product-recommendations-wrapper,
+  .section-has-product-grid {
+    padding-bottom: 72px !important; /* 72px mobile */
+  }
+}
