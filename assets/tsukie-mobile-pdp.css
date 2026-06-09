@@ -1,0 +1,133 @@
+/* ==========================================================================
+   Tsukie Mobile PDP Overrides — max-width:749px only
+   Desktop layout is 100% untouched.
+   ========================================================================== */
+
+@media screen and (max-width: 749px) {
+
+  /* -----------------------------------------------------------------------
+     1. PRODUCT MEDIA GALLERY — Swipe + Dots
+     ----------------------------------------------------------------------- */
+
+  /* Hide desktop arrows on mobile */
+  media-gallery .slideshow-arrows,
+  media-gallery slideshow-arrows,
+  media-gallery .slider-button,
+  media-gallery .slideshow-control {
+    display: none !important;
+  }
+
+  /* Hide thumbnail strips on mobile */
+  media-gallery .slideshow-controls__thumbnails,
+  media-gallery slideshow-controls[thumbnails],
+  media-gallery .media-gallery__mobile-controls--thumbnails {
+    display: none !important;
+  }
+
+  /* Enable horizontal snap-scroll on the main image list */
+  media-gallery slideshow-container {
+    scroll-snap-type: x mandatory !important;
+    -webkit-overflow-scrolling: touch !important;
+    overflow-x: auto !important;
+    scrollbar-width: none !important;
+  }
+  media-gallery slideshow-container::-webkit-scrollbar {
+    display: none !important;
+  }
+
+  media-gallery slideshow-slide {
+    scroll-snap-align: center !important;
+    flex: 0 0 100% !important;
+  }
+
+  /* Show dots pagination (mobile-only dots rendered by Dawn) */
+  media-gallery .media-gallery__mobile-controls--dots,
+  media-gallery .slideshow-controls__dots {
+    display: flex !important;
+    justify-content: center !important;
+    gap: 8px !important;
+    margin-top: 12px !important;
+  }
+
+  /* Dot styling */
+  media-gallery .slideshow-controls__dot {
+    width: 8px !important;
+    height: 8px !important;
+    border-radius: 50% !important;
+    background: #d4c5a9 !important;
+    border: none !important;
+    padding: 0 !important;
+    min-width: 0 !important;
+    min-height: 0 !important;
+    cursor: pointer !important;
+    transition: background 0.2s ease, transform 0.2s ease !important;
+  }
+  media-gallery .slideshow-controls__dot[aria-selected="true"],
+  media-gallery .slideshow-controls__dot.active {
+    background: #1e2a38 !important;
+    transform: scale(1.25) !important;
+  }
+
+  /* Counter fallback (>15 images) */
+  media-gallery .slideshow-controls__counter {
+    display: flex !important;
+    justify-content: center !important;
+    gap: 4px !important;
+    margin-top: 12px !important;
+    font-family: 'Montserrat', sans-serif !important;
+    font-size: 12px !important;
+    color: #1e2a38 !important;
+  }
+
+
+  /* -----------------------------------------------------------------------
+     2. PRODUCT RECOMMENDATIONS — Horizontal Scroll (1.5 cards visible)
+     ----------------------------------------------------------------------- */
+
+  /* Hide arrows in recommendations */
+  .product-recommendations .slideshow-arrows,
+  .product-recommendations slideshow-arrows,
+  .product-recommendations .slider-button,
+  .product-recommendations .slideshow-control {
+    display: none !important;
+  }
+
+  /* Grid layout → flex horizontal scroll */
+  .product-recommendations .resource-list--grid,
+  .product-recommendations .resource-list {
+    display: flex !important;
+    overflow-x: auto !important;
+    scroll-snap-type: x mandatory !important;
+    -webkit-overflow-scrolling: touch !important;
+    gap: 16px !important;
+    padding: 0 15px !important;
+    scrollbar-width: none !important;
+    flex-wrap: nowrap !important;
+  }
+  .product-recommendations .resource-list--grid::-webkit-scrollbar,
+  .product-recommendations .resource-list::-webkit-scrollbar {
+    display: none !important;
+  }
+
+  /* Each card = 70% width so 1.5 cards peek */
+  .product-recommendations .resource-list__item {
+    flex: 0 0 70% !important;
+    max-width: 70% !important;
+    scroll-snap-align: start !important;
+  }
+
+  /* Carousel variant of recommendations */
+  .product-recommendations slideshow-container {
+    scroll-snap-type: x mandatory !important;
+    -webkit-overflow-scrolling: touch !important;
+    overflow-x: auto !important;
+    scrollbar-width: none !important;
+  }
+  .product-recommendations slideshow-container::-webkit-scrollbar {
+    display: none !important;
+  }
+  .product-recommendations slideshow-slide {
+    flex: 0 0 70% !important;
+    scroll-snap-align: start !important;
+  }
+}

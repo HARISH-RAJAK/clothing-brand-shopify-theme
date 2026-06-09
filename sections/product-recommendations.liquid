@@ -5,6 +5,8 @@
   fetchpriority="low"
 ></script>
 
+{{ 'tsukie-mobile-pdp.css' | asset_url | stylesheet_tag: media: '(max-width:749px)' }}
+
 {% liquid
   case section.settings.layout_type
     when 'grid'
