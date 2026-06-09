@@ -569,6 +569,83 @@
 .tsukie-size-guide-table-wrap tr:nth-child(even) {
   background: rgba(212, 197, 169, 0.1);
 }
+
+/* Special Offers Section Styling (Horizontal Strip above CTA) */
+.tsukie-special-offers-strip {
+  background: #fdfbf7;
+  border: 1px solid #e0d9cd;
+  border-radius: 4px;
+  padding: 10px 14px;
+  margin-bottom: 20px;
+  font-family: 'Montserrat', sans-serif;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px;
+}
+.tsukie-offers-title {
+  font-size: 11px;
+  font-weight: 700;
+  color: #1e2a38;
+  text-transform: uppercase;
+  letter-spacing: 1px;
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  flex-shrink: 0;
+}
+.tsukie-offers-title svg {
+  width: 14px;
+  height: 14px;
+  color: #a08766;
+}
+.tsukie-offers-strip-items {
+  display: flex;
+  gap: 12px;
+  flex-wrap: wrap;
+  flex: 1;
+  justify-content: flex-end;
+}
+.tsukie-offer-strip-item {
+  background: #f5f1ea;
+  border: 1px dashed #d4c5a9;
+  border-radius: 3px;
+  padding: 6px 10px;
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  cursor: pointer;
+  font-size: 11px;
+  color: #1e2a38;
+  transition: all 0.2s ease;
+}
+.tsukie-offer-strip-item:hover {
+  border-color: #1e2a38;
+  background: #e0d9cd;
+}
+.tsukie-offer-strip-item strong {
+  font-weight: 700;
+}
+.tsukie-offer-strip-item .copy-lbl {
+  font-size: 9px;
+  text-transform: uppercase;
+  font-weight: 600;
+  color: #a08766;
+  border-left: 1px solid rgba(30,42,56,0.15);
+  padding-left: 6px;
+}
+@media(max-width:768px){
+  .tsukie-special-offers-strip {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 10px;
+  }
+  .tsukie-offers-strip-items {
+    justify-content: flex-start;
+    width: 100%;
+    gap: 8px;
+  }
+}
 </style>
 
 <section class="tsukie-product" data-section-id="{{ section.id }}" data-section-type="product">
@@ -735,6 +812,29 @@
         <div class="tsukie-inventory" id="tsukie-inventory" {% if product.selected_or_first_available_variant.inventory_management and product.selected_or_first_available_variant.inventory_quantity < 10 and product.selected_or_first_available_variant.inventory_quantity > 0 %}{% else %}style="display:none"{% endif %}>
           Only <span id="tsukie-nav-qty">{{ product.selected_or_first_available_variant.inventory_quantity }}</span> left in stock
         </div>
+
+        {% assign offer1_code = product.metafields.custom.offer_1_code | default: section.settings.default_offer1_code | default: 'TSUKIE10' %}
+        {% assign offer1_text = product.metafields.custom.offer_1_text | default: section.settings.default_offer1_text | default: 'Buy 1 get 10% off' %}
+        {% assign offer2_code = product.metafields.custom.offer_2_code | default: section.settings.default_offer2_code | default: 'TSUKIE25' %}
+        {% assign offer2_text = product.metafields.custom.offer_2_text | default: section.settings.default_offer2_text | default: 'Buy 2 get 25% off' %}
+        {% if section.settings.show_special_offers %}
+        <div class="tsukie-special-offers-strip">
+          <div class="tsukie-offers-title">
+            <svg fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M9.568 3H5.25A2.25 2.25 0 003 5.25v4.318c0 .597.237 1.17.659 1.591l9.581 9.581a1.125 1.125 0 001.59 0l4.318-4.318a1.125 1.125 0 000-1.59l-9.58-9.581a1.125 1.125 0 00-1.591-.659zm5.432 4.5a1.125 1.125 0 11-2.25 0 1.125 1.125 0 012.25 0z" /></svg>
+            Special Offers
+          </div>
+          <div class="tsukie-offers-strip-items">
+            <div class="tsukie-offer-strip-item" onclick="tsukieCopyCode(this, '{{ offer1_code }}')" title="Click to copy {{ offer1_code }}">
+              <span><strong>{{ offer1_code }}</strong>: {{ offer1_text }}</span>
+              <span class="copy-lbl">Copy</span>
+            </div>
+            <div class="tsukie-offer-strip-item" onclick="tsukieCopyCode(this, '{{ offer2_code }}')" title="Click to copy {{ offer2_code }}">
+              <span><strong>{{ offer2_code }}</strong>: {{ offer2_text }}</span>
+              <span class="copy-lbl">Copy</span>
+            </div>
+          </div>
+        </div>
+        {% endif %}
 
         <div class="tsukie-btn-group">
           <button type="submit" name="add" id="tsukie-add-to-cart-btn" class="tsukie-btn ss-add-to-cart tsukie-btn-add" {% unless product.selected_or_first_available_variant.available %}disabled{% endunless %}>
@@ -992,6 +1092,83 @@
 .tsukie-size-guide-table-wrap tr:nth-child(even) {
   background: rgba(212, 197, 169, 0.1);
 }
+
+/* Special Offers Section Styling (Horizontal Strip above CTA) */
+.tsukie-special-offers-strip {
+  background: #fdfbf7;
+  border: 1px solid #e0d9cd;
+  border-radius: 4px;
+  padding: 10px 14px;
+  margin-bottom: 20px;
+  font-family: 'Montserrat', sans-serif;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px;
+}
+.tsukie-offers-title {
+  font-size: 11px;
+  font-weight: 700;
+  color: #1e2a38;
+  text-transform: uppercase;
+  letter-spacing: 1px;
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  flex-shrink: 0;
+}
+.tsukie-offers-title svg {
+  width: 14px;
+  height: 14px;
+  color: #a08766;
+}
+.tsukie-offers-strip-items {
+  display: flex;
+  gap: 12px;
+  flex-wrap: wrap;
+  flex: 1;
+  justify-content: flex-end;
+}
+.tsukie-offer-strip-item {
+  background: #f5f1ea;
+  border: 1px dashed #d4c5a9;
+  border-radius: 3px;
+  padding: 6px 10px;
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  cursor: pointer;
+  font-size: 11px;
+  color: #1e2a38;
+  transition: all 0.2s ease;
+}
+.tsukie-offer-strip-item:hover {
+  border-color: #1e2a38;
+  background: #e0d9cd;
+}
+.tsukie-offer-strip-item strong {
+  font-weight: 700;
+}
+.tsukie-offer-strip-item .copy-lbl {
+  font-size: 9px;
+  text-transform: uppercase;
+  font-weight: 600;
+  color: #a08766;
+  border-left: 1px solid rgba(30,42,56,0.15);
+  padding-left: 6px;
+}
+@media(max-width:768px){
+  .tsukie-special-offers-strip {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 10px;
+  }
+  .tsukie-offers-strip-items {
+    justify-content: flex-start;
+    width: 100%;
+    gap: 8px;
+  }
+}
 </style>
 
 <!-- 1. Three Colored Trust Badges Section -->
@@ -1011,19 +1188,20 @@
 </div>
 
 <!-- 2. Tracker Section -->
+{% if section.settings.show_order_status %}
 <div class="tsukie-order-status-v2">
-  <h3 class="tsukie-status-title-v2">ORDER STATUS</h3>
-  <p class="tsukie-status-subtitle-v2">Track your delivery and expected arrival time!</p>
+  <h3 class="tsukie-status-title-v2">{{ section.settings.tracker_title | default: 'ORDER STATUS' }}</h3>
+  <p class="tsukie-status-subtitle-v2">{{ section.settings.tracker_subtitle | default: 'Track your delivery and expected arrival time!' }}</p>
   
   <!-- Tracker Node Line -->
   <div class="tsukie-timeline-v2">
     <div class="tsukie-node-v2">
-      <div class="tsukie-circle-v2">
+      <div class="tsukie-circle-v2 active">
         <svg fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="3" d="M5 13l4 4L19 7"></path></svg>
       </div>
     </div>
     <div class="tsukie-node-v2">
-      <div class="tsukie-circle-v2">
+      <div class="tsukie-circle-v2 active">
         <svg fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="3" d="M5 13l4 4L19 7"></path></svg>
       </div>
     </div>
@@ -1037,19 +1215,20 @@
   <!-- Labels with Automated Live Real Dates -->
   <div class="tsukie-labels-grid-v2">
     <div class="tsukie-label-item-v2">
-      <div class="tsukie-lbl-title-v2">Order Confirmed</div>
+      <div class="tsukie-lbl-title-v2">{{ section.settings.tracker_node1_title | default: 'Order Confirmed' }}</div>
       <div class="tsukie-lbl-date-v2">{{ "now" | date: "%b %d %A" }}</div>
     </div>
     <div class="tsukie-label-item-v2">
-      <div class="tsukie-lbl-title-v2">On Its Way</div>
+      <div class="tsukie-lbl-title-v2">{{ section.settings.tracker_node2_title | default: 'On Its Way' }}</div>
       <div class="tsukie-lbl-date-v2">{{ "now" | date: "%s" | plus: 86400 | date: "%b %d %A" }}</div>
     </div>
     <div class="tsukie-label-item-v2">
-      <div class="tsukie-lbl-title-v2">Arriving Soon</div>
+      <div class="tsukie-lbl-title-v2">{{ section.settings.tracker_node3_title | default: 'Arriving Soon' }}</div>
       <div class="tsukie-lbl-date-v2">Expected {{ "now" | date: "%s" | plus: 259200 | date: "%b %d %A" }}</div>
     </div>
   </div>
 </div>
+{% endif %}
 <!-- END OF TRACKER CODES -->
       <div class="tsukie-features">
         <div class="tsukie-feature">
@@ -1071,30 +1250,44 @@
 
       <!-- Accordion Blocks -->
       <div class="tsukie-accordion">
-        <div class="tsukie-accordion-item">
-          <div class="tsukie-accordion-header" onclick="tsukieToggleAccordion(this)">
-            WHY YOU'LL LOVE IT <span class="tsukie-accordion-icon">+</span>
+        {% assign t1_title = section.settings.tab1_title | default: "WHY YOU'LL LOVE IT" %}
+        {% assign t1_content = section.settings.tab1_content | default: product.description %}
+        {% if t1_content != blank %}
+          <div class="tsukie-accordion-item">
+            <div class="tsukie-accordion-header" onclick="tsukieToggleAccordion(this)">
+              {{ t1_title | upcase }} <span class="tsukie-accordion-icon">+</span>
+            </div>
+            <div class="tsukie-accordion-content">
+              <div style="padding-top:12px;">{{ t1_content }}</div>
+            </div>
           </div>
-          <div class="tsukie-accordion-content">
-            <div style="padding-top:12px;">{{ product.description }}</div>
+        {% endif %}
+        
+        {% assign t2_title = section.settings.tab2_title | default: "FABRIC & CARE" %}
+        {% assign t2_content = section.settings.tab2_content | default: product.metafields.custom.fabric_care | default: 'Dry clean only. Do not tumble dry. Iron on low heat.' %}
+        {% if t2_content != blank %}
+          <div class="tsukie-accordion-item">
+            <div class="tsukie-accordion-header" onclick="tsukieToggleAccordion(this)">
+              {{ t2_title | upcase }} <span class="tsukie-accordion-icon">+</span>
+            </div>
+            <div class="tsukie-accordion-content">
+              <div style="padding-top:12px;">{{ t2_content }}</div>
+            </div>
           </div>
-        </div>
-        <div class="tsukie-accordion-item">
-          <div class="tsukie-accordion-header" onclick="tsukieToggleAccordion(this)">
-            FABRIC & CARE <span class="tsukie-accordion-icon">+</span>
+        {% endif %}
+        
+        {% assign t3_title = section.settings.tab3_title | default: "SHIPPING & RETURNS" %}
+        {% assign t3_content = section.settings.tab3_content | default: 'Free shipping on orders above ₹1,999. Easy 14-day returns and exchanges. Delivery within 5-7 business days across India.' %}
+        {% if t3_content != blank %}
+          <div class="tsukie-accordion-item">
+            <div class="tsukie-accordion-header" onclick="tsukieToggleAccordion(this)">
+              {{ t3_title | upcase }} <span class="tsukie-accordion-icon">+</span>
+            </div>
+            <div class="tsukie-accordion-content">
+              <div style="padding-top:12px;">{{ t3_content }}</div>
+            </div>
           </div>
-          <div class="tsukie-accordion-content">
-            <div style="padding-top:12px;">{{ product.metafields.custom.fabric_care | default: 'Dry clean only. Do not tumble dry. Iron on low heat.' }}</div>
-          </div>
-        </div>
-        <div class="tsukie-accordion-item">
-          <div class="tsukie-accordion-header" onclick="tsukieToggleAccordion(this)">
-            SHIPPING & RETURNS <span class="tsukie-accordion-icon">+</span>
-          </div>
-          <div class="tsukie-accordion-content">
-            <div style="padding-top:12px;">Free shipping on orders above ₹1,999. Easy 14-day returns and exchanges. Delivery within 5-7 business days across India.</div>
-          </div>
-        </div>
+        {% endif %}
       </div>
     </div>
   </div>
@@ -1143,6 +1336,21 @@ function tsukieOpenSizeGuide(e) {
 function tsukieCloseSizeGuide() {
   const modal = document.getElementById('tsukie-size-guide-modal');
   if (modal) modal.style.display = 'none';
+}
+
+function tsukieCopyCode(el, code) {
+  navigator.clipboard.writeText(code).then(() => {
+    const copyLbl = el.querySelector('.copy-lbl');
+    if (copyLbl) {
+      const origText = copyLbl.textContent;
+      copyLbl.textContent = 'COPIED!';
+      copyLbl.style.color = '#1e2a38';
+      setTimeout(() => {
+        copyLbl.textContent = origText;
+        copyLbl.style.color = '#a08766';
+      }, 1500);
+    }
+  });
 }
 const tsukieImages = [{% for image in product.images %}'{{ image | img_url: '1000x' }}'{% unless forloop.last %},{% endunless %}{% endfor %}];
 const tsukieImageIds = [{% for image in product.images %}{{ image.id }}{% unless forloop.last %},{% endunless %}{% endfor %}];
@@ -1363,6 +1571,73 @@ function tsukieToggleAccordion(header) {
       "id": "show_order_status",
       "label": "Show Order Status Tracker",
       "default": true
+    },
+    {
+      "type": "text",
+      "id": "tracker_title",
+      "label": "Tracker Title",
+      "default": "ORDER STATUS"
+    },
+    {
+      "type": "text",
+      "id": "tracker_subtitle",
+      "label": "Tracker Subtitle",
+      "default": "Track your delivery and expected arrival time!"
+    },
+    {
+      "type": "text",
+      "id": "tracker_node1_title",
+      "label": "Tracker Step 1 Title",
+      "default": "Order Confirmed"
+    },
+    {
+      "type": "text",
+      "id": "tracker_node2_title",
+      "label": "Tracker Step 2 Title",
+      "default": "On Its Way"
+    },
+    {
+      "type": "text",
+      "id": "tracker_node3_title",
+      "label": "Tracker Step 3 Title",
+      "default": "Arriving Soon"
+    },
+    {
+      "type": "header",
+      "content": "Accordion Tabs"
+    },
+    {
+      "type": "text",
+      "id": "tab1_title",
+      "label": "Tab 1 Title",
+      "default": "WHY YOU'LL LOVE IT"
+    },
+    {
+      "type": "richtext",
+      "id": "tab1_content",
+      "label": "Tab 1 Content (Fallback to Product Description if empty)"
+    },
+    {
+      "type": "text",
+      "id": "tab2_title",
+      "label": "Tab 2 Title",
+      "default": "FABRIC & CARE"
+    },
+    {
+      "type": "richtext",
+      "id": "tab2_content",
+      "label": "Tab 2 Content (Fallback to Fabric & Care metafield if empty)"
+    },
+    {
+      "type": "text",
+      "id": "tab3_title",
+      "label": "Tab 3 Title",
+      "default": "SHIPPING & RETURNS"
+    },
+    {
+      "type": "richtext",
+      "id": "tab3_content",
+      "label": "Tab 3 Content (Fallback to shipping text if empty)"
     },
     {
       "type": "header",
