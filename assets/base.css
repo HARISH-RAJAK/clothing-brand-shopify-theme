@@ -5345,9 +5345,12 @@ ul.product-grid,
   width: 100vw !important;
   height: 100vh !important;
   z-index: 10000 !important;
-  display: flex !important;
+  display: none !important;
   align-items: center !important;
   justify-content: center !important;
+}
+.tsukie-size-guide-modal.open {
+  display: flex !important;
 }
 .tsukie-size-guide-modal-overlay {
   position: absolute !important;

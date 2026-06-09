@@ -436,11 +436,11 @@
 function tsukieOpenSizeGuide(e) {
   if (e) e.preventDefault();
   const modal = document.getElementById('tsukie-size-guide-modal');
-  if (modal) modal.style.display = 'flex';
+  if (modal) modal.classList.add('open');
 }
 function tsukieCloseSizeGuide() {
   const modal = document.getElementById('tsukie-size-guide-modal');
-  if (modal) modal.style.display = 'none';
+  if (modal) modal.classList.remove('open');
 }
 </script>
 
