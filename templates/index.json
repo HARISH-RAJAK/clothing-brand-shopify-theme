@@ -1,3 +1,12 @@
+/*
+ * ------------------------------------------------------------
+ * IMPORTANT: The contents of this file are auto-generated.
+ *
+ * This file may be updated by the Shopify admin theme editor
+ * or related systems. Please exercise caution as any changes
+ * made to this file may be overwritten.
+ * ------------------------------------------------------------
+ */
 {
   "sections": {
     "tsukie_hero_banner": {
@@ -7,20 +16,30 @@
           "type": "slide",
           "settings": {
             "image": "shopify://shop_images/website_Banner_2.png",
-            "eyebrow": "ESSENTIAL LUXURY",
-            "heading": "Timeless Pieces For Your Wardrobe",
-            "description": "Crafted with love, highlighting the natural body shape in sizes from XS to 4XL.",
+            "eyebrow": "",
+            "heading": "",
+            "description": "",
             "button_text": "VIEW ALL COLLECTIONS",
             "button_url": "/collections"
+          }
+        },
+        "slide_ywHpHH": {
+          "type": "slide",
+          "settings": {
+            "eyebrow": "",
+            "heading": "",
+            "description": "",
+            "button_text": "SHOP NOW",
+            "button_url": ""
           }
         },
         "slide_2": {
           "type": "slide",
           "settings": {
             "image": "shopify://shop_images/Website_Banner.png",
-            "eyebrow": "CHIC & ELEGANT",
-            "heading": "Style in Peplum & Flared Tops",
-            "description": "Discover curated sets and tops designed for comfort, grace, and premium everyday wear.",
+            "eyebrow": "",
+            "heading": "",
+            "description": "",
             "button_text": "EXPLORE BEST SELLERS",
             "button_url": "/collections/all"
           }
@@ -29,9 +48,9 @@
           "type": "slide",
           "settings": {
             "image": "shopify://shop_images/Elevate_Your_Everyday_12.png",
-            "eyebrow": "SUMMER 2026 COLLECTION",
-            "heading": "Dressed for the woman you already are",
-            "description": "Premium silhouettes crafted for the modern Indian woman — luxurious fabrics, thoughtful fit, and enduring style. Starting at ₹1,499.",
+            "eyebrow": "",
+            "heading": "",
+            "description": "",
             "button_text": "SHOP NEW ARRIVALS",
             "button_url": "/collections/new-arrivals"
           }
@@ -39,6 +58,7 @@
       },
       "block_order": [
         "slide_3",
+        "slide_ywHpHH",
         "slide_2",
         "slide_1"
       ],
