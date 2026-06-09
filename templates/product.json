@@ -9,6 +9,25 @@
  */
 {
   "sections": {
+    "product_details": {
+      "type": "tsukie-product-details",
+      "settings": {
+        "show_size_guide": true,
+        "show_inventory_urgency": true,
+        "show_special_offers": true,
+        "default_offer1_code": "TSUKIE0",
+        "default_offer1_text": "Buy 1 get 10% off",
+        "default_offer2_code": "TSUKIE25",
+        "default_offer2_text": "Buy 2 get 25% off",
+        "show_order_status": false,
+        "feature1_title": "PREMIUM FABRIC",
+        "feature1_desc": "100% Viscose",
+        "feature2_title": "EASY EXCHANGE",
+        "feature2_desc": "14 days",
+        "feature3_title": "SECURE PAYMENT",
+        "feature3_desc": "UPI · Cards · COD"
+      }
+    },
     "custom_liquid_AfqtEM": {
       "type": "custom-liquid",
       "disabled": true,
@@ -419,144 +438,6 @@
         "padding-block-end": 0
       }
     },
-    "custom_liquid_fQbTBM": {
-      "type": "custom-liquid",
-      "name": "t:names.custom_liquid",
-      "settings": {
-        "custom_liquid": "<style>\n.tsukie-section-header{\n  text-align:center;\n  padding:60px 40px 48px;\n  background:linear-gradient(180deg, #fff 0%, #f5f1ea 100%);\n  position:relative;\n  overflow:hidden;\n}\n.tsukie-section-header::before{\n  content:'';\n  position:absolute;\n  top:0;\n  left:50%;\n  transform:translateX(-50%);\n  width:200px;\n  height:200px;\n  background:radial-gradient(circle, rgba(160,135,102,0.08) 0%, transparent 70%);\n  pointer-events:none;\n}\n.tsukie-header-eyebrow{\n  font-size:11px;\n  letter-spacing:4px;\n  text-transform:uppercase;\n  color:#a08766;\n  margin:0 0 16px;\n  font-weight:600;\n  position:relative;\n}\n.tsukie-header-title{\n  font-family:'Playfair Display',serif;\n  font-size:58px;\n  font-weight:600;\n  font-style:italic;\n  margin:0 0 20px;\n  color:#1e2a38;\n  line-height:1.1;\n  position:relative;\n}\n.tsukie-header-divider{\n  display:flex;\n  align-items:center;\n  justify-content:center;\n  gap:12px;\n  margin:0 auto;\n}\n.tsukie-header-line{\n  width:80px;\n  height:1px;\n  background:linear-gradient(90deg, transparent, #a08766, transparent);\n}\n.tsukie-header-icon{\n  font-size:14px;\n  color:#a08766;\n}\n.tsukie-header-subtitle{\n  font-family:'Cormorant Garamond',serif;\n  font-size:18px;\n  font-style:italic;\n  color:#6b6b6b;\n  margin:16px 0 0;\n  letter-spacing:0.5px;\n}\n@media(max-width:749px){\n.tsukie-section-header{padding:50px 20px 40px}\n.tsukie-header-title{font-size:40px}\n.tsukie-header-subtitle{font-size:16px}\n}\n</style>\n\n<div class=\"tsukie-section-header\">\n  <p class=\"tsukie-header-eyebrow\">Complete The Look</p>\n  <h2 class=\"tsukie-header-title\">You May Also Adore</h2>\n  <div class=\"tsukie-header-divider\">\n    <span class=\"tsukie-header-line\"></span>\n    <span class=\"tsukie-header-icon\">✦</span>\n    <span class=\"tsukie-header-line\"></span>\n  </div>\n  <p class=\"tsukie-header-subtitle\">Handpicked pieces that complement your style</p>\n</div>",
-        "color_scheme": "",
-        "section_width": "full-width",
-        "padding-block-start": 0,
-        "padding-block-end": 0
-      }
-    },
-    "product_recommendations_qggXJq": {
-      "type": "product-recommendations",
-      "blocks": {
-        "static-product-card": {
-          "type": "_product-card",
-          "name": "t:names.product_card",
-          "static": true,
-          "settings": {
-            "product_card_gap": 8,
-            "inherit_color_scheme": true,
-            "color_scheme": "",
-            "border": "none",
-            "border_width": 1,
-            "border_opacity": 100,
-            "border_radius": 0,
-            "padding-block-start": 0,
-            "padding-block-end": 8,
-            "padding-inline-start": 0,
-            "padding-inline-end": 0
-          },
-          "blocks": {
-            "product_card_gallery_DNizbJ": {
-              "type": "_product-card-gallery",
-              "name": "t:names.product_card_media",
-              "settings": {
-                "image_ratio": "adapt",
-                "border": "none",
-                "border_width": 1,
-                "border_opacity": 100,
-                "border_radius": 0,
-                "padding-block-start": 0,
-                "padding-block-end": 0,
-                "padding-inline-start": 0,
-                "padding-inline-end": 0
-              },
-              "blocks": {}
-            },
-            "product_title_M7MJkb": {
-              "type": "product-title",
-              "name": "t:names.product_title",
-              "settings": {
-                "width": "100%",
-                "max_width": "normal",
-                "alignment": "left",
-                "type_preset": "rte",
-                "font": "var(--font-body--family)",
-                "font_size": "1rem",
-                "line_height": "normal",
-                "letter_spacing": "normal",
-                "case": "none",
-                "wrap": "pretty",
-                "color": "var(--color-foreground)",
-                "background": false,
-                "background_color": "#00000026",
-                "corner_radius": 0,
-                "padding-block-start": 4,
-                "padding-block-end": 0,
-                "padding-inline-start": 0,
-                "padding-inline-end": 0
-              },
-              "blocks": {}
-            },
-            "price_gLWgA6": {
-              "type": "price",
-              "settings": {
-                "show_sale_price_first": true,
-                "show_installments": false,
-                "show_tax_info": false,
-                "type_preset": "h6",
-                "width": "100%",
-                "alignment": "left",
-                "font": "var(--font-body--family)",
-                "font_size": "1rem",
-                "line_height": "normal",
-                "letter_spacing": "normal",
-                "case": "none",
-                "color": "var(--color-foreground)",
-                "padding-block-start": 0,
-                "padding-block-end": 0,
-                "padding-inline-start": 0,
-                "padding-inline-end": 0
-              },
-              "blocks": {}
-            },
-            "custom_liquid_TLFaJq": {
-              "type": "custom-liquid",
-              "name": "t:names.custom_liquid",
-              "settings": {
-                "custom_liquid": "{% liquid\n  assign product_resource = closest.product\n  if request.visual_preview_mode and product_resource == blank\n    assign product_resource = collections.all.products.first\n  endif\n-%}\n\n{% unless product_resource == blank %}\n  {%- assign color_option = product_resource.options_with_values | where: 'name', 'Color' | first -%}\n  {%- if color_option == blank -%}\n    {%- assign color_option = product_resource.options_with_values | where: 'name', 'Colour' | first -%}\n  {%- endif -%}\n\n  {% if color_option and color_option.values.size > 1 %}\n    <style>\n    @import url('https://fonts.googleapis.com/css2?family=Montserrat:wght@400;500;600&display=swap');\n    \n    .tsukie-block-colorpicker{\n      margin-top:16px;\n      margin-bottom:16px;\n    }\n    .tsukie-block-color-label{\n      display: none;\n\n      display: none;\n\n      font-size:11px;\n      letter-spacing:2px;\n      text-transform:uppercase;\n      color:#1e2a38;\n      margin:0 0 12px;\n      font-weight:500;\n      font-family:'Montserrat',sans-serif;\n    }\n    .tsukie-block-color-label span{\n      color:#6b6b6b;\n      font-weight:400;\n      margin-left:4px;\n    }\n    .tsukie-block-swatches{\n      display:flex;\n      gap:6px;\n      align-items:center;\n      flex-wrap:wrap;\n    }\n    .tsukie-block-swatch{\n      width:18px;\n      height:18px;\n      border-radius:50%;\n      border:1px solid #c9c9c9;\n      cursor:pointer;\n      flex-shrink:0;\n      box-sizing:border-box;\n      background-color:var(--swatch-color);\n      padding:0;\n      transition:all 0.2s ease;\n      position:relative;\n    }\n    .tsukie-block-swatch:hover{\n      transform:scale(1.1);\n    }\n    .tsukie-block-swatch.active{\n      border:2px solid #1e2a38;\n    }\n    </style>\n\n    <div class=\"tsukie-block-colorpicker\">\n      <p class=\"tsukie-block-color-label\">\n        COLOR:<span id=\"tsukie-block-selected-{{ section.id }}\">{{ product_resource.selected_or_first_available_variant.option1 }}</span>\n      </p>\n      \n      <div class=\"tsukie-block-swatches\">\n        {% for value in color_option.values %}\n          {%- liquid\n            assign variant_for_color = blank\n            assign color_downcase = value | downcase\n            \n            for variant in product_resource.variants\n              if variant.option1 == value or variant.option2 == value or variant.option3 == value\n                assign variant_for_color = variant\n                break\n              endif\n            endfor\n            \n            assign bg_color = color_downcase | replace: ' ', ''\n            case color_downcase\n              when 'navy blue' \n                assign bg_color = '#001f3f'\n              when 'off white' \n                assign bg_color = '#f8f8f8'\n              when 'beige' \n                assign bg_color = '#f5f1ea'\n              when 'black' \n                assign bg_color = '#000000'\n              when 'white' \n                assign bg_color = '#ffffff'\n            endcase\n          -%}\n          \n          <button \n            class=\"tsukie-block-swatch {% if product_resource.selected_or_first_available_variant.id == variant_for_color.id %}active{% endif %}\"\n            data-variant-id=\"{{ variant_for_color.id }}\"\n            data-color-name=\"{{ value }}\"\n            type=\"button\"\n            style=\"--swatch-color: {{ bg_color }}\"\n            onclick=\"tsukieBlockColorSelect{{ section.id }}(this)\"\n            title=\"{{ value }}\"\n          >\n          </button>\n        {% endfor %}\n      </div>\n    </div>\n\n    <script>\n    function tsukieBlockColorSelect{{ section.id }}(btn){\n      document.querySelectorAll('#shopify-section-{{ section.id }} .tsukie-block-swatch').forEach(s => s.classList.remove('active'));\n      btn.classList.add('active');\n      \n      document.getElementById('tsukie-block-selected-{{ section.id }}').textContent = btn.dataset.colorName;\n      \n      let variantInput = document.querySelector('form[action*=\"/cart/add\"] input[name=\"id\"]');\n      if(variantInput && btn.dataset.variantId){\n        variantInput.value = btn.dataset.variantId;\n        variantInput.dispatchEvent(new Event('change', {bubbles: true}));\n      }\n    }\n    </script>\n  {% endif %}\n{% endunless %}"
-              },
-              "blocks": {}
-            }
-          },
-          "block_order": [
-            "product_card_gallery_DNizbJ",
-            "product_title_M7MJkb",
-            "price_gLWgA6",
-            "custom_liquid_TLFaJq"
-          ]
-        }
-      },
-      "name": "t:names.product_recommendations",
-      "settings": {
-        "product": "{{ closest.product }}",
-        "recommendation_type": "related",
-        "layout_type": "carousel",
-        "carousel_on_mobile": false,
-        "max_products": 4,
-        "columns": 4,
-        "mobile_columns": "2",
-        "columns_gap": 12,
-        "rows_gap": 24,
-        "icons_style": "arrow",
-        "icons_shape": "none",
-        "section_width": "page-width",
-        "gap": 28,
-        "color_scheme": "scheme-e5234ede-d196-4b3b-a9e2-6e7d24b8ca5c",
-        "padding-block-start": 48,
-        "padding-block-end": 48
-      }
-    },
-    "recently_viewed": {
-      "type": "tsukie-recently-viewed",
-      "settings": {
-        "heading": "Recently Viewed"
-      }
-    },
     "custom_liquid_style_it_with_header": {
       "type": "custom-liquid",
       "name": "Style It With Header",
@@ -689,6 +570,138 @@
         "padding-block-end": 48
       }
     },
+    "custom_liquid_fQbTBM": {
+      "type": "custom-liquid",
+      "name": "t:names.custom_liquid",
+      "settings": {
+        "custom_liquid": "<style>\n.tsukie-section-header{\n  text-align:center;\n  padding:60px 40px 48px;\n  background:linear-gradient(180deg, #fff 0%, #f5f1ea 100%);\n  position:relative;\n  overflow:hidden;\n}\n.tsukie-section-header::before{\n  content:'';\n  position:absolute;\n  top:0;\n  left:50%;\n  transform:translateX(-50%);\n  width:200px;\n  height:200px;\n  background:radial-gradient(circle, rgba(160,135,102,0.08) 0%, transparent 70%);\n  pointer-events:none;\n}\n.tsukie-header-eyebrow{\n  font-size:11px;\n  letter-spacing:4px;\n  text-transform:uppercase;\n  color:#a08766;\n  margin:0 0 16px;\n  font-weight:600;\n  position:relative;\n}\n.tsukie-header-title{\n  font-family:'Playfair Display',serif;\n  font-size:58px;\n  font-weight:600;\n  font-style:italic;\n  margin:0 0 20px;\n  color:#1e2a38;\n  line-height:1.1;\n  position:relative;\n}\n.tsukie-header-divider{\n  display:flex;\n  align-items:center;\n  justify-content:center;\n  gap:12px;\n  margin:0 auto;\n}\n.tsukie-header-line{\n  width:80px;\n  height:1px;\n  background:linear-gradient(90deg, transparent, #a08766, transparent);\n}\n.tsukie-header-icon{\n  font-size:14px;\n  color:#a08766;\n}\n.tsukie-header-subtitle{\n  font-family:'Cormorant Garamond',serif;\n  font-size:18px;\n  font-style:italic;\n  color:#6b6b6b;\n  margin:16px 0 0;\n  letter-spacing:0.5px;\n}\n@media(max-width:749px){\n.tsukie-section-header{padding:50px 20px 40px}\n.tsukie-header-title{font-size:40px}\n.tsukie-header-subtitle{font-size:16px}\n}\n</style>\n\n<div class=\"tsukie-section-header\">\n  <p class=\"tsukie-header-eyebrow\">Complete The Look</p>\n  <h2 class=\"tsukie-header-title\">You May Also Adore</h2>\n  <div class=\"tsukie-header-divider\">\n    <span class=\"tsukie-header-line\"></span>\n    <span class=\"tsukie-header-icon\">✦</span>\n    <span class=\"tsukie-header-line\"></span>\n  </div>\n  <p class=\"tsukie-header-subtitle\">Handpicked pieces that complement your style</p>\n</div>",
+        "color_scheme": "",
+        "section_width": "full-width",
+        "padding-block-start": 0,
+        "padding-block-end": 0
+      }
+    },
+    "product_recommendations_qggXJq": {
+      "type": "product-recommendations",
+      "blocks": {
+        "static-product-card": {
+          "type": "_product-card",
+          "name": "t:names.product_card",
+          "static": true,
+          "settings": {
+            "product_card_gap": 8,
+            "inherit_color_scheme": true,
+            "color_scheme": "",
+            "border": "none",
+            "border_width": 1,
+            "border_opacity": 100,
+            "border_radius": 0,
+            "padding-block-start": 0,
+            "padding-block-end": 8,
+            "padding-inline-start": 0,
+            "padding-inline-end": 0
+          },
+          "blocks": {
+            "product_card_gallery_DNizbJ": {
+              "type": "_product-card-gallery",
+              "name": "t:names.product_card_media",
+              "settings": {
+                "image_ratio": "adapt",
+                "border": "none",
+                "border_width": 1,
+                "border_opacity": 100,
+                "border_radius": 0,
+                "padding-block-start": 0,
+                "padding-block-end": 0,
+                "padding-inline-start": 0,
+                "padding-inline-end": 0
+              },
+              "blocks": {}
+            },
+            "product_title_M7MJkb": {
+              "type": "product-title",
+              "name": "t:names.product_title",
+              "settings": {
+                "width": "100%",
+                "max_width": "normal",
+                "alignment": "left",
+                "type_preset": "rte",
+                "font": "var(--font-body--family)",
+                "font_size": "1rem",
+                "line_height": "normal",
+                "letter_spacing": "normal",
+                "case": "none",
+                "wrap": "pretty",
+                "color": "var(--color-foreground)",
+                "background": false,
+                "background_color": "#00000026",
+                "corner_radius": 0,
+                "padding-block-start": 4,
+                "padding-block-end": 0,
+                "padding-inline-start": 0,
+                "padding-inline-end": 0
+              },
+              "blocks": {}
+            },
+            "price_gLWgA6": {
+              "type": "price",
+              "settings": {
+                "show_sale_price_first": true,
+                "show_installments": false,
+                "show_tax_info": false,
+                "type_preset": "h6",
+                "width": "100%",
+                "alignment": "left",
+                "font": "var(--font-body--family)",
+                "font_size": "1rem",
+                "line_height": "normal",
+                "letter_spacing": "normal",
+                "case": "none",
+                "color": "var(--color-foreground)",
+                "padding-block-start": 0,
+                "padding-block-end": 0,
+                "padding-inline-start": 0,
+                "padding-inline-end": 0
+              },
+              "blocks": {}
+            },
+            "custom_liquid_TLFaJq": {
+              "type": "custom-liquid",
+              "name": "t:names.custom_liquid",
+              "settings": {
+                "custom_liquid": "{% liquid\n  assign product_resource = closest.product\n  if request.visual_preview_mode and product_resource == blank\n    assign product_resource = collections.all.products.first\n  endif\n-%}\n\n{% unless product_resource == blank %}\n  {%- assign color_option = product_resource.options_with_values | where: 'name', 'Color' | first -%}\n  {%- if color_option == blank -%}\n    {%- assign color_option = product_resource.options_with_values | where: 'name', 'Colour' | first -%}\n  {%- endif -%}\n\n  {% if color_option and color_option.values.size > 1 %}\n    <style>\n    @import url('https://fonts.googleapis.com/css2?family=Montserrat:wght@400;500;600&display=swap');\n    \n    .tsukie-block-colorpicker{\n      margin-top:16px;\n      margin-bottom:16px;\n    }\n    .tsukie-block-color-label{\n      display: none;\n\n      display: none;\n\n      font-size:11px;\n      letter-spacing:2px;\n      text-transform:uppercase;\n      color:#1e2a38;\n      margin:0 0 12px;\n      font-weight:500;\n      font-family:'Montserrat',sans-serif;\n    }\n    .tsukie-block-color-label span{\n      color:#6b6b6b;\n      font-weight:400;\n      margin-left:4px;\n    }\n    .tsukie-block-swatches{\n      display:flex;\n      gap:6px;\n      align-items:center;\n      flex-wrap:wrap;\n    }\n    .tsukie-block-swatch{\n      width:18px;\n      height:18px;\n      border-radius:50%;\n      border:1px solid #c9c9c9;\n      cursor:pointer;\n      flex-shrink:0;\n      box-sizing:border-box;\n      background-color:var(--swatch-color);\n      padding:0;\n      transition:all 0.2s ease;\n      position:relative;\n    }\n    .tsukie-block-swatch:hover{\n      transform:scale(1.1);\n    }\n    .tsukie-block-swatch.active{\n      border:2px solid #1e2a38;\n    }\n    </style>\n\n    <div class=\"tsukie-block-colorpicker\">\n      <p class=\"tsukie-block-color-label\">\n        COLOR:<span id=\"tsukie-block-selected-{{ section.id }}\">{{ product_resource.selected_or_first_available_variant.option1 }}</span>\n      </p>\n      \n      <div class=\"tsukie-block-swatches\">\n        {% for value in color_option.values %}\n          {%- liquid\n            assign variant_for_color = blank\n            assign color_downcase = value | downcase\n            \n            for variant in product_resource.variants\n              if variant.option1 == value or variant.option2 == value or variant.option3 == value\n                assign variant_for_color = variant\n                break\n              endif\n            endfor\n            \n            assign bg_color = color_downcase | replace: ' ', ''\n            case color_downcase\n              when 'navy blue' \n                assign bg_color = '#001f3f'\n              when 'off white' \n                assign bg_color = '#f8f8f8'\n              when 'beige' \n                assign bg_color = '#f5f1ea'\n              when 'black' \n                assign bg_color = '#000000'\n              when 'white' \n                assign bg_color = '#ffffff'\n            endcase\n          -%}\n          \n          <button \n            class=\"tsukie-block-swatch {% if product_resource.selected_or_first_available_variant.id == variant_for_color.id %}active{% endif %}\"\n            data-variant-id=\"{{ variant_for_color.id }}\"\n            data-color-name=\"{{ value }}\"\n            type=\"button\"\n            style=\"--swatch-color: {{ bg_color }}\"\n            onclick=\"tsukieBlockColorSelect{{ section.id }}(this)\"\n            title=\"{{ value }}\"\n          >\n          </button>\n        {% endfor %}\n      </div>\n    </div>\n\n    <script>\n    function tsukieBlockColorSelect{{ section.id }}(btn){\n      document.querySelectorAll('#shopify-section-{{ section.id }} .tsukie-block-swatch').forEach(s => s.classList.remove('active'));\n      btn.classList.add('active');\n      \n      document.getElementById('tsukie-block-selected-{{ section.id }}').textContent = btn.dataset.colorName;\n      \n      let variantInput = document.querySelector('form[action*=\"/cart/add\"] input[name=\"id\"]');\n      if(variantInput && btn.dataset.variantId){\n        variantInput.value = btn.dataset.variantId;\n        variantInput.dispatchEvent(new Event('change', {bubbles: true}));\n      }\n    }\n    </script>\n  {% endif %}\n{% endunless %}"
+              },
+              "blocks": {}
+            }
+          },
+          "block_order": [
+            "product_card_gallery_DNizbJ",
+            "product_title_M7MJkb",
+            "price_gLWgA6",
+            "custom_liquid_TLFaJq"
+          ]
+        }
+      },
+      "name": "t:names.product_recommendations",
+      "settings": {
+        "product": "{{ closest.product }}",
+        "recommendation_type": "related",
+        "layout_type": "carousel",
+        "carousel_on_mobile": false,
+        "max_products": 4,
+        "columns": 4,
+        "mobile_columns": "2",
+        "columns_gap": 12,
+        "rows_gap": 24,
+        "icons_style": "arrow",
+        "icons_shape": "none",
+        "section_width": "page-width",
+        "gap": 28,
+        "color_scheme": "scheme-e5234ede-d196-4b3b-a9e2-6e7d24b8ca5c",
+        "padding-block-start": 48,
+        "padding-block-end": 48
+      }
+    },
     "seen_on_real_women": {
       "type": "tsukie-seen-on-real-women",
       "blocks": {
@@ -742,23 +755,10 @@
         "padding-block-end": 0
       }
     },
-    "product_details": {
-      "type": "tsukie-product-details",
+    "recently_viewed": {
+      "type": "tsukie-recently-viewed",
       "settings": {
-        "show_size_guide": true,
-        "show_inventory_urgency": true,
-        "show_special_offers": true,
-        "default_offer1_code": "TSUKIE10",
-        "default_offer1_text": "Buy 1 get 10% off",
-        "default_offer2_code": "TSUKIE25",
-        "default_offer2_text": "Buy 2 get 25% off",
-        "show_order_status": true,
-        "feature1_title": "PREMIUM FABRIC",
-        "feature1_desc": "100% Viscose",
-        "feature2_title": "EASY EXCHANGE",
-        "feature2_desc": "14 days",
-        "feature3_title": "SECURE PAYMENT",
-        "feature3_desc": "UPI · Cards · COD"
+        "heading": "Recently Viewed"
       }
     }
   },
