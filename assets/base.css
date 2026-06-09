@@ -5433,3 +5433,49 @@ ul.product-grid,
 .tsukie-size-guide-table-wrap tr:nth-child(even) {
   background: rgba(212, 197, 169, 0.1) !important;
 }
+
+/* 14. Desktop Media Gallery Thumbnails Custom styling (Tsukie Reference) */
+@media screen and (min-width: 750px) {
+  /* Enforce 80px width for thumbnails on desktop */
+  media-gallery {
+    --thumbnail-width: 80px !important;
+  }
+  
+  .slideshow-controls__thumbnails-container {
+    max-height: 520px !important;
+  }
+
+  .slideshow-controls__thumbnails .slideshow-control {
+    width: 80px !important;
+    height: 80px !important;
+    min-width: 80px !important;
+    aspect-ratio: 1 !important;
+    border-radius: 0 !important;
+    border: 2px solid transparent !important;
+    padding: 0 !important;
+    background: #e8e4dd !important;
+    transition: border 0.2s !important;
+  }
+  
+  .slideshow-controls__thumbnails .slideshow-control img {
+    width: 100% !important;
+    height: 100% !important;
+    object-fit: cover !important;
+    border-radius: 0 !important;
+  }
+  
+  .slideshow-controls__thumbnails .slideshow-control[aria-selected="true"] {
+    border-color: #1e2a38 !important;
+    border: 2px solid #1e2a38 !important;
+    outline: none !important;
+  }
+  
+  .slideshow-controls__thumbnails {
+    gap: 8px !important;
+    padding: 0 !important;
+  }
+  
+  slideshow-controls[pagination-position='left'] {
+    margin-right: 12px !important;
+  }
+}
