@@ -4855,6 +4855,77 @@ ul.product-grid,
    Tsukie Native Product Page Custom Styling Overrides (Dawn Blocks Migration)
    ========================================================================== */
 
+/* PDP Container & Column Layout Overrides (matches Tsukie Reference / 1234.txt) */
+.product-information {
+  background: #f5f1ea !important;
+  padding: 40px 0 80px !important;
+  display: block !important;
+}
+
+.product-information .section-background {
+  display: none !important;
+}
+
+.product-information__grid {
+  max-width: 1400px !important;
+  margin: 0 auto !important;
+  padding: 0 40px !important;
+  display: grid !important;
+  grid-template-columns: 1fr 1fr !important;
+  gap: 60px !important;
+  align-items: start !important;
+  width: 100% !important;
+}
+
+.product-information__media {
+  grid-column: auto !important;
+  width: 100% !important;
+  min-width: 0 !important;
+  position: sticky !important;
+  top: 100px !important;
+  order: 0 !important;
+}
+
+.product-details {
+  grid-column: auto !important;
+  width: 100% !important;
+  order: 1 !important;
+}
+
+.product-details,
+.product-details > .group-block {
+  padding-top: 8px !important;
+  padding-bottom: 0 !important;
+  padding-left: 0 !important;
+  padding-right: 0 !important;
+}
+
+@media (max-width: 989px) {
+  .product-information {
+    padding: 40px 0 !important;
+  }
+  .product-information__grid {
+    grid-template-columns: 1fr !important;
+    gap: 24px !important;
+    padding: 0 20px !important;
+  }
+  .product-information__media {
+    position: relative !important;
+    top: 0 !important;
+    order: 0 !important;
+  }
+  .product-details {
+    order: 1 !important;
+  }
+  .product-details,
+  .product-details > .group-block {
+    padding-top: 0 !important;
+    padding-bottom: 0 !important;
+    padding-left: 0 !important;
+    padding-right: 0 !important;
+  }
+}
+
 /* 1. Title & Subtitle Styling */
 .product-details .product-title,
 .product-details h1,
