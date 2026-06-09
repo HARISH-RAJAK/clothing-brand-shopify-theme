@@ -20,7 +20,7 @@
 }
 
 /* Left: Images */
-.tsukie-product-media{
+.tsukie-pdp-media{
   position:sticky;
   top:100px;
   display:flex;
@@ -123,10 +123,10 @@
 .tsukie-carousel-nav svg{width:18px;height:18px;color:#1e2a38}
 
 /* Right: Info */
-.tsukie-product-info{
+.tsukie-pdp-info{
   padding-top:8px;
 }
-.tsukie-product-title{
+.tsukie-pdp-title{
   font-family:'Playfair Display',serif;
   font-size:36px;
   font-weight:400;
@@ -451,7 +451,7 @@
     gap:24px;
     padding:0 20px;
   }
-  .tsukie-product-media{
+  .tsukie-pdp-media{
     position:relative;
     top:0;
     flex-direction:column;
@@ -459,7 +459,7 @@
   .tsukie-thumbnails-wrapper{
     display:none;
   }
-  .tsukie-product-title{
+  .tsukie-pdp-title{
     font-size:28px;
   }
   .tsukie-price{
@@ -574,7 +574,7 @@
 <section class="tsukie-product" data-section-id="{{ section.id }}" data-section-type="product">
   <div class="tsukie-product-container">
     <!-- Left Layout -->
-    <div class="tsukie-product-media">
+    <div class="tsukie-pdp-media">
       <div class="tsukie-thumbnails-wrapper">
         {% if product.images.size > 6 %}
           <button class="tsukie-thumb-nav" type="button" onclick="tsukieScrollThumbs('up')">
@@ -614,8 +614,8 @@
     </div>
 
     <!-- Right Layout -->
-    <div class="tsukie-product-info">
-      <h1 class="tsukie-product-title">{{ product.title }}</h1>
+    <div class="tsukie-pdp-info">
+      <h1 class="tsukie-pdp-title">{{ product.title }}</h1>
 
       {% if product.metafields.custom.subtitle %}
         <p class="tsukie-product-subtitle">{{ product.metafields.custom.subtitle }}</p>
