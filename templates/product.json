@@ -721,6 +721,7 @@
         "item_1": {
           "type": "image_item",
           "settings": {
+            "image": "shopify://shop_images/Rujuta.jpg",
             "tag": "@PRIYA_ANAND"
           }
         },
@@ -728,12 +729,14 @@
           "type": "video_item",
           "settings": {
             "video_url": "",
+            "shopify_video": "shopify://files/videos/moast-AQNtkxBVwuibM7ENWbrrU_7iZ5B7H9j8xWsRC4-jTdluNCy3pRw5cAQsPxGg1Y7EViJaJO5ck1Ov7VD3F9HhROueQleCC89X1Lx-sW4.mp4",
             "tag": "@ANJALI.S"
           }
         },
         "item_3": {
           "type": "image_item",
           "settings": {
+            "image": "shopify://shop_images/Relaxed_Denim_Shirt_01_1.jpg",
             "tag": "@MEERA_M"
           }
         },
@@ -741,6 +744,7 @@
           "type": "video_item",
           "settings": {
             "video_url": "",
+            "shopify_video": "shopify://files/videos/moast-AQMyhXNwLmUSlwmknQZpd-iYevGigGMDg1bAdBEG2h0yVTfTC7MP8f1SRkmSaZ1XmxjqNg_nDbGmAFzn2fm9OpeAqGKJC4OPM4SRQ88.mp4",
             "tag": "@RIYA.SEN"
           }
         }
