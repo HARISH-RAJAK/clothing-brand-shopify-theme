@@ -146,7 +146,7 @@
         if (html.trim().length > 0) {
           var parser = new DOMParser();
           var doc = parser.parseFromString(html, 'text/html');
-          var newContent = doc.getElementById('tsukie-recently-viewed-{{ section.id }}');
+          var newContent = doc.querySelector('.tsukie-recently-viewed');
           if (newContent) {
             var grid = newContent.querySelector('.product-grid');
             if (grid) {
