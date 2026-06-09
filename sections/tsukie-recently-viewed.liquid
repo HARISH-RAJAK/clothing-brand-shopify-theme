@@ -1,8 +1,13 @@
 <div class="tsukie-recently-viewed" id="tsukie-recently-viewed-{{ section.id }}" style="display: none;">
   <div class="recently-viewed-inner" style="max-width: 1400px; margin: 0 auto; padding: 80px 40px; background: #f5f1ea;">
     <h2>{{ section.settings.heading }}</h2>
-    <ul class="product-grid" style="display:grid; grid-template-columns: repeat(4, 1fr); gap: 32px; list-style:none; padding:0; margin:0;">
+    <ul class="product-grid" id="tsukie-rv-grid-{{ section.id }}" style="display:grid; grid-template-columns: repeat(4, 1fr); gap: 32px; list-style:none; padding:0; margin:0;">
     </ul>
+    <div class="tsukie-rv-view-more-wrap" id="tsukie-rv-more-wrap-{{ section.id }}" style="display:none; text-align:center; margin-top:40px;">
+      <button class="tsukie-rv-view-more-btn" id="tsukie-rv-more-btn-{{ section.id }}" type="button">
+        VIEW MORE
+      </button>
+    </div>
   </div>
 </div>
 
@@ -72,6 +77,40 @@
 #tsukie-recently-viewed-{{ section.id }} .tsukie-product-card:hover img {
   transform: scale(1.05);
 }
+
+/* View More Button */
+.tsukie-rv-view-more-btn {
+  background: transparent;
+  border: 2px solid #1e2a38;
+  color: #1e2a38;
+  font-family: 'Montserrat', sans-serif;
+  font-size: 11px;
+  font-weight: 600;
+  letter-spacing: 2px;
+  text-transform: uppercase;
+  padding: 14px 40px;
+  cursor: pointer;
+  transition: all 0.3s ease;
+}
+.tsukie-rv-view-more-btn:hover {
+  background: #1e2a38;
+  color: #d4c5a9;
+}
+
+/* Hidden items (shown on View More click) */
+#tsukie-recently-viewed-{{ section.id }} .product-grid__item.tsukie-rv-hidden {
+  display: none;
+}
+#tsukie-recently-viewed-{{ section.id }} .product-grid__item.tsukie-rv-hidden.tsukie-rv-show {
+  display: block;
+  animation: tsukieRvFadeIn 0.4s ease forwards;
+}
+
+@keyframes tsukieRvFadeIn {
+  from { opacity: 0; transform: translateY(16px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+
 @media(max-width: 989px) {
   #tsukie-recently-viewed-{{ section.id }} ul.product-grid {
     grid-template-columns: repeat(3, 1fr) !important;
@@ -109,8 +148,10 @@
 
 <script>
 (function() {
+  var sectionId = '{{ section.id }}';
+
   function initRecentlyViewed() {
-    var container = document.getElementById('tsukie-recently-viewed-{{ section.id }}');
+    var container = document.getElementById('tsukie-recently-viewed-' + sectionId);
     if (!container) return;
 
     var viewedRaw = localStorage.getItem('viewedProducts');
@@ -128,7 +169,7 @@
     if (currentHandle) {
       viewedProducts = viewedProducts.filter(function(item) {
         if (typeof item === 'object' && item.handle) return item.handle !== currentHandle;
-        if (typeof item === 'string') return true; // old format, keep but won't be used
+        if (typeof item === 'string') return true;
         return true;
       });
     }
@@ -140,10 +181,12 @@
 
     if (validItems.length === 0) return;
 
-    // Limit to 4 products
-    validItems = validItems.slice(0, 4);
+    // Keep up to 8 unique products
+    validItems = validItems.slice(0, 8);
 
-    var grid = container.querySelector('.product-grid');
+    var grid = document.getElementById('tsukie-rv-grid-' + sectionId);
+    var moreWrap = document.getElementById('tsukie-rv-more-wrap-' + sectionId);
+    var moreBtn = document.getElementById('tsukie-rv-more-btn-' + sectionId);
     if (!grid) return;
 
     var loadedCount = 0;
@@ -151,7 +194,6 @@
     var cardElements = new Array(totalToLoad);
 
     validItems.forEach(function(item, index) {
-      // Use Section Rendering API: fetch product page with our card section
       var productUrl = '/products/' + item.handle + '?section_id=tsukie-recently-viewed-card';
 
       fetch(productUrl)
@@ -170,24 +212,58 @@
         .finally(function() {
           loadedCount++;
           if (loadedCount === totalToLoad) {
-            // All fetches done, render in order
-            var hasCards = false;
-            cardElements.forEach(function(cardHtml) {
-              if (cardHtml) {
-                var li = document.createElement('li');
-                li.className = 'product-grid__item';
-                li.style.listStyle = 'none';
-                li.innerHTML = cardHtml;
-                grid.appendChild(li);
-                hasCards = true;
-              }
-            });
-            if (hasCards) {
-              container.style.display = 'block';
-            }
+            renderCards(cardElements, grid, moreWrap, moreBtn);
           }
         });
     });
+  }
+
+  function renderCards(cardElements, grid, moreWrap, moreBtn) {
+    var hasCards = false;
+    var totalRendered = 0;
+    var hasHidden = false;
+
+    cardElements.forEach(function(cardHtml, idx) {
+      if (cardHtml) {
+        var li = document.createElement('li');
+        li.className = 'product-grid__item';
+        li.style.listStyle = 'none';
+        li.innerHTML = cardHtml;
+
+        // First 4 visible, rest hidden
+        if (totalRendered >= 4) {
+          li.classList.add('tsukie-rv-hidden');
+          hasHidden = true;
+        }
+
+        grid.appendChild(li);
+        hasCards = true;
+        totalRendered++;
+      }
+    });
+
+    if (hasCards) {
+      var container = document.getElementById('tsukie-recently-viewed-' + sectionId);
+      if (container) container.style.display = 'block';
+    }
+
+    // Show "View More" button only if there are hidden items
+    if (hasHidden && moreWrap && moreBtn) {
+      moreWrap.style.display = 'block';
+
+      moreBtn.addEventListener('click', function() {
+        var hiddenItems = grid.querySelectorAll('.tsukie-rv-hidden:not(.tsukie-rv-show)');
+        hiddenItems.forEach(function(item, i) {
+          // Stagger the animation slightly
+          setTimeout(function() {
+            item.classList.add('tsukie-rv-show');
+          }, i * 80);
+        });
+
+        // Hide the button after click
+        moreWrap.style.display = 'none';
+      });
+    }
   }
 
   if (document.readyState === 'loading') {
