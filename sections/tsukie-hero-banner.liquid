@@ -5,6 +5,12 @@
   height: 600px;
   overflow: hidden;
   background-color: #f5f1ea;
+  user-select: none;
+  -webkit-user-select: none;
+  cursor: grab;
+}
+.tsukie-hero-slider:active {
+  cursor: grabbing;
 }
 .tsukie-hero-slides {
   width: 100%;
@@ -230,6 +236,60 @@ document.addEventListener('DOMContentLoaded', function() {
       showSlide(parseInt(this.getAttribute('data-index'), 10));
       startAutoPlay();
     });
+  });
+
+  // Touch & Drag Support for Mobile and Desktop
+  var startX = 0;
+  var startY = 0;
+  var isDragging = false;
+  var minSwipeDistance = 40;
+
+  function getEventX(e) {
+    return e.touches ? e.touches[0].clientX : e.clientX;
+  }
+  function getEventY(e) {
+    return e.touches ? e.touches[0].clientY : e.clientY;
+  }
+
+  function onDragStart(e) {
+    if (e.target.closest('.tsukie-slider-btn') || e.target.closest('.tsukie-slider-dot') || e.target.closest('a') || e.target.closest('button')) {
+      return;
+    }
+    startX = getEventX(e);
+    startY = getEventY(e);
+    isDragging = true;
+    stopAutoPlay();
+  }
+
+  function onDragEnd(e) {
+    if (!isDragging) return;
+    isDragging = false;
+    
+    var endX = e.changedTouches ? e.changedTouches[0].clientX : e.clientX;
+    var endY = e.changedTouches ? e.changedTouches[0].clientY : e.clientY;
+    
+    var diffX = endX - startX;
+    var diffY = endY - startY;
+
+    if (Math.abs(diffX) > Math.abs(diffY) && Math.abs(diffX) > minSwipeDistance) {
+      if (diffX < 0) {
+        showSlide(currentIndex + 1);
+      } else {
+        showSlide(currentIndex - 1);
+      }
+    }
+    startAutoPlay();
+  }
+
+  slider.addEventListener('touchstart', onDragStart, { passive: true });
+  slider.addEventListener('touchend', onDragEnd, { passive: true });
+
+  slider.addEventListener('mousedown', onDragStart);
+  slider.addEventListener('mouseup', onDragEnd);
+  slider.addEventListener('mouseleave', function(e) {
+    if (isDragging) {
+      onDragEnd(e);
+    }
   });
 
   slider.addEventListener('mouseenter', stopAutoPlay);

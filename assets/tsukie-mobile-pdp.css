@@ -101,6 +101,11 @@
   }
 
   /* Make the slideshow slides container scrollable if not already */
+  .product-recommendations slideshow-slides,
+  media-gallery slideshow-slides {
+    pointer-events: auto !important;
+  }
+
   .product-recommendations slideshow-slides {
     overflow-x: auto !important;
     -webkit-overflow-scrolling: touch !important;

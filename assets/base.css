@@ -5366,7 +5366,7 @@ ul.product-grid,
     display: none !important;
   }
   slideshow-slides {
-    pointer-events: none !important;
+    pointer-events: auto !important;
   }
   slideshow-controls {
     pointer-events: auto !important;
