@@ -1,16 +1,45 @@
 <div class="tsukie-recently-viewed" id="tsukie-recently-viewed-{{ section.id }}" style="display: none;">
   {% if search.performed and search.results.size > 0 %}
-    <div class="recently-viewed-inner" style="max-width: 1400px; margin: 0 auto; padding: 80px 40px; background: #fdfbf7;">
-      <h2 style="font-family:'Playfair Display',serif; font-style:italic; font-weight:600; color:#1e2a38; font-size:42px; text-align:center; margin:0 0 40px; letter-spacing: normal;">
-        {{ section.settings.heading }}
-      </h2>
+    <div class="recently-viewed-inner" style="max-width: 1400px; margin: 0 auto; padding: 80px 40px; background: #f5f1ea;">
+      <h2>{{ section.settings.heading }}</h2>
       <ul class="product-grid" style="display:grid; grid-template-columns: repeat(4, 1fr); gap: 32px; list-style:none; padding:0; margin:0;">
-        {% for product in search.results %}
-          <li class="product-grid__item" style="list-style:none;">
+        {% for product in search.results limit: 10 %}
+          <li class="product-grid__item" data-product-id="{{ product.id }}" style="list-style:none;">
             <div class="tsukie-product-card" style="position:relative;">
               <div class="tsukie-product-media" style="position:relative; overflow:hidden; background:#fff; aspect-ratio:3/4;">
                 <a href="{{ product.url }}" style="text-decoration:none; display:block; height:100%;">
-                  <span class="tsukie-product-badge" style="position:absolute; top:12px; left:12px; background:#1e2a38; color:#d4c5a9; font-size:10px; letter-spacing:1.5px; text-transform:uppercase; padding:6px 12px; font-weight:600; border-radius:2px; z-index:2;">Bestsellers</span>
+                  {% assign badge_text = '' %}
+                  {% for tag in product.tags %}
+                    {% assign tag_downcase = tag | downcase %}
+                    {% if tag_downcase == 'new' %}
+                      {% assign badge_text = 'NEW' %}
+                      {% break %}
+                    {% elif tag_downcase == 'sale' %}
+                      {% assign badge_text = 'SALE' %}
+                      {% break %}
+                    {% elif tag_downcase == 'bestseller' or tag_downcase == 'best seller' %}
+                      {% assign badge_text = 'BESTSELLER' %}
+                      {% break %}
+                    {% endif %}
+                  {% endfor %}
+                  {% if badge_text == blank %}
+                    {% for tag in product.tags %}
+                      {% unless tag contains 'filter' or tag contains 'meta-' or tag contains 'custom-' or tag == 'all' or tag == 'All' %}
+                        {% assign badge_text = tag | upcase %}
+                        {% break %}
+                      {% endunless %}
+                    {% endfor %}
+                  {% endif %}
+                  {% if product.selected_or_first_available_variant.inventory_quantity < 5 and product.selected_or_first_available_variant.inventory_quantity > 0 and product.selected_or_first_available_variant.available %}
+                    {% assign badge_text = 'LOW STOCK' %}
+                  {% endif %}
+                  {% unless product.available %}
+                    {% assign badge_text = 'SOLD OUT' %}
+                  {% endunless %}
+
+                  {% if badge_text != blank %}
+                    <span class="tsukie-product-badge">{{ badge_text }}</span>
+                  {% endif %}
                   
                   {% if product.featured_image %}
                     <img src="{{ product.featured_image | image_url: width: 400 }}" alt="{{ product.title | escape }}" width="{{ product.featured_image.width }}" height="{{ product.featured_image.height }}" style="width:100%; height:100%; object-fit:cover; display:block; transition:transform 0.5s ease;" loading="lazy">
@@ -18,11 +47,18 @@
                     {{ 'product-1' | placeholder_svg_tag: 'placeholder-svg' }}
                   {% endif %}
                 </a>
+                
+                {% form 'product', product, style: 'margin:0;' %}
+                  <input type="hidden" name="id" value="{{ product.selected_or_first_available_variant.id }}">
+                  <button type="submit" class="tsukie-quick-add-btn" {% unless product.selected_or_first_available_variant.available %}disabled{% endunless %}>
+                    {% if product.selected_or_first_available_variant.available %}QUICK ADD{% else %}SOLD OUT{% endif %}
+                  </button>
+                {% endform %}
               </div>
               
               <div class="tsukie-product-info" style="margin-top:16px; display:flex; flex-direction:column; gap:10px;">
                 <a href="{{ product.url }}" style="text-decoration:none;">
-                  <h3 class="tsukie-product-title" style="font-family:'Playfair Display',serif; font-style:italic; font-size:18px; color:#1e2a38; margin:0; font-weight:600; letter-spacing: normal; line-height: 1.3;">{{ product.title }}</h3>
+                  <h3 class="tsukie-product-title">{{ product.title }}</h3>
                 </a>
                 
                 <div class="tsukie-product-price" style="font-family:'Montserrat',sans-serif; font-size:15px; color:#1e2a38; font-weight:600; letter-spacing: 0.5px;">
@@ -38,7 +74,7 @@
                 {%- endif -%}
                 {%- if color_option and color_option.values.size > 1 -%}
                   <div class="tsukie-color-swatches" style="display:flex; gap:6px; align-items:center; flex-wrap:wrap;">
-                    {%- for value in color_option.values -%}
+                    {%- for value in color_option.values limit: 4 -%}
                       {%- liquid
                         assign bg_color = value | downcase | replace: ' ', ''
                         case bg_color
@@ -82,6 +118,68 @@
 </div>
 
 <style>
+#tsukie-recently-viewed-{{ section.id }} h2 {
+  font-family: 'Cormorant Garamond', serif !important;
+  font-weight: 300 !important;
+  color: #1e2a38 !important;
+  font-size: 42px !important;
+  text-align: center;
+  margin: 0 0 40px;
+  letter-spacing: normal;
+}
+#tsukie-recently-viewed-{{ section.id }} .tsukie-product-title {
+  font-family: 'Cormorant Garamond', serif !important;
+  font-weight: 300 !important;
+  color: #1e2a38 !important;
+  font-size: 18px !important;
+  margin: 0;
+  letter-spacing: normal;
+  line-height: 1.3;
+  text-decoration: none;
+  font-style: normal !important;
+}
+#tsukie-recently-viewed-{{ section.id }} .tsukie-product-badge {
+  position: absolute;
+  top: 12px;
+  left: 12px;
+  background: #1e2a38 !important;
+  color: #d4c5a9 !important;
+  font-family: 'Cormorant Garamond', serif !important;
+  font-size: 10px !important;
+  font-weight: 500 !important;
+  letter-spacing: 1.5px;
+  text-transform: uppercase;
+  padding: 6px 12px;
+  z-index: 2;
+  border-radius: 2px;
+}
+#tsukie-recently-viewed-{{ section.id }} .tsukie-quick-add-btn {
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  background: #1e2a38;
+  color: #d4c5a9;
+  text-align: center;
+  padding: 14px;
+  font-size: 11px;
+  letter-spacing: 2px;
+  text-transform: uppercase;
+  border: none;
+  cursor: pointer;
+  transform: translateY(100%);
+  transition: transform 0.3s ease;
+  width: 100%;
+  z-index: 3;
+  font-family: 'Montserrat', sans-serif;
+  font-weight: 500;
+}
+#tsukie-recently-viewed-{{ section.id }} .tsukie-quick-add-btn:hover {
+  background: #2a3a4a;
+}
+#tsukie-recently-viewed-{{ section.id }} .tsukie-product-card:hover .tsukie-quick-add-btn {
+  transform: translateY(0);
+}
 #tsukie-recently-viewed-{{ section.id }} .tsukie-product-card:hover img {
   transform: scale(1.05);
 }
@@ -92,13 +190,6 @@
   }
 }
 @media(max-width: 749px) {
-  #tsukie-recently-viewed-{{ section.id }} .tsukie-product-badge {
-    font-size: 7px !important;
-    padding: 3px 6px !important;
-    letter-spacing: 1px !important;
-    top: 6px !important;
-    left: 6px !important;
-  }
   #tsukie-recently-viewed-{{ section.id }} .recently-viewed-inner {
     padding: 50px 16px !important;
   }
@@ -109,6 +200,17 @@
   #tsukie-recently-viewed-{{ section.id }} ul.product-grid {
     grid-template-columns: repeat(2, 1fr) !important;
     gap: 16px !important;
+  }
+  #tsukie-recently-viewed-{{ section.id }} .tsukie-product-badge {
+    font-size: 8px !important;
+    padding: 4px 8px !important;
+    top: 6px !important;
+    left: 6px !important;
+  }
+  #tsukie-recently-viewed-{{ section.id }} .tsukie-quick-add-btn {
+    transform: translateY(0);
+    padding: 11px;
+    font-size: 10px;
   }
   #tsukie-recently-viewed-{{ section.id }} .tsukie-product-title {
     font-size: 15px !important;
@@ -149,9 +251,40 @@
           var parser = new DOMParser();
           var doc = parser.parseFromString(html, 'text/html');
           var newContent = doc.getElementById('tsukie-recently-viewed-{{ section.id }}');
-          if (newContent && newContent.innerHTML.trim().length > 0) {
-            container.innerHTML = newContent.innerHTML;
-            container.style.display = 'block';
+          if (newContent) {
+            var grid = newContent.querySelector('.product-grid');
+            if (grid) {
+              var items = Array.prototype.slice.call(grid.querySelectorAll('.product-grid__item'));
+              
+              // Sort items based on the order in viewedProducts
+              items.sort(function(a, b) {
+                var idA = a.getAttribute('data-product-id');
+                var idB = b.getAttribute('data-product-id');
+                var indexA = viewedProducts.indexOf(idA);
+                var indexB = viewedProducts.indexOf(idB);
+                
+                // If not found (should not happen), put at the end
+                if (indexA === -1) indexA = 999;
+                if (indexB === -1) indexB = 999;
+                
+                return indexA - indexB;
+              });
+              
+              // Clear grid and append only the first 4 items
+              grid.innerHTML = '';
+              var count = 0;
+              items.forEach(function(item) {
+                if (count < 4) {
+                  grid.appendChild(item);
+                  count++;
+                }
+              });
+
+              if (count > 0) {
+                container.innerHTML = newContent.innerHTML;
+                container.style.display = 'block';
+              }
+            }
           }
         }
       })
