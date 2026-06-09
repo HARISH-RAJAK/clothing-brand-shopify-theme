@@ -6,50 +6,31 @@
 @media screen and (max-width: 749px) {
 
   /* -----------------------------------------------------------------------
-     1. PRODUCT MEDIA GALLERY — Swipe + Dots (Dawn native gallery)
+     1. PRODUCT MEDIA GALLERY — Dawn native (media-gallery / slideshow)
+        Hide arrows + thumbnails, keep swipe + dots
      ----------------------------------------------------------------------- */
 
-  /* Hide desktop arrows on mobile */
-  media-gallery .slideshow-arrows,
+  /* Hide prev/next arrows in media gallery on mobile */
   media-gallery slideshow-arrows,
-  media-gallery .slider-button,
-  media-gallery .slideshow-control {
+  media-gallery .slideshow-arrows {
     display: none !important;
   }
 
-  /* Hide thumbnail strips on mobile */
-  media-gallery .slideshow-controls__thumbnails,
+  /* Hide desktop thumbnail strip on mobile */
   media-gallery slideshow-controls[thumbnails],
   media-gallery .media-gallery__mobile-controls--thumbnails {
     display: none !important;
   }
 
-  /* Enable horizontal snap-scroll on the main image list */
-  media-gallery slideshow-container {
-    scroll-snap-type: x mandatory !important;
-    -webkit-overflow-scrolling: touch !important;
-    overflow-x: auto !important;
-    scrollbar-width: none !important;
-  }
-  media-gallery slideshow-container::-webkit-scrollbar {
-    display: none !important;
-  }
-
-  media-gallery slideshow-slide {
-    scroll-snap-align: center !important;
-    flex: 0 0 100% !important;
-  }
-
-  /* Show dots pagination (mobile-only dots rendered by Dawn) */
-  media-gallery .media-gallery__mobile-controls--dots,
-  media-gallery .slideshow-controls__dots {
+  /* Show mobile dot controls */
+  media-gallery .media-gallery__mobile-controls--dots {
     display: flex !important;
     justify-content: center !important;
     gap: 8px !important;
     margin-top: 12px !important;
   }
 
-  /* Dot styling */
+  /* Dot button style */
   media-gallery .slideshow-controls__dot {
     width: 8px !important;
     height: 8px !important;
@@ -58,83 +39,37 @@
     border: none !important;
     padding: 0 !important;
     min-width: 0 !important;
-    min-height: 0 !important;
     cursor: pointer !important;
     transition: background 0.2s ease, transform 0.2s ease !important;
   }
-  media-gallery .slideshow-controls__dot[aria-selected="true"],
-  media-gallery .slideshow-controls__dot.active {
+  media-gallery .slideshow-controls__dot[aria-selected="true"] {
     background: #1e2a38 !important;
-    transform: scale(1.25) !important;
-  }
-
-  /* Counter fallback (>15 images) */
-  media-gallery .slideshow-controls__counter {
-    display: flex !important;
-    justify-content: center !important;
-    gap: 4px !important;
-    margin-top: 12px !important;
-    font-family: 'Montserrat', sans-serif !important;
-    font-size: 12px !important;
-    color: #1e2a38 !important;
+    transform: scale(1.3) !important;
   }
 
 
   /* -----------------------------------------------------------------------
-     2. PRODUCT RECOMMENDATIONS — Fix visibility + Horizontal Scroll
+     2. "YOU MAY ALSO ADORE" Recommendations — Mobile Fix
+        DO NOT touch .grid display. Let Dawn's slideshow-component handle scroll.
+        Only hide arrows. Widen cards to 70% so 1.5 are visible.
      ----------------------------------------------------------------------- */
 
-  /* CRITICAL: Override Dawn's hidden--mobile so products are visible */
-  .product-recommendations .resource-list.hidden--mobile {
-    display: flex !important;
-  }
-
-  /* Hide arrows in recommendations */
-  .product-recommendations .slideshow-arrows,
+  /* Hide only the prev/next arrow buttons — keep slide JS intact */
   .product-recommendations slideshow-arrows,
-  .product-recommendations .slider-button,
+  .product-recommendations .slideshow-arrows,
   .product-recommendations .slideshow-control {
     display: none !important;
   }
 
-  /* Grid layout → flex horizontal scroll */
-  .product-recommendations .resource-list--grid,
-  .product-recommendations .resource-list {
-    display: flex !important;
-    overflow-x: auto !important;
-    scroll-snap-type: x mandatory !important;
-    -webkit-overflow-scrolling: touch !important;
-    gap: 16px !important;
-    padding: 0 16px 8px !important;
-    scrollbar-width: none !important;
-    flex-wrap: nowrap !important;
-    align-items: flex-start !important;
-  }
-  .product-recommendations .resource-list--grid::-webkit-scrollbar,
-  .product-recommendations .resource-list::-webkit-scrollbar {
-    display: none !important;
+  /* Give the carousel left padding so first card starts inset */
+  .product-recommendations .resource-list__carousel slideshow-slides {
+    padding-inline-start: 15px !important;
+    padding-inline-end: 15px !important;
   }
 
-  /* Each card = 70% width so 1.5 cards peek */
-  .product-recommendations .resource-list__item {
-    flex: 0 0 70% !important;
-    max-width: 70% !important;
-    min-width: 0 !important;
-    scroll-snap-align: start !important;
-  }
-
-  /* Carousel variant of recommendations */
-  .product-recommendations slideshow-container {
-    scroll-snap-type: x mandatory !important;
-    -webkit-overflow-scrolling: touch !important;
-    overflow-x: auto !important;
-    scrollbar-width: none !important;
-  }
-  .product-recommendations slideshow-container::-webkit-scrollbar {
-    display: none !important;
-  }
-  .product-recommendations slideshow-slide {
-    flex: 0 0 70% !important;
-    scroll-snap-align: start !important;
+  /* Each slide card = 70% of viewport → 1.5 cards visible */
+  .product-recommendations .resource-list__carousel .resource-list__slide {
+    width: 70vw !important;
+    max-width: 70vw !important;
   }
 }
