@@ -169,13 +169,29 @@
     var container = document.getElementById('tsukie-recently-viewed-' + sectionId);
     if (!container) return;
 
-    var viewedRaw = localStorage.getItem('recentlyViewedProducts') || localStorage.getItem('viewedProducts');
-    if (!viewedRaw) return;
+    var viewedProducts = [];
 
-    var viewedProducts;
+    // 1. Try reading recentlyViewedProducts
     try {
-      viewedProducts = JSON.parse(viewedRaw);
-    } catch(e) { return; }
+      var raw = localStorage.getItem('recentlyViewedProducts');
+      if (raw) {
+        viewedProducts = JSON.parse(raw);
+      }
+    } catch(e) {
+      viewedProducts = [];
+    }
+
+    // 2. Fallback to viewedProducts if empty or invalid
+    if (!Array.isArray(viewedProducts) || viewedProducts.length === 0) {
+      try {
+        var rawViewed = localStorage.getItem('viewedProducts');
+        if (rawViewed) {
+          viewedProducts = JSON.parse(rawViewed);
+        }
+      } catch(e) {
+        viewedProducts = [];
+      }
+    }
 
     if (!Array.isArray(viewedProducts) || viewedProducts.length === 0) return;
 
@@ -185,10 +201,10 @@
 
     viewedProducts.forEach(function(item) {
       var handle = '';
-      if (typeof item === 'string') {
+      if (item && typeof item === 'object' && item.handle) {
+        handle = item.handle;
+      } else if (typeof item === 'string' && !/^\d+$/.test(item)) {
         handle = item;
-      } else if (item && typeof item === 'object') {
-        handle = item.handle || item.id;
       }
       if (handle && handle !== currentHandle) {
         if (uniqueHandles.indexOf(handle) === -1) {

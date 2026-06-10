@@ -1334,20 +1334,45 @@
   if (currentId && currentHandle) {
     try {
       // 1. Update recentlyViewedProducts (array of handles)
-      var recentlyViewed = JSON.parse(localStorage.getItem('recentlyViewedProducts') || '[]');
+      var recentlyViewed = [];
+      try {
+        var raw = localStorage.getItem('recentlyViewedProducts');
+        if (raw) {
+          recentlyViewed = JSON.parse(raw);
+        }
+      } catch(e) {
+        recentlyViewed = [];
+      }
+      if (!Array.isArray(recentlyViewed)) {
+        recentlyViewed = [];
+      }
+
       recentlyViewed = recentlyViewed.filter(function(x) {
         var h = (typeof x === 'object' && x !== null) ? x.handle : x;
-        return h !== currentHandle;
+        return h && h !== currentHandle;
       });
       recentlyViewed.unshift(currentHandle);
       if (recentlyViewed.length > 10) recentlyViewed = recentlyViewed.slice(0, 10);
       localStorage.setItem('recentlyViewedProducts', JSON.stringify(recentlyViewed));
 
       // 2. Update viewedProducts (backward compatibility)
-      var viewed = JSON.parse(localStorage.getItem('viewedProducts') || '[]');
+      var viewed = [];
+      try {
+        var rawViewed = localStorage.getItem('viewedProducts');
+        if (rawViewed) {
+          viewed = JSON.parse(rawViewed);
+        }
+      } catch(e) {
+        viewed = [];
+      }
+      if (!Array.isArray(viewed)) {
+        viewed = [];
+      }
+
       viewed = viewed.filter(function(x) {
-        if (typeof x === 'object' && x !== null && x.handle) return x.handle !== currentHandle;
-        if (typeof x === 'string') return x !== currentId;
+        var h = (typeof x === 'object' && x !== null) ? x.handle : x;
+        if (h === currentHandle) return false;
+        if (typeof x === 'string' && x === currentId) return false;
         return true;
       });
       viewed.unshift({ id: currentId, handle: currentHandle });
