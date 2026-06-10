@@ -424,16 +424,9 @@
     }
   }
 
-  // Global submit interception
-  document.addEventListener('submit', async function(e) {
-    const form = e.target.closest('.tsukie-quick-add-form');
-    if (!form) return;
-
-    e.preventDefault();
-    e.stopPropagation();
-
+  // Handle the quick add action
+  async function handleQuickAddAction(form, submitBtn) {
     const card = form.closest('.tsukie-product-card');
-    const submitBtn = form.querySelector('.tsukie-quick-add-btn');
     const handle = (card && card.getAttribute('data-product-handle')) || 
                    (submitBtn && submitBtn.getAttribute('data-product-handle')) || 
                    form.getAttribute('data-product-handle');
@@ -442,14 +435,17 @@
       (submitBtn && submitBtn.getAttribute('data-variants-count')) || 
       form.getAttribute('data-variants-count'), 10
     ) || 1;
-    const variantId = form.querySelector('input[name="id"]').value;
+    
+    const variantInput = form.querySelector('input[name="id"]');
+    const variantId = variantInput ? variantInput.value : null;
 
     if (variantsCount <= 1) {
       // Add directly
-      await addSingleVariantDirectly(variantId, form);
+      if (variantId) {
+        await addSingleVariantDirectly(variantId, form);
+      }
     } else {
       // Show loading in modal
-      const submitBtn = form.querySelector('.tsukie-quick-add-btn');
       if (submitBtn) {
         submitBtn.disabled = true;
         submitBtn.textContent = 'LOADING...';
@@ -475,5 +471,33 @@
         }
       }
     }
-  });
+  }
+
+  // Intercept click event in capturing phase (to pre-empt click-based dynamic checkout/app listeners)
+  document.addEventListener('click', function(e) {
+    const btn = e.target.closest('.tsukie-quick-add-btn');
+    if (!btn) return;
+
+    const form = btn.closest('.tsukie-quick-add-form');
+    if (!form) return;
+
+    e.preventDefault();
+    e.stopPropagation();
+    e.stopImmediatePropagation();
+
+    handleQuickAddAction(form, btn);
+  }, true);
+
+  // Intercept submit event in capturing phase (fallback for form submissions)
+  document.addEventListener('submit', function(e) {
+    const form = e.target.closest('.tsukie-quick-add-form');
+    if (!form) return;
+
+    e.preventDefault();
+    e.stopPropagation();
+    e.stopImmediatePropagation();
+
+    const btn = form.querySelector('.tsukie-quick-add-btn');
+    handleQuickAddAction(form, btn);
+  }, true);
 })();
