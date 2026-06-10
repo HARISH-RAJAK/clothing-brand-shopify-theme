@@ -5551,37 +5551,3 @@ ul.product-grid,
   }
 }
 
-/* Instagram Feed Mobile Fix - 4 cards at once */
-@media screen and (max-width: 749px) {
-  /* Insta feed ka wrapper - theme ke hisab se class change kar lena */
-  .instagram-feed .grid,
-  .insta-feed-wrapper .grid,
-  #shopify-section-* [id*="insta"] .grid {
-    display: flex !important;
-    flex-wrap: nowrap !important;
-    overflow-x: auto !important;
-    scroll-snap-type: x mandatory !important;
-    gap: 8px !important;
-    padding: 0 15px !important;
-    scroll-padding: 0 15px !important;
-  }
-
-  .instagram-feed .grid__item,
-  .insta-feed-wrapper .grid__item,
-  #shopify-section-* [id*="insta"] .grid__item {
-    flex: 0 0 calc(25% - 6px) !important; /* 4 cards = 25% each */
-    width: calc(25% - 6px) !important;
-    scroll-snap-align: start !important;
-  }
-
-  /* Optional: Hide scrollbar but keep scroll working */
-  .instagram-feed .grid::-webkit-scrollbar,
-  .insta-feed-wrapper .grid::-webkit-scrollbar {
-    display: none;
-  }
-  .instagram-feed .grid,
-  .insta-feed-wrapper .grid {
-    -ms-overflow-style: none;
-    scrollbar-width: none;
-  }
-}
