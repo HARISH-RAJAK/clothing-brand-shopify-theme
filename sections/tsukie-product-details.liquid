@@ -486,6 +486,162 @@
   }
 }
 
+/* Custom Product Form Buttons Layout */
+.tsukie-btn-row-1 {
+  display: flex !important;
+  align-items: center !important;
+  gap: 8px !important;
+  margin-bottom: 8px !important;
+  width: 100% !important;
+}
+.tsukie-quantity-selector {
+  display: flex !important;
+  align-items: center !important;
+  width: 35% !important;
+  height: 52px !important;
+  border: 1px solid rgba(30,42,56,0.15) !important;
+  background: #fff !important;
+  box-sizing: border-box !important;
+}
+.tsukie-qty-btn {
+  background: none !important;
+  border: none !important;
+  width: 30% !important;
+  height: 100% !important;
+  cursor: pointer !important;
+  font-family: 'Montserrat', sans-serif !important;
+  font-size: 16px !important;
+  font-weight: 500 !important;
+  color: #1e2a38 !important;
+  display: flex !important;
+  align-items: center !important;
+  justify-content: center !important;
+  padding: 0 !important;
+}
+.tsukie-qty-btn:hover {
+  background: rgba(30,42,56,0.05) !important;
+}
+.tsukie-qty-input {
+  width: 40% !important;
+  height: 100% !important;
+  border: none !important;
+  text-align: center !important;
+  font-family: 'Montserrat', sans-serif !important;
+  font-size: 14px !important;
+  font-weight: 600 !important;
+  color: #1e2a38 !important;
+  background: transparent !important;
+  outline: none !important;
+  -moz-appearance: textfield !important;
+}
+.tsukie-qty-input::-webkit-outer-spin-button,
+.tsukie-qty-input::-webkit-inner-spin-button {
+  -webkit-appearance: none !important;
+  margin: 0 !important;
+}
+.tsukie-btn-add {
+  width: 65% !important;
+  margin: 0 !important;
+}
+.tsukie-btn-row-2 {
+  width: 100% !important;
+}
+.tsukie-btn-buy {
+  width: 100% !important;
+  background: #1e2a38 !important;
+  color: #ffffff !important;
+  border: none !important;
+  margin: 0 !important;
+}
+.tsukie-btn-buy:hover:not(:disabled) {
+  background: #2a3a4e !important;
+}
+
+/* Image Slider Base Styles */
+.tsukie-main-image-slider {
+  display: flex !important;
+  overflow: hidden !important;
+  scroll-behavior: smooth !important;
+  scrollbar-width: none !important;
+  width: 100% !important;
+}
+.tsukie-main-image-slider::-webkit-scrollbar {
+  display: none !important;
+}
+.tsukie-main-image-slide {
+  flex: 0 0 100% !important;
+  width: 100% !important;
+}
+.tsukie-main-image-slide img {
+  width: 100% !important;
+  height: auto !important;
+  display: block !important;
+}
+.tsukie-carousel-dots {
+  display: none !important;
+}
+
+/* Mobile-only overrides (max-width: 749px) */
+@media (max-width: 749px) {
+  .tsukie-product-container {
+    padding: 0 !important;
+  }
+  .tsukie-pdp-media {
+    padding: 0 !important;
+    margin: 0 !important;
+    width: 100% !important;
+  }
+  .tsukie-pdp-info {
+    padding: 0 20px !important;
+  }
+  .tsukie-main-image-wrap {
+    width: 100vw !important;
+    max-width: 100vw !important;
+    overflow: hidden !important;
+    margin: 0 !important;
+    padding: 0 !important;
+  }
+  .tsukie-main-image-slider {
+    display: flex !important;
+    overflow-x: auto !important;
+    scroll-snap-type: x mandatory !important;
+    -webkit-overflow-scrolling: touch !important;
+    width: 100vw !important;
+    margin: 0 !important;
+    padding: 0 !important;
+  }
+  .tsukie-main-image-slide {
+    flex: 0 0 100vw !important;
+    width: 100vw !important;
+    scroll-snap-align: start !important;
+  }
+  .tsukie-carousel-nav {
+    display: none !important;
+  }
+  .tsukie-thumbnails-wrapper {
+    display: none !important;
+  }
+  .tsukie-carousel-dots {
+    display: flex !important;
+    justify-content: center !important;
+    gap: 8px !important;
+    margin-top: 16px !important;
+    margin-bottom: 8px !important;
+    width: 100% !important;
+  }
+  .tsukie-dot {
+    width: 8px !important;
+    height: 8px !important;
+    border-radius: 50% !important;
+    background-color: #D9D9D9 !important;
+    cursor: pointer !important;
+    transition: background-color 0.2s !important;
+  }
+  .tsukie-dot.active {
+    background-color: #1E2A38 !important;
+  }
+}
+
 /* Size Guide Modal Styles */
 .tsukie-size-guide-modal {
   position: fixed;
@@ -679,13 +835,27 @@
           {% if product.tags contains 'bestseller' %}
             <div class="tsukie-badge">BESTSELLER</div>
           {% endif %}
-          <img id="tsukie-main-img" src="{{ product.featured_image | img_url: '1000x' }}" alt="{{ product.title | escape }}">
+          
+          <div class="tsukie-main-image-slider" onscroll="tsukieOnSliderScroll(this)">
+            {% for image in product.images %}
+              <div class="tsukie-main-image-slide" data-index="{{ forloop.index0 }}">
+                <img src="{{ image | img_url: '1000x' }}" alt="{{ product.title | escape }}" loading="lazy">
+              </div>
+            {% endfor %}
+          </div>
+          
           <button class="tsukie-carousel-nav prev" type="button" onclick="tsukiePrevImage(this)">
             <svg fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M15 19l-7-7 7-7"></path></svg>
           </button>
           <button class="tsukie-carousel-nav next" type="button" onclick="tsukieNextImage(this)">
             <svg fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M9 5l7 7-7 7"></path></svg>
           </button>
+        </div>
+        
+        <div class="tsukie-carousel-dots">
+          {% for image in product.images %}
+            <span class="tsukie-dot {% if forloop.first %}active{% endif %}" onclick="tsukieScrollToImage(this, {{ forloop.index0 }})"></span>
+          {% endfor %}
         </div>
       </div>
     </div>
@@ -836,12 +1006,20 @@
         </div>
         {% endif %}
 
-        <div class="tsukie-btn-group">
+        <div class="tsukie-btn-row-1">
+          <div class="tsukie-quantity-selector">
+            <button type="button" class="tsukie-qty-btn minus" onclick="tsukieUpdateQty(this, -1)">-</button>
+            <input type="number" name="quantity" value="1" min="1" class="tsukie-qty-input" readonly>
+            <button type="button" class="tsukie-qty-btn plus" onclick="tsukieUpdateQty(this, 1)">+</button>
+          </div>
+          
           <button type="submit" name="add" id="tsukie-add-to-cart-btn" class="tsukie-btn ss-add-to-cart tsukie-btn-add" {% unless product.selected_or_first_available_variant.available %}disabled{% endunless %}>
             <svg fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M16 11V7a4 4 0 00-8 0v4M5 9h14l1 12H4L5 9z"></path></svg>
             <span id="tsukie-add-btn-text">{% if product.selected_or_first_available_variant.available %}ADD TO BAG{% else %}SOLD OUT{% endif %}</span>
           </button>
-          
+        </div>
+        
+        <div class="tsukie-btn-row-2">
           <!-- Pure Clean Isolated Dynamic Buy Button -->
           <button type="button" id="tsukie-buy-now-btn" class="tsukie-btn tsukie-btn-buy" onclick="tsukieBuyNowClean(this)" {% unless product.selected_or_first_available_variant.available %}disabled{% endunless %}>
             <span id="tsukie-buy-text">BUY NOW</span>
@@ -1492,12 +1670,69 @@ window.tsukieCopyCode = function(el, code) {
 window.tsukieChangeImage = function(src, index, element) {
   const container = tsukieGetContext(element);
   if (!container) return;
-  const mainImg = container.querySelector('#tsukie-main-img');
-  if(mainImg) mainImg.src = src;
+  const slider = container.querySelector('.tsukie-main-image-slider');
+  if (slider) {
+    const width = slider.clientWidth;
+    if (width > 0) {
+      slider.scrollTo({
+        left: index * width,
+        behavior: 'smooth'
+      });
+    }
+  } else {
+    const mainImg = container.querySelector('#tsukie-main-img');
+    if(mainImg) mainImg.src = src;
+  }
   container.tsukieCurrentImage = index;
   container.querySelectorAll('.tsukie-thumb').forEach((thumb, i) => {
     thumb.classList.toggle('active', i === index);
   });
+  container.querySelectorAll('.tsukie-dot').forEach((dot, i) => {
+    dot.classList.toggle('active', i === index);
+  });
+};
+
+window.tsukieScrollToImage = function(dotEl, index) {
+  const container = tsukieGetContext(dotEl);
+  if (!container) return;
+  const slider = container.querySelector('.tsukie-main-image-slider');
+  if (slider) {
+    const width = slider.clientWidth;
+    if (width > 0) {
+      slider.scrollTo({
+        left: index * width,
+        behavior: 'smooth'
+      });
+    }
+  }
+  container.tsukieCurrentImage = index;
+  container.querySelectorAll('.tsukie-dot').forEach((dot, i) => {
+    dot.classList.toggle('active', i === index);
+  });
+  container.querySelectorAll('.tsukie-thumb').forEach((thumb, i) => {
+    thumb.classList.toggle('active', i === index);
+  });
+};
+
+window.tsukieOnSliderScroll = function(slider) {
+  const container = tsukieGetContext(slider);
+  if (!container) return;
+  const scrollLeft = slider.scrollLeft;
+  const width = slider.clientWidth;
+  if (width <= 0) return;
+  const index = Math.round(scrollLeft / width);
+  
+  if (container.tsukieCurrentImage !== index) {
+    container.tsukieCurrentImage = index;
+    
+    container.querySelectorAll('.tsukie-dot').forEach((dot, i) => {
+      dot.classList.toggle('active', i === index);
+    });
+    
+    container.querySelectorAll('.tsukie-thumb').forEach((thumb, i) => {
+      thumb.classList.toggle('active', i === index);
+    });
+  }
 };
 
 window.tsukieScrollThumbs = function(direction, element) {
@@ -1609,6 +1844,15 @@ window.tsukieSelectOption = function(element, position, value) {
       if(addText) addText.textContent = "SOLD OUT";
     }
   }
+window.tsukieUpdateQty = function(btn, change) {
+  const container = tsukieGetContext(btn);
+  const input = container.querySelector('.tsukie-qty-input');
+  if (input) {
+    let val = parseInt(input.value) || 1;
+    val += change;
+    if (val < 1) val = 1;
+    input.value = val;
+  }
 };
 
 window.tsukieBuyNowClean = function(element) {
@@ -1623,6 +1867,9 @@ window.tsukieBuyNowClean = function(element) {
   if(buyBtn) buyBtn.setAttribute('disabled', 'disabled');
   if(buyTxt) buyTxt.textContent = "PROCESSING...";
 
+  const qtyInput = container.querySelector('.tsukie-qty-input');
+  const qty = qtyInput ? parseInt(qtyInput.value) || 1 : 1;
+
   fetch(window.Shopify.routes.root + 'cart/clear.js', {
     method: 'POST',
     headers: { 'Content-Type': 'application/json' }
@@ -1632,7 +1879,7 @@ window.tsukieBuyNowClean = function(element) {
       method: 'POST',
       headers: { 'Content-Type': 'application/json' },
       body: JSON.stringify({
-        'items': [{ 'id': parseInt(variantId), 'quantity': 1 }]
+        'items': [{ 'id': parseInt(variantId), 'quantity': qty }]
       })
     });
   })
@@ -1642,7 +1889,7 @@ window.tsukieBuyNowClean = function(element) {
   })
   .catch(err => {
     console.error('Checkout error:', err);
-    window.location.href = '/checkout?updates[' + variantId + ']=1';
+    window.location.href = '/checkout?updates[' + variantId + ']=' + qty;
   });
 };
 
