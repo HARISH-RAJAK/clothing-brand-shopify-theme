@@ -1,0 +1,746 @@
+{% comment %}
+  Testimonial Section for Shopify
+  Save this as sections/testimonials.liquid
+{% endcomment %}
+
+<style>
+  .testimonial-section-{{ section.id }} {
+    padding: {{ section.settings.padding_top | default: 40 }}px 20px {{ section.settings.padding_bottom | default: 40 }}px;
+    background-color: #ffffff;
+  }
+
+  .testimonial-container-{{ section.id }} {
+    max-width: 1400px;
+    margin: 0 auto;
+    position: relative;
+  }
+
+  .testimonial-heading-wrap-{{ section.id }} {
+    display: flex;
+    justify-content: center;
+  }
+
+  .testimonial-heading-{{ section.id }} {
+    margin: 0 auto 40px;
+    font-size: {{ section.settings.heading_font_size_desktop | default: 32 }}px;
+    font-weight: 400;
+    letter-spacing: 0.08em;
+    text-transform: {{ section.settings.heading_text_transform | default: 'uppercase' }};
+    text-align: center;
+    color: #222;
+    font-family: var(--font-heading-family);
+  }
+
+  .testimonial-heading-{{ section.id }} {
+    display: inline-block;
+    background-color: {{ section.settings.heading_bg_color | default: '#000000' }};
+    color: #fff;
+    padding: {{ section.settings.heading_bg_vertical_desktop | default: 14 }}px {{ section.settings.heading_bg_horizontal_desktop | default: 240 }}px;
+    line-height: 1;
+    box-sizing: border-box;
+    white-space: nowrap;
+  }
+
+  {% if section.settings.heading_bg_width_desktop == 'full' %}
+  .testimonial-heading-{{ section.id }} {
+    display: block;
+    width: calc(100% + {{ section.settings.heading_bg_horizontal_desktop | default: 240 | times: 2 }}px);
+    margin-left: -{{ section.settings.heading_bg_horizontal_desktop | default: 240 }}px;
+    margin-right: -{{ section.settings.heading_bg_horizontal_desktop | default: 240 }}px;
+    padding-left: 0;
+    padding-right: 0;
+    text-align: center;
+  }
+  {% endif %}
+
+  .testimonial-desktop-{{ section.id }} {
+    display: block;
+  }
+
+  .testimonial-mobile-{{ section.id }} {
+    display: none;
+  }
+
+  .testimonial-wrapper-desktop-{{ section.id }},
+  .testimonial-wrapper-mobile-{{ section.id }} {
+    overflow: hidden;
+    position: relative;
+  }
+
+  .testimonial-track-desktop-{{ section.id }},
+  .testimonial-track-mobile-{{ section.id }} {
+    display: flex;
+    gap: 0;
+    transition: transform 0.5s ease;
+  }
+
+  .testimonial-slide-desktop-{{ section.id }},
+  .testimonial-slide-mobile-{{ section.id }} {
+    flex: 0 0 100%;
+    min-width: 100%;
+    box-sizing: border-box;
+    display: flex;
+    align-items: stretch;
+    justify-content: center;
+    opacity: 0.4;
+    transition: opacity 0.5s ease;
+  }
+
+  .testimonial-slide-desktop-{{ section.id }}.is-active,
+  .testimonial-slide-mobile-{{ section.id }}.is-active {
+    opacity: 1;
+  }
+
+  .testimonial-card-{{ section.id }} {
+    flex: 1;
+    max-width: 400px;
+    margin: 0 10px;
+    background: white;
+    padding: 50px 40px;
+    border-radius: 0;
+    border: 1px solid rgba(0, 0, 0, 0.09);
+    box-shadow: 0 6px 20px rgba(0, 0, 0, 0.08);
+    text-align: center;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    transition: all 0.3s ease;
+  }
+
+  .testimonial-slide-mobile-{{ section.id }} .testimonial-card-{{ section.id }} {
+    margin: 0 auto;
+  }
+
+  .testimonial-slide-desktop-{{ section.id }}.has-three-cards .testimonial-card-{{ section.id }}:nth-child(2) {
+    transform: scale(1.15) translateY(-20px);
+    z-index: 1;
+    box-shadow: 0 4px 16px rgba(0, 0, 0, 0.12);
+  }
+
+  .stars-{{ section.id }} {
+    color: #ffd700;
+    font-size: 20px;
+    margin-bottom: 30px;
+    letter-spacing: 2px;
+  }
+
+  .testimonial-text-{{ section.id }} {
+    font-size: 18px;
+    line-height: 1.6;
+    color: #333;
+    margin-bottom: 40px;
+    max-width: 350px;
+  }
+
+  .author-info-{{ section.id }} {
+    margin-top: auto;
+  }
+
+  .author-name-{{ section.id }} {
+    font-size: 16px;
+    font-weight: 600;
+    color: #000;
+    margin-bottom: 5px;
+  }
+
+  .author-location-{{ section.id }} {
+    font-size: 15px;
+    color: #666;
+  }
+
+  .navigation-desktop-{{ section.id }},
+  .navigation-mobile-{{ section.id }} {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 15px;
+    margin-top: 40px;
+  }
+
+  .nav-button-desktop-{{ section.id }},
+  .nav-button-mobile-{{ section.id }} {
+    background: white;
+    border: 1px solid #ddd;
+    width: 40px;
+    height: 40px;
+    border-radius: 50%;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 18px;
+    color: #333;
+    transition: all 0.3s ease;
+  }
+
+  .nav-button-desktop-{{ section.id }}:hover,
+  .nav-button-mobile-{{ section.id }}:hover {
+    background: #f5f5f5;
+    border-color: #999;
+  }
+
+  .nav-button-desktop-{{ section.id }}:disabled,
+  .nav-button-mobile-{{ section.id }}:disabled {
+    opacity: 0.3;
+    cursor: not-allowed;
+  }
+
+  .dots-desktop-{{ section.id }},
+  .dots-mobile-{{ section.id }} {
+    display: flex;
+    gap: 10px;
+  }
+
+  .dot-desktop-{{ section.id }},
+  .dot-mobile-{{ section.id }} {
+    width: 10px;
+    height: 10px;
+    border-radius: 50%;
+    background: #ddd;
+    cursor: pointer;
+    transition: all 0.3s ease;
+  }
+
+  .dot-desktop-{{ section.id }}.active,
+  .dot-mobile-{{ section.id }}.active {
+    background: #333;
+    width: 12px;
+    height: 12px;
+  }
+
+  @media (max-width: 768px) {
+    .testimonial-desktop-{{ section.id }} {
+      display: none;
+    }
+
+    .testimonial-mobile-{{ section.id }} {
+      display: block;
+    }
+
+    .testimonial-slide-desktop-{{ section.id }},
+    .testimonial-slide-mobile-{{ section.id }} {
+      flex-direction: column;
+    }
+
+    .testimonial-card-{{ section.id }} {
+      padding: 30px 20px;
+      margin: 0;
+    }
+
+    .testimonial-slide-desktop-{{ section.id }}.has-three-cards .testimonial-card-{{ section.id }}:nth-child(2) {
+      transform: scale(1);
+    }
+
+    .testimonial-text-{{ section.id }} {
+      font-size: 16px;
+    }
+
+    .testimonial-heading-{{ section.id }} {
+      font-size: {{ section.settings.heading_font_size_mobile | default: 24 }}px;
+      margin-bottom: 28px;
+    }
+
+    .testimonial-heading-{{ section.id }} {
+      display: block;
+      width: calc(100% + {{ section.settings.heading_bg_horizontal_mobile | default: 24 | times: 2 }}px);
+      margin-left: -{{ section.settings.heading_bg_horizontal_mobile | default: 24 }}px;
+      margin-right: -{{ section.settings.heading_bg_horizontal_mobile | default: 24 }}px;
+      padding: {{ section.settings.heading_bg_vertical_mobile | default: 14 }}px {{ section.settings.heading_bg_horizontal_mobile | default: 24 }}px;
+      white-space: normal;
+    }
+
+    .navigation-mobile-{{ section.id }} {
+      gap: 10px;
+      margin-top: 28px;
+    }
+
+    .nav-button-mobile-{{ section.id }} {
+      width: 32px;
+      height: 32px;
+      font-size: 16px;
+    }
+
+    .dots-mobile-{{ section.id }} {
+      gap: 6px;
+    }
+
+    .dot-mobile-{{ section.id }} {
+      width: 8px;
+      height: 8px;
+    }
+
+    .dot-mobile-{{ section.id }}.active {
+      width: 10px;
+      height: 10px;
+    }
+  }
+</style>
+
+<div class="testimonial-section-{{ section.id }}">
+  <div class="testimonial-container-{{ section.id }}">
+    {% assign blocks_per_slide = 3 %}
+    {% assign total_blocks = section.blocks.size %}
+    {% assign slide_count = total_blocks | divided_by: blocks_per_slide %}
+    {% assign remainder = total_blocks | modulo: blocks_per_slide %}
+    {% if remainder > 0 %}
+      {% assign slide_count = slide_count | plus: 1 %}
+    {% endif %}
+
+    {% if section.settings.heading != blank %}
+      <div class="testimonial-heading-wrap-{{ section.id }}">
+        <h2 class="testimonial-heading-{{ section.id }}">{{ section.settings.heading | strip | escape }}</h2>
+      </div>
+    {% endif %}
+
+    <div class="testimonial-desktop-{{ section.id }}">
+      <div class="testimonial-wrapper-desktop-{{ section.id }}">
+        <div class="testimonial-track-desktop-{{ section.id }}" id="track-desktop-{{ section.id }}">
+          {% for i in (1..slide_count) %}
+            {% assign slide_index = forloop.index0 %}
+            {% assign start_index = slide_index | times: blocks_per_slide %}
+            {% assign end_index = start_index | plus: blocks_per_slide | minus: 1 %}
+
+            {% assign cards_in_slide = 0 %}
+            {% for block in section.blocks %}
+              {% assign block_index = forloop.index0 %}
+              {% if block_index >= start_index and block_index <= end_index %}
+                {% assign cards_in_slide = cards_in_slide | plus: 1 %}
+              {% endif %}
+            {% endfor %}
+
+            <div class="testimonial-slide-desktop-{{ section.id }} {% if cards_in_slide == 3 %}has-three-cards{% endif %}{% if forloop.first %} is-active{% endif %}">
+              {% for block in section.blocks %}
+                {% assign block_index = forloop.index0 %}
+                {% if block_index >= start_index and block_index <= end_index %}
+                  <div class="testimonial-card-{{ section.id }}" {{ block.shopify_attributes }}>
+                    <div class="stars-{{ section.id }}">★★★★★</div>
+                    <div class="testimonial-text-{{ section.id }}">
+                      {{ block.settings.testimonial_text }}
+                    </div>
+                    <div class="author-info-{{ section.id }}">
+                      <div class="author-name-{{ section.id }}">{{ block.settings.author_name }}</div>
+                      <div class="author-location-{{ section.id }}">{{ block.settings.author_location }}</div>
+                    </div>
+                  </div>
+                {% endif %}
+              {% endfor %}
+            </div>
+          {% endfor %}
+        </div>
+      </div>
+
+      {% if slide_count > 1 %}
+        <div class="navigation-desktop-{{ section.id }}">
+          <button class="nav-button-desktop-{{ section.id }}" id="prevBtn-desktop-{{ section.id }}" data-direction="-1">‹</button>
+          <div class="dots-desktop-{{ section.id }}">
+            {% for i in (1..slide_count) %}
+              <div class="dot-desktop-{{ section.id }} {% if forloop.first %}active{% endif %}" data-slide-index="{{ forloop.index0 }}"></div>
+            {% endfor %}
+          </div>
+          <button class="nav-button-desktop-{{ section.id }}" id="nextBtn-desktop-{{ section.id }}" data-direction="1">›</button>
+        </div>
+      {% endif %}
+    </div>
+
+    <div class="testimonial-mobile-{{ section.id }}">
+      <div class="testimonial-wrapper-mobile-{{ section.id }}">
+        <div class="testimonial-track-mobile-{{ section.id }}" id="track-mobile-{{ section.id }}">
+          {% for block in section.blocks %}
+            <div class="testimonial-slide-mobile-{{ section.id }}{% if forloop.first %} is-active{% endif %}">
+              <div class="testimonial-card-{{ section.id }}">
+                <div class="stars-{{ section.id }}">★★★★★</div>
+                <div class="testimonial-text-{{ section.id }}">
+                  {{ block.settings.testimonial_text }}
+                </div>
+                <div class="author-info-{{ section.id }}">
+                  <div class="author-name-{{ section.id }}">{{ block.settings.author_name }}</div>
+                  <div class="author-location-{{ section.id }}">{{ block.settings.author_location }}</div>
+                </div>
+              </div>
+            </div>
+          {% endfor %}
+        </div>
+      </div>
+
+      {% if total_blocks > 1 %}
+        <div class="navigation-mobile-{{ section.id }}">
+          <button class="nav-button-mobile-{{ section.id }}" id="prevBtn-mobile-{{ section.id }}" data-direction="-1">‹</button>
+          <div class="dots-mobile-{{ section.id }}">
+            {% for block in section.blocks %}
+              <div class="dot-mobile-{{ section.id }} {% if forloop.first %}active{% endif %}" data-slide-index="{{ forloop.index0 }}"></div>
+            {% endfor %}
+          </div>
+          <button class="nav-button-mobile-{{ section.id }}" id="nextBtn-mobile-{{ section.id }}" data-direction="1">›</button>
+        </div>
+      {% endif %}
+    </div>
+  </div>
+</div>
+
+<script>
+document.addEventListener('DOMContentLoaded', function() {
+  (function() {
+    const sectionId = '{{ section.id }}';
+    const autoplayEnabled = {{ section.settings.enable_autoplay | default: false }};
+    const autoplayDelay = {{ section.settings.autoplay_delay | default: 5 }} * 1000;
+
+    const sliderConfigs = [
+      {
+        wrapper: document.querySelector('.testimonial-wrapper-desktop-' + sectionId),
+        track: document.getElementById('track-desktop-' + sectionId),
+        slides: document.querySelectorAll('.testimonial-slide-desktop-' + sectionId),
+        dots: document.querySelectorAll('.dot-desktop-' + sectionId),
+        prevBtn: document.getElementById('prevBtn-desktop-' + sectionId),
+        nextBtn: document.getElementById('nextBtn-desktop-' + sectionId)
+      },
+      {
+        wrapper: document.querySelector('.testimonial-wrapper-mobile-' + sectionId),
+        track: document.getElementById('track-mobile-' + sectionId),
+        slides: document.querySelectorAll('.testimonial-slide-mobile-' + sectionId),
+        dots: document.querySelectorAll('.dot-mobile-' + sectionId),
+        prevBtn: document.getElementById('prevBtn-mobile-' + sectionId),
+        nextBtn: document.getElementById('nextBtn-mobile-' + sectionId)
+      }
+    ];
+
+    sliderConfigs.forEach(function(config) {
+      if (!config.wrapper || !config.track || config.slides.length === 0) {
+        return;
+      }
+
+      let currentSlide = 0;
+      const totalSlides = config.slides.length;
+      let autoplayInterval = null;
+
+      function updateSlide() {
+        const slideWidth = config.wrapper.offsetWidth;
+        if (slideWidth === 0) {
+          return;
+        }
+
+        if (currentSlide > totalSlides - 1) {
+          currentSlide = totalSlides - 1;
+        }
+
+        config.track.style.transform = 'translateX(-' + (currentSlide * slideWidth) + 'px)';
+
+        if (config.slides && config.slides.length) {
+          config.slides.forEach(function(slide, index) {
+            slide.classList.toggle('is-active', index === currentSlide);
+          });
+        }
+
+        if (config.dots && config.dots.length) {
+          config.dots.forEach(function(dot, index) {
+            dot.classList.toggle('active', index === currentSlide);
+          });
+        }
+
+        if (config.prevBtn) {
+          config.prevBtn.disabled = currentSlide === 0;
+        }
+
+        if (config.nextBtn) {
+          config.nextBtn.disabled = currentSlide === totalSlides - 1;
+        }
+      }
+
+      function nextSlide() {
+        currentSlide = (currentSlide + 1) % totalSlides;
+        updateSlide();
+      }
+
+      function startAutoplay() {
+        if (autoplayEnabled && totalSlides > 1) {
+          stopAutoplay();
+          autoplayInterval = setInterval(nextSlide, autoplayDelay);
+        }
+      }
+
+      function stopAutoplay() {
+        if (autoplayInterval) {
+          clearInterval(autoplayInterval);
+          autoplayInterval = null;
+        }
+      }
+
+      function resetAutoplay() {
+        if (autoplayEnabled) {
+          stopAutoplay();
+          startAutoplay();
+        }
+      }
+
+      if (config.prevBtn) {
+        config.prevBtn.addEventListener('click', function() {
+          if (currentSlide > 0) {
+            currentSlide -= 1;
+          } else {
+            currentSlide = totalSlides - 1;
+          }
+          updateSlide();
+          resetAutoplay();
+        });
+      }
+
+      if (config.nextBtn) {
+        config.nextBtn.addEventListener('click', function() {
+          if (currentSlide < totalSlides - 1) {
+            currentSlide += 1;
+          } else {
+            currentSlide = 0;
+          }
+          updateSlide();
+          resetAutoplay();
+        });
+      }
+
+      if (config.dots && config.dots.length) {
+        config.dots.forEach(function(dot) {
+          dot.addEventListener('click', function() {
+            const index = parseInt(this.getAttribute('data-slide-index'), 10);
+            if (!isNaN(index)) {
+              currentSlide = index;
+              updateSlide();
+              resetAutoplay();
+            }
+          });
+        });
+      }
+
+      // Pause autoplay on hover
+      if (config.wrapper) {
+        config.wrapper.addEventListener('mouseenter', stopAutoplay);
+        config.wrapper.addEventListener('mouseleave', function() {
+          if (autoplayEnabled) {
+            startAutoplay();
+          }
+        });
+      }
+
+      let resizeTimer;
+      window.addEventListener('resize', function() {
+        clearTimeout(resizeTimer);
+        resizeTimer = setTimeout(updateSlide, 250);
+      });
+
+      setTimeout(function() {
+        updateSlide();
+        startAutoplay();
+      }, 100);
+    });
+  })();
+});
+</script>
+
+{% schema %}
+{
+  "name": "Testimonials",
+  "settings": [
+    {
+      "type": "text",
+      "id": "heading",
+      "label": "Heading",
+      "default": "Testimonials"
+    },
+    {
+      "type": "range",
+      "id": "heading_font_size_desktop",
+      "label": "Heading Font Size - Desktop",
+      "min": 16,
+      "max": 60,
+      "step": 1,
+      "unit": "px",
+      "default": 32
+    },
+    {
+      "type": "range",
+      "id": "heading_font_size_mobile",
+      "label": "Heading Font Size - Mobile",
+      "min": 12,
+      "max": 48,
+      "step": 1,
+      "unit": "px",
+      "default": 24
+    },
+    {
+      "type": "select",
+      "id": "heading_text_transform",
+      "label": "Heading Text Style",
+      "options": [
+        { "value": "uppercase", "label": "Uppercase" },
+        { "value": "none", "label": "Normal" }
+      ],
+      "default": "uppercase"
+    },
+    {
+      "type": "color",
+      "id": "heading_bg_color",
+      "label": "Background Color",
+      "default": "#000000"
+    },
+    {
+      "type": "header",
+      "content": "Heading Background - Desktop"
+    },
+    {
+      "type": "select",
+      "id": "heading_bg_width_desktop",
+      "label": "Background Width",
+      "options": [
+        { "value": "auto", "label": "Auto" },
+        { "value": "full", "label": "Full width" }
+      ],
+      "default": "auto"
+    },
+    {
+      "type": "range",
+      "id": "heading_bg_vertical_desktop",
+      "label": "Vertical Padding",
+      "min": 0,
+      "max": 100,
+      "step": 1,
+      "unit": "px",
+      "default": 14
+    },
+    {
+      "type": "range",
+      "id": "heading_bg_horizontal_desktop",
+      "label": "Horizontal Padding",
+      "min": 0,
+      "max": 1200,
+      "step": 12,
+      "unit": "px",
+      "default": 240
+    },
+    {
+      "type": "header",
+      "content": "Heading Background - Mobile"
+    },
+    {
+      "type": "range",
+      "id": "heading_bg_vertical_mobile",
+      "label": "Vertical Padding",
+      "min": 0,
+      "max": 100,
+      "step": 1,
+      "unit": "px",
+      "default": 14
+    },
+    {
+      "type": "range",
+      "id": "heading_bg_horizontal_mobile",
+      "label": "Horizontal Padding",
+      "min": 0,
+      "max": 1200,
+      "step": 12,
+      "unit": "px",
+      "default": 24
+    },
+    {
+      "type": "header",
+      "content": "Autoplay Settings"
+    },
+    {
+      "type": "checkbox",
+      "id": "enable_autoplay",
+      "label": "Enable Autoplay",
+      "default": false
+    },
+    {
+      "type": "range",
+      "id": "autoplay_delay",
+      "label": "Autoplay Delay (seconds)",
+      "min": 2,
+      "max": 10,
+      "step": 1,
+      "unit": "s",
+      "default": 5
+    },
+    {
+      "type": "header",
+      "content": "Spacing"
+    },
+    {
+      "type": "range",
+      "id": "padding_top",
+      "label": "Top padding",
+      "min": 0,
+      "max": 160,
+      "step": 4,
+      "unit": "px",
+      "default": 40
+    },
+    {
+      "type": "range",
+      "id": "padding_bottom",
+      "label": "Bottom padding",
+      "min": 0,
+      "max": 160,
+      "step": 4,
+      "unit": "px",
+      "default": 40
+    }
+  ],
+  "blocks": [
+    {
+      "type": "testimonial",
+      "name": "Testimonial",
+      "settings": [
+        {
+          "type": "textarea",
+          "id": "testimonial_text",
+          "label": "Testimonial Text",
+          "default": "Add customer reviews and testimonials to showcase your store's happy customers."
+        },
+        {
+          "type": "text",
+          "id": "author_name",
+          "label": "Author Name",
+          "default": "Author's name"
+        },
+        {
+          "type": "text",
+          "id": "author_location",
+          "label": "Author Location",
+          "default": "Los Angeles, CA"
+        }
+      ]
+    }
+  ],
+  "presets": [
+    {
+      "name": "Testimonials",
+      "blocks": [
+        {
+          "type": "testimonial"
+        },
+        {
+          "type": "testimonial"
+        },
+        {
+          "type": "testimonial"
+        },
+        {
+          "type": "testimonial"
+        },
+        {
+          "type": "testimonial"
+        },
+        {
+          "type": "testimonial"
+        },
+        {
+          "type": "testimonial"
+        },
+        {
+          "type": "testimonial"
+        },
+        {
+          "type": "testimonial"
+        }
+      ]
+    }
+  ]
+}
+{% endschema %}

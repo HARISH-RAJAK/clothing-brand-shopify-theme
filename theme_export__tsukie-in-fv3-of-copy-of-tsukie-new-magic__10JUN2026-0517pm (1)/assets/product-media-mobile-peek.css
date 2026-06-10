@@ -1,0 +1,32 @@
+@media screen and (max-width: 767px) {
+  .product-gallery__slider.scroll-area {
+    overflow-x: hidden;
+    scroll-snap-type: x mandatory;
+    scroll-behavior: smooth;
+  }
+
+  .product-gallery__slides {
+    display: flex;
+    width: 100%;
+    overflow-x: auto;
+    -ms-overflow-style: none;
+    scrollbar-width: none;
+  }
+
+  .product-gallery__slides::-webkit-scrollbar {
+    display: none;
+  }
+
+  .product-gallery__slide {
+    flex: 0 0 80%;
+    margin-right: 1rem;
+  }
+
+  .product-gallery__slide:first-child {
+    margin-left: 1rem;
+  }
+
+  .product-gallery__slide.is-active {
+    scroll-snap-align: center;
+  }
+}
