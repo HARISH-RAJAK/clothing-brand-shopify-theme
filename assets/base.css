@@ -5738,3 +5738,34 @@ button[name="add"]:hover,
 .shopify-payment-button__button--hidden {
   display: none !important;
 }
+
+
+/* BUY NOW Button - Force Override */
+.shopify-payment-button__button {
+  background: #1e2a38 !important;
+  color: #ffffff !important;
+  border: 1px solid #1e2a38 !important;
+  font-weight: 600 !important;
+}
+
+.shopify-payment-button__button:hover {
+  background: #000000 !important;
+  color: #ffffff !important;
+  border: 1px solid #000000 !important;
+}
+
+/* Shopify ke andar jo span hota hai uska text */
+.shopify-payment-button__button--unbranded .shopify-payment-button__button--unbranded {
+  background: #1e2a38 !important;
+  color: #ffffff !important;
+}
+
+/* Google Pay/Apple Pay jab show hota hai tab bhi */
+.shopify-payment-button__button--branded {
+  filter: brightness(0.2) !important; /* Dark kar de */
+}
+
+/* Buy now ke upar extra space hatane ke liye */
+.shopify-payment-button {
+  margin-top: 8px !important;
+}
