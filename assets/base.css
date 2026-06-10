@@ -5551,3 +5551,14 @@ ul.product-grid,
   }
 }
 
+/* Recently Viewed section wrapper */
+[id*="shopify-section"][id*="recently-viewed"],
+[id*="shopify-section"][id*="tsukie-recently"] {
+  margin-bottom: 0 !important;
+}
+
+/* Agar section ke andar spacing hai to ye bhi */
+.tsukie-recently-viewed {
+  margin-bottom: 0 !important;
+  padding-bottom: 0 !important;
+}
