@@ -1561,33 +1561,42 @@
 })();
 
 function tsukieGetContext(el) {
+  let container = null;
   if (el && typeof el.closest === 'function') {
-    const container = el.closest('.tsukie-product');
-    if (container) return container;
+    container = el.closest('.tsukie-product');
   }
-  const modalProduct = document.querySelector('#tsukie-quick-add-modal.is-open .tsukie-product');
-  if (modalProduct) return modalProduct;
-  return document.querySelector('.tsukie-product') || document.body;
+  if (!container) {
+    container = document.querySelector('#tsukie-quick-add-modal.is-open .tsukie-product');
+  }
+  if (!container) {
+    container = document.querySelector('.tsukie-product') || document.body;
+  }
+  
+  if (container && !container.tsukieProduct) {
+    container.tsukieCurrentImage = 0;
+    container.tsukieImages = [{% for image in product.images %}'{{ image | img_url: '1000x' }}'{% unless forloop.last %},{% endunless %}{% endfor %}];
+    container.tsukieImageIds = [{% for image in product.images %}{{ image.id }}{% unless forloop.last %},{% endunless %}{% endfor %}];
+    container.tsukieProduct = {{ product | json }};
+    container.tsukieSelectedOptions = { 1: null, 2: null, 3: null };
+    
+    const defaultVariantId = {{ product.selected_or_first_available_variant.id | default: 'null' }};
+    if (defaultVariantId && container.tsukieProduct) {
+      const defaultVar = container.tsukieProduct.variants.find(v => v.id === defaultVariantId);
+      if (defaultVar) {
+        container.tsukieSelectedOptions[1] = defaultVar.option1;
+        container.tsukieSelectedOptions[2] = defaultVar.option2;
+        container.tsukieSelectedOptions[3] = defaultVar.option3;
+      }
+    }
+  }
+  return container;
 }
 
+// Initial kickoff block to pre-populate main page container
 (function() {
-  const container = document.querySelector('#tsukie-quick-add-modal.is-open .tsukie-product') || document.querySelector('.tsukie-product') || document.body;
-  if (!container) return;
-  
-  container.tsukieCurrentImage = 0;
-  container.tsukieImages = [{% for image in product.images %}'{{ image | img_url: '1000x' }}'{% unless forloop.last %},{% endunless %}{% endfor %}];
-  container.tsukieImageIds = [{% for image in product.images %}{{ image.id }}{% unless forloop.last %},{% endunless %}{% endfor %}];
-  container.tsukieProduct = {{ product | json }};
-  container.tsukieSelectedOptions = { 1: null, 2: null, 3: null };
-  
-  const defaultVariantId = {{ product.selected_or_first_available_variant.id | default: 'null' }};
-  if (defaultVariantId && container.tsukieProduct) {
-    const defaultVar = container.tsukieProduct.variants.find(v => v.id === defaultVariantId);
-    if (defaultVar) {
-      container.tsukieSelectedOptions[1] = defaultVar.option1;
-      container.tsukieSelectedOptions[2] = defaultVar.option2;
-      container.tsukieSelectedOptions[3] = defaultVar.option3;
-    }
+  const container = document.querySelector('.tsukie-product') || document.body;
+  if (container) {
+    tsukieGetContext(container);
   }
 })();
 
@@ -1844,6 +1853,7 @@ window.tsukieSelectOption = function(element, position, value) {
       if(addText) addText.textContent = "SOLD OUT";
     }
   }
+};
 window.tsukieUpdateQty = function(btn, change) {
   const container = tsukieGetContext(btn);
   const input = container.querySelector('.tsukie-qty-input');
@@ -1870,12 +1880,14 @@ window.tsukieBuyNowClean = function(element) {
   const qtyInput = container.querySelector('.tsukie-qty-input');
   const qty = qtyInput ? parseInt(qtyInput.value) || 1 : 1;
 
-  fetch(window.Shopify.routes.root + 'cart/clear.js', {
+  const rootPath = (window.Shopify && window.Shopify.routes && window.Shopify.routes.root) || '/';
+
+  fetch(rootPath + 'cart/clear.js', {
     method: 'POST',
     headers: { 'Content-Type': 'application/json' }
   })
   .then(() => {
-    return fetch(window.Shopify.routes.root + 'cart/add.js', {
+    return fetch(rootPath + 'cart/add.js', {
       method: 'POST',
       headers: { 'Content-Type': 'application/json' },
       body: JSON.stringify({
