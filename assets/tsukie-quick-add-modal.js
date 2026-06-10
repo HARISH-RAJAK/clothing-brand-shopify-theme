@@ -316,8 +316,11 @@
     const parser = new DOMParser();
     const doc = parser.parseFromString(html, 'text/html');
 
-    // Extract the PDP section wrapper
-    const pdpWrapper = doc.querySelector('.tsukie-product')?.parentElement;
+    // Extract the PDP section wrapper (robust lookup for both full page and section rendering)
+    const pdpWrapper = doc.querySelector('.shopify-section-tsukie-product') || 
+                       doc.querySelector('.shopify-section') || 
+                       doc.querySelector('.tsukie-product')?.parentElement || 
+                       doc.body;
 
     if (pdpWrapper) {
       const clonedContent = pdpWrapper.cloneNode(true);
@@ -479,13 +482,23 @@
       openModal();
 
       try {
-        const res = await fetch(`/products/${handle}`);
-        if (!res.ok) throw new Error('Failed to fetch product page');
+        // Fast-path: Fetch ONLY the product section markup (Shopify Section Rendering API)
+        const res = await fetch(`/products/${handle}?section_id=product_details`);
+        if (!res.ok) throw new Error('Failed to fetch section');
         const html = await res.text();
         renderModalContent(html);
       } catch (err) {
-        console.error('Failed to load product page', err);
-        contentContainer.innerHTML = '<div class="quick-view__error">Failed to load product details.</div>';
+        console.warn('Failed to load via Section Rendering API, falling back to full page fetch', err);
+        try {
+          // Slow-path fallback: Fetch full product details page
+          const res = await fetch(`/products/${handle}`);
+          if (!res.ok) throw new Error('Failed to fetch full product page');
+          const html = await res.text();
+          renderModalContent(html);
+        } catch (fallbackErr) {
+          console.error('Failed to load product page', fallbackErr);
+          contentContainer.innerHTML = '<div class="quick-view__error">Failed to load product details.</div>';
+        }
       } finally {
         if (submitBtn) {
           submitBtn.disabled = false;
