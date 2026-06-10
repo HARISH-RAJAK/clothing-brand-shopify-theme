@@ -5588,3 +5588,91 @@ ul.product-grid,
     grid-template-columns: unset !important;
   }
 }
+
+/* Judge.me Reviews - Mobile Responsive Fix */
+@media screen and (max-width: 749px) {
+  /* Main widget padding */
+  .jdgm-widget, 
+  .jdgm-review-widget {
+    padding: 0 15px !important;
+  }
+
+  /* Heading "Customer Reviews" */
+  .jdgm-rev-widg__title {
+    font-size: 20px !important;
+    margin-bottom: 8px !important;
+  }
+
+  /* Rating number 4.8 */
+  .jdgm-rev-widg__summary-average {
+    font-size: 24px !important;
+  }
+  
+  /* "11 reviews" text */
+  .jdgm-rev-widg__summary-text {
+    font-size: 13px !important;
+  }
+
+  /* "Write a review" button */
+  .jdgm-write-rev-link {
+    font-size: 12px !important;
+    padding: 8px 16px !important;
+  }
+
+  /* Tabs: Product reviews / Store reviews */
+  .jdgm-rev-widg__tab {
+    font-size: 13px !important;
+    padding: 8px 12px !important;
+  }
+
+  /* Filter + Sort dropdown */
+  .jdgm-sort-dropdown, 
+  .jdgm-rev-widg__sort-wrapper {
+    font-size: 13px !important;
+  }
+
+  /* Har single review ka box */
+  .jdgm-rev {
+    padding: 16px 0 !important;
+    margin-bottom: 0 !important;
+    border-bottom: 1px solid #e5e5e5 !important;
+  }
+
+  /* Stars */
+  .jdgm-rev__rating {
+    font-size: 14px !important;
+    margin-bottom: 6px !important;
+  }
+
+  /* Reviewer name */
+  .jdgm-rev__author {
+    font-size: 14px !important;
+    margin-bottom: 2px !important;
+  }
+
+  /* Date */
+  .jdgm-rev__timestamp {
+    font-size: 12px !important;
+    color: #777 !important;
+  }
+
+  /* Review title "Great quality" */
+  .jdgm-rev__title {
+    font-size: 15px !important;
+    margin: 8px 0 6px 0 !important;
+    line-height: 1.3 !important;
+  }
+
+  /* Review body text */
+  .jdgm-rev__body {
+    font-size: 14px !important;
+    line-height: 1.5 !important;
+  }
+  
+  /* Avatar circle chhota kar de */
+  .jdgm-rev__avatar {
+    width: 36px !important;
+    height: 36px !important;
+    font-size: 14px !important;
+  }
+}
