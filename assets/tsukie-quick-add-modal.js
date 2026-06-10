@@ -31,6 +31,7 @@
       height: 100%;
       background: rgba(30, 42, 56, 0.6);
       backdrop-filter: blur(4px);
+      z-index: 1;
     }
     .tsukie-modal-container {
       position: relative;
@@ -41,7 +42,7 @@
       max-height: 90vh;
       padding: 40px;
       box-shadow: 0 10px 30px rgba(0, 0, 0, 0.15);
-      z-index: 1;
+      z-index: 2;
       transform: translateY(20px);
       transition: transform 0.3s ease;
       border: 1px solid #1E2A38;
