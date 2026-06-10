@@ -52,7 +52,7 @@
   endunless
 -%}
 
-<div class="tsukie-product-card" data-product-id="{{ product.id }}">
+<div class="tsukie-product-card" data-product-id="{{ product.id }}" data-product-handle="{{ product.handle }}" data-variants-count="{{ product.variants.size }}">
   <div class="tsukie-product-media">
     <a href="{{ variant_to_link.url }}" class="tsukie-product-link">
       {%- if badge_text != blank -%}

@@ -432,8 +432,16 @@
     e.preventDefault();
     e.stopPropagation();
 
-    const handle = form.getAttribute('data-product-handle');
-    const variantsCount = parseInt(form.getAttribute('data-variants-count'), 10) || 1;
+    const card = form.closest('.tsukie-product-card');
+    const submitBtn = form.querySelector('.tsukie-quick-add-btn');
+    const handle = (card && card.getAttribute('data-product-handle')) || 
+                   (submitBtn && submitBtn.getAttribute('data-product-handle')) || 
+                   form.getAttribute('data-product-handle');
+    const variantsCount = parseInt(
+      (card && card.getAttribute('data-variants-count')) || 
+      (submitBtn && submitBtn.getAttribute('data-variants-count')) || 
+      form.getAttribute('data-variants-count'), 10
+    ) || 1;
     const variantId = form.querySelector('input[name="id"]').value;
 
     if (variantsCount <= 1) {
