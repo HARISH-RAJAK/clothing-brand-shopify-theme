@@ -117,6 +117,14 @@
       padding: 0 !important;
       gap: 30px !important;
       max-width: 100% !important;
+      display: grid !important;
+      grid-template-columns: 1fr 1fr !important;
+      align-items: start !important; /* Force top alignment of columns */
+    }
+    .tsukie-modal-content .tsukie-pdp-media {
+      display: flex !important;
+      align-items: start !important; /* Force top alignment of media elements */
+      gap: 12px !important;
     }
     .tsukie-modal-content .tsukie-thumbnails {
       max-height: 400px !important;
@@ -133,6 +141,12 @@
     @media screen and (max-width: 989px) {
       .tsukie-modal-container {
         padding: 30px 20px;
+      }
+      .tsukie-modal-content .tsukie-product-container {
+        grid-template-columns: 1fr !important;
+      }
+      .tsukie-modal-content .tsukie-pdp-media {
+        flex-direction: column !important;
       }
     }
     @media screen and (max-width: 749px) {
