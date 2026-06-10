@@ -1,25 +1,23 @@
 <div class="tsukie-recently-viewed" id="tsukie-recently-viewed-{{ section.id }}" style="display: none;">
   <div class="recently-viewed-inner" style="max-width: 1400px; margin: 0 auto; padding: 80px 40px; background: #f5f1ea;">
-    <h2>{{ section.settings.heading }}</h2>
-    <ul class="product-grid" id="tsukie-rv-grid-{{ section.id }}" style="display:grid; grid-template-columns: repeat(4, 1fr); gap: 32px; list-style:none; padding:0; margin:0;">
+    <ul class="product-grid" id="tsukie-rv-grid-{{ section.id }}">
     </ul>
     <div class="tsukie-rv-view-more-wrap" id="tsukie-rv-more-wrap-{{ section.id }}" style="display:none; text-align:center; margin-top:40px;">
       <button class="tsukie-rv-view-more-btn" id="tsukie-rv-more-btn-{{ section.id }}" type="button">
-        VIEW MORE
+        LOAD MORE
       </button>
     </div>
   </div>
 </div>
 
 <style>
-#tsukie-recently-viewed-{{ section.id }} h2 {
-  font-family: 'Cormorant Garamond', serif !important;
-  font-weight: 300 !important;
-  color: #1e2a38 !important;
-  font-size: 42px !important;
-  text-align: center;
-  margin: 0 0 40px;
-  letter-spacing: normal;
+#tsukie-recently-viewed-{{ section.id }} ul.product-grid {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr) !important;
+  gap: 32px !important;
+  list-style: none;
+  padding: 0;
+  margin: 0;
 }
 #tsukie-recently-viewed-{{ section.id }} .tsukie-product-title {
   font-family: 'Cormorant Garamond', serif !important;
@@ -78,11 +76,11 @@
   transform: scale(1.05);
 }
 
-/* View More Button */
+/* Load More Button styling (navy background, gold text) */
 .tsukie-rv-view-more-btn {
-  background: transparent;
-  border: 2px solid #1e2a38;
-  color: #1e2a38;
+  background: #1e2a38 !important;
+  color: #A08766 !important;
+  border: none !important;
   font-family: 'Montserrat', sans-serif;
   font-size: 11px;
   font-weight: 600;
@@ -93,17 +91,18 @@
   transition: all 0.3s ease;
 }
 .tsukie-rv-view-more-btn:hover {
-  background: #1e2a38;
-  color: #d4c5a9;
+  opacity: 0.9;
 }
 
-/* Hidden items (shown on View More click) */
-#tsukie-recently-viewed-{{ section.id }} .product-grid__item.tsukie-rv-hidden {
-  display: none;
-}
-#tsukie-recently-viewed-{{ section.id }} .product-grid__item.tsukie-rv-hidden.tsukie-rv-show {
-  display: block;
-  animation: tsukieRvFadeIn 0.4s ease forwards;
+/* Hidden items (shown on Load More click) */
+@media (min-width: 750px) {
+  #tsukie-recently-viewed-{{ section.id }} .product-grid__item.tsukie-rv-hidden {
+    display: none;
+  }
+  #tsukie-recently-viewed-{{ section.id }} .product-grid__item.tsukie-rv-hidden.tsukie-rv-show {
+    display: block;
+    animation: tsukieRvFadeIn 0.4s ease forwards;
+  }
 }
 
 @keyframes tsukieRvFadeIn {
@@ -111,7 +110,7 @@
   to { opacity: 1; transform: translateY(0); }
 }
 
-@media(max-width: 989px) {
+@media(max-width: 989px) and (min-width: 750px) {
   #tsukie-recently-viewed-{{ section.id }} ul.product-grid {
     grid-template-columns: repeat(3, 1fr) !important;
     gap: 24px !important;
@@ -121,13 +120,26 @@
   #tsukie-recently-viewed-{{ section.id }} .recently-viewed-inner {
     padding: 50px 16px !important;
   }
-  #tsukie-recently-viewed-{{ section.id }} h2 {
-    font-size: 30px !important;
-    margin-bottom: 24px !important;
-  }
   #tsukie-recently-viewed-{{ section.id }} ul.product-grid {
-    grid-template-columns: repeat(2, 1fr) !important;
+    display: flex !important;
+    flex-wrap: nowrap !important;
+    overflow-x: auto !important;
+    scroll-snap-type: x mandatory !important;
+    -webkit-overflow-scrolling: touch !important;
     gap: 16px !important;
+    padding: 0 16px !important;
+    margin: 0 -16px !important;
+    scrollbar-width: none !important;
+  }
+  #tsukie-recently-viewed-{{ section.id }} ul.product-grid::-webkit-scrollbar {
+    display: none !important;
+  }
+  #tsukie-recently-viewed-{{ section.id }} .product-grid__item {
+    flex: 0 0 calc(25% - 12px) !important;
+    scroll-snap-align: start !important;
+  }
+  #tsukie-recently-viewed-{{ section.id }} .product-grid__item.tsukie-rv-hidden {
+    display: block !important;
   }
   #tsukie-recently-viewed-{{ section.id }} .tsukie-product-badge {
     font-size: 8px !important;
@@ -143,6 +155,9 @@
   #tsukie-recently-viewed-{{ section.id }} .tsukie-product-title {
     font-size: 15px !important;
   }
+  #tsukie-rv-more-wrap-{{ section.id }} {
+    display: none !important;
+  }
 }
 </style>
 
@@ -154,7 +169,7 @@
     var container = document.getElementById('tsukie-recently-viewed-' + sectionId);
     if (!container) return;
 
-    var viewedRaw = localStorage.getItem('viewedProducts');
+    var viewedRaw = localStorage.getItem('recentlyViewedProducts') || localStorage.getItem('viewedProducts');
     if (!viewedRaw) return;
 
     var viewedProducts;
@@ -166,23 +181,26 @@
 
     // If on a product page, filter out the current product
     var currentHandle = '{{ product.handle }}';
-    if (currentHandle) {
-      viewedProducts = viewedProducts.filter(function(item) {
-        if (typeof item === 'object' && item.handle) return item.handle !== currentHandle;
-        if (typeof item === 'string') return true;
-        return true;
-      });
-    }
+    var uniqueHandles = [];
 
-    // Only take items that have handle info (new format: {id, handle})
-    var validItems = viewedProducts.filter(function(item) {
-      return typeof item === 'object' && item.handle;
+    viewedProducts.forEach(function(item) {
+      var handle = '';
+      if (typeof item === 'string') {
+        handle = item;
+      } else if (item && typeof item === 'object') {
+        handle = item.handle || item.id;
+      }
+      if (handle && handle !== currentHandle) {
+        if (uniqueHandles.indexOf(handle) === -1) {
+          uniqueHandles.push(handle);
+        }
+      }
     });
 
-    if (validItems.length === 0) return;
+    if (uniqueHandles.length === 0) return;
 
     // Keep up to 8 unique products
-    validItems = validItems.slice(0, 8);
+    uniqueHandles = uniqueHandles.slice(0, 8);
 
     var grid = document.getElementById('tsukie-rv-grid-' + sectionId);
     var moreWrap = document.getElementById('tsukie-rv-more-wrap-' + sectionId);
@@ -190,11 +208,11 @@
     if (!grid) return;
 
     var loadedCount = 0;
-    var totalToLoad = validItems.length;
+    var totalToLoad = uniqueHandles.length;
     var cardElements = new Array(totalToLoad);
 
-    validItems.forEach(function(item, index) {
-      var productUrl = '/products/' + item.handle + '?section_id=tsukie-recently-viewed-card';
+    uniqueHandles.forEach(function(handle, index) {
+      var productUrl = '/products/' + handle + '?section_id=tsukie-recently-viewed-card';
 
       fetch(productUrl)
         .then(function(res) { return res.text(); })
@@ -207,7 +225,7 @@
           }
         })
         .catch(function(err) {
-          console.warn('Recently viewed fetch error for ' + item.handle, err);
+          console.warn('Recently viewed fetch error for ' + handle, err);
         })
         .finally(function() {
           loadedCount++;
@@ -247,7 +265,7 @@
       if (container) container.style.display = 'block';
     }
 
-    // Show "View More" button only if there are hidden items
+    // Show "Load More" button only if there are hidden items
     if (hasHidden && moreWrap && moreBtn) {
       moreWrap.style.display = 'block';
 
@@ -279,14 +297,7 @@
   "name": "Recently Viewed Products",
   "tag": "section",
   "class": "tsukie-recently-viewed-section-wrapper",
-  "settings": [
-    {
-      "type": "text",
-      "id": "heading",
-      "label": "Heading",
-      "default": "Recently Viewed"
-    }
-  ],
+  "settings": [],
   "presets": [
     {
       "name": "Recently Viewed Products"

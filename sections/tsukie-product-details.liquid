@@ -1333,10 +1333,20 @@
   var currentHandle = '{{ product.handle }}';
   if (currentId && currentHandle) {
     try {
+      // 1. Update recentlyViewedProducts (array of handles)
+      var recentlyViewed = JSON.parse(localStorage.getItem('recentlyViewedProducts') || '[]');
+      recentlyViewed = recentlyViewed.filter(function(x) {
+        var h = (typeof x === 'object' && x !== null) ? x.handle : x;
+        return h !== currentHandle;
+      });
+      recentlyViewed.unshift(currentHandle);
+      if (recentlyViewed.length > 10) recentlyViewed = recentlyViewed.slice(0, 10);
+      localStorage.setItem('recentlyViewedProducts', JSON.stringify(recentlyViewed));
+
+      // 2. Update viewedProducts (backward compatibility)
       var viewed = JSON.parse(localStorage.getItem('viewedProducts') || '[]');
-      // Remove old entries for this product (handle-based objects or plain string IDs)
       viewed = viewed.filter(function(x) {
-        if (typeof x === 'object' && x.handle) return x.handle !== currentHandle;
+        if (typeof x === 'object' && x !== null && x.handle) return x.handle !== currentHandle;
         if (typeof x === 'string') return x !== currentId;
         return true;
       });
