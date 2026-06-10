@@ -1,0 +1,831 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Summer Edit — Tsukie</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,500;0,600;1,300;1,400;1,500&family=Jost:wght@300;400;500&display=swap" rel="stylesheet">
+
+<style>
+:root {
+  --cream: #F8F4EE;
+  --ivory: #F2EDE5;
+  --warm-white: #FDFAF6;
+  --sand: #E8DFD2;
+  --tan: #C9B99A;
+  --nude: #B89E83;
+  --charcoal: #2A2520;
+  --dark-brown: #3D3228;
+  --muted-brown: #6B5D52;
+  --accent-gold: #C4A882;
+  --accent-rust: #9B6E4E;
+  --font-serif: 'Cormorant Garamond', Georgia, serif;
+  --font-sans: 'Jost', sans-serif;
+}
+
+* { margin: 0; padding: 0; box-sizing: border-box; }
+html { scroll-behavior: smooth; }
+body {
+  font-family: var(--font-sans);
+  background: var(--warm-white);
+  color: var(--charcoal);
+  font-weight: 300;
+  overflow-x: hidden;
+}
+
+/* ===== ANNOUNCEMENT ===== */
+.announcement-bar {
+  background: var(--charcoal);
+  color: var(--cream);
+  text-align: center;
+  padding: 10px 20px;
+  font-size: 12px;
+  letter-spacing: 2px;
+  text-transform: uppercase;
+  font-weight: 300;
+}
+.announcement-bar span { color: var(--accent-gold); }
+
+/* ===== NAV ===== */
+nav {
+  position: sticky; top: 0; z-index: 100;
+  background: rgba(253,250,246,0.97);
+  backdrop-filter: blur(12px);
+  border-bottom: 1px solid var(--sand);
+  padding: 0 40px;
+  display: flex; align-items: center; justify-content: space-between;
+  height: 72px;
+}
+.nav-links { display: flex; gap: 36px; list-style: none; }
+.nav-links a { text-decoration: none; color: var(--muted-brown); font-size: 12px; letter-spacing: 2px; text-transform: uppercase; font-weight: 400; transition: color .25s; }
+.nav-links a:hover, .nav-links a.active { color: var(--charcoal); }
+.nav-logo { font-family: var(--font-serif); font-size: 28px; font-weight: 500; letter-spacing: 6px; text-transform: uppercase; color: var(--charcoal); text-decoration: none; }
+.nav-right { display: flex; gap: 24px; align-items: center; }
+.nav-icon { cursor: pointer; color: var(--charcoal); font-size: 13px; letter-spacing: 1.5px; text-transform: uppercase; text-decoration: none; display: flex; align-items: center; gap: 6px; transition: color .25s; }
+.nav-icon:hover { color: var(--accent-rust); }
+.nav-icon svg { width: 18px; height: 18px; stroke-width: 1.5; }
+
+/* ===== BREADCRUMB ===== */
+.breadcrumb {
+  padding: 16px 40px;
+  font-size: 11px;
+  letter-spacing: 1.5px;
+  color: var(--tan);
+  text-transform: uppercase;
+  display: flex; gap: 10px; align-items: center;
+  background: var(--warm-white);
+  border-bottom: 1px solid var(--sand);
+}
+.breadcrumb a { color: var(--tan); text-decoration: none; transition: color .2s; }
+.breadcrumb a:hover { color: var(--muted-brown); }
+.breadcrumb span { color: var(--muted-brown); }
+
+/* ===== COLLECTION BANNER ===== */
+.collection-banner {
+  background: var(--ivory);
+  padding: 64px 40px 48px;
+  display: grid;
+  grid-template-columns: 1fr auto;
+  align-items: flex-end;
+  gap: 40px;
+  border-bottom: 1px solid var(--sand);
+}
+.banner-left {}
+.banner-eyebrow { font-size: 11px; letter-spacing: 4px; text-transform: uppercase; color: var(--accent-gold); font-weight: 400; margin-bottom: 12px; }
+.banner-title { font-family: var(--font-serif); font-size: clamp(48px, 5vw, 80px); font-weight: 300; color: var(--charcoal); line-height: 1; letter-spacing: -1px; margin-bottom: 16px; }
+.banner-title em { font-style: italic; color: var(--accent-rust); }
+.banner-desc { font-size: 14px; color: var(--muted-brown); line-height: 1.8; max-width: 440px; font-weight: 300; letter-spacing: 0.3px; }
+.banner-right { text-align: right; padding-bottom: 4px; }
+.banner-count { font-family: var(--font-serif); font-size: 52px; font-weight: 300; color: var(--charcoal); line-height: 1; display: block; }
+.banner-count-label { font-size: 11px; letter-spacing: 2px; text-transform: uppercase; color: var(--tan); display: block; margin-top: 4px; }
+
+/* ===== FILTER BAR ===== */
+.filter-bar {
+  background: var(--warm-white);
+  border-bottom: 1px solid var(--sand);
+  padding: 0 40px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 20px;
+  position: sticky;
+  top: 72px;
+  z-index: 90;
+}
+.filter-left { display: flex; align-items: center; gap: 10px; padding: 16px 0; overflow-x: auto; scrollbar-width: none; flex: 1; }
+.filter-left::-webkit-scrollbar { display: none; }
+.filter-chip {
+  white-space: nowrap;
+  padding: 8px 18px;
+  border: 1px solid var(--sand);
+  font-family: var(--font-sans);
+  font-size: 11px;
+  letter-spacing: 2px;
+  text-transform: uppercase;
+  font-weight: 400;
+  color: var(--muted-brown);
+  background: transparent;
+  cursor: pointer;
+  transition: all .2s;
+  flex-shrink: 0;
+}
+.filter-chip:hover, .filter-chip.active {
+  background: var(--charcoal);
+  color: var(--cream);
+  border-color: var(--charcoal);
+}
+.filter-chip.active.gold {
+  background: var(--accent-gold);
+  border-color: var(--accent-gold);
+  color: var(--charcoal);
+}
+.filter-divider { width: 1px; height: 20px; background: var(--sand); flex-shrink: 0; }
+.filter-right { display: flex; align-items: center; gap: 16px; flex-shrink: 0; }
+.sort-select {
+  border: 1px solid var(--sand);
+  background: transparent;
+  font-family: var(--font-sans);
+  font-size: 11px;
+  letter-spacing: 2px;
+  text-transform: uppercase;
+  color: var(--muted-brown);
+  padding: 8px 14px;
+  cursor: pointer;
+  outline: none;
+}
+.sort-select:focus { border-color: var(--tan); }
+.filter-toggle-btn {
+  padding: 8px 18px;
+  border: 1px solid var(--sand);
+  font-family: var(--font-sans);
+  font-size: 11px;
+  letter-spacing: 2px;
+  text-transform: uppercase;
+  color: var(--muted-brown);
+  background: transparent;
+  cursor: pointer;
+  display: flex; align-items: center; gap: 8px;
+  transition: all .2s;
+}
+.filter-toggle-btn:hover { border-color: var(--charcoal); color: var(--charcoal); }
+.filter-toggle-btn svg { width: 14px; height: 14px; stroke-width: 1.5; }
+
+/* ===== MAIN LAYOUT ===== */
+.page-body { display: flex; min-height: 60vh; }
+
+/* ===== SIDEBAR FILTER ===== */
+.sidebar-filters {
+  width: 0;
+  overflow: hidden;
+  transition: width .35s ease;
+  border-right: 0px solid var(--sand);
+  background: var(--warm-white);
+  flex-shrink: 0;
+}
+.sidebar-filters.open {
+  width: 280px;
+  border-right-width: 1px;
+}
+.sidebar-inner { width: 280px; padding: 32px 28px; }
+.sidebar-section { margin-bottom: 40px; }
+.sidebar-title { font-size: 11px; letter-spacing: 3px; text-transform: uppercase; color: var(--accent-gold); font-weight: 400; margin-bottom: 20px; display: flex; align-items: center; justify-content: space-between; cursor: pointer; }
+.sidebar-title svg { width: 12px; height: 12px; stroke-width: 2; transition: transform .2s; }
+.sidebar-options { display: flex; flex-direction: column; gap: 10px; }
+.sidebar-option { display: flex; align-items: center; gap: 10px; cursor: pointer; }
+.sidebar-check { width: 14px; height: 14px; border: 1px solid var(--tan); flex-shrink: 0; display: flex; align-items: center; justify-content: center; }
+.sidebar-check.checked { background: var(--charcoal); border-color: var(--charcoal); }
+.sidebar-check.checked::after { content: '✓'; color: white; font-size: 9px; line-height: 1; }
+.sidebar-option-label { font-size: 13px; color: var(--muted-brown); letter-spacing: 0.5px; }
+.price-range-display { font-family: var(--font-serif); font-size: 18px; font-weight: 400; color: var(--charcoal); margin-bottom: 16px; }
+.price-slider { width: 100%; accent-color: var(--charcoal); }
+.size-pills { display: flex; flex-wrap: wrap; gap: 8px; }
+.size-pill { padding: 6px 12px; border: 1px solid var(--sand); font-size: 11px; letter-spacing: 1px; color: var(--muted-brown); cursor: pointer; transition: all .2s; }
+.size-pill:hover, .size-pill.active { border-color: var(--charcoal); color: var(--charcoal); }
+.color-swatches { display: flex; flex-wrap: wrap; gap: 10px; }
+.color-swatch { width: 26px; height: 26px; border-radius: 50%; cursor: pointer; transition: transform .2s; position: relative; }
+.color-swatch:hover { transform: scale(1.15); }
+.color-swatch.active::after { content: ''; position: absolute; inset: -3px; border-radius: 50%; border: 1px solid var(--charcoal); }
+.clear-filters { font-size: 11px; letter-spacing: 2px; text-transform: uppercase; color: var(--tan); cursor: pointer; background: none; border: none; font-family: var(--font-sans); margin-top: 32px; transition: color .2s; display: block; }
+.clear-filters:hover { color: var(--accent-rust); }
+
+/* ===== PRODUCT GRID ===== */
+.products-area { flex: 1; padding: 32px 40px; }
+.products-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 28px; }
+.products-grid.four-col { grid-template-columns: repeat(4, 1fr); gap: 20px; }
+
+/* ===== PRODUCT CARD ===== */
+.product-card { cursor: pointer; }
+.product-image-wrap { position: relative; overflow: hidden; aspect-ratio: 3/4; margin-bottom: 16px; background: var(--ivory); }
+.product-img { width: 100%; height: 100%; object-fit: cover; display: block; transition: opacity .45s ease; }
+.product-img.hover-img { position: absolute; inset: 0; opacity: 0; transition: opacity .45s ease; }
+.product-card:hover .product-img.main-img { opacity: 0; }
+.product-card:hover .product-img.hover-img { opacity: 1; }
+.img-placeholder { width: 100%; height: 100%; display: flex; align-items: center; justify-content: center; font-family: var(--font-serif); font-size: 12px; letter-spacing: 2px; color: rgba(255,255,255,0.4); flex-direction: column; gap: 10px; transition: transform .5s ease; }
+.img-placeholder-hover { width: 100%; height: 100%; position: absolute; inset: 0; display: flex; align-items: center; justify-content: center; opacity: 0; transition: opacity .4s ease; flex-direction: column; gap: 10px; font-family: var(--font-serif); font-size: 12px; letter-spacing: 2px; color: rgba(255,255,255,0.4); }
+.product-card:hover .img-placeholder { transform: scale(1.04); }
+.product-card:hover .img-placeholder-hover { opacity: 1; }
+
+.card-badge { position: absolute; top: 14px; left: 14px; padding: 5px 12px; font-size: 9px; letter-spacing: 2.5px; text-transform: uppercase; font-weight: 400; z-index: 2; }
+.badge-new { background: var(--accent-rust); color: white; }
+.badge-best { background: var(--accent-gold); color: var(--charcoal); }
+.badge-sale { background: var(--dark-brown); color: var(--cream); }
+.badge-lowstock { background: transparent; border: 1px solid rgba(255,255,255,0.5); color: rgba(255,255,255,0.85); }
+
+.card-wishlist { position: absolute; top: 14px; right: 14px; width: 34px; height: 34px; background: rgba(253,250,246,0.9); display: flex; align-items: center; justify-content: center; cursor: pointer; opacity: 0; transition: opacity .25s; border: none; }
+.product-card:hover .card-wishlist { opacity: 1; }
+.card-wishlist svg { width: 16px; height: 16px; stroke-width: 1.5; stroke: var(--charcoal); fill: none; }
+.card-wishlist.active svg { fill: var(--accent-rust); stroke: var(--accent-rust); }
+
+.card-sizes { position: absolute; bottom: 0; left: 0; right: 0; background: rgba(253,250,246,0.96); padding: 12px 14px; display: flex; gap: 8px; align-items: center; transform: translateY(100%); transition: transform .3s ease; }
+.product-card:hover .card-sizes { transform: translateY(0); }
+.card-size { font-size: 10px; letter-spacing: 1.5px; color: var(--muted-brown); cursor: pointer; padding: 4px 8px; border: 1px solid var(--sand); transition: all .2s; }
+.card-size:hover { border-color: var(--charcoal); color: var(--charcoal); }
+.card-size.oos { text-decoration: line-through; opacity: 0.4; cursor: default; }
+.sizes-label { font-size: 9px; letter-spacing: 2px; text-transform: uppercase; color: var(--tan); margin-right: 4px; }
+
+.card-info { padding: 0 2px; }
+.card-name { font-family: var(--font-serif); font-size: 17px; font-weight: 400; color: var(--charcoal); margin-bottom: 4px; line-height: 1.2; }
+.card-sub { font-size: 11px; color: var(--tan); letter-spacing: 0.5px; margin-bottom: 8px; }
+.card-bottom { display: flex; align-items: center; justify-content: space-between; }
+.card-price { font-size: 14px; color: var(--charcoal); font-weight: 400; }
+.card-price-strike { text-decoration: line-through; color: var(--tan); font-size: 12px; margin-right: 6px; }
+.card-price-sale { color: var(--accent-rust); }
+.card-rating { display: flex; align-items: center; gap: 4px; }
+.card-stars { color: var(--accent-gold); font-size: 11px; letter-spacing: -1px; }
+.card-rcount { font-size: 10px; color: var(--tan); }
+.card-add-btn {
+  position: absolute; bottom: 0; left: 0; right: 0;
+  background: var(--charcoal); color: var(--cream);
+  text-align: center; padding: 14px;
+  font-size: 10px; letter-spacing: 3px; text-transform: uppercase; font-weight: 400;
+  transform: translateY(100%);
+  transition: transform .3s ease .1s;
+  border: none; cursor: pointer; font-family: var(--font-sans);
+}
+
+/* ===== TRUST BAR ===== */
+.trust-bar {
+  background: var(--charcoal);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0;
+  padding: 20px 40px;
+  grid-column: 1 / -1;
+  margin: 0 -40px;
+}
+.trust-item { display: flex; align-items: center; gap: 10px; padding: 0 32px; flex: 1; justify-content: center; }
+.trust-item + .trust-item { border-left: 1px solid rgba(196,168,130,0.2); }
+.trust-icon { color: var(--accent-gold); font-size: 16px; flex-shrink: 0; }
+.trust-item-text { font-size: 11px; letter-spacing: 2px; text-transform: uppercase; color: rgba(248,244,238,0.7); font-weight: 400; }
+
+/* ===== SOCIAL PROOF STRIP ===== */
+.social-proof-strip {
+  background: var(--ivory);
+  padding: 40px;
+  text-align: center;
+  border-top: 1px solid var(--sand);
+  border-bottom: 1px solid var(--sand);
+  grid-column: 1 / -1;
+  margin: 0 -40px;
+}
+.sp-count { font-family: var(--font-serif); font-size: 48px; font-weight: 300; color: var(--charcoal); display: block; line-height: 1; margin-bottom: 8px; }
+.sp-text { font-size: 13px; letter-spacing: 2px; text-transform: uppercase; color: var(--muted-brown); font-weight: 400; margin-bottom: 28px; }
+.ugc-row { display: flex; gap: 6px; justify-content: center; max-width: 600px; margin: 0 auto; }
+.ugc-thumb { flex: 1; aspect-ratio: 1; overflow: hidden; }
+.ugc-thumb-bg { width: 100%; height: 100%; transition: transform .4s; }
+.ugc-thumb:hover .ugc-thumb-bg { transform: scale(1.07); }
+
+/* ===== LOAD MORE ===== */
+.load-more-section { text-align: center; padding: 60px 40px; }
+.load-more-progress { max-width: 320px; margin: 0 auto 24px; }
+.progress-text { font-size: 11px; letter-spacing: 2px; text-transform: uppercase; color: var(--tan); margin-bottom: 12px; display: flex; justify-content: space-between; }
+.progress-bar { height: 1px; background: var(--sand); }
+.progress-fill { height: 1px; background: var(--charcoal); width: 50%; transition: width .5s; }
+.btn-load-more { background: transparent; color: var(--charcoal); border: 1px solid var(--charcoal); padding: 16px 48px; font-family: var(--font-sans); font-size: 11px; letter-spacing: 3px; text-transform: uppercase; cursor: pointer; font-weight: 400; transition: all .3s; }
+.btn-load-more:hover { background: var(--charcoal); color: var(--cream); }
+
+/* ===== RECENTLY VIEWED ===== */
+.recently-viewed { padding: 72px 40px; background: var(--ivory); border-top: 1px solid var(--sand); }
+.rv-title { font-family: var(--font-serif); font-size: 36px; font-weight: 300; color: var(--charcoal); text-align: center; margin-bottom: 8px; }
+.rv-title em { font-style: italic; color: var(--accent-rust); }
+.rv-sub { font-size: 13px; color: var(--tan); text-align: center; letter-spacing: 1px; margin-bottom: 40px; }
+.rv-grid { display: grid; grid-template-columns: repeat(4, 1fr); gap: 20px; max-width: 1200px; margin: 0 auto; }
+
+/* ===== FOOTER ===== */
+footer {
+  background: var(--charcoal); color: var(--cream); padding: 72px 60px 36px;
+}
+.footer-top { display: grid; grid-template-columns: 1.5fr 1fr 1fr 1fr; gap: 60px; border-bottom: 1px solid rgba(196,168,130,0.15); padding-bottom: 56px; margin-bottom: 36px; }
+.footer-logo { font-family: var(--font-serif); font-size: 28px; letter-spacing: 6px; text-transform: uppercase; color: var(--cream); display: block; margin-bottom: 18px; font-weight: 500; }
+.footer-tagline { font-size: 13px; color: rgba(248,244,238,0.45); line-height: 1.9; margin-bottom: 28px; }
+.footer-newsletter { display: flex; }
+.footer-email { flex: 1; background: rgba(255,255,255,0.07); border: 1px solid rgba(196,168,130,0.2); border-right: none; color: var(--cream); padding: 11px 14px; font-family: var(--font-sans); font-size: 12px; outline: none; }
+.footer-email::placeholder { color: rgba(248,244,238,0.3); }
+.footer-submit { background: var(--accent-gold); border: 1px solid var(--accent-gold); color: var(--charcoal); padding: 11px 18px; font-family: var(--font-sans); font-size: 10px; letter-spacing: 2px; text-transform: uppercase; cursor: pointer; font-weight: 500; transition: all .3s; }
+.footer-submit:hover { background: var(--accent-rust); border-color: var(--accent-rust); color: white; }
+.footer-col-title { font-size: 10px; letter-spacing: 3px; text-transform: uppercase; color: var(--accent-gold); font-weight: 400; margin-bottom: 22px; }
+.footer-links { list-style: none; }
+.footer-links li { margin-bottom: 10px; }
+.footer-links a { font-size: 13px; color: rgba(248,244,238,0.45); text-decoration: none; letter-spacing: 0.5px; transition: color .25s; }
+.footer-links a:hover { color: var(--cream); }
+.footer-bottom { display: flex; align-items: center; justify-content: space-between; font-size: 11px; color: rgba(248,244,238,0.3); letter-spacing: 1px; flex-wrap: wrap; gap: 12px; }
+.pay-badge { background: rgba(255,255,255,0.07); border: 1px solid rgba(255,255,255,0.1); padding: 4px 10px; font-size: 9px; border-radius: 2px; color: rgba(255,255,255,0.4); letter-spacing: 1px; }
+
+/* ===== COLORS ===== */
+.prod-c1 { background: linear-gradient(160deg, #D4C4B0 0%, #B89E83 100%); }
+.prod-c2 { background: linear-gradient(160deg, #C8B8A4 0%, #A08070 100%); }
+.prod-c3 { background: linear-gradient(160deg, #E0D4C4 0%, #C4A882 100%); }
+.prod-c4 { background: linear-gradient(160deg, #B8A890 0%, #9A8070 100%); }
+.prod-c5 { background: linear-gradient(160deg, #C0B0A0 0%, #987860 100%); }
+.prod-c6 { background: linear-gradient(160deg, #D8C8B4 0%, #B0987C 100%); }
+.prod-c7 { background: linear-gradient(160deg, #BCA898 0%, #906858 100%); }
+.prod-c8 { background: linear-gradient(160deg, #E4D4C0 0%, #C8A884 100%); }
+.prod-h1 { background: linear-gradient(160deg, #C0A894 0%, #9A7868 100%); }
+.prod-h2 { background: linear-gradient(160deg, #B8A898 0%, #887870 100%); }
+.prod-h3 { background: linear-gradient(160deg, #D4C4B4 0%, #B09880 100%); }
+.prod-h4 { background: linear-gradient(160deg, #A89890 0%, #7A6860 100%); }
+.ugc-a { background: linear-gradient(135deg, #D0C0A8, #A88870); }
+.ugc-b { background: linear-gradient(135deg, #C8B498, #9A7A60); }
+.ugc-c { background: linear-gradient(135deg, #E0D0BC, #C0A080); }
+.ugc-d { background: linear-gradient(135deg, #B8A890, #907060); }
+.ugc-e { background: linear-gradient(135deg, #D8C8B0, #B0906C); }
+
+/* ===== GRID COLUMNS TOGGLE ===== */
+.grid-toggle { display: flex; gap: 8px; align-items: center; }
+.col-btn { width: 30px; height: 30px; background: transparent; border: 1px solid var(--sand); display: flex; align-items: center; justify-content: center; cursor: pointer; gap: 2px; padding: 7px; transition: all .2s; }
+.col-btn.active, .col-btn:hover { border-color: var(--charcoal); }
+.col-btn span { display: block; background: var(--muted-brown); border-radius: 0; }
+.col-btn.active span { background: var(--charcoal); }
+
+/* ===== MOBILE ===== */
+@media (max-width: 900px) {
+  nav { padding: 0 20px; }
+  .nav-links { display: none; }
+  .breadcrumb { padding: 14px 20px; }
+  .collection-banner { padding: 48px 20px 36px; grid-template-columns: 1fr; }
+  .banner-right { text-align: left; }
+  .filter-bar { padding: 0 20px; }
+  .filter-right { display: none; }
+  .products-area { padding: 24px 20px; }
+  .products-grid { grid-template-columns: repeat(2, 1fr); gap: 16px; }
+  .trust-bar { flex-wrap: wrap; gap: 16px; padding: 20px; }
+  .trust-item { flex: calc(50% - 16px); justify-content: flex-start; }
+  .trust-item + .trust-item { border-left: none; }
+  .ugc-row { gap: 4px; }
+  .rv-grid { grid-template-columns: repeat(2, 1fr); }
+  .footer-top { grid-template-columns: 1fr 1fr; gap: 32px; }
+  .footer-top > :first-child { grid-column: span 2; }
+  footer { padding: 56px 24px 28px; }
+}
+
+@media (max-width: 480px) {
+  .banner-title { font-size: 36px; }
+  .products-grid { gap: 12px; }
+  .card-sizes { display: none; }
+}
+</style>
+</head>
+<body>
+
+<!-- ANNOUNCEMENT -->
+<div class="announcement-bar">
+  Free shipping above <span>₹1,999</span> &nbsp;·&nbsp; Easy 14-day returns &nbsp;·&nbsp; Sizes XS – 4XL
+</div>
+
+<!-- NAV -->
+<nav>
+  <ul class="nav-links">
+    <li><a href="tsukie-homepage.html">Home</a></li>
+    <li><a href="#" class="active">Collections</a></li>
+    <li><a href="#">Dresses</a></li>
+    <li><a href="#">Coord Sets</a></li>
+  </ul>
+  <a href="tsukie-homepage.html" class="nav-logo">Tsukie</a>
+  <div class="nav-right">
+    <a href="#" class="nav-icon">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor"><circle cx="11" cy="11" r="8"/><path d="m21 21-4.35-4.35"/></svg>
+    </a>
+    <a href="#" class="nav-icon">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor"><path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"/><circle cx="12" cy="7" r="4"/></svg>
+    </a>
+    <a href="#" class="nav-icon">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor"><path d="M6 2 3 6v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2V6l-3-4z"/><line x1="3" y1="6" x2="21" y2="6"/><path d="M16 10a4 4 0 0 1-8 0"/></svg>
+      &nbsp;Bag (0)
+    </a>
+  </div>
+</nav>
+
+<!-- BREADCRUMB -->
+<div class="breadcrumb">
+  <a href="tsukie-homepage.html">Home</a>
+  <span>›</span>
+  <span>Summer Edit</span>
+</div>
+
+<!-- COLLECTION BANNER -->
+<div class="collection-banner">
+  <div class="banner-left">
+    <p class="banner-eyebrow">New Collection — SS 2025</p>
+    <h1 class="banner-title">Summer <em>Edit</em></h1>
+    <p class="banner-desc">Effortless silhouettes crafted for every occasion — from rooftop dinners to Sunday brunches. Breathable fabrics, timeless cuts, and fits that feel made for you.</p>
+  </div>
+  <div class="banner-right">
+    <span class="banner-count">48</span>
+    <span class="banner-count-label">Pieces</span>
+  </div>
+</div>
+
+<!-- FILTER BAR -->
+<div class="filter-bar">
+  <div class="filter-left">
+    <button class="filter-chip active gold" onclick="setFilter(this)">All</button>
+    <button class="filter-chip" onclick="setFilter(this)">Best Seller</button>
+    <button class="filter-chip" onclick="setFilter(this)">New Arrival</button>
+    <div class="filter-divider"></div>
+    <button class="filter-chip" onclick="setFilter(this)">Dresses</button>
+    <button class="filter-chip" onclick="setFilter(this)">Co-ord Sets</button>
+    <button class="filter-chip" onclick="setFilter(this)">Tops</button>
+    <button class="filter-chip" onclick="setFilter(this)">Bottoms</button>
+    <div class="filter-divider"></div>
+    <button class="filter-chip" onclick="setFilter(this)">Under ₹2,499</button>
+    <button class="filter-chip" onclick="setFilter(this)">Under ₹2,999</button>
+  </div>
+  <div class="filter-right">
+    <div class="grid-toggle">
+      <button class="col-btn active" id="btn3col" onclick="setGrid(3, this)" title="3 columns">
+        <span style="width:2px;height:12px;"></span><span style="width:2px;height:12px;"></span><span style="width:2px;height:12px;"></span>
+      </button>
+      <button class="col-btn" id="btn4col" onclick="setGrid(4, this)" title="4 columns">
+        <span style="width:2px;height:12px;"></span><span style="width:2px;height:12px;"></span><span style="width:2px;height:12px;"></span><span style="width:2px;height:12px;"></span>
+      </button>
+    </div>
+    <select class="sort-select">
+      <option>Sort: Featured</option>
+      <option>Newest First</option>
+      <option>Price: Low to High</option>
+      <option>Price: High to Low</option>
+      <option>Best Selling</option>
+      <option>Highest Rated</option>
+    </select>
+    <button class="filter-toggle-btn" onclick="toggleSidebar()">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor"><line x1="4" y1="6" x2="20" y2="6"/><line x1="4" y1="12" x2="14" y2="12"/><line x1="4" y1="18" x2="10" y2="18"/></svg>
+      Filters
+    </button>
+  </div>
+</div>
+
+<!-- MAIN BODY -->
+<div class="page-body">
+
+  <!-- SIDEBAR -->
+  <div class="sidebar-filters" id="sidebarFilters">
+    <div class="sidebar-inner">
+      <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:28px;">
+        <span style="font-size:11px;letter-spacing:3px;text-transform:uppercase;color:var(--charcoal);font-weight:500;">Refine</span>
+        <button class="clear-filters" style="margin:0;" onclick="toggleSidebar()">✕ Close</button>
+      </div>
+
+      <div class="sidebar-section">
+        <div class="sidebar-title">Category <svg viewBox="0 0 24 24" fill="none" stroke="currentColor"><polyline points="6 9 12 15 18 9"/></svg></div>
+        <div class="sidebar-options">
+          <div class="sidebar-option" onclick="toggleCheck(this)"><div class="sidebar-check checked"></div><span class="sidebar-option-label">All</span></div>
+          <div class="sidebar-option" onclick="toggleCheck(this)"><div class="sidebar-check"></div><span class="sidebar-option-label">Dresses</span></div>
+          <div class="sidebar-option" onclick="toggleCheck(this)"><div class="sidebar-check"></div><span class="sidebar-option-label">Co-ord Sets</span></div>
+          <div class="sidebar-option" onclick="toggleCheck(this)"><div class="sidebar-check"></div><span class="sidebar-option-label">Tops & Blouses</span></div>
+          <div class="sidebar-option" onclick="toggleCheck(this)"><div class="sidebar-check"></div><span class="sidebar-option-label">Bottoms</span></div>
+          <div class="sidebar-option" onclick="toggleCheck(this)"><div class="sidebar-check"></div><span class="sidebar-option-label">Jumpsuits</span></div>
+        </div>
+      </div>
+
+      <div class="sidebar-section">
+        <div class="sidebar-title">Size <svg viewBox="0 0 24 24" fill="none" stroke="currentColor"><polyline points="6 9 12 15 18 9"/></svg></div>
+        <div class="size-pills">
+          <span class="size-pill" onclick="this.classList.toggle('active')">XS</span>
+          <span class="size-pill active" onclick="this.classList.toggle('active')">S</span>
+          <span class="size-pill active" onclick="this.classList.toggle('active')">M</span>
+          <span class="size-pill" onclick="this.classList.toggle('active')">L</span>
+          <span class="size-pill" onclick="this.classList.toggle('active')">XL</span>
+          <span class="size-pill" onclick="this.classList.toggle('active')">XXL</span>
+          <span class="size-pill" onclick="this.classList.toggle('active')">3XL</span>
+          <span class="size-pill" onclick="this.classList.toggle('active')">4XL</span>
+        </div>
+      </div>
+
+      <div class="sidebar-section">
+        <div class="sidebar-title">Price Range <svg viewBox="0 0 24 24" fill="none" stroke="currentColor"><polyline points="6 9 12 15 18 9"/></svg></div>
+        <p class="price-range-display">₹1,499 — ₹3,499</p>
+        <input type="range" class="price-slider" min="1499" max="3499" value="3499" id="priceSlider" oninput="updatePrice(this.value)">
+      </div>
+
+      <div class="sidebar-section">
+        <div class="sidebar-title">Colour <svg viewBox="0 0 24 24" fill="none" stroke="currentColor"><polyline points="6 9 12 15 18 9"/></svg></div>
+        <div class="color-swatches">
+          <div class="color-swatch active" style="background:#F5E6D8;" title="Blush" onclick="this.classList.toggle('active')"></div>
+          <div class="color-swatch" style="background:#E8D5C4;" title="Nude" onclick="this.classList.toggle('active')"></div>
+          <div class="color-swatch" style="background:#2A2520;" title="Charcoal" onclick="this.classList.toggle('active')"></div>
+          <div class="color-swatch" style="background:#FFFFFF;border:1px solid var(--sand);" title="White" onclick="this.classList.toggle('active')"></div>
+          <div class="color-swatch" style="background:#8B7355;" title="Caramel" onclick="this.classList.toggle('active')"></div>
+          <div class="color-swatch" style="background:#C4949A;" title="Dusty Rose" onclick="this.classList.toggle('active')"></div>
+          <div class="color-swatch" style="background:#6B8E8A;" title="Sage" onclick="this.classList.toggle('active')"></div>
+          <div class="color-swatch" style="background:#3D4A5C;" title="Navy" onclick="this.classList.toggle('active')"></div>
+        </div>
+      </div>
+
+      <div class="sidebar-section">
+        <div class="sidebar-title">Availability <svg viewBox="0 0 24 24" fill="none" stroke="currentColor"><polyline points="6 9 12 15 18 9"/></svg></div>
+        <div class="sidebar-options">
+          <div class="sidebar-option" onclick="toggleCheck(this)"><div class="sidebar-check checked"></div><span class="sidebar-option-label">In Stock Only</span></div>
+        </div>
+      </div>
+
+      <button class="clear-filters">Clear All Filters</button>
+    </div>
+  </div>
+
+  <!-- PRODUCTS AREA -->
+  <div class="products-area">
+    <div class="products-grid" id="productsGrid">
+
+      <!-- Row 1 -->
+      <!-- Product 1 -->
+      <div class="product-card" onclick="window.location='tsukie-pdp.html'">
+        <div class="product-image-wrap">
+          <div class="img-placeholder prod-c1">
+            <svg width="40" height="55" viewBox="0 0 40 55" fill="none" stroke="rgba(255,255,255,0.3)" stroke-width="0.8"><path d="M12 6 C12 6 8 10 8 20 L5 52 L35 52 L32 20 C32 10 28 6 28 6 C26 2 22 1 20 1 C18 1 14 2 12 6Z"/></svg>
+          </div>
+          <div class="img-placeholder-hover prod-h1">
+            <svg width="40" height="55" viewBox="0 0 40 55" fill="none" stroke="rgba(255,255,255,0.3)" stroke-width="0.8"><path d="M12 6 C12 6 8 10 8 20 L5 52 L35 52 L32 20 C32 10 28 6 28 6 C26 2 22 1 20 1 C18 1 14 2 12 6Z"/><line x1="8" y1="20" x2="32" y2="20"/></svg>
+          </div>
+          <span class="card-badge badge-best">Bestseller</span>
+          <button class="card-wishlist" onclick="event.stopPropagation();this.classList.toggle('active')">
+            <svg viewBox="0 0 24 24"><path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"/></svg>
+          </button>
+          <div class="card-sizes">
+            <span class="sizes-label">Size</span>
+            <span class="card-size">XS</span><span class="card-size">S</span><span class="card-size">M</span><span class="card-size">L</span><span class="card-size oos">XL</span>
+          </div>
+        </div>
+        <div class="card-info">
+          <p class="card-name">Valentina Wrap Dress</p>
+          <p class="card-sub">Viscose · Dusty Rose · 5 colours</p>
+          <div class="card-bottom">
+            <div class="card-price">₹2,199</div>
+            <div class="card-rating"><span class="card-stars">★★★★★</span><span class="card-rcount">(84)</span></div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Product 2 -->
+      <div class="product-card" onclick="window.location='tsukie-pdp.html'">
+        <div class="product-image-wrap">
+          <div class="img-placeholder prod-c2"></div>
+          <div class="img-placeholder-hover prod-h2"></div>
+          <span class="card-badge badge-new">New</span>
+          <button class="card-wishlist" onclick="event.stopPropagation();this.classList.toggle('active')">
+            <svg viewBox="0 0 24 24"><path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"/></svg>
+          </button>
+          <div class="card-sizes">
+            <span class="sizes-label">Size</span>
+            <span class="card-size">XS</span><span class="card-size">S</span><span class="card-size">M</span><span class="card-size">L</span><span class="card-size">XL</span>
+          </div>
+        </div>
+        <div class="card-info">
+          <p class="card-name">Aurore Midi Dress</p>
+          <p class="card-sub">Crinkle Georgette · Ivory</p>
+          <div class="card-bottom">
+            <div class="card-price">₹2,499</div>
+            <div class="card-rating"><span class="card-stars">★★★★★</span><span class="card-rcount">(42)</span></div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Product 3 -->
+      <div class="product-card" onclick="window.location='tsukie-pdp.html'">
+        <div class="product-image-wrap">
+          <div class="img-placeholder prod-c3"></div>
+          <div class="img-placeholder-hover prod-h3"></div>
+          <span class="card-badge badge-sale">Sale</span>
+          <button class="card-wishlist" onclick="event.stopPropagation();this.classList.toggle('active')">
+            <svg viewBox="0 0 24 24"><path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"/></svg>
+          </button>
+          <div class="card-sizes">
+            <span class="sizes-label">Size</span>
+            <span class="card-size oos">XS</span><span class="card-size">S</span><span class="card-size">M</span><span class="card-size">L</span><span class="card-size">XL</span>
+          </div>
+        </div>
+        <div class="card-info">
+          <p class="card-name">Solène Coord Set</p>
+          <p class="card-sub">Linen Blend · Caramel</p>
+          <div class="card-bottom">
+            <div class="card-price"><span class="card-price-strike">₹2,999</span><span class="card-price-sale">₹2,199</span></div>
+            <div class="card-rating"><span class="card-stars">★★★★★</span><span class="card-rcount">(61)</span></div>
+          </div>
+        </div>
+      </div>
+
+      <!-- TRUST BAR after 3 products (row 1) -->
+      <div class="trust-bar">
+        <div class="trust-item"><span class="trust-icon">✦</span><span class="trust-item-text">Premium Fabrics</span></div>
+        <div class="trust-item"><span class="trust-icon">✦</span><span class="trust-item-text">Easy Returns</span></div>
+        <div class="trust-item"><span class="trust-icon">✦</span><span class="trust-item-text">Secure Payments</span></div>
+        <div class="trust-item"><span class="trust-icon">✦</span><span class="trust-item-text">Free Shipping ₹1,999+</span></div>
+      </div>
+
+      <!-- Products 4-9 -->
+      <div class="product-card" onclick="window.location='tsukie-pdp.html'">
+        <div class="product-image-wrap">
+          <div class="img-placeholder prod-c4"></div>
+          <div class="img-placeholder-hover prod-h4"></div>
+          <button class="card-wishlist" onclick="event.stopPropagation();this.classList.toggle('active')"><svg viewBox="0 0 24 24"><path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"/></svg></button>
+          <div class="card-sizes"><span class="sizes-label">Size</span><span class="card-size">XS</span><span class="card-size">S</span><span class="card-size">M</span><span class="card-size">L</span></div>
+        </div>
+        <div class="card-info">
+          <p class="card-name">Céleste Slip Dress</p>
+          <p class="card-sub">Satin · Champagne</p>
+          <div class="card-bottom"><div class="card-price">₹1,899</div><div class="card-rating"><span class="card-stars">★★★★★</span><span class="card-rcount">(29)</span></div></div>
+        </div>
+      </div>
+
+      <div class="product-card" onclick="window.location='tsukie-pdp.html'">
+        <div class="product-image-wrap">
+          <div class="img-placeholder prod-c5"></div>
+          <div class="img-placeholder-hover prod-h1"></div>
+          <span class="card-badge badge-new">New</span>
+          <button class="card-wishlist" onclick="event.stopPropagation();this.classList.toggle('active')"><svg viewBox="0 0 24 24"><path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"/></svg></button>
+          <div class="card-sizes"><span class="sizes-label">Size</span><span class="card-size">S</span><span class="card-size">M</span><span class="card-size">L</span><span class="card-size">XL</span><span class="card-size">2XL</span></div>
+        </div>
+        <div class="card-info">
+          <p class="card-name">Lumière Blazer Set</p>
+          <p class="card-sub">Stretch Crepe · Charcoal</p>
+          <div class="card-bottom"><div class="card-price">₹3,199</div><div class="card-rating"><span class="card-stars">★★★★★</span><span class="card-rcount">(18)</span></div></div>
+        </div>
+      </div>
+
+      <div class="product-card" onclick="window.location='tsukie-pdp.html'">
+        <div class="product-image-wrap">
+          <div class="img-placeholder prod-c6"></div>
+          <div class="img-placeholder-hover prod-h2"></div>
+          <button class="card-wishlist" onclick="event.stopPropagation();this.classList.toggle('active')"><svg viewBox="0 0 24 24"><path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"/></svg></button>
+          <div class="card-sizes"><span class="sizes-label">Size</span><span class="card-size">XS</span><span class="card-size">S</span><span class="card-size">M</span><span class="card-size oos">L</span></div>
+        </div>
+        <div class="card-info">
+          <p class="card-name">Isabeau Wide Pants</p>
+          <p class="card-sub">Cotton Twill · Cream</p>
+          <div class="card-bottom"><div class="card-price">₹1,799</div><div class="card-rating"><span class="card-stars">★★★★☆</span><span class="card-rcount">(37)</span></div></div>
+        </div>
+      </div>
+
+      <!-- SOCIAL PROOF STRIP after 6 products -->
+      <div class="social-proof-strip">
+        <span class="sp-count">12,000+</span>
+        <p class="sp-text">Women Love Tsukie — Join the Community</p>
+        <div class="ugc-row">
+          <div class="ugc-thumb"><div class="ugc-thumb-bg ugc-a"></div></div>
+          <div class="ugc-thumb"><div class="ugc-thumb-bg ugc-b"></div></div>
+          <div class="ugc-thumb"><div class="ugc-thumb-bg ugc-c"></div></div>
+          <div class="ugc-thumb"><div class="ugc-thumb-bg ugc-d"></div></div>
+          <div class="ugc-thumb"><div class="ugc-thumb-bg ugc-e"></div></div>
+        </div>
+      </div>
+
+      <!-- Products 7-9 -->
+      <div class="product-card" onclick="window.location='tsukie-pdp.html'">
+        <div class="product-image-wrap">
+          <div class="img-placeholder prod-c7"></div>
+          <div class="img-placeholder-hover prod-h3"></div>
+          <span class="card-badge badge-best">Bestseller</span>
+          <button class="card-wishlist" onclick="event.stopPropagation();this.classList.toggle('active')"><svg viewBox="0 0 24 24"><path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"/></svg></button>
+          <div class="card-sizes"><span class="sizes-label">Size</span><span class="card-size">S</span><span class="card-size">M</span><span class="card-size">L</span><span class="card-size">XL</span><span class="card-size">2XL</span><span class="card-size">3XL</span></div>
+        </div>
+        <div class="card-info">
+          <p class="card-name">Seraphine Maxi Dress</p>
+          <p class="card-sub">Chiffon · Blush · 3 colours</p>
+          <div class="card-bottom"><div class="card-price">₹2,599</div><div class="card-rating"><span class="card-stars">★★★★★</span><span class="card-rcount">(103)</span></div></div>
+        </div>
+      </div>
+
+      <div class="product-card" onclick="window.location='tsukie-pdp.html'">
+        <div class="product-image-wrap">
+          <div class="img-placeholder prod-c8"></div>
+          <div class="img-placeholder-hover prod-h4"></div>
+          <button class="card-wishlist" onclick="event.stopPropagation();this.classList.toggle('active')"><svg viewBox="0 0 24 24"><path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"/></svg></button>
+          <div class="card-sizes"><span class="sizes-label">Size</span><span class="card-size">XS</span><span class="card-size">S</span><span class="card-size">M</span><span class="card-size">L</span></div>
+        </div>
+        <div class="card-info">
+          <p class="card-name">Elara Linen Top</p>
+          <p class="card-sub">Premium Linen · Natural</p>
+          <div class="card-bottom"><div class="card-price">₹1,499</div><div class="card-rating"><span class="card-stars">★★★★☆</span><span class="card-rcount">(51)</span></div></div>
+        </div>
+      </div>
+
+      <div class="product-card" onclick="window.location='tsukie-pdp.html'">
+        <div class="product-image-wrap">
+          <div class="img-placeholder prod-c1" style="filter:hue-rotate(20deg)"></div>
+          <div class="img-placeholder-hover prod-h1" style="filter:hue-rotate(20deg)"></div>
+          <span class="card-badge badge-new">New</span>
+          <button class="card-wishlist" onclick="event.stopPropagation();this.classList.toggle('active')"><svg viewBox="0 0 24 24"><path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"/></svg></button>
+          <div class="card-sizes"><span class="sizes-label">Size</span><span class="card-size">XS</span><span class="card-size">S</span><span class="card-size">M</span><span class="card-size">L</span><span class="card-size">XL</span><span class="card-size">2XL</span></div>
+        </div>
+        <div class="card-info">
+          <p class="card-name">Cléo Cutout Dress</p>
+          <p class="card-sub">Jersey Knit · Sage Green</p>
+          <div class="card-bottom"><div class="card-price">₹2,299</div><div class="card-rating"><span class="card-stars">★★★★★</span><span class="card-rcount">(14)</span></div></div>
+        </div>
+      </div>
+
+    </div><!-- end grid -->
+
+    <!-- LOAD MORE -->
+    <div class="load-more-section">
+      <div class="load-more-progress">
+        <div class="progress-text"><span>Showing 9 of 48</span><span>19% loaded</span></div>
+        <div class="progress-bar"><div class="progress-fill" style="width:19%"></div></div>
+      </div>
+      <button class="btn-load-more">Load More</button>
+    </div>
+
+  </div><!-- end products-area -->
+</div><!-- end page-body -->
+
+<!-- RECENTLY VIEWED -->
+<section class="recently-viewed">
+  <h2 class="rv-title">Recently <em>Viewed</em></h2>
+  <p class="rv-sub">Continue where you left off</p>
+  <div class="rv-grid">
+    <div class="product-card" onclick="window.location='tsukie-pdp.html'">
+      <div class="product-image-wrap"><div class="img-placeholder prod-c3"></div>
+        <button class="card-wishlist" onclick="event.stopPropagation();this.classList.toggle('active')"><svg viewBox="0 0 24 24"><path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"/></svg></button>
+      </div>
+      <div class="card-info"><p class="card-name">Solène Coord Set</p><p class="card-sub">Linen · Caramel</p><div class="card-bottom"><div class="card-price"><span class="card-price-strike">₹2,999</span><span class="card-price-sale">₹2,199</span></div></div></div>
+    </div>
+    <div class="product-card" onclick="window.location='tsukie-pdp.html'">
+      <div class="product-image-wrap"><div class="img-placeholder prod-c5"></div>
+        <button class="card-wishlist" onclick="event.stopPropagation();this.classList.toggle('active')"><svg viewBox="0 0 24 24"><path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"/></svg></button>
+      </div>
+      <div class="card-info"><p class="card-name">Lumière Blazer Set</p><p class="card-sub">Stretch Crepe · Charcoal</p><div class="card-bottom"><div class="card-price">₹3,199</div></div></div>
+    </div>
+    <div class="product-card" onclick="window.location='tsukie-pdp.html'">
+      <div class="product-image-wrap"><div class="img-placeholder prod-c2"></div>
+        <button class="card-wishlist" onclick="event.stopPropagation();this.classList.toggle('active')"><svg viewBox="0 0 24 24"><path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"/></svg></button>
+      </div>
+      <div class="card-info"><p class="card-name">Aurore Midi Dress</p><p class="card-sub">Crinkle Georgette · Ivory</p><div class="card-bottom"><div class="card-price">₹2,499</div></div></div>
+    </div>
+    <div class="product-card" onclick="window.location='tsukie-pdp.html'">
+      <div class="product-image-wrap"><div class="img-placeholder prod-c7"></div>
+        <button class="card-wishlist" onclick="event.stopPropagation();this.classList.toggle('active')"><svg viewBox="0 0 24 24"><path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"/></svg></button>
+      </div>
+      <div class="card-info"><p class="card-name">Seraphine Maxi Dress</p><p class="card-sub">Chiffon · Blush</p><div class="card-bottom"><div class="card-price">₹2,599</div></div></div>
+    </div>
+  </div>
+</section>
+
+<!-- FOOTER -->
+<footer>
+  <div class="footer-top">
+    <div>
+      <span class="footer-logo">Tsukie</span>
+      <p class="footer-tagline">Affordable luxury for the modern Indian woman. Premium fabrics, inclusive sizing, silhouettes designed to make you feel extraordinary every day.</p>
+      <div class="footer-newsletter">
+        <input class="footer-email" type="email" placeholder="Your email address">
+        <button class="footer-submit">Join</button>
+      </div>
+    </div>
+    <div><p class="footer-col-title">Shop</p><ul class="footer-links"><li><a href="#">New Arrivals</a></li><li><a href="#">Bestsellers</a></li><li><a href="#">Dresses</a></li><li><a href="#">Coord Sets</a></li><li><a href="#">Sale</a></li></ul></div>
+    <div><p class="footer-col-title">Help</p><ul class="footer-links"><li><a href="#">Size Guide</a></li><li><a href="#">Track Order</a></li><li><a href="#">Returns</a></li><li><a href="#">Contact</a></li></ul></div>
+    <div><p class="footer-col-title">Brand</p><ul class="footer-links"><li><a href="#">Our Story</a></li><li><a href="#">Sustainability</a></li><li><a href="#">Press</a></li><li><a href="#">Careers</a></li></ul></div>
+  </div>
+  <div class="footer-bottom">
+    <p>© 2025 Tsukie. Made with love in India.</p>
+    <div style="display:flex;gap:8px;"><span class="pay-badge">UPI</span><span class="pay-badge">Visa</span><span class="pay-badge">Mastercard</span><span class="pay-badge">COD</span></div>
+    <div style="display:flex;gap:16px;"><a href="#" style="color:rgba(248,244,238,0.3);text-decoration:none;font-size:11px;">Privacy</a><a href="#" style="color:rgba(248,244,238,0.3);text-decoration:none;font-size:11px;">Terms</a></div>
+  </div>
+</footer>
+
+<script>
+function setFilter(el) {
+  document.querySelectorAll('.filter-chip').forEach(c => c.classList.remove('active','gold'));
+  el.classList.add('active');
+  if (el.textContent === 'All') el.classList.add('gold');
+}
+function toggleSidebar() {
+  const sb = document.getElementById('sidebarFilters');
+  sb.classList.toggle('open');
+}
+function setGrid(cols, btn) {
+  const grid = document.getElementById('productsGrid');
+  grid.classList.toggle('four-col', cols === 4);
+  document.querySelectorAll('.col-btn').forEach(b => b.classList.remove('active'));
+  btn.classList.add('active');
+}
+function toggleCheck(el) {
+  el.querySelector('.sidebar-check').classList.toggle('checked');
+}
+function updatePrice(val) {
+  document.querySelector('.price-range-display').textContent = '₹1,499 — ₹' + parseInt(val).toLocaleString('en-IN');
+}
+</script>
+</body>
+</html>
