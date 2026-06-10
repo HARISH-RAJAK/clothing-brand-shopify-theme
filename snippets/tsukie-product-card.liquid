@@ -86,12 +86,14 @@
     </a>
 
     {%- if product.available -%}
-      {%- form 'product', product, class: 'tsukie-quick-add-form', data-product-handle: product.handle, data-variants-count: product.variants.size -%}
+      <form action="/cart/add" method="post" class="tsukie-quick-add-form" data-product-handle="{{ product.handle }}" data-variants-count="{{ product.variants.size }}">
+        <input type="hidden" name="form_type" value="product">
+        <input type="hidden" name="utf8" value="✓">
         <input type="hidden" name="id" value="{{ variant_to_link.id }}">
         <button type="submit" class="tsukie-quick-add-btn">
           QUICK ADD
         </button>
-      {%- endform -%}
+      </form>
     {%- else -%}
       <button class="tsukie-quick-add-btn" disabled>
         SOLD OUT
