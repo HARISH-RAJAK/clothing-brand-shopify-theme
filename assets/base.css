@@ -5571,7 +5571,7 @@ ul.product-grid,
     width: calc(25% - 9px) !important;
     min-width: calc(25% - 9px) !important;
     scroll-snap-align: start !important;
-    aspect-ratio: 1 / 1 !important; /* Height = Width, square ban jayega */
+    aspect-ratio: 3 / 4 !important; /* Height = Width, square ban jayega */
   }
 
   /* Image ko square box mein fit karo */
