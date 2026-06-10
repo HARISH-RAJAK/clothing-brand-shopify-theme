@@ -1609,7 +1609,190 @@ function tsukieToggleAccordion(header) {
   });
   currentItem.classList.toggle('active');
 }
+
+// Custom reviews pagination to 1+3 logic
+(function() {
+  function initCustomReviewsWidget() {
+    const widget = document.querySelector('.jdgm-review-widget, #judgeme_product_reviews');
+    if (!widget) return false;
+
+    const origList = widget.querySelector('.jdgm-rev-list');
+    if (!origList) return false;
+
+    // Avoid double initialization
+    if (widget.querySelector('.tsukie-custom-reviews-wrapper')) return true;
+
+    const customWrap = document.createElement('div');
+    customWrap.className = 'tsukie-custom-reviews-wrapper';
+    customWrap.innerHTML = `
+      <div class="tsukie-custom-rev-list"></div>
+      <div class="tsukie-jdgm-load-more-wrapper" style="display: none; justify-content: center; margin-top: 24px; margin-bottom: 24px;">
+        <button type="button" class="tsukie-jdgm-load-more-btn">
+          Load More Reviews
+        </button>
+      </div>
+    `;
+
+    widget.appendChild(customWrap);
+
+    const customList = customWrap.querySelector('.tsukie-custom-rev-list');
+    const loadMoreWrapper = customWrap.querySelector('.tsukie-jdgm-load-more-wrapper');
+    const loadMoreBtn = customWrap.querySelector('.tsukie-jdgm-load-more-btn');
+
+    let allReviews = [];
+    let visibleCount = 1;
+
+    function renderCustomReviews() {
+      customList.innerHTML = '';
+      const reviewsToRender = allReviews.slice(0, visibleCount);
+      reviewsToRender.forEach(function(rev) {
+        const clone = rev.cloneNode(true);
+        clone.style.setProperty('display', 'block', 'important');
+        customList.appendChild(clone);
+      });
+
+      const nativeNextBtn = widget.querySelector('.jdgm-paginate__next-page, .jdgm-next-page, [data-page="next"], .jdgm-paginate__page[data-page="next"]');
+
+      const hasMoreToRevealLocal = visibleCount < allReviews.length;
+      const hasNativeNextPage = !!nativeNextBtn && !nativeNextBtn.classList.contains('jdgm-paginate__last-page') && !nativeNextBtn.disabled;
+
+      if (hasMoreToRevealLocal || hasNativeNextPage) {
+        loadMoreWrapper.style.setProperty('display', 'flex', 'important');
+      } else {
+        loadMoreWrapper.style.setProperty('display', 'none', 'important');
+      }
+    }
+
+    function scanNativeReviews() {
+      const origRevs = origList.querySelectorAll('.jdgm-rev');
+      let addedAny = false;
+
+      origRevs.forEach(function(rev) {
+        const revId = rev.getAttribute('data-review-id') || rev.innerHTML.substring(0, 150);
+        const alreadyExists = allReviews.some(function(existingRev) {
+          const existingId = existingRev.getAttribute('data-review-id') || existingRev.innerHTML.substring(0, 150);
+          return existingId === revId;
+        });
+
+        if (!alreadyExists) {
+          allReviews.push(rev);
+          addedAny = true;
+        }
+      });
+
+      if (addedAny) {
+        renderCustomReviews();
+      }
+    }
+
+    scanNativeReviews();
+
+    const listObserver = new MutationObserver(function() {
+      scanNativeReviews();
+    });
+    listObserver.observe(origList, { childList: true, subtree: true });
+
+    loadMoreBtn.addEventListener('click', function() {
+      if (visibleCount < allReviews.length) {
+        visibleCount += 3;
+        renderCustomReviews();
+      } else {
+        const nativeNextBtn = widget.querySelector('.jdgm-paginate__next-page, .jdgm-next-page, [data-page="next"], .jdgm-paginate__page[data-page="next"]');
+        if (nativeNextBtn) {
+          loadMoreBtn.disabled = true;
+          const origText = loadMoreBtn.textContent;
+          loadMoreBtn.textContent = 'Loading...';
+
+          visibleCount += 3;
+
+          nativeNextBtn.click();
+
+          setTimeout(function() {
+            loadMoreBtn.disabled = false;
+            loadMoreBtn.textContent = origText;
+            renderCustomReviews();
+          }, 1500);
+        } else {
+          loadMoreWrapper.style.setProperty('display', 'none', 'important');
+        }
+      }
+    });
+
+    return true;
+  }
+
+  const bodyObserver = new MutationObserver(function() {
+    initCustomReviewsWidget();
+  });
+  bodyObserver.observe(document.body, { childList: true, subtree: true });
+
+  initCustomReviewsWidget();
+})();
 </script>
+
+<style>
+/* Custom Load More button styling matching Montserrat, 12px uppercase, bg #1e2a38, text #A08766 */
+.tsukie-jdgm-load-more-btn {
+  background-color: #1e2a38 !important;
+  color: #A08766 !important;
+  font-family: 'Montserrat', sans-serif !important;
+  font-size: 12px !important;
+  text-transform: uppercase !important;
+  font-weight: 600 !important;
+  border: none !important;
+  padding: 14px 32px !important;
+  letter-spacing: 1.5px !important;
+  cursor: pointer !important;
+  transition: all 0.3s ease !important;
+  display: inline-block !important;
+  border-radius: 0 !important;
+}
+
+.tsukie-jdgm-load-more-btn:hover {
+  opacity: 0.9 !important;
+}
+
+.tsukie-jdgm-load-more-btn[disabled] {
+  opacity: 0.6 !important;
+  cursor: not-allowed !important;
+}
+
+/* Hide native Judge.me pagination and header elements completely to show ONLY reviews + custom button */
+.jdgm-widget-header,
+.jdgm-histogram,
+.jdgm-summary,
+.jdgm-rev-widg__summary,
+.jdgm-rev-widg__header,
+.jdgm-widget-actions-wrapper,
+.jdgm-paginate,
+.jdgm-all-reviews-rating,
+.jdgm-widget-title,
+.jdgm-widget-actions,
+.jdgm-rev-list {
+  display: none !important;
+}
+
+/* Ensure our custom wrapper and elements are displayed properly */
+.jdgm-widget {
+  display: block !important;
+}
+
+.tsukie-custom-reviews-wrapper {
+  display: block !important;
+  width: 100% !important;
+}
+
+.tsukie-custom-rev-list {
+  display: flex !important;
+  flex-direction: column !important;
+  gap: 16px !important;
+  width: 100% !important;
+}
+
+.tsukie-custom-rev-list .jdgm-rev {
+  display: block !important;
+}
+</style>
 
 {% schema %}
 {
