@@ -1,0 +1,337 @@
+{%- comment -%}
+  Tsukie Premium Filter UI
+  Renders filter bar + sidebar drawer for collection page
+  Dynamic data from collection.filters & collection.all_tags
+  Does NOT affect product grid layout
+{%- endcomment -%}
+
+{%- liquid
+  assign sort_by = collection.sort_by | default: collection.default_sort_by
+  assign total_active_values = 0
+  for filter in collection.filters
+    if filter.type == 'price_range'
+      if filter.min_value.value != blank or filter.max_value.value != blank
+        assign total_active_values = total_active_values | plus: 1
+      endif
+    else
+      assign total_active_values = total_active_values | plus: filter.active_values.size
+    endif
+  endfor
+-%}
+
+<!-- Google Fonts for Tsukie Filters -->
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,500;0,600;1,300;1,400;1,500&family=Jost:wght@300;400;500&display=swap" rel="stylesheet">
+
+{{ 'tsukie-filters.css' | asset_url | stylesheet_tag }}
+
+<!-- ===== TSUKIE FILTER BAR ===== -->
+<div class="tsukie-filter-bar">
+  <div class="tsukie-filter-left">
+    <a href="{{ collection.url }}" class="tsukie-filter-chip {% if current_tags == blank %}tsukie-active tsukie-gold{% endif %}">All</a>
+
+    {%- for tag in collection.all_tags limit: 12 -%}
+      {%- if current_tags contains tag -%}
+        <a href="{{ collection.url }}" class="tsukie-filter-chip tsukie-active">{{ tag }}</a>
+      {%- else -%}
+        <a href="{{ collection.url }}/{{ tag | handle }}" class="tsukie-filter-chip">{{ tag }}</a>
+      {%- endif -%}
+    {%- endfor -%}
+  </div>
+
+  <div class="tsukie-filter-right">
+    <select class="tsukie-sort-select" id="tsukieSortSelect">
+      {%- for option in collection.sort_options -%}
+        <option value="{{ option.value }}"{% if option.value == sort_by %} selected{% endif %}>
+          {{ option.name }}
+        </option>
+      {%- endfor -%}
+    </select>
+
+    <button class="tsukie-filter-toggle-btn" id="tsukieFilterToggle" type="button">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor"><line x1="4" y1="6" x2="20" y2="6"/><line x1="4" y1="12" x2="14" y2="12"/><line x1="4" y1="18" x2="10" y2="18"/></svg>
+      Filters
+      {%- if total_active_values > 0 -%}
+        <span class="tsukie-filter-count">{{ total_active_values }}</span>
+      {%- endif -%}
+    </button>
+  </div>
+</div>
+
+<!-- ===== TSUKIE SIDEBAR OVERLAY ===== -->
+<div class="tsukie-sidebar-overlay" id="tsukieSidebarOverlay"></div>
+
+<!-- ===== TSUKIE SIDEBAR FILTERS ===== -->
+<div class="tsukie-sidebar-filters" id="tsukieSidebarFilters">
+  <div class="tsukie-sidebar-inner">
+    <!-- Header -->
+    <div class="tsukie-sidebar-header">
+      <span class="tsukie-sidebar-heading">Refine</span>
+      <button class="tsukie-sidebar-close" id="tsukieSidebarClose" type="button">✕ Close</button>
+    </div>
+
+    <!-- Dynamic Filters from collection.filters -->
+    {%- for filter in collection.filters -%}
+      <div class="tsukie-sidebar-section" data-filter-index="{{ forloop.index }}">
+        <div class="tsukie-sidebar-title" onclick="this.parentElement.classList.toggle('tsukie-collapsed')">
+          {{ filter.label }}
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor"><polyline points="6 9 12 15 18 9"/></svg>
+        </div>
+        <div class="tsukie-sidebar-content">
+
+          {%- case filter.type -%}
+
+            {%- when 'price_range' -%}
+              <!-- PRICE RANGE -->
+              <p class="tsukie-price-range-display">
+                {{ filter.range_min | money_without_trailing_zeros }} — {{ filter.range_max | money_without_trailing_zeros }}
+              </p>
+              <div class="tsukie-price-inputs">
+                <input
+                  type="number"
+                  class="tsukie-price-input"
+                  id="tsukiePriceMin"
+                  placeholder="{{ filter.range_min | money_without_trailing_zeros }}"
+                  {%- if filter.min_value.value != blank %} value="{{ filter.min_value.value }}"{% endif %}
+                  data-param-name="{{ filter.min_value.param_name }}"
+                >
+                <span class="tsukie-price-separator">—</span>
+                <input
+                  type="number"
+                  class="tsukie-price-input"
+                  id="tsukiePriceMax"
+                  placeholder="{{ filter.range_max | money_without_trailing_zeros }}"
+                  {%- if filter.max_value.value != blank %} value="{{ filter.max_value.value }}"{% endif %}
+                  data-param-name="{{ filter.max_value.param_name }}"
+                >
+              </div>
+              <button type="button" class="tsukie-price-apply" onclick="tsukieApplyPrice()">Apply</button>
+
+            {%- when 'boolean' -%}
+              <!-- BOOLEAN (e.g., Availability) -->
+              <div class="tsukie-sidebar-options">
+                {%- for value in filter.values -%}
+                  <a href="javascript:void(0)"
+                     class="tsukie-sidebar-option"
+                     onclick="tsukieToggleFilter('{{ value.param_name }}','{{ value.value }}',{{ value.active }})"
+                  >
+                    <div class="tsukie-sidebar-check{% if value.active %} tsukie-checked{% endif %}"></div>
+                    <span class="tsukie-sidebar-option-label">{{ value.label }}</span>
+                    <span class="tsukie-sidebar-option-count">({{ value.count }})</span>
+                  </a>
+                {%- endfor -%}
+              </div>
+
+            {%- else -%}
+              {%- assign filter_down = filter.label | downcase -%}
+
+              {%- if filter_down contains 'size' -%}
+                <!-- SIZE PILLS -->
+                <div class="tsukie-size-pills">
+                  {%- for value in filter.values -%}
+                    {%- if value.count > 0 or value.active -%}
+                      <a href="javascript:void(0)"
+                         class="tsukie-size-pill{% if value.active %} tsukie-active{% endif %}"
+                         onclick="tsukieToggleFilter('{{ value.param_name }}','{{ value.value }}',{{ value.active }})"
+                         title="{{ value.label }} ({{ value.count }})"
+                      >{{ value.label }}</a>
+                    {%- endif -%}
+                  {%- endfor -%}
+                </div>
+
+              {%- elsif filter_down contains 'color' or filter_down contains 'colour' -%}
+                <!-- COLOR SWATCHES -->
+                <div class="tsukie-color-swatches">
+                  {%- for value in filter.values -%}
+                    {%- if value.count > 0 or value.active -%}
+                      {%- assign swatch_bg = '' -%}
+
+                      {%- if value.swatch.color != blank -%}
+                        {%- assign swatch_bg = value.swatch.color -%}
+                      {%- else -%}
+                        {%- assign cn = value.label | downcase | strip -%}
+                        {%- case cn -%}
+                          {%- when 'black' -%}{%- assign swatch_bg = '#000000' -%}
+                          {%- when 'white' -%}{%- assign swatch_bg = '#FFFFFF' -%}
+                          {%- when 'red' -%}{%- assign swatch_bg = '#C0392B' -%}
+                          {%- when 'blue' -%}{%- assign swatch_bg = '#2980B9' -%}
+                          {%- when 'green' -%}{%- assign swatch_bg = '#27AE60' -%}
+                          {%- when 'navy' or 'navy blue' -%}{%- assign swatch_bg = '#001F3F' -%}
+                          {%- when 'pink' -%}{%- assign swatch_bg = '#E91E63' -%}
+                          {%- when 'beige' -%}{%- assign swatch_bg = '#F5F1EA' -%}
+                          {%- when 'cream' -%}{%- assign swatch_bg = '#FFFDD0' -%}
+                          {%- when 'brown' -%}{%- assign swatch_bg = '#795548' -%}
+                          {%- when 'grey' or 'gray' -%}{%- assign swatch_bg = '#95A5A6' -%}
+                          {%- when 'yellow' -%}{%- assign swatch_bg = '#F1C40F' -%}
+                          {%- when 'orange' -%}{%- assign swatch_bg = '#E67E22' -%}
+                          {%- when 'purple' -%}{%- assign swatch_bg = '#9B59B6' -%}
+                          {%- when 'maroon' -%}{%- assign swatch_bg = '#800000' -%}
+                          {%- when 'olive' -%}{%- assign swatch_bg = '#808000' -%}
+                          {%- when 'teal' -%}{%- assign swatch_bg = '#008080' -%}
+                          {%- when 'nude' -%}{%- assign swatch_bg = '#E8D5C4' -%}
+                          {%- when 'blush' -%}{%- assign swatch_bg = '#F5E6D8' -%}
+                          {%- when 'charcoal' -%}{%- assign swatch_bg = '#2A2520' -%}
+                          {%- when 'caramel' -%}{%- assign swatch_bg = '#8B7355' -%}
+                          {%- when 'sage' -%}{%- assign swatch_bg = '#6B8E8A' -%}
+                          {%- when 'dusty rose' -%}{%- assign swatch_bg = '#C4949A' -%}
+                          {%- when 'off white' -%}{%- assign swatch_bg = '#FAF9F6' -%}
+                          {%- when 'ivory' -%}{%- assign swatch_bg = '#FFFFF0' -%}
+                          {%- when 'rust' -%}{%- assign swatch_bg = '#B7410E' -%}
+                          {%- when 'burgundy' -%}{%- assign swatch_bg = '#800020' -%}
+                          {%- when 'coral' -%}{%- assign swatch_bg = '#FF7F50' -%}
+                          {%- when 'khaki' -%}{%- assign swatch_bg = '#C3B091' -%}
+                          {%- when 'lavender' -%}{%- assign swatch_bg = '#E6E6FA' -%}
+                          {%- when 'mint' -%}{%- assign swatch_bg = '#98FF98' -%}
+                          {%- when 'peach' -%}{%- assign swatch_bg = '#FFDAB9' -%}
+                          {%- when 'tan' -%}{%- assign swatch_bg = '#D2B48C' -%}
+                          {%- when 'wine' -%}{%- assign swatch_bg = '#722F37' -%}
+                          {%- when 'gold' -%}{%- assign swatch_bg = '#FFD700' -%}
+                          {%- when 'silver' -%}{%- assign swatch_bg = '#C0C0C0' -%}
+                          {%- when 'champagne' -%}{%- assign swatch_bg = '#F7E7CE' -%}
+                          {%- when 'mustard' -%}{%- assign swatch_bg = '#FFDB58' -%}
+                          {%- when 'rose' -%}{%- assign swatch_bg = '#FF007F' -%}
+                          {%- when 'sand' -%}{%- assign swatch_bg = '#C2B280' -%}
+                          {%- when 'taupe' -%}{%- assign swatch_bg = '#483C32' -%}
+                          {%- when 'lilac' -%}{%- assign swatch_bg = '#C8A2C8' -%}
+                          {%- when 'moss' -%}{%- assign swatch_bg = '#8A9A5B' -%}
+                          {%- when 'copper' -%}{%- assign swatch_bg = '#B87333' -%}
+                          {%- when 'indigo' -%}{%- assign swatch_bg = '#4B0082' -%}
+                          {%- when 'turquoise' -%}{%- assign swatch_bg = '#40E0D0' -%}
+                          {%- when 'magenta' -%}{%- assign swatch_bg = '#FF00FF' -%}
+                          {%- when 'aqua' -%}{%- assign swatch_bg = '#00FFFF' -%}
+                          {%- when 'plum' -%}{%- assign swatch_bg = '#DDA0DD' -%}
+                          {%- when 'mauve' -%}{%- assign swatch_bg = '#E0B0FF' -%}
+                          {%- when 'lime' -%}{%- assign swatch_bg = '#CDDC39' -%}
+                          {%- when 'cyan' -%}{%- assign swatch_bg = '#00BCD4' -%}
+                          {%- else -%}{%- assign swatch_bg = '#CCCCCC' -%}
+                        {%- endcase -%}
+                      {%- endif -%}
+
+                      {%- assign is_light = false -%}
+                      {%- assign cn_check = value.label | downcase | strip -%}
+                      {%- if cn_check == 'white' or cn_check == 'off white' or cn_check == 'cream' or cn_check == 'ivory' or cn_check == 'beige' -%}
+                        {%- assign is_light = true -%}
+                      {%- endif -%}
+
+                      <a href="javascript:void(0)"
+                         class="tsukie-color-swatch{% if value.active %} tsukie-active{% endif %}"
+                         style="background-color:{{ swatch_bg }};{% if is_light %}border:1px solid #E8DFD2;{% endif %}"
+                         title="{{ value.label }} ({{ value.count }})"
+                         onclick="tsukieToggleFilter('{{ value.param_name }}','{{ value.value }}',{{ value.active }})"
+                      ></a>
+                    {%- endif -%}
+                  {%- endfor -%}
+                </div>
+
+              {%- else -%}
+                <!-- GENERIC CHECKBOXES (Vendor, Product Type, etc.) -->
+                <div class="tsukie-sidebar-options">
+                  {%- for value in filter.values -%}
+                    {%- if value.count > 0 or value.active -%}
+                      <a href="javascript:void(0)"
+                         class="tsukie-sidebar-option"
+                         onclick="tsukieToggleFilter('{{ value.param_name }}','{{ value.value }}',{{ value.active }})"
+                      >
+                        <div class="tsukie-sidebar-check{% if value.active %} tsukie-checked{% endif %}"></div>
+                        <span class="tsukie-sidebar-option-label">{{ value.label }}</span>
+                        <span class="tsukie-sidebar-option-count">({{ value.count }})</span>
+                      </a>
+                    {%- endif -%}
+                  {%- endfor -%}
+                </div>
+              {%- endif -%}
+
+          {%- endcase -%}
+        </div>
+      </div>
+    {%- endfor -%}
+
+    <!-- Clear All Filters -->
+    {%- if total_active_values > 0 -%}
+      <a href="{{ collection.url }}{% if current_tags %}{% endif %}" class="tsukie-clear-filters">Clear All Filters</a>
+    {%- endif -%}
+  </div>
+</div>
+
+<!-- ===== TSUKIE FILTER JAVASCRIPT ===== -->
+<script>
+(function(){
+  /* Sort handler */
+  var sortEl = document.getElementById('tsukieSortSelect');
+  if(sortEl){
+    sortEl.addEventListener('change', function(){
+      var url = new URL(window.location);
+      if(this.value) url.searchParams.set('sort_by', this.value);
+      else url.searchParams.delete('sort_by');
+      window.location = url.toString();
+    });
+  }
+
+  /* Sidebar open */
+  var toggleBtn = document.getElementById('tsukieFilterToggle');
+  if(toggleBtn){
+    toggleBtn.addEventListener('click', function(){
+      document.getElementById('tsukieSidebarFilters').classList.add('tsukie-open');
+      document.getElementById('tsukieSidebarOverlay').classList.add('tsukie-open');
+      document.body.style.overflow = 'hidden';
+    });
+  }
+
+  /* Sidebar close */
+  function closeSidebar(){
+    document.getElementById('tsukieSidebarFilters').classList.remove('tsukie-open');
+    document.getElementById('tsukieSidebarOverlay').classList.remove('tsukie-open');
+    document.body.style.overflow = '';
+  }
+
+  var closeBtn = document.getElementById('tsukieSidebarClose');
+  if(closeBtn) closeBtn.addEventListener('click', closeSidebar);
+
+  var overlay = document.getElementById('tsukieSidebarOverlay');
+  if(overlay) overlay.addEventListener('click', closeSidebar);
+
+  /* Close on Escape key */
+  document.addEventListener('keydown', function(e){
+    if(e.key === 'Escape'){
+      var sidebar = document.getElementById('tsukieSidebarFilters');
+      if(sidebar && sidebar.classList.contains('tsukie-open')) closeSidebar();
+    }
+  });
+})();
+
+/* Toggle filter value via URL params */
+function tsukieToggleFilter(paramName, value, isActive){
+  var url = new URL(window.location);
+  if(isActive){
+    var allValues = url.searchParams.getAll(paramName);
+    url.searchParams.delete(paramName);
+    allValues.forEach(function(v){
+      if(v !== value) url.searchParams.append(paramName, v);
+    });
+  } else {
+    url.searchParams.append(paramName, value);
+  }
+  url.searchParams.delete('page');
+  window.location = url.toString();
+}
+
+/* Apply price filter */
+function tsukieApplyPrice(){
+  var url = new URL(window.location);
+  var minInput = document.getElementById('tsukiePriceMin');
+  var maxInput = document.getElementById('tsukiePriceMax');
+
+  if(minInput){
+    if(minInput.value) url.searchParams.set(minInput.dataset.paramName, minInput.value);
+    else url.searchParams.delete(minInput.dataset.paramName);
+  }
+  if(maxInput){
+    if(maxInput.value) url.searchParams.set(maxInput.dataset.paramName, maxInput.value);
+    else url.searchParams.delete(maxInput.dataset.paramName);
+  }
+
+  url.searchParams.delete('page');
+  window.location = url.toString();
+}
+</script>
