@@ -208,10 +208,18 @@
   .main-collection-grid {
     grid-column: var(--grid-column--mobile);
     padding: var(--grid--margin--mobile);
+    padding-left: 20px;
+    padding-right: 20px;
 
     @media screen and (min-width: 750px) {
       grid-column: var(--grid-column--desktop);
       padding: var(--padding-block-start) var(--padding-inline-end) var(--padding-block-end) var(--padding-inline-start);
+    }
+  }
+
+  @media screen and (max-width: 749px) {
+    .main-collection-grid__title {
+      margin-left: 0 !important;
     }
   }
 
