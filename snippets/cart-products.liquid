@@ -205,20 +205,72 @@
                     -%}
                       {%- if item.product.has_only_default_variant == false and item.item_components.size == 0 -%}
                         <!-- Cart item editable variants wrapper -->
-                        <div class="cart-item-selectors" data-line="{{ forloop.index }}" data-current-variant="{{ item.variant_id }}">
+                        <div class="cart-item-selectors" 
+                             data-line="{{ forloop.index }}" 
+                             data-current-variant="{{ item.variant_id }}"
+                             {% if item.selling_plan_allocation %}data-selling-plan="{{ item.selling_plan_allocation.selling_plan.id }}"{% endif %}
+                             data-product-handle="{{ item.product.handle }}">
                           {%- for option in item.options_with_values -%}
                             {%- assign option_index_0 = forloop.index0 -%}
-                            <div class="cart-item-selector-wrapper">
-                              <label class="cart-item-selector-label">{{ option.name }}:</label>
-                              <select class="cart-item-select" data-option-index="{{ option_index_0 }}" onchange="tsukieCartOptionChange(this)">
+                            <div class="cart-item-selector-wrapper" data-option-name="{{ option.name }}">
+                              <span class="cart-item-selector-label">{{ option.name }}:</span>
+                              <div class="cart-item-options-list" data-option-index="{{ option_index_0 }}">
                                 {%- for value in option.values -%}
                                   {%- assign selected = false -%}
                                   {%- if item.variant.options[option_index_0] == value -%}
                                     {%- assign selected = true -%}
                                   {%- endif -%}
-                                  <option value="{{ value | escape }}" {% if selected %}selected{% endif %}>{{ value }}</option>
+                                  
+                                  {%- liquid
+                                    assign is_color = false
+                                    assign opt_name_downcase = option.name | downcase
+                                    if opt_name_downcase == 'color' or opt_name_downcase == 'colour'
+                                      assign is_color = true
+                                    endif
+                                  -%}
+                                  
+                                  {%- if is_color -%}
+                                    {%- liquid
+                                      assign bg_color = value | downcase | replace: ' ', ''
+                                      case bg_color
+                                        when 'navyblue' or 'navy'
+                                          assign bg_color = '#001935'
+                                        when 'offwhite'
+                                          assign bg_color = '#faf6f0'
+                                        when 'beige'
+                                          assign bg_color = '#ebdcc7'
+                                        when 'black'
+                                          assign bg_color = '#111111'
+                                        when 'white'
+                                          assign bg_color = '#ffffff'
+                                        when 'olive' or 'olivegreen'
+                                          assign bg_color = '#556b2f'
+                                        when 'rust'
+                                          assign bg_color = '#b76e50'
+                                        when 'dustypink' or 'rose'
+                                          assign bg_color = '#dcaeaf'
+                                        when 'mustard'
+                                          assign bg_color = '#e1ad01'
+                                        when 'lavender'
+                                          assign bg_color = '#e6e6fa'
+                                        when 'grey' or 'gray'
+                                          assign bg_color = '#808080'
+                                        when 'skyblue' or 'blue'
+                                          assign bg_color = '#87ceeb'
+                                      endcase
+                                    -%}
+                                    <button type="button" 
+                                            class="cart-item-swatch{% if selected %} is-active{% endif %}" 
+                                            style="background-color: {{ bg_color }};" 
+                                            data-value="{{ value | escape }}"
+                                            title="{{ value }}"></button>
+                                  {%- else -%}
+                                    <button type="button" 
+                                            class="cart-item-pill{% if selected %} is-active{% endif %}" 
+                                            data-value="{{ value | escape }}">{{ value }}</button>
+                                  {%- endif -%}
                                 {%- endfor -%}
-                              </select>
+                              </div>
                             </div>
                           {%- endfor -%}
                           
@@ -945,34 +997,84 @@
   /* Cart Option Selector Custom Styles */
   .cart-item-selectors {
     display: flex;
-    flex-wrap: wrap;
-    gap: 8px;
-    margin-top: 8px;
+    flex-direction: column;
+    gap: 12px;
+    margin-top: 10px;
+    font-family: 'Montserrat', sans-serif;
+    font-size: 12px;
+    color: #1E2A38;
   }
   .cart-item-selector-wrapper {
     display: flex;
-    align-items: center;
-    gap: 4px;
+    flex-direction: column;
+    gap: 6px;
+    align-items: flex-start;
   }
   .cart-item-selector-label {
-    font-family: var(--cart-primary-font-family);
-    font-size: 11px;
-    color: rgb(var(--color-foreground-rgb) / var(--opacity-70));
-    text-transform: uppercase;
+    font-family: 'Montserrat', sans-serif;
+    font-size: 12px;
+    color: #1E2A38;
+    font-weight: 500;
   }
-  .cart-item-select {
-    font-family: var(--cart-primary-font-family);
-    font-size: 11px;
-    padding: 2px 6px;
-    border: 1px solid #e0d9cd;
-    background: #fff;
-    color: #1e2a38;
+  .cart-item-options-list {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 8px;
+    align-items: center;
+  }
+  .cart-item-pill {
+    font-family: 'Montserrat', sans-serif;
+    font-size: 12px;
+    color: #1E2A38;
+    background: transparent;
+    border: 1px solid #1E2A38;
+    padding: 6px 12px;
+    border-radius: 0;
     cursor: pointer;
+    transition: all 0.2s ease;
     outline: none;
-    border-radius: 2px;
-    transition: border-color 0.2s ease;
+    line-height: 1.2;
   }
-  .cart-item-select:hover {
-    border-color: #1e2a38;
+  .cart-item-pill.is-active {
+    border-width: 2px;
+    font-weight: 600;
+  }
+  .cart-item-pill:disabled {
+    opacity: 0.4;
+    cursor: not-allowed;
+    text-decoration: line-through;
+  }
+  .cart-item-swatch {
+    width: 28px;
+    height: 28px;
+    border-radius: 50%;
+    border: 1px solid #1E2A38;
+    cursor: pointer;
+    position: relative;
+    padding: 0;
+    outline: none;
+    transition: all 0.2s ease;
+    box-shadow: inset 0 0 0 2px #fff;
+  }
+  .cart-item-swatch.is-active {
+    border: 2px solid #A08766;
+  }
+  .cart-item-swatch:disabled {
+    opacity: 0.3;
+    cursor: not-allowed;
+  }
+  .cart-item-swatch:disabled::after {
+    content: '';
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    width: 100%;
+    height: 1px;
+    background: #1E2A38;
+    transform: translate(-50%, -50%) rotate(45deg);
+  }
+  .cart-item-selectors.is-loading {
+    opacity: 0.5;
+    pointer-events: none;
   }
 {% endstylesheet %}

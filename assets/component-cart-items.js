@@ -38,6 +38,9 @@ class CartItemsComponent extends Component {
     document.addEventListener(ThemeEvents.cartUpdate, this.#handleCartUpdate);
     document.addEventListener(ThemeEvents.discountUpdate, this.handleDiscountUpdate);
     document.addEventListener(ThemeEvents.quantitySelectorUpdate, this.#debouncedOnChange);
+
+    this.addEventListener('click', this.#onCartOptionClick);
+    this.#initializeAllCartOptionAvailabilities();
   }
 
   disconnectedCallback() {
@@ -46,6 +49,8 @@ class CartItemsComponent extends Component {
     document.removeEventListener(ThemeEvents.cartUpdate, this.#handleCartUpdate);
     document.removeEventListener(ThemeEvents.discountUpdate, this.handleDiscountUpdate);
     document.removeEventListener(ThemeEvents.quantitySelectorUpdate, this.#debouncedOnChange);
+
+    this.removeEventListener('click', this.#onCartOptionClick);
   }
 
   /**
@@ -209,9 +214,18 @@ class CartItemsComponent extends Component {
    * Updates the variant at a specific line item.
    * @param {number} line - The line item number (1-indexed).
    * @param {number} variantId - The new variant ID to set.
+   * @param {string|null} [sellingPlan] - The selling plan ID if subscription.
+   * @param {Function} [revertCallback] - Callback to revert UI on error.
    */
-  updateVariant(line, variantId) {
+  updateVariant(line, variantId, sellingPlan = null, revertCallback = null) {
     this.#disableCartItems();
+
+    const row = this.refs.cartItemRows[line - 1];
+    const selectorsContainer = row?.querySelector('.cart-item-selectors');
+    if (selectorsContainer) {
+      selectorsContainer.classList.add('is-loading');
+    }
+
     const { cartTotal } = this.refs;
     const cartItemsComponents = document.querySelectorAll('cart-items-component');
     const sectionsToUpdate = new Set([this.sectionId]);
@@ -222,17 +236,22 @@ class CartItemsComponent extends Component {
     });
 
     // We get the current quantity of that line item
-    const row = this.refs.cartItemRows[line - 1];
     const qtyInput = row?.querySelector('quantity-selector-component input');
     const quantity = qtyInput ? parseInt(qtyInput.value, 10) : 1;
 
-    const body = JSON.stringify({
+    const bodyObj = {
       line: line,
       id: variantId,
       quantity: quantity,
       sections: Array.from(sectionsToUpdate).join(','),
       sections_url: window.location.pathname,
-    });
+    };
+
+    if (sellingPlan) {
+      bodyObj.selling_plan = parseInt(sellingPlan, 10);
+    }
+
+    const body = JSON.stringify(bodyObj);
 
     cartTotal?.shimmer();
 
@@ -244,6 +263,7 @@ class CartItemsComponent extends Component {
 
         if (parsedResponseText.errors) {
           this.#handleCartError(line, parsedResponseText);
+          if (typeof revertCallback === 'function') revertCallback();
           return;
         }
 
@@ -270,9 +290,13 @@ class CartItemsComponent extends Component {
       })
       .catch((error) => {
         console.error(error);
+        if (typeof revertCallback === 'function') revertCallback();
       })
       .finally(() => {
         this.#enableCartItems();
+        if (selectorsContainer) {
+          selectorsContainer.classList.remove('is-loading');
+        }
       });
   }
 
@@ -315,10 +339,15 @@ class CartItemsComponent extends Component {
    */
   #handleCartUpdate = (event) => {
     if (event instanceof DiscountUpdateEvent) {
-      sectionRenderer.renderSection(this.sectionId, { cache: false });
+      sectionRenderer.renderSection(this.sectionId, { cache: false }).then(() => {
+        this.#initializeAllCartOptionAvailabilities();
+      });
       return;
     }
-    if (event.target === this) return;
+    if (event.target === this) {
+      this.#initializeAllCartOptionAvailabilities();
+      return;
+    }
 
     const cartItemsHtml = event.detail.data.sections?.[this.sectionId];
     if (cartItemsHtml) {
@@ -326,8 +355,11 @@ class CartItemsComponent extends Component {
 
       // Update button states for all cart quantity selectors after morph
       this.#updateCartQuantitySelectorButtonStates();
+      this.#initializeAllCartOptionAvailabilities();
     } else {
-      sectionRenderer.renderSection(this.sectionId, { cache: false });
+      sectionRenderer.renderSection(this.sectionId, { cache: false }).then(() => {
+        this.#initializeAllCartOptionAvailabilities();
+      });
     }
   };
 
@@ -398,40 +430,112 @@ class CartItemsComponent extends Component {
   get isDrawer() {
     return this.dataset.drawer !== undefined;
   }
+  #onCartOptionClick = (event) => {
+    const button = event.target.closest('.cart-item-pill, .cart-item-swatch');
+    if (!button || button.disabled) return;
+
+    const container = button.closest('.cart-item-selectors');
+    if (!container) return;
+
+    const list = button.closest('.cart-item-options-list');
+    const optionIndex = parseInt(list.getAttribute('data-option-index'), 10);
+    const value = button.getAttribute('data-value');
+
+    // Store previous selections in case we need to revert
+    const activeButtons = container.querySelectorAll('.cart-item-pill.is-active, .cart-item-swatch.is-active');
+    const previousSelections = Array.from(activeButtons).map(btn => ({
+      btn,
+      parentList: btn.closest('.cart-item-options-list')
+    }));
+
+    // Update active class on siblings
+    const siblings = list.querySelectorAll('.cart-item-pill, .cart-item-swatch');
+    siblings.forEach(s => s.classList.remove('is-active'));
+    button.classList.add('is-active');
+
+    // Re-evaluate other options
+    this.#updateCartOptionAvailability(container);
+
+    // Get currently selected options
+    const selectedOptions = [];
+    const optionLists = container.querySelectorAll('.cart-item-options-list');
+    optionLists.forEach(optList => {
+      const idx = parseInt(optList.getAttribute('data-option-index'), 10);
+      const activeBtn = optList.querySelector('.cart-item-pill.is-active, .cart-item-swatch.is-active');
+      selectedOptions[idx] = activeBtn ? activeBtn.getAttribute('data-value') : null;
+    });
+
+    const variantsJson = JSON.parse(container.querySelector('.cart-item-variants-json').textContent);
+    const matchedVariant = variantsJson.find(v => {
+      return (!v.option1 || v.option1 === selectedOptions[0]) &&
+             (!v.option2 || v.option2 === selectedOptions[1]) &&
+             (!v.option3 || v.option3 === selectedOptions[2]);
+    });
+
+    if (matchedVariant) {
+      const currentVariantId = parseInt(container.getAttribute('data-current-variant'), 10);
+      if (matchedVariant.id !== currentVariantId) {
+        const line = parseInt(container.getAttribute('data-line'), 10);
+        const sellingPlan = container.getAttribute('data-selling-plan');
+        
+        this.updateVariant(line, matchedVariant.id, sellingPlan, () => {
+          // Revert callback: restore active state of previously selected buttons
+          siblings.forEach(s => s.classList.remove('is-active'));
+          previousSelections.forEach(sel => {
+            sel.btn.classList.add('is-active');
+          });
+          this.#updateCartOptionAvailability(container);
+        });
+      }
+    }
+  };
+
+  #updateCartOptionAvailability(container) {
+    const variantsJson = JSON.parse(container.querySelector('.cart-item-variants-json').textContent);
+    const optionLists = container.querySelectorAll('.cart-item-options-list');
+    
+    // Get currently selected options
+    const selectedOptions = [];
+    optionLists.forEach(optList => {
+      const idx = parseInt(optList.getAttribute('data-option-index'), 10);
+      const activeBtn = optList.querySelector('.cart-item-pill.is-active, .cart-item-swatch.is-active');
+      selectedOptions[idx] = activeBtn ? activeBtn.getAttribute('data-value') : null;
+    });
+
+    optionLists.forEach(optList => {
+      const optIdx = parseInt(optList.getAttribute('data-option-index'), 10);
+      const buttons = optList.querySelectorAll('.cart-item-pill, .cart-item-swatch');
+
+      buttons.forEach(btn => {
+        const val = btn.getAttribute('data-value');
+
+        const isAvailable = variantsJson.some(variant => {
+          if (variant.options[optIdx] !== val) return false;
+
+          for (let i = 0; i < selectedOptions.length; i++) {
+            if (i !== optIdx && selectedOptions[i] !== null) {
+              if (variant.options[i] !== selectedOptions[i]) return false;
+            }
+          }
+          return variant.available;
+        });
+
+        btn.disabled = !isAvailable;
+      });
+    });
+  }
+
+  #initializeAllCartOptionAvailabilities() {
+    const containers = this.querySelectorAll('.cart-item-selectors');
+    containers.forEach(container => {
+      this.#updateCartOptionAvailability(container);
+    });
+  }
 }
 
 if (!customElements.get('cart-items-component')) {
   customElements.define('cart-items-component', CartItemsComponent);
 }
 
-// Global handler for cart variant selector option changes
-window.tsukieCartOptionChange = function(selectEl) {
-  const container = selectEl.closest('.cart-item-selectors');
-  if (!container) return;
-  
-  const line = parseInt(container.getAttribute('data-line'), 10);
-  const selects = container.querySelectorAll('.cart-item-select');
-  const variantsJson = JSON.parse(container.querySelector('.cart-item-variants-json').textContent);
-  
-  const selectedOptions = [];
-  selects.forEach(select => {
-    const index = parseInt(select.getAttribute('data-option-index'), 10);
-    selectedOptions[index] = select.value;
-  });
-  
-  const matchedVariant = variantsJson.find(v => {
-    return (!v.option1 || v.option1 === selectedOptions[0]) &&
-           (!v.option2 || v.option2 === selectedOptions[1]) &&
-           (!v.option3 || v.option3 === selectedOptions[2]);
-  });
-  
-  if (matchedVariant) {
-    const currentVariantId = parseInt(container.getAttribute('data-current-variant'), 10);
-    if (matchedVariant.id !== currentVariantId) {
-      const cartComponent = document.querySelector('cart-items-component');
-      if (cartComponent && typeof cartComponent.updateVariant === 'function') {
-        cartComponent.updateVariant(line, matchedVariant.id);
-      }
-    }
-  }
-};
+// Global handler placeholder (kept for compatibility)
+window.tsukieCartOptionChange = function(selectEl) {};
