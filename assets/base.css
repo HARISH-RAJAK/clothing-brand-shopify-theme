@@ -5550,7 +5550,7 @@ ul.product-grid,
     margin-right: 12px !important;
   }
 }
-/* Instafeed App - Mobile par 4 cards dikhao */
+/* Instafeed App - Mobile par 4 bade cards + bottom space */
 @media screen and (max-width: 749px) {
   #instafeed, 
   .instafeed-container,
@@ -5560,19 +5560,30 @@ ul.product-grid,
     flex-wrap: nowrap !important;
     overflow-x: auto !important;
     scroll-snap-type: x mandatory !important;
-    gap: 8px !important;
+    gap: 12px !important;
+    padding-bottom: 20px !important; /* Bottom padding */
   }
 
   #instafeed .instafeed-item,
   .instafeed-container .instafeed-item,
   [class*="instafeed"] [class*="item"] {
-    flex: 0 0 calc(25% - 6px) !important;
-    width: calc(25% - 6px) !important;
-    min-width: calc(25% - 6px) !important;
+    flex: 0 0 calc(25% - 9px) !important;
+    width: calc(25% - 9px) !important;
+    min-width: calc(25% - 9px) !important;
     scroll-snap-align: start !important;
+    aspect-ratio: 1 / 1 !important; /* Height = Width, square ban jayega */
+  }
+
+  /* Image ko square box mein fit karo */
+  #instafeed .instafeed-item img,
+  .instafeed-container img,
+  [class*="instafeed"] img {
+    width: 100% !important;
+    height: 100% !important;
+    object-fit: cover !important; /* Crop nahi, stretch nahi */
   }
   
-  /* App ka default grid todne ke liye */
+  /* App ka default grid override */
   #instafeed {
     grid-template-columns: unset !important;
   }
