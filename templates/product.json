@@ -19,7 +19,7 @@
         "default_offer1_text": "Buy 1 get 10% off",
         "default_offer2_code": "TSUKIE25",
         "default_offer2_text": "Buy 2 get 25% off",
-        "show_order_status": false,
+        "show_order_status": true,
         "tracker_title": "ORDER STATUS",
         "tracker_subtitle": "Track your delivery and expected arrival time!",
         "tracker_node1_title": "Order Confirmed",
