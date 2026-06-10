@@ -42,44 +42,42 @@
       results_size: collection.products_count
     %}
 
-    <div class="products-area">
-      {% assign products_per_page = 24 %}
+    {% assign products_per_page = 24 %}
 
-      {% if section.settings.enable_infinite_scroll == false %}
-        {% assign products_per_page = section.settings.products_per_page %}
-      {% endif %}
+    {% if section.settings.enable_infinite_scroll == false %}
+      {% assign products_per_page = section.settings.products_per_page %}
+    {% endif %}
 
-      {% paginate collection.products by products_per_page %}
-        {% capture children %}
-          {% for product in collection.products %}
-            <li
-              id="{{ section.id }}-{{ product.id }}"
-              class="product-grid__item product-grid__item--{{ forloop.index0 }}"
-              data-page="{{ paginate.current_page }}"
-              data-product-id="{{ product.id }}"
-              ref="cards[]"
-            >
-              {% # theme-check-disable %}
-              {% content_for 'block', type: '_product-card', id: 'product-card', closest.product: product %}
-              {% # theme-check-enable %}
+    {% paginate collection.products by products_per_page %}
+      {% capture children %}
+        {% for product in collection.products %}
+          <li
+            id="{{ section.id }}-{{ product.id }}"
+            class="product-grid__item product-grid__item--{{ forloop.index0 }}"
+            data-page="{{ paginate.current_page }}"
+            data-product-id="{{ product.id }}"
+            ref="cards[]"
+          >
+            {% # theme-check-disable %}
+            {% content_for 'block', type: '_product-card', id: 'product-card', closest.product: product %}
+            {% # theme-check-enable %}
+          </li>
+          {% if paginate.current_page == 1 and forloop.index == 8 %}
+            <li class="product-grid__strip-item" style="grid-column: 1 / -1; list-style: none; margin: 32px 0 16px;">
+              {% render 'collection-strip' %}
             </li>
-            {% if paginate.current_page == 1 and forloop.index == 8 %}
-              <li class="product-grid__strip-item" style="grid-column: 1 / -1; list-style: none; margin: 32px 0 16px;">
-                {% render 'collection-strip' %}
-              </li>
-            {% endif %}
-          {% endfor %}
-        {% endcapture %}
+          {% endif %}
+        {% endfor %}
+      {% endcapture %}
 
-        {% render 'product-grid',
-          section: section,
-          children: children,
-          products: collection.products,
-          paginate: paginate,
-          enable_infinite_scroll: section.settings.enable_infinite_scroll
-        %}
-      {% endpaginate %}
-    </div>
+      {% render 'product-grid',
+        section: section,
+        children: children,
+        products: collection.products,
+        paginate: paginate,
+        enable_infinite_scroll: section.settings.enable_infinite_scroll
+      %}
+    {% endpaginate %}
   </div>
 </results-list>
 
