@@ -198,9 +198,7 @@
     "tsukie_recently_viewed_RrHd7p": {
       "type": "tsukie-recently-viewed",
       "name": "Recently Viewed Products",
-      "settings": {
-        "heading": "Recently Viewed"
-      }
+      "settings": {}
     }
   },
   "order": [
