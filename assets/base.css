@@ -5695,3 +5695,46 @@ ul.product-grid,
     font-size: 13px !important;
   }
 }
+
+
+/* Product Page Buttons - Tsukie Colors */
+
+/* 1. ADD TO BAG button - White bg, dark text + border */
+.product-form__submit,
+button[name="add"],
+.product__add-to-cart-button {
+  background: #ffffff !important;
+  color: #1e2a38 !important;
+  border: 1px solid #1e2a38 !important;
+  box-shadow: none !important;
+}
+
+.product-form__submit:hover,
+button[name="add"]:hover,
+.product__add-to-cart-button:hover {
+  background: #1e2a38 !important;
+  color: #ffffff !important;
+  border: 1px solid #1e2a38 !important;
+}
+
+/* 2. BUY NOW button - Dark bg, white text */
+.shopify-payment-button__button--unbranded,
+.shopify-payment-button__button[type="submit"],
+.product-form__buy-now {
+  background: #1e2a38 !important;
+  color: #ffffff !important;
+  border: 1px solid #1e2a38 !important;
+}
+
+.shopify-payment-button__button--unbranded:hover,
+.shopify-payment-button__button[type="submit"]:hover,
+.product-form__buy-now:hover {
+  background: #000000 !important;
+  color: #ffffff !important;
+  border: 1px solid #000000 !important;
+}
+
+/* Buy now button ke aaspaas ka extra div */
+.shopify-payment-button__button--hidden {
+  display: none !important;
+}
