@@ -123,9 +123,16 @@
       align-items: start !important; /* Force top alignment of columns */
     }
     .tsukie-modal-content .tsukie-pdp-media {
+      position: relative !important;
+      top: 0 !important;
+      margin-top: 0 !important;
       display: flex !important;
       align-items: start !important; /* Force top alignment of media elements */
       gap: 12px !important;
+    }
+    .tsukie-modal-content .tsukie-pdp-info {
+      padding-top: 0 !important;
+      margin-top: 0 !important;
     }
     .tsukie-modal-content .tsukie-thumbnails {
       max-height: 400px !important;
