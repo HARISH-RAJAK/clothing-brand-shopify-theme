@@ -1,0 +1,130 @@
+<style>
+#shopify-section-{{ section.id }} .tsukie-section-header {
+  text-align: center;
+  padding: 40px 40px 20px;
+  background: linear-gradient(180deg, #fff 0%, #f5f1ea 100%);
+  position: relative;
+  overflow: hidden;
+}
+#shopify-section-{{ section.id }} .tsukie-section-header::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 200px;
+  height: 200px;
+  background: radial-gradient(circle, rgba(160,135,102,0.08) 0%, transparent 70%);
+  pointer-events: none;
+}
+#shopify-section-{{ section.id }} .tsukie-header-eyebrow {
+  font-family: 'Montserrat', sans-serif;
+  font-size: 11px;
+  letter-spacing: 4px;
+  text-transform: uppercase;
+  color: #a08766;
+  margin: 0 0 16px;
+  font-weight: 600;
+  position: relative;
+}
+#shopify-section-{{ section.id }} .tsukie-header-title {
+  font-family: 'Playfair Display', serif;
+  font-size: 58px;
+  font-weight: 600;
+  font-style: italic;
+  margin: 0 0 20px;
+  color: #1e2a38;
+  line-height: 1.1;
+  position: relative;
+}
+#shopify-section-{{ section.id }} .tsukie-header-divider {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 12px;
+  margin: 0 auto;
+}
+#shopify-section-{{ section.id }} .tsukie-header-line {
+  width: 80px;
+  height: 1px;
+  background: linear-gradient(90deg, transparent, #a08766, transparent);
+}
+#shopify-section-{{ section.id }} .tsukie-header-icon {
+  font-size: 14px;
+  color: #a08766;
+}
+#shopify-section-{{ section.id }} .tsukie-header-subtitle {
+  font-family: 'Cormorant Garamond', serif;
+  font-size: 18px;
+  font-style: italic;
+  color: #6b6b6b;
+  margin: 16px 0 0;
+  letter-spacing: 0.5px;
+}
+@media(max-width:749px) {
+  #shopify-section-{{ section.id }} .tsukie-section-header {
+    padding: 50px 20px 40px;
+  }
+  #shopify-section-{{ section.id }} .tsukie-header-title {
+    font-size: 40px;
+  }
+  #shopify-section-{{ section.id }} .tsukie-header-subtitle {
+    font-size: 16px;
+  }
+}
+</style>
+
+<div class="tsukie-section-header">
+  {%- if section.settings.eyebrow != blank -%}
+    <p class="tsukie-header-eyebrow">{{ section.settings.eyebrow }}</p>
+  {%- endif -%}
+  {%- if section.settings.heading != blank -%}
+    <h2 class="tsukie-header-title">{{ section.settings.heading }}</h2>
+  {%- endif -%}
+  <div class="tsukie-header-divider">
+    <span class="tsukie-header-line"></span>
+    <span class="tsukie-header-icon">✦</span>
+    <span class="tsukie-header-line"></span>
+  </div>
+  {%- if section.settings.subtitle != blank -%}
+    <p class="tsukie-header-subtitle">{{ section.settings.subtitle }}</p>
+  {%- endif -%}
+</div>
+
+{% schema %}
+{
+  "name": "Collection Product Heading",
+  "tag": "section",
+  "class": "collection-product-heading-section",
+  "settings": [
+    {
+      "type": "text",
+      "id": "eyebrow",
+      "label": "Eyebrow Text",
+      "default": "Complete The Look"
+    },
+    {
+      "type": "text",
+      "id": "heading",
+      "label": "Heading",
+      "default": "You May Also Adore"
+    },
+    {
+      "type": "text",
+      "id": "subtitle",
+      "label": "Subtitle",
+      "default": "Handpicked pieces that complement your style"
+    }
+  ],
+  "presets": [
+    {
+      "name": "Collection Product Heading",
+      "settings": {
+        "eyebrow": "Complete The Look",
+        "heading": "You May Also Adore",
+        "subtitle": "Handpicked pieces that complement your style"
+      }
+    }
+  ]
+}
+{% endschema %}

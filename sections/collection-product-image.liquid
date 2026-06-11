@@ -1,0 +1,131 @@
+<style>
+#shopify-section-{{ section.id }} .tsukie-coll-prod-grid-section {
+  background: {{ section.settings.bg_color }};
+  padding-top: {{ section.settings.padding_top }}px;
+  padding-bottom: {{ section.settings.padding_bottom }}px;
+}
+#shopify-section-{{ section.id }} .tsukie-coll-prod-inner {
+  max-width: 1400px;
+  margin: 0 auto;
+  padding: 0 40px;
+}
+#shopify-section-{{ section.id }} .tsukie-coll-prod-grid {
+  display: grid;
+  grid-template-columns: repeat({{ section.settings.columns }}, 1fr);
+  gap: 32px;
+}
+@media(max-width: 989px) {
+  #shopify-section-{{ section.id }} .tsukie-coll-prod-grid {
+    grid-template-columns: repeat(2, 1fr);
+    gap: 24px;
+  }
+}
+@media(max-width: 749px) {
+  #shopify-section-{{ section.id }} .tsukie-coll-prod-grid-section {
+    padding-top: {{ section.settings.padding_top | divided_by: 2 }}px;
+    padding-bottom: {{ section.settings.padding_bottom | divided_by: 2 }}px;
+  }
+  #shopify-section-{{ section.id }} .tsukie-coll-prod-inner {
+    padding: 0 16px;
+  }
+  #shopify-section-{{ section.id }} .tsukie-coll-prod-grid {
+    grid-template-columns: repeat(2, 1fr);
+    gap: 16px;
+  }
+}
+</style>
+
+<div class="tsukie-coll-prod-grid-section">
+  <div class="tsukie-coll-prod-inner">
+    <div class="tsukie-coll-prod-grid">
+      {%- assign selected_collection = collections[section.settings.collection] -%}
+      {%- if selected_collection != blank and selected_collection.products.size > 0 -%}
+        {%- for product in selected_collection.products limit: section.settings.limit -%}
+          {%- render 'tsukie-product-card', product: product -%}
+        {%- endfor -%}
+      {%- else -%}
+        {%- comment -%} Onboarding placeholders {%- endcomment -%}
+        {%- for i in (1..section.settings.limit) -%}
+          <div class="tsukie-product-card">
+            <div class="tsukie-product-media" style="position:relative; aspect-ratio:3/4; background:#eaeaea;">
+              {{ 'product-' | append: i | placeholder_svg_tag: 'placeholder-svg' }}
+            </div>
+            <div class="tsukie-product-info" style="margin-top:16px;">
+              <h3 class="tsukie-product-title" style="font-family:'Playfair Display',serif; font-size:16px; font-weight:600;">Sample Product {{ i }}</h3>
+              <div class="tsukie-product-price" style="font-family:'Montserrat',sans-serif; font-size:15px; font-weight:500; margin-top:8px;">Rs. 999</div>
+            </div>
+          </div>
+        {%- endfor -%}
+      {%- endif -%}
+    </div>
+  </div>
+</div>
+
+{% schema %}
+{
+  "name": "Collection Product Image",
+  "tag": "section",
+  "class": "collection-product-image-section",
+  "settings": [
+    {
+      "type": "collection",
+      "id": "collection",
+      "label": "Collection"
+    },
+    {
+      "type": "range",
+      "id": "limit",
+      "label": "Products to show",
+      "min": 2,
+      "max": 12,
+      "step": 1,
+      "default": 4
+    },
+    {
+      "type": "range",
+      "id": "columns",
+      "label": "Columns on Desktop",
+      "min": 2,
+      "max": 4,
+      "step": 1,
+      "default": 4
+    },
+    {
+      "type": "color",
+      "id": "bg_color",
+      "label": "Background Color",
+      "default": "#f5f1ea"
+    },
+    {
+      "type": "range",
+      "id": "padding_top",
+      "label": "Padding Top",
+      "min": 0,
+      "max": 100,
+      "step": 4,
+      "default": 24
+    },
+    {
+      "type": "range",
+      "id": "padding_bottom",
+      "label": "Padding Bottom",
+      "min": 0,
+      "max": 100,
+      "step": 4,
+      "default": 80
+    }
+  ],
+  "presets": [
+    {
+      "name": "Collection Product Image",
+      "settings": {
+        "limit": 4,
+        "columns": 4,
+        "bg_color": "#f5f1ea",
+        "padding_top": 24,
+        "padding_bottom": 80
+      }
+    }
+  ]
+}
+{% endschema %}
