@@ -4633,7 +4633,7 @@ product-recommendations:has([data-has-recommendations='false']) {
   left: 12px !important;
   background: #1e2a38 !important;
   color: #fdfbf7 !important;
-  font-family: 'Cormorant Garamond', serif !important;
+  font-family: 'Montserrat', sans-serif !important;
   font-weight: 300 !important;
   font-size: 10px !important;
   letter-spacing: 1px !important;
@@ -4684,8 +4684,10 @@ product-recommendations:has([data-has-recommendations='false']) {
   line-height: 1.2 !important;
 }
 
-.tsukie-quick-add-btn:hover {
-  background: #a08766 !important;
+.tsukie-quick-add-btn:hover,
+.tsukie-quick-add-btn:focus,
+.tsukie-quick-add-btn:active {
+  background: #1e2a38 !important;
 }
 
 .tsukie-quick-add-btn:disabled {
@@ -4726,8 +4728,8 @@ product-recommendations:has([data-has-recommendations='false']) {
 
 /* Title Styling */
 .tsukie-product-title {
-  font-family: 'Cormorant Garamond', serif !important;
-  font-weight: 300 !important;
+  font-family: 'Playfair Display', serif !important;
+  font-weight: 600 !important;
   color: #1e2a38 !important;
   font-size: 19px !important; /* 19px desktop */
   line-height: 1.3 !important;

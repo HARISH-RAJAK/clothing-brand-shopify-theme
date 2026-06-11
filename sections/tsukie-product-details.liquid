@@ -832,9 +832,10 @@
 
       <div class="tsukie-main-image-wrap">
         <div class="tsukie-main-image">
-          {% if product.tags contains 'bestseller' %}
-            <div class="tsukie-badge">BESTSELLER</div>
-          {% endif %}
+          {%- assign pdp_badge_text = product.metafields.custom.badge.value | default: product.metafields.custom.badge -%}
+          {%- if pdp_badge_text != blank -%}
+            <div class="tsukie-badge">{{ pdp_badge_text }}</div>
+          {%- endif -%}
           
           <div class="tsukie-main-image-slider" onscroll="tsukieOnSliderScroll(this)">
             {% for image in product.images %}

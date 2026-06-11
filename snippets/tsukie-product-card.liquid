@@ -3,60 +3,22 @@
   Usage: {% render 'tsukie-product-card', product: product %}
 {%- endcomment -%}
 
-{%- liquid
+{{%- liquid
   assign variant_to_link = product.selected_or_first_available_variant
   assign onboarding = false
   if product == empty or product == blank
     assign onboarding = true
   endif
 
-  # Resolve Badge Text and Class
-  assign badge_text = ''
-  assign badge_class = ''
-  
-  for tag in product.tags
-    assign tag_downcase = tag | downcase
-    if tag_downcase == 'bestseller' or tag_downcase == 'best seller'
-      assign badge_text = 'BESTSELLER'
-      assign badge_class = 'tsukie-product-badge--bestseller'
-      break
-    elsif tag_downcase == 'new'
-      assign badge_text = 'NEW'
-      assign badge_class = 'tsukie-product-badge--new'
-      break
-    elsif tag_downcase == 'sale'
-      assign badge_text = 'SALE'
-      assign badge_class = 'tsukie-product-badge--sale'
-      break
-    endif
-  endfor
-
-  if badge_text == blank
-    for tag in product.tags
-      unless tag contains 'filter' or tag contains 'meta-' or tag contains 'custom-' or tag == 'all' or tag == 'All'
-        assign badge_text = tag | upcase
-        assign badge_class = 'tsukie-product-badge--custom'
-        break
-      endunless
-    endfor
-  endif
-
-  if product.selected_or_first_available_variant.inventory_management and product.selected_or_first_available_variant.inventory_quantity < 5 and product.selected_or_first_available_variant.inventory_quantity > 0 and product.selected_or_first_available_variant.available
-    assign badge_text = 'LOW STOCK'
-    assign badge_class = 'tsukie-product-badge--low'
-  endif
-
-  unless product.available
-    assign badge_text = 'SOLD OUT'
-    assign badge_class = 'tsukie-product-badge--soldout'
-  endunless
+  # Resolve Badge Text
+  assign badge_text = product.metafields.custom.badge.value | default: product.metafields.custom.badge
 -%}
 
 <div class="tsukie-product-card" data-product-id="{{ product.id }}" data-product-handle="{{ product.handle }}" data-variants-count="{{ product.variants.size }}">
   <div class="tsukie-product-media">
     <a href="{{ variant_to_link.url }}" class="tsukie-product-link">
       {%- if badge_text != blank -%}
-        <span class="tsukie-product-badge {{ badge_class }}">{{ badge_text }}</span>
+        <span class="tsukie-product-badge">{{ badge_text }}</span>
       {%- endif -%}
 
       {%- if product.featured_image -%}
@@ -107,20 +69,26 @@
     </a>
 
     {%- liquid
-      assign color_option = product.options_with_values | where: 'name', 'Color' | first
-      if color_option == blank
-        assign color_option = product.options_with_values | where: 'name', 'Colour' | first
-      endif
+      assign has_color = false
+      assign color_option = blank
+      for option in product.options_with_values
+        assign option_name_downcase = option.name | downcase
+        if option_name_downcase == 'color' or option_name_downcase == 'colour'
+          assign has_color = true
+          assign color_option = option
+          break
+        endif
+      endfor
     -%}
 
-    <div class="tsukie-product-price {% if color_option and color_option.values.size > 1 %}has-swatches{% endif %}">
+    <div class="tsukie-product-price {% if product.variants.size > 1 and has_color and color_option != blank %}has-swatches{% endif %}">
       {{ product.price | money }}
       {%- if product.compare_at_price > product.price -%}
         <span class="tsukie-product-price--compare">{{ product.compare_at_price | money }}</span>
       {%- endif -%}
     </div>
 
-    {%- if color_option and color_option.values.size > 1 -%}
+    {%- if product.variants.size > 1 and has_color and color_option != blank -%}
       <div class="tsukie-color-swatches">
         {%- for value in color_option.values limit: 4 -%}
           {%- liquid
