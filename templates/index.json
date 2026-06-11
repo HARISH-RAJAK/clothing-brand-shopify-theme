@@ -16,33 +16,45 @@
           "type": "slide",
           "settings": {
             "image": "shopify://shop_images/website_Banner_2.png",
+            "image_size": "cover",
+            "mobile_image_size": "auto-adapt",
+            "mobile_image_width": 100,
             "eyebrow": "",
             "heading": "",
             "description": "",
-            "button_text": "VIEW ALL COLLECTIONS",
-            "button_url": "/collections"
+            "button_text": "",
+            "button_url": "/collections",
+            "link": ""
           }
         },
         "slide_2": {
           "type": "slide",
           "settings": {
             "image": "shopify://shop_images/Website_Banner.png",
+            "image_size": "cover",
+            "mobile_image_size": "cover",
+            "mobile_image_width": 100,
             "eyebrow": "",
             "heading": "",
             "description": "",
-            "button_text": "EXPLORE BEST SELLERS",
-            "button_url": "/collections/all"
+            "button_text": "",
+            "button_url": "/collections/all",
+            "link": ""
           }
         },
         "slide_1": {
           "type": "slide",
           "settings": {
             "image": "shopify://shop_images/Elevate_Your_Everyday_12.png",
+            "image_size": "cover",
+            "mobile_image_size": "cover",
+            "mobile_image_width": 100,
             "eyebrow": "",
             "heading": "",
             "description": "",
-            "button_text": "SHOP NEW ARRIVALS",
-            "button_url": "/collections/new-arrivals"
+            "button_text": "",
+            "button_url": "/collections/new-arrivals",
+            "link": ""
           }
         }
       },
@@ -51,7 +63,16 @@
         "slide_2",
         "slide_1"
       ],
-      "settings": {}
+      "settings": {
+        "autoplay": true,
+        "autoplay_speed": 5,
+        "slide_effect": "zoom",
+        "hover_effect": "brightness",
+        "section_height": "full-screen",
+        "section_height_custom": 70,
+        "section_height_mobile": "small",
+        "section_height_mobile_custom": 60
+      }
     },
     "custom_liquid_UPURke": {
       "type": "custom-liquid",
