@@ -829,6 +829,23 @@
   <div class="tsukie-product-container">
     <!-- Left Layout -->
     <div class="tsukie-pdp-media">
+      {%- assign color_option_index = nil -%}
+      {%- for option in product.options_with_values -%}
+        {%- if option.name == 'Color' or option.name == 'Colour' -%}
+          {%- assign color_option_index = forloop.index -%}
+        {%- endif -%}
+      {%- endfor -%}
+      {%- assign first_variant_color = "" -%}
+      {%- if color_option_index != nil and product.variants.size > 0 -%}
+        {%- if color_option_index == 1 -%}
+          {%- assign first_variant_color = product.variants[0].option1 -%}
+        {%- elsif color_option_index == 2 -%}
+          {%- assign first_variant_color = product.variants[0].option2 -%}
+        {%- elsif color_option_index == 3 -%}
+          {%- assign first_variant_color = product.variants[0].option3 -%}
+        {%- endif -%}
+      {%- endif -%}
+
       <div class="tsukie-thumbnails-wrapper">
         {% if product.images.size > 6 %}
           <button class="tsukie-thumb-nav" type="button" onclick="tsukieScrollThumbs('up', this)">
@@ -837,12 +854,11 @@
         {% endif %}
         
         <div class="tsukie-thumbnails" id="tsukie-thumbs-list">
+          {%- assign active_seq_color = first_variant_color -%}
           {% for image in product.images %}
             {%- assign image_colors = "" -%}
-            {%- assign color_option_index = nil -%}
             {%- for option in product.options_with_values -%}
               {%- if option.name == 'Color' or option.name == 'Colour' -%}
-                {%- assign color_option_index = forloop.index -%}
                 {%- for color_val in option.values -%}
                   {%- assign color_val_down = color_val | downcase | strip -%}
                   {%- assign image_alt_down = image.alt | downcase | strip -%}
@@ -852,20 +868,31 @@
                 {%- endfor -%}
               {%- endif -%}
             {%- endfor -%}
+            
+            {%- assign featured_var_color = "" -%}
             {%- for variant in product.variants -%}
               {%- if variant.featured_image.id == image.id -%}
                 {%- if color_option_index == 1 -%}
-                  {%- assign var_color = variant.option1 -%}
+                  {%- assign featured_var_color = variant.option1 -%}
                 {%- elsif color_option_index == 2 -%}
-                  {%- assign var_color = variant.option2 -%}
+                  {%- assign featured_var_color = variant.option2 -%}
                 {%- elsif color_option_index == 3 -%}
-                  {%- assign var_color = variant.option3 -%}
+                  {%- assign featured_var_color = variant.option3 -%}
                 {%- endif -%}
-                {%- if var_color != blank -%}
-                  {%- assign image_colors = image_colors | append: "," | append: var_color -%}
+                {%- if featured_var_color != blank -%}
+                  {%- break -%}
                 {%- endif -%}
               {%- endif -%}
             {%- endfor -%}
+            
+            {%- if featured_var_color != blank -%}
+              {%- assign active_seq_color = featured_var_color -%}
+            {%- endif -%}
+            
+            {%- if active_seq_color != blank -%}
+              {%- assign image_colors = image_colors | append: "," | append: active_seq_color -%}
+            {%- endif -%}
+            
             {%- assign image_colors_arr = image_colors | split: "," | uniq -%}
             {%- assign image_colors_clean = "" -%}
             {%- for c in image_colors_arr -%}
@@ -894,12 +921,11 @@
           {%- endif -%}
           
           <div class="tsukie-main-image-slider" onscroll="tsukieOnSliderScroll(this)">
+            {%- assign active_seq_color = first_variant_color -%}
             {% for image in product.images %}
               {%- assign image_colors = "" -%}
-              {%- assign color_option_index = nil -%}
               {%- for option in product.options_with_values -%}
                 {%- if option.name == 'Color' or option.name == 'Colour' -%}
-                  {%- assign color_option_index = forloop.index -%}
                   {%- for color_val in option.values -%}
                     {%- assign color_val_down = color_val | downcase | strip -%}
                     {%- assign image_alt_down = image.alt | downcase | strip -%}
@@ -909,20 +935,31 @@
                   {%- endfor -%}
                 {%- endif -%}
               {%- endfor -%}
+              
+              {%- assign featured_var_color = "" -%}
               {%- for variant in product.variants -%}
                 {%- if variant.featured_image.id == image.id -%}
                   {%- if color_option_index == 1 -%}
-                    {%- assign var_color = variant.option1 -%}
+                    {%- assign featured_var_color = variant.option1 -%}
                   {%- elsif color_option_index == 2 -%}
-                    {%- assign var_color = variant.option2 -%}
+                    {%- assign featured_var_color = variant.option2 -%}
                   {%- elsif color_option_index == 3 -%}
-                    {%- assign var_color = variant.option3 -%}
+                    {%- assign featured_var_color = variant.option3 -%}
                   {%- endif -%}
-                  {%- if var_color != blank -%}
-                    {%- assign image_colors = image_colors | append: "," | append: var_color -%}
+                  {%- if featured_var_color != blank -%}
+                    {%- break -%}
                   {%- endif -%}
-                {%- endif -%}
+                {%- endfor -%}
               {%- endfor -%}
+              
+              {%- if featured_var_color != blank -%}
+                {%- assign active_seq_color = featured_var_color -%}
+              {%- endif -%}
+              
+              {%- if active_seq_color != blank -%}
+                {%- assign image_colors = image_colors | append: "," | append: active_seq_color -%}
+              {%- endif -%}
+              
               {%- assign image_colors_arr = image_colors | split: "," | uniq -%}
               {%- assign image_colors_clean = "" -%}
               {%- for c in image_colors_arr -%}
@@ -945,12 +982,11 @@
         </div>
         
         <div class="tsukie-carousel-dots">
+          {%- assign active_seq_color = first_variant_color -%}
           {% for image in product.images %}
             {%- assign image_colors = "" -%}
-            {%- assign color_option_index = nil -%}
             {%- for option in product.options_with_values -%}
               {%- if option.name == 'Color' or option.name == 'Colour' -%}
-                {%- assign color_option_index = forloop.index -%}
                 {%- for color_val in option.values -%}
                   {%- assign color_val_down = color_val | downcase | strip -%}
                   {%- assign image_alt_down = image.alt | downcase | strip -%}
@@ -960,20 +996,31 @@
                 {%- endfor -%}
               {%- endif -%}
             {%- endfor -%}
+            
+            {%- assign featured_var_color = "" -%}
             {%- for variant in product.variants -%}
               {%- if variant.featured_image.id == image.id -%}
                 {%- if color_option_index == 1 -%}
-                  {%- assign var_color = variant.option1 -%}
+                  {%- assign featured_var_color = variant.option1 -%}
                 {%- elsif color_option_index == 2 -%}
-                  {%- assign var_color = variant.option2 -%}
+                  {%- assign featured_var_color = variant.option2 -%}
                 {%- elsif color_option_index == 3 -%}
-                  {%- assign var_color = variant.option3 -%}
+                  {%- assign featured_var_color = variant.option3 -%}
                 {%- endif -%}
-                {%- if var_color != blank -%}
-                  {%- assign image_colors = image_colors | append: "," | append: var_color -%}
+                {%- if featured_var_color != blank -%}
+                  {%- break -%}
                 {%- endif -%}
               {%- endif -%}
             {%- endfor -%}
+            
+            {%- if featured_var_color != blank -%}
+              {%- assign active_seq_color = featured_var_color -%}
+            {%- endif -%}
+            
+            {%- if active_seq_color != blank -%}
+              {%- assign image_colors = image_colors | append: "," | append: active_seq_color -%}
+            {%- endif -%}
+            
             {%- assign image_colors_arr = image_colors | split: "," | uniq -%}
             {%- assign image_colors_clean = "" -%}
             {%- for c in image_colors_arr -%}
