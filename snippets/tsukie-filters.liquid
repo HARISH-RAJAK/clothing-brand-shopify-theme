@@ -17,6 +17,36 @@
       assign total_active_values = total_active_values | plus: filter.active_values.size
     endif
   endfor
+
+  comment
+    DYNAMIC COLOR FILTER FROM COLLECTION PRODUCTS
+  endcomment
+  assign color_option_name = "Color"
+  assign raw_colors = ""
+  for product in collection.products
+    for option in product.options_with_values
+      assign option_name_downcase = option.name | downcase
+      if option_name_downcase == 'color' or option_name_downcase == 'colour'
+        assign color_option_name = option.name
+        for value in option.values
+          assign val_clean = value | strip
+          if val_clean != blank
+            assign raw_colors = raw_colors | append: ";" | append: val_clean
+          endif
+        endfor
+      endif
+    endfor
+  endfor
+  assign unique_colors = raw_colors | split: ";" | uniq | compact
+  assign color_param_name = "filter.v.option." | append: color_option_name | downcase
+
+  assign has_native_color_filter = false
+  for filter in collection.filters
+    assign filter_down = filter.label | downcase
+    if filter_down contains 'color' or filter_down contains 'colour'
+      assign has_native_color_filter = true
+    endif
+  endfor
 -%}
 
 <!-- Google Fonts for Tsukie Filters -->
@@ -29,15 +59,18 @@
 <!-- ===== TSUKIE FILTER BAR ===== -->
 <div class="tsukie-filter-bar">
   <div class="tsukie-filter-left">
-    <a href="{{ collection.url }}" class="tsukie-filter-chip {% if current_tags == blank %}tsukie-active tsukie-gold{% endif %}">All</a>
+    {%- assign current_handle = collection.handle -%}
+    {%- if request.path == '/products' or request.path == '/collections' or request.path == '/collections/all' -%}
+      {%- assign current_handle = 'all' -%}
+    {%- endif -%}
 
-    {%- for tag in collection.all_tags limit: 12 -%}
-      {%- if current_tags contains tag -%}
-        <a href="{{ collection.url }}" class="tsukie-filter-chip tsukie-active">{{ tag }}</a>
-      {%- else -%}
-        <a href="{{ collection.url }}/{{ tag | handle }}" class="tsukie-filter-chip">{{ tag }}</a>
-      {%- endif -%}
-    {%- endfor -%}
+    <a href="/collections/all" class="tsukie-filter-chip {% if current_handle == 'all' or current_handle == blank %}tsukie-active tsukie-gold{% endif %}">All</a>
+    <a href="/collections/tops" class="tsukie-filter-chip {% if current_handle == 'tops' %}tsukie-active tsukie-gold{% endif %}">Tops</a>
+    <a href="/collections/co-ord-set" class="tsukie-filter-chip {% if current_handle == 'co-ord-set' %}tsukie-active tsukie-gold{% endif %}">Co-ord Set</a>
+    <a href="/collections/dresses" class="tsukie-filter-chip {% if current_handle == 'dresses' %}tsukie-active tsukie-gold{% endif %}">Dresses</a>
+    <a href="/collections/skirts" class="tsukie-filter-chip {% if current_handle == 'skirts' %}tsukie-active tsukie-gold{% endif %}">Skirts</a>
+    <a href="/collections/shirts" class="tsukie-filter-chip {% if current_handle == 'shirts' %}tsukie-active tsukie-gold{% endif %}">Shirts</a>
+    <a href="/collections/bottoms" class="tsukie-filter-chip {% if current_handle == 'bottoms' %}tsukie-active tsukie-gold{% endif %}">Bottoms</a>
   </div>
 
   <div class="tsukie-filter-right">
@@ -247,6 +280,92 @@
       </div>
     {%- endfor -%}
 
+    {%- if has_native_color_filter == false and unique_colors.size > 0 -%}
+      <div class="tsukie-sidebar-section custom-color-section" data-filter-index="color">
+        <div class="tsukie-sidebar-title" onclick="this.parentElement.classList.toggle('tsukie-collapsed')">
+          Color
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor"><polyline points="6 9 12 15 18 9"/></svg>
+        </div>
+        <div class="tsukie-sidebar-content">
+          <div class="tsukie-color-swatches">
+            {%- for color_name in unique_colors -%}
+              {%- assign swatch_bg = '' -%}
+              {%- assign cn = color_name | downcase | strip -%}
+              {%- case cn -%}
+                {%- when 'black' -%}{%- assign swatch_bg = '#000000' -%}
+                {%- when 'white' -%}{%- assign swatch_bg = '#FFFFFF' -%}
+                {%- when 'red' -%}{%- assign swatch_bg = '#C0392B' -%}
+                {%- when 'blue' -%}{%- assign swatch_bg = '#2980B9' -%}
+                {%- when 'green' -%}{%- assign swatch_bg = '#27AE60' -%}
+                {%- when 'navy' or 'navy blue' -%}{%- assign swatch_bg = '#001F3F' -%}
+                {%- when 'pink' -%}{%- assign swatch_bg = '#E91E63' -%}
+                {%- when 'beige' -%}{%- assign swatch_bg = '#F5F1EA' -%}
+                {%- when 'cream' -%}{%- assign swatch_bg = '#FFFDD0' -%}
+                {%- when 'brown' -%}{%- assign swatch_bg = '#795548' -%}
+                {%- when 'grey' or 'gray' -%}{%- assign swatch_bg = '#95A5A6' -%}
+                {%- when 'yellow' -%}{%- assign swatch_bg = '#F1C40F' -%}
+                {%- when 'orange' -%}{%- assign swatch_bg = '#E67E22' -%}
+                {%- when 'purple' -%}{%- assign swatch_bg = '#9B59B6' -%}
+                {%- when 'maroon' -%}{%- assign swatch_bg = '#800000' -%}
+                {%- when 'olive' -%}{%- assign swatch_bg = '#808000' -%}
+                {%- when 'teal' -%}{%- assign swatch_bg = '#008080' -%}
+                {%- when 'nude' -%}{%- assign swatch_bg = '#E8D5C4' -%}
+                {%- when 'blush' -%}{%- assign swatch_bg = '#F5E6D8' -%}
+                {%- when 'charcoal' -%}{%- assign swatch_bg = '#2A2520' -%}
+                {%- when 'caramel' -%}{%- assign swatch_bg = '#8B7355' -%}
+                {%- when 'sage' -%}{%- assign swatch_bg = '#6B8E8A' -%}
+                {%- when 'dusty rose' -%}{%- assign swatch_bg = '#C4949A' -%}
+                {%- when 'off white' -%}{%- assign swatch_bg = '#FAF9F6' -%}
+                {%- when 'ivory' -%}{%- assign swatch_bg = '#FFFFF0' -%}
+                {%- when 'rust' -%}{%- assign swatch_bg = '#B7410E' -%}
+                {%- when 'burgundy' -%}{%- assign swatch_bg = '#800020' -%}
+                {%- when 'coral' -%}{%- assign swatch_bg = '#FF7F50' -%}
+                {%- when 'khaki' -%}{%- assign swatch_bg = '#C3B091' -%}
+                {%- when 'lavender' -%}{%- assign swatch_bg = '#E6E6FA' -%}
+                {%- when 'mint' -%}{%- assign swatch_bg = '#98FF98' -%}
+                {%- when 'peach' -%}{%- assign swatch_bg = '#FFDAB9' -%}
+                {%- when 'tan' -%}{%- assign swatch_bg = '#D2B48C' -%}
+                {%- when 'wine' -%}{%- assign swatch_bg = '#722F37' -%}
+                {%- when 'gold' -%}{%- assign swatch_bg = '#FFD700' -%}
+                {%- when 'silver' -%}{%- assign swatch_bg = '#C0C0C0' -%}
+                {%- when 'champagne' -%}{%- assign swatch_bg = '#F7E7CE' -%}
+                {%- when 'mustard' -%}{%- assign swatch_bg = '#FFDB58' -%}
+                {%- when 'rose' -%}{%- assign swatch_bg = '#FF007F' -%}
+                {%- when 'sand' -%}{%- assign swatch_bg = '#C2B280' -%}
+                {%- when 'taupe' -%}{%- assign swatch_bg = '#483C32' -%}
+                {%- when 'lilac' -%}{%- assign swatch_bg = '#C8A2C8' -%}
+                {%- when 'moss' -%}{%- assign swatch_bg = '#8A9A5B' -%}
+                {%- when 'copper' -%}{%- assign swatch_bg = '#B87333' -%}
+                {%- when 'indigo' -%}{%- assign swatch_bg = '#4B0082' -%}
+                {%- when 'turquoise' -%}{%- assign swatch_bg = '#40E0D0' -%}
+                {%- when 'magenta' -%}{%- assign swatch_bg = '#FF00FF' -%}
+                {%- when 'aqua' -%}{%- assign swatch_bg = '#00FFFF' -%}
+                {%- when 'plum' -%}{%- assign swatch_bg = '#DDA0DD' -%}
+                {%- when 'mauve' -%}{%- assign swatch_bg = '#E0B0FF' -%}
+                {%- when 'lime' -%}{%- assign swatch_bg = '#CDDC39' -%}
+                {%- when 'cyan' -%}{%- assign swatch_bg = '#00BCD4' -%}
+                {%- else -%}{%- assign swatch_bg = '#CCCCCC' -%}
+              {%- endcase -%}
+
+              {%- assign is_light = false -%}
+              {%- if cn == 'white' or cn == 'off white' or cn == 'cream' or cn == 'ivory' or cn == 'beige' -%}
+                {%- assign is_light = true -%}
+              {%- endif -%}
+
+              <a href="javascript:void(0)"
+                 class="tsukie-color-swatch tsukie-dynamic-color-swatch"
+                 data-color-name="{{ color_name | escape }}"
+                 data-param-name="{{ color_param_name }}"
+                 style="background-color:{{ swatch_bg }};{% if is_light %}border:1px solid #E8DFD2;{% endif %}"
+                 title="{{ color_name }}"
+                 onclick="tsukieToggleFilter('{{ color_param_name }}','{{ color_name | escape }}',this.classList.contains('tsukie-active'))"
+              ></a>
+            {%- endfor -%}
+          </div>
+        </div>
+      </div>
+    {%- endif -%}
+
     <!-- Clear All Filters -->
     {%- if total_active_values > 0 -%}
       <a href="{{ collection.url }}{% if current_tags %}{% endif %}" class="tsukie-clear-filters">Clear All Filters</a>
@@ -298,6 +417,50 @@
       if(sidebar && sidebar.classList.contains('tsukie-open')) closeSidebar();
     }
   });
+
+  /* Parse active dynamic color parameters on load */
+  var params = new URLSearchParams(window.location.search);
+  var activeColorsCount = 0;
+  var swatches = document.querySelectorAll('.tsukie-dynamic-color-swatch');
+  swatches.forEach(function(swatch) {
+    var paramName = swatch.getAttribute('data-param-name');
+    var colorName = swatch.getAttribute('data-color-name');
+    var activeValues = params.getAll(paramName);
+    if (activeValues.includes(colorName)) {
+      swatch.classList.add('tsukie-active');
+      activeColorsCount++;
+    }
+  });
+
+  if (activeColorsCount > 0) {
+    // Update total active filter count badge
+    var countBadge = document.querySelector('.tsukie-filter-count');
+    if (countBadge) {
+      var currentCount = parseInt(countBadge.textContent) || 0;
+      countBadge.textContent = currentCount + activeColorsCount;
+    } else {
+      var toggleBtn = document.getElementById('tsukieFilterToggle');
+      if (toggleBtn) {
+        var badge = document.createElement('span');
+        badge.className = 'tsukie-filter-count';
+        badge.textContent = activeColorsCount;
+        toggleBtn.appendChild(badge);
+      }
+    }
+
+    // Ensure Clear All Filters button is visible
+    var clearBtn = document.querySelector('.tsukie-clear-filters');
+    if (!clearBtn) {
+      var sidebarInner = document.querySelector('.tsukie-sidebar-inner');
+      if (sidebarInner) {
+        var clearA = document.createElement('a');
+        clearA.href = window.location.pathname; // clears query params
+        clearA.className = 'tsukie-clear-filters';
+        clearA.textContent = 'Clear All Filters';
+        sidebarInner.appendChild(clearA);
+      }
+    }
+  }
 })();
 
 /* Toggle filter value via URL params */
