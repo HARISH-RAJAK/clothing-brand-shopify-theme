@@ -21,7 +21,7 @@
         "default_offer2_text": "Buy 2 get 25% off",
         "show_order_status": true,
         "tracker_title": "ORDER STATUS",
-        "tracker_subtitle": "Partial COD: Pay 20% Now, Rest on Delivery",
+        "tracker_subtitle": "Track your delivery and expected arrival time!",
         "tracker_node1_title": "Order Confirmed",
         "tracker_node2_title": "On Its Way",
         "tracker_node3_title": "Arriving Soon",
