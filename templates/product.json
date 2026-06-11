@@ -761,8 +761,22 @@
         "description": "Candid moments of real women styling our timeless silhouettes. Tag us at #TsukieWomen to get featured."
       }
     },
+    "custom_liquid_khNBCT": {
+      "type": "custom-liquid",
+      "name": "t:names.custom_liquid",
+      "settings": {
+        "custom_liquid": "<style>\n.tsukie-bestsellers-head{\n  background:#f5f1ea;\n  padding:80px 0 0;\n  text-align:center;\n}\n.tsukie-bestsellers-inner{\n  max-width:1400px;\n  margin:0 auto;\n  padding:0 40px;\n}\n.tsukie-bestsellers-header{\n  text-align:center;\n  margin-bottom:45px;\n}\n.tsukie-bestsellers-eyebrow{\n  color:#a08766;\n  font-size:11px;\n  letter-spacing:3px;\n  text-transform:uppercase;\n  margin:0 0 16px;\n  font-weight:500;\n  font-family:'Montserrat',sans-serif;\n}\n.tsukie-bestsellers-heading{\n  font-family:'Playfair Display',serif;\n  font-size:52px;\n  font-style:italic;\n  font-weight:600;\n  line-height:1.15;\n  margin:0 0 20px;\n  color:#1e2a38;\n}\n.tsukie-bestsellers-subtext{\n  font-size:15px;\n  line-height:1.6;\n  color:#6b6b6b;\n  margin:0 auto;\n  max-width:580px;\n  font-family:'Montserrat',sans-serif;\n}\n\n@media(max-width:749px){\n  .tsukie-bestsellers-head{padding:50px 0 0}\n  .tsukie-bestsellers-inner{padding:0 20px}\n  .tsukie-bestsellers-heading{font-size:36px;margin:0 0 16px;line-height:1.2}\n  .tsukie-bestsellers-header{margin-bottom:35px}\n  .tsukie-bestsellers-eyebrow{margin:0 0 12px}\n}\n</style>\n\n<div class=\"tsukie-bestsellers-head\">\n  <div class=\"tsukie-bestsellers-inner\">\n    <div class=\"tsukie-bestsellers-header\">\n     \n      <h2 class=\"tsukie-bestsellers-heading\">Recently Viewed Products</h2>\n    \n    </div>\n  </div>\n</div>",
+        "color_scheme": "",
+        "section_width": "full-width",
+        "padding-block-start": 0,
+        "padding-block-end": 0
+      }
+    },
     "recently_viewed": {
       "type": "tsukie-recently-viewed",
+      "custom_css": [
+        "{margin-bottom: 0 !important; padding-bottom: 0 !important;}"
+      ],
       "settings": {}
     },
     "instagram_feed": {
@@ -846,6 +860,7 @@
     "custom_liquid_fQbTBM",
     "product_recommendations_qggXJq",
     "seen_on_real_women",
+    "custom_liquid_khNBCT",
     "recently_viewed",
     "instagram_feed",
     "178107514790d9b152"
