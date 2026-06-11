@@ -170,17 +170,6 @@
         "padding-block-end": 32
       }
     },
-    "custom_liquid_4jmcfg": {
-      "type": "custom-liquid",
-      "name": "collection strip",
-      "settings": {
-        "custom_liquid": "<style>\n.tsukie-ticker{\n  background:#1e2a38;\n  width:100vw;\n  position:relative;\n  left:50%;\n  right:50%;\n  margin-left:-50vw;\n  margin-right:-50vw;\n  overflow:hidden;\n  padding:18px 0;\n}\n.tsukie-ticker-track{\n  display:flex;\n  width:fit-content;\n  animation:tsukie-scroll 30s linear infinite;\n}\n.tsukie-ticker-content{\n  display:flex;\n  align-items:center;\n  white-space:nowrap;\n}\n.tsukie-ticker-item{\n  display:flex;\n  align-items:center;\n  color:#d4c5a9;\n  font-size:11px;\n  letter-spacing:2.5px;\n  text-transform:uppercase;\n  font-weight:500;\n  padding:0 60px;\n  position:relative;\n}\n.tsukie-ticker-item:after{\n  content:'';\n  position:absolute;\n  right:0;\n  top:50%;\n  transform:translateY(-50%);\n  width:1px;\n  height:14px;\n  background:rgba(212,197,169,0.2);\n}\n.tsukie-ticker-icon{\n  margin-right:10px;\n  font-size:10px;\n}\n@keyframes tsukie-scroll{\n  0%{transform:translateX(0)}\n  100%{transform:translateX(-50%)}\n}\n.tsukie-ticker:hover .tsukie-ticker-track{\n  animation-play-state:paused;\n}\n@media(max-width:749px){\n.tsukie-ticker{padding:14px 0}\n.tsukie-ticker-item{font-size:10px;padding:0 40px}\n}\n</style>\n\n<div class=\"tsukie-ticker\">\n  <div class=\"tsukie-ticker-track\">\n    <!-- Set 1 -->\n    <div class=\"tsukie-ticker-content\">\n      <div class=\"tsukie-ticker-item\">\n        <span class=\"tsukie-ticker-icon\">✦</span> PREMIUM FABRICS\n      </div>\n      <div class=\"tsukie-ticker-item\">\n        <span class=\"tsukie-ticker-icon\">✦</span> EASY RETURNS\n      </div>\n      <div class=\"tsukie-ticker-item\">\n        <span class=\"tsukie-ticker-icon\">✦</span> SECURE PAYMENTS\n      </div>\n      <div class=\"tsukie-ticker-item\">\n        <span class=\"tsukie-ticker-icon\">✦</span> FREE SHIPPING ₹1,999+\n      </div>\n      <div class=\"tsukie-ticker-item\">\n        <span class=\"tsukie-ticker-icon\">✦</span> 12,000+ HAPPY CUSTOMERS\n      </div>\n      <div class=\"tsukie-ticker-item\">\n        <span class=\"tsukie-ticker-icon\">✦</span> SIZE INCLUSIVE XS-4XL\n      </div>\n    </div>\n    <!-- Set 2 - Duplicate for seamless loop -->\n    <div class=\"tsukie-ticker-content\">\n      <div class=\"tsukie-ticker-item\">\n        <span class=\"tsukie-ticker-icon\">✦</span> PREMIUM FABRICS\n      </div>\n      <div class=\"tsukie-ticker-item\">\n        <span class=\"tsukie-ticker-icon\">✦</span> EASY RETURNS\n      </div>\n      <div class=\"tsukie-ticker-item\">\n        <span class=\"tsukie-ticker-icon\">✦</span> SECURE PAYMENTS\n      </div>\n      <div class=\"tsukie-ticker-item\">\n        <span class=\"tsukie-ticker-icon\">✦</span> FREE SHIPPING ₹1,999+\n      </div>\n      <div class=\"tsukie-ticker-item\">\n        <span class=\"tsukie-ticker-icon\">✦</span> 12,000+ HAPPY CUSTOMERS\n      </div>\n      <div class=\"tsukie-ticker-item\">\n        <span class=\"tsukie-ticker-icon\">✦</span> SIZE INCLUSIVE XS-4XL\n      </div>\n    </div>\n  </div>\n</div>",
-        "color_scheme": "",
-        "section_width": "page-width",
-        "padding-block-start": 0,
-        "padding-block-end": 0
-      }
-    },
     "divider_dJVYfB": {
       "type": "divider",
       "name": "t:names.divider_section",
@@ -199,7 +188,7 @@
       "type": "custom-liquid",
       "name": "t:names.custom_liquid",
       "settings": {
-        "custom_liquid": "<style>\n.tsukie-bestsellers-head{\n  background:#f5f1ea;\n  padding:80px 0 0;\n  text-align:center;\n}\n.tsukie-bestsellers-inner{\n  max-width:1400px;\n  margin:0 auto;\n  padding:0 40px;\n}\n.tsukie-bestsellers-header{\n  text-align:center;\n  margin-bottom:45px;\n}\n.tsukie-bestsellers-eyebrow{\n  color:#a08766;\n  font-size:11px;\n  letter-spacing:3px;\n  text-transform:uppercase;\n  margin:0 0 16px;\n  font-weight:500;\n  font-family:'Montserrat',sans-serif;\n}\n.tsukie-bestsellers-heading{\n  font-family:'Playfair Display',serif;\n  font-size:52px;\n  font-style:italic;\n  font-weight:600;\n  line-height:1.15;\n  margin:0 0 20px;\n  color:#1e2a38;\n}\n.tsukie-bestsellers-subtext{\n  font-size:15px;\n  line-height:1.6;\n  color:#6b6b6b;\n  margin:0 auto;\n  max-width:580px;\n  font-family:'Montserrat',sans-serif;\n}\n\n@media(max-width:749px){\n  .tsukie-bestsellers-head{padding:50px 0 0}\n  .tsukie-bestsellers-inner{padding:0 20px}\n  .tsukie-bestsellers-heading{font-size:36px;margin:0 0 16px;line-height:1.2}\n  .tsukie-bestsellers-header{margin-bottom:35px}\n  .tsukie-bestsellers-eyebrow{margin:0 0 12px}\n}\n</style>\n\n<div class=\"tsukie-bestsellers-head\">\n  <div class=\"tsukie-bestsellers-inner\">\n    <div class=\"tsukie-bestsellers-header\">\n     \n      <h2 class=\"tsukie-bestsellers-heading\">Recently Viewed Products</h2>\n    \n    </div>\n  </div>\n</div>",
+        "custom_liquid": "<style>\n.tsukie-collection-head{\n  background:#f5f1ea;\n  padding:20px 0 0;\n  text-align:center;\n}\n.tsukie-collection-inner{\n  max-width:1400px;\n  margin:0 auto;\n  padding:0 40px;\n}\n.tsukie-collection-eyebrow{\n  color:#a08766;\n  font-size:10px;\n  letter-spacing:2.5px;\n  text-transform:uppercase;\n  margin:0 0 8px;\n  font-weight:500;\n  font-family:'Montserrat',sans-serif;\n}\n.tsukie-collection-heading{\n  font-family:'Playfair Display',serif;\n  font-size:52px;\n  font-style:italic;\n  font-weight:600;\n  line-height:1.15;\n  margin:0 0 16px;\n  padding-bottom:4px;\n  color:#1e2a38;\n  display:inline-block;\n}\n.tsukie-collection-subtext{\n  font-size:14px;\n  line-height:1.4;\n  margin:0 auto;\n  font-family:'Montserrat',sans-serif;\n  color:#6b6b6b;\n}\n\n@media(max-width:749px){\n  .tsukie-collection-head{padding:50px 0 0}\n  .tsukie-collection-inner{padding:0 20px}\n  .tsukie-collection-eyebrow{font-size:9px;margin:0 0 6px}\n  .tsukie-collection-heading{font-size:36px;margin:0 0 12px;line-height:1.2;padding-bottom:3px}\n  .tsukie-collection-subtext{font-size:13px}\n}\n</style>\n\n<div class=\"tsukie-collection-head\">\n  <div class=\"tsukie-collection-inner\">\n    <p class=\"tsukie-collection-eyebrow\">JUST EXPLORED</p>\n    <h2 class=\"tsukie-collection-heading\">Recently Viewed</h2>\n    <p class=\"tsukie-collection-subtext\">\n      Seen Before, Loved Again \n    </p>\n  </div>\n</div>",
         "color_scheme": "",
         "section_width": "full-width",
         "padding-block-start": 0,
@@ -239,6 +228,7 @@
       "block_order": [
         "instafeed_app_block_B3Lnrq"
       ],
+      "disabled": true,
       "custom_css": [],
       "settings": {
         "content_direction": "column",
@@ -273,7 +263,6 @@
     "custom_liquid_PzyxTY",
     "custom_liquid_gxTVPP",
     "main",
-    "custom_liquid_4jmcfg",
     "divider_dJVYfB",
     "custom_liquid_H9kPzt",
     "tsukie_recently_viewed_RrHd7p",
