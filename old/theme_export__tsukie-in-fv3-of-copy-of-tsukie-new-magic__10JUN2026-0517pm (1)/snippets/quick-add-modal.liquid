@@ -1,0 +1,256 @@
+{%- doc -%}
+  Renders a quick view modal that can be triggered from product cards.
+  This modal displays the product-information section in a dialog overlay.
+{%- enddoc -%}
+
+<script
+  src="{{ 'quick-view.js' | asset_url }}"
+  type="module"
+></script>
+
+<quick-view-component
+  id="quick-view-modal"
+  class="quick-view-modal"
+>
+  <dialog
+    ref="dialog"
+    class="quick-view-modal__dialog"
+    scroll-lock
+  >
+    <div class="quick-view-modal__container">
+      <button
+        type="button"
+        class="button button-unstyled quick-view-modal__close"
+        on:click="/closeDialog"
+        aria-label="Close quick view"
+      >
+        <span aria-hidden="true" class="quick-view-modal__close-text">×</span>
+      </button>
+      <div
+        ref="dialogContent"
+        class="quick-view-modal__content"
+      >
+        <!-- Product information will be loaded here -->
+      </div>
+    </div>
+  </dialog>
+</quick-view-component>
+
+{% stylesheet %}
+  .quick-view-modal__dialog {
+    max-width: 90vw;
+    max-height: 90vh;
+    height: auto;
+    width: 1120px;
+    padding: 0;
+    border: var(--style-border-popover);
+    border-radius: var(--style-border-radius-popover, 8px);
+    background: var(--color-background);
+    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.15);
+    overflow: hidden;
+  }
+
+  .quick-view-modal__dialog::backdrop {
+    background: rgba(0, 0, 0, 0.5);
+    backdrop-filter: blur(4px);
+  }
+
+  .quick-view-modal__container {
+    position: relative;
+    width: 100%;
+    height: 100%;
+    overflow-y: auto;
+    overflow-x: hidden;
+  }
+
+  .quick-view-modal__close {
+    position: absolute;
+    top: 1rem;
+    right: 1rem;
+    z-index: 10;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 2.5rem;
+    height: 2.5rem;
+    padding: 0;
+    background: #ffffff;
+    border: none;
+    border-radius: 9999px;
+    cursor: pointer;
+    transition: color 0.2s ease, box-shadow 0.2s ease;
+    color: var(--color-foreground);
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.12);
+  }
+
+  .quick-view-modal__close:focus-visible {
+    outline: none;
+    box-shadow: none;
+  }
+
+  .quick-view-modal__close-text {
+    font-size: 1.5rem;
+    line-height: 1;
+  }
+
+  .quick-view-modal__content {
+    padding: 0;
+    min-height: 460px;
+    max-height: 84vh;
+    overflow-y: auto;
+  }
+
+  /* Ensure the product information section displays properly */
+  .quick-view-modal__content .product-information {
+    max-width: 100%;
+    padding-top: 1.5rem;
+  }
+
+  .quick-view-modal__content .product-information__grid {
+    display: grid;
+    gap: var(--gap, 1.75rem);
+  }
+
+  /* Add top margin to media and details */
+  .quick-view-modal__content .product-information__media,
+  .quick-view-modal__content .product-details {
+    margin-top: 1.25rem;
+  }
+
+  /* Keep the media and details side by side on larger screens */
+  @media screen and (min-width: 750px) {
+    .quick-view-modal__content .product-information__grid {
+      grid-template-columns: 1fr 1fr;
+    }
+  }
+
+  /* Loading state */
+  .quick-view__loading {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    min-height: 400px;
+    font-size: var(--font-size--lg);
+    color: var(--color-foreground);
+  }
+
+  .quick-view__loading::after {
+    content: '';
+    margin-left: 0.5rem;
+    width: 20px;
+    height: 20px;
+    border: 3px solid var(--color-border);
+    border-top-color: var(--color-foreground);
+    border-radius: 50%;
+    animation: quick-view-spin 0.8s linear infinite;
+  }
+
+  @keyframes quick-view-spin {
+    to {
+      transform: rotate(360deg);
+    }
+  }
+
+  /* Error state */
+  .quick-view__error {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    min-height: 400px;
+    font-size: var(--font-size--lg);
+    color: var(--color-error, #d00);
+  }
+
+  /* Animation for dialog opening/closing */
+  .quick-view-modal__dialog[open] {
+    animation: quick-view-fade-in 0.3s ease-out;
+  }
+
+  .quick-view-modal__dialog.dialog-closing {
+    animation: quick-view-fade-out 0.2s ease-in;
+  }
+
+  @keyframes quick-view-fade-in {
+    from {
+      opacity: 0;
+      transform: scale(0.95) translateY(-20px);
+    }
+    to {
+      opacity: 1;
+      transform: scale(1) translateY(0);
+    }
+  }
+
+  @keyframes quick-view-fade-out {
+    from {
+      opacity: 1;
+      transform: scale(1) translateY(0);
+    }
+    to {
+      opacity: 0;
+      transform: scale(0.95) translateY(-20px);
+    }
+  }
+
+  /* Mobile responsive */
+  @media screen and (max-width: 749px) {
+    .quick-view-modal__dialog {
+      max-width: 95vw;
+      max-height: 90vh;
+      width: 100%;
+    }
+
+    .quick-view-modal__content {
+      padding: 0 !important;
+    }
+
+    .quick-view-modal__content .product-information {
+      padding-top: 0 !important;
+      padding-left: 0 !important;
+      padding-right: 0 !important;
+    }
+
+    .quick-view-modal__content .product-information__grid {
+      gap: 0 !important;
+    }
+
+    .quick-view-modal__content .product-information__media {
+      margin-top: 0 !important;
+      padding: 0 !important;
+    }
+
+    .quick-view-modal__content .product-information__media * {
+      padding-left: 0 !important;
+      padding-right: 0 !important;
+    }
+
+    .quick-view-modal__content .product-information__media img {
+      width: 100%;
+      display: block;
+    }
+
+    /* Target all possible gallery containers */
+    .quick-view-modal__content .product-media-gallery,
+    .quick-view-modal__content .product-media-gallery__main,
+    .quick-view-modal__content .product-media-gallery__viewport,
+    .quick-view-modal__content .product__media-wrapper,
+    .quick-view-modal__content .product__media-item {
+      padding: 0 !important;
+      margin-top: 0 !important;
+    }
+
+    .quick-view-modal__content .product-details {
+      padding: 1rem !important;
+      margin-top: 1rem !important;
+    }
+
+    .quick-view-modal__close {
+      top: 0.5rem;
+      right: 0.5rem;
+    }
+
+    .quick-view-modal__close-text {
+      font-size: 1.25rem;
+    }
+  }
+{% endstylesheet %}

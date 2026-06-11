@@ -1,0 +1,1592 @@
+
+<style>
+  /* --- SECTION LAYOUT --- */
+  .video-shop-wrapper {
+    padding-top: {{ section.settings.padding_top }}px;
+    padding-bottom: {{ section.settings.padding_bottom }}px;
+    background: {{ section.settings.bg_color }};
+  }
+  .video-shop-header {
+    font-size: {{ section.settings.header_size }}px;
+    font-weight: {{ section.settings.header_weight }};
+    color: {{ section.settings.header_color }};
+    margin-bottom: 30px;
+    padding: 0 20px;
+    text-align: center;
+  }
+  .video-shop-container {
+    position: relative;
+    overflow: hidden;
+    padding: 0 20px;
+  }
+  .video-shop-scroll {
+    display: flex;
+    gap: 20px;
+    overflow-x: auto;
+    scroll-behavior: smooth;
+    scrollbar-width: none;
+    -ms-overflow-style: none;
+    padding-bottom: 10px;
+    justify-content: flex-start;
+  }
+  .video-shop-scroll::-webkit-scrollbar {
+    display: none;
+  }
+
+  /* --- MAIN GRID CARD STYLES --- */
+  .video-card {
+    min-width: 240px;
+    width: 240px;
+    border-radius: {{ section.settings.card_radius }}px;
+    box-shadow: 0 4px 8px rgba(0,0,0,0.1);
+    overflow: hidden;
+    background: #fff;
+    flex-shrink: 0;
+    transition: transform 0.3s ease;
+    cursor: pointer;
+    display: flex;
+    flex-direction: column;
+  }
+  .video-card:hover {
+    transform: translateY(-5px);
+  }
+  .video-wrapper {
+    position: relative;
+    height: 440px;
+    background: #f2f2f2;
+    overflow: hidden;
+    border-radius: {{ section.settings.card_radius }}px {{ section.settings.card_radius }}px 0 0;
+    flex-shrink: 0;
+  }
+  .video-element {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    border-radius: {{ section.settings.card_radius }}px {{ section.settings.card_radius }}px 0 0;
+  }
+  .video-overlay {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background: rgba(0,0,0,0.3);
+    opacity: 0;
+    transition: opacity 0.3s;
+    pointer-events: none;
+    border-radius: {{ section.settings.card_radius }}px {{ section.settings.card_radius }}px 0 0;
+  }
+  .video-wrapper:hover .video-overlay {
+    opacity: 1;
+  }
+  .play-icon {
+    width: 60px;
+    height: 60px;
+    border-radius: 50%;
+    background: rgba(255,255,255,0.9);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+  .play-icon::after {
+    content: "";
+    width: 0;
+    height: 0;
+    border-left: 20px solid #000;
+    border-top: 12px solid transparent;
+    border-bottom: 12px solid transparent;
+    margin-left: 5px;
+  }
+  .discount-badge {
+    position: absolute;
+    top: 10px;
+    left: 10px;
+    background: {{ section.settings.badge_bg }};
+    color: {{ section.settings.badge_color }};
+    padding: 5px 10px;
+    border-radius: 4px;
+    font-size: 12px;
+    font-weight: 600;
+    z-index: 2;
+  }
+  .view-count {
+    position: absolute;
+    bottom: 10px;
+    left: 10px;
+    background: rgba(255,255,255,0.2);
+    backdrop-filter: blur(10px);
+    -webkit-backdrop-filter: blur(10px);
+    padding: 5px 10px;
+    border-radius: 4px;
+    font-size: 12px;
+    color: #fff;
+    z-index: 2;
+  }
+  .action-buttons {
+    position: absolute;
+    bottom: 10px;
+    right: 10px;
+    display: flex;
+    gap: 8px;
+    z-index: 2;
+  }
+  .action-btn {
+    width: 32px;
+    height: 32px;
+    border-radius: 50%;
+    background: rgba(255,255,255,0.2);
+    backdrop-filter: blur(10px);
+    -webkit-backdrop-filter: blur(10px);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+    transition: background 0.3s;
+    border: none;
+  }
+  .action-btn:hover {
+    background: rgba(255,255,255,0.4);
+  }
+  .action-btn svg {
+    width: 16px;
+    height: 16px;
+    transform: scale(1.3);
+    filter: drop-shadow(0 0 4px rgba(0,0,0,0.5));
+  }
+
+  /* --- PRODUCT INFO STYLES (GRID) --- */
+  .container_sf_product_theme {
+    padding: 15px;
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+  }
+  .lively_sf_dc1_wrapper {
+    display: flex;
+    align-items: flex-start;
+    gap: 12px;
+  }
+  .productImgAndNameWrapper {
+    display: flex;
+    align-items: flex-start;
+  }
+  .imageContainer {
+    border-radius: 2rem;
+    height: 32px;
+    width: 32px;
+    overflow: hidden;
+    flex-shrink: 0;
+  }
+  .vudio_sf_product_image {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    border-radius: 2rem;
+  }
+  .lively_sf_product_name_wrapper {
+    flex: 1;
+  }
+  .productName {
+    color: rgb(0, 0, 0);
+    font-weight: 400;
+    font-size: 13px;
+    line-height: 1.3;
+    display: -webkit-box;
+    -webkit-line-clamp: 2;
+    -webkit-box-orient: vertical;
+    overflow: hidden;
+  }
+  .productPricesWrapper {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    margin-top: 4px;
+    flex-wrap: wrap;
+  }
+  .productSellingPrice {
+    color: #000000;
+    font-style: normal;
+    font-weight: 600;
+    font-size: 14px;
+  }
+  .productOriginalPrice {
+    color: #000000;
+    font-style: normal;
+    text-decoration: line-through;
+    font-size: 12px;
+    opacity: 0.7;
+  }
+  .lively_sf_product_offer_wrapper {
+    margin-top: 4px;
+  }
+  .productOfferPercentage {
+    color: rgb(0, 0, 0);
+    font-weight: 400;
+    font-size: 12px;
+  }
+  .lively_sf_hf_buttonz {
+    width: 100%;
+    padding: 12px;
+    border: none;
+    border-radius: 6px;
+    font-weight: 600;
+    cursor: pointer;
+    transition: all 0.3s;
+    font-size: 14px;
+    text-align: center;
+  }
+  .lively_sf_hf_buttonz.available {
+    background: {{ section.settings.button_bg }};
+    color: {{ section.settings.button_color }};
+  }
+  .lively_sf_hf_buttonz.available:hover {
+    opacity: 0.9;
+    transform: scale(1.02);
+  }
+  .lively_sf_hf_buttonz.out-of-stock {
+    background: #000;
+    color: #fff;
+    cursor: not-allowed;
+    pointer-events: none;
+    font-weight: 800;
+  }
+
+  /* --- REEL VIEWER STYLES (POPUP) --- */
+  .reel-viewer {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100vh;
+    background: rgba(0,0,0,0.6);
+    backdrop-filter: blur(5px);
+    -webkit-backdrop-filter: blur(5px);
+    z-index: 9999;
+    display: none;
+    align-items: center;
+    justify-content: center;
+  }
+  .reel-viewer.active {
+    display: flex;
+  }
+
+  /* REEL CONTAINER */
+  .reel-container {
+    position: relative;
+    width: 100%;
+    height: 100vh;
+    background: transparent;
+    overflow-y: auto;
+    scroll-snap-type: y mandatory;
+    scrollbar-width: none;
+    -ms-overflow-style: none;
+    -webkit-overflow-scrolling: touch;
+  }
+
+  /* Desktop: Configurable Height, Fixed 9:16 Ratio */
+  @media (min-width: 769px) {
+    .reel-container {
+      height: {{ section.settings.desktop_height }}vh;
+      aspect-ratio: 9 / 16;
+      width: auto;
+      min-width: 350px;
+      border-radius: 20px;
+      box-shadow: 0 20px 50px rgba(0,0,0,0.5);
+      overflow: hidden;
+    }
+  }
+
+  .reel-container::-webkit-scrollbar {
+    display: none;
+  }
+
+  .reel-video-wrapper {
+    position: relative;
+    width: 100%;
+    height: 100%;
+    min-height: 100vh;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    scroll-snap-align: start;
+    overflow: hidden;
+    flex-shrink: 0;
+  }
+  @media (min-width: 769px) {
+    .reel-video-wrapper {
+      min-height: unset;
+    }
+  }
+  .reel-video {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    border-radius: 0;
+  }
+  .reel-iframe {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    border: none;
+    z-index: 2;
+    display: block;
+  }
+
+  /* --- Instagram Embed Wrapper --- */
+  .ig-embed-wrapper {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: #111;
+    z-index: 1;
+    overflow: hidden;
+  }
+  .ig-loading {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    background: #111;
+    z-index: 3;
+    gap: 12px;
+    color: rgba(255,255,255,0.7);
+    font-size: 13px;
+    pointer-events: none;
+  }
+  .ig-loading.hidden { display: none; }
+  .ig-spinner {
+    width: 34px;
+    height: 34px;
+    border: 3px solid rgba(255,255,255,0.15);
+    border-top-color: #fff;
+    border-radius: 50%;
+    animation: ig-spin 0.75s linear infinite;
+  }
+  @keyframes ig-spin { to { transform: rotate(360deg); } }
+  .ig-fallback {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    display: none;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    background: linear-gradient(160deg, #405de6 0%, #833ab4 40%, #e1306c 80%, #fd1d1d 100%);
+    z-index: 4;
+    gap: 14px;
+    padding: 24px;
+    text-align: center;
+  }
+  .ig-fallback.visible { display: flex; }
+  .ig-fallback-icon { width: 52px; height: 52px; fill: #fff; flex-shrink: 0; }
+  .ig-fallback-text { color: rgba(255,255,255,0.85); font-size: 13px; line-height: 1.4; }
+  .ig-open-btn {
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    background: #fff;
+    color: #000;
+    border: none;
+    border-radius: 8px;
+    padding: 11px 20px;
+    font-size: 14px;
+    font-weight: 600;
+    cursor: pointer;
+    text-decoration: none;
+    margin-top: 4px;
+  }
+  .ig-open-btn svg { width: 16px; height: 16px; }
+
+  .video-url-badge {
+    position: absolute;
+    top: 10px;
+    right: 10px;
+    background: rgba(193,53,132,0.85);
+    backdrop-filter: blur(6px);
+    -webkit-backdrop-filter: blur(6px);
+    border-radius: 6px;
+    padding: 4px 8px;
+    display: flex;
+    align-items: center;
+    gap: 4px;
+    z-index: 3;
+  }
+  .video-url-badge svg {
+    width: 14px;
+    height: 14px;
+    fill: #fff;
+  }
+  .video-url-badge span {
+    color: #fff;
+    font-size: 11px;
+    font-weight: 600;
+  }
+
+  /* --- TOP CONTROLS --- */
+  .reel-close-btn {
+    position: absolute;
+    top: 20px;
+    right: 20px;
+    width: 36px;
+    height: 36px;
+    border: none;
+    background: #fff;
+    border-radius: 50%;
+    cursor: pointer;
+    z-index: 110;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    box-shadow: 0 2px 5px rgba(0,0,0,0.2);
+  }
+  .reel-close-btn svg {
+    width: 14px;
+    height: 14px;
+    fill: #5A3A31;
+  }
+  
+  .reel-mute-btn {
+    position: absolute;
+    top: 70px;
+    right: 20px;
+    width: 36px;
+    height: 36px;
+    border: none;
+    background: transparent;
+    cursor: pointer;
+    z-index: 110;
+  }
+  .reel-mute-btn svg {
+    width: 100%;
+    height: 100%;
+    stroke: #ffffff;
+    fill: none;
+    filter: drop-shadow(0 0 4px rgba(0,0,0,0.5));
+  }
+  .reel-mute-btn.muted svg {
+    opacity: 0.8;
+  }
+
+  /* --- SIDE CAPSULE (Action Bar) --- */
+  .reel-side-capsule {
+    position: absolute;
+    bottom: 180px;
+    right: 16px;
+    width: 60px;
+    background: rgba(90, 58, 49, {{ section.settings.capsule_opacity | divided_by: 100.0 }});
+    border-radius: {{ section.settings.capsule_radius }}px;
+    padding: 15px 0;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 15px;
+    z-index: 110;
+    box-shadow: 0 4px 12px rgba(0,0,0,0.3);
+    backdrop-filter: blur(4px);
+  }
+  
+  .reel-stat-group {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 0px;
+    width: 100%;
+  }
+  
+  .reel-view-count-num {
+    color: #fff;
+    font-size: 13px;
+    font-weight: 700;
+    line-height: 1.1;
+    text-align: center;
+  }
+
+  .reel-view-label {
+    color: #fff;
+    font-size: 9px;
+    font-weight: 400;
+    text-align: center;
+    line-height: 1.1;
+    margin-top: 1px;
+  }
+  
+  .reel-icon-btn {
+    background: transparent;
+    border: none;
+    cursor: pointer;
+    padding: 0;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 32px;
+    height: 32px;
+  }
+  
+  .reel-icon-btn svg {
+    width: 24px;
+    height: 24px;
+    stroke: #fff;
+    fill: none;
+    stroke-width: 2px;
+  }
+  
+  .reel-stat-number {
+    color: #fff;
+    font-size: 12px;
+    font-weight: 600;
+  }
+  
+  .like-btn.liked svg {
+    fill: #ff0000;
+    stroke: #ff0000;
+  }
+
+  /* --- BOTTOM PRODUCT CARD --- */
+  .reel-product-card {
+    position: absolute;
+    bottom: 20px;
+    left: 16px;
+    right: 16px;
+    background: {{ section.settings.product_card_bg }};
+    border-radius: 12px;
+    padding: 0;
+    z-index: 110;
+    box-shadow: 0 4px 15px rgba(0,0,0,0.2);
+    display: none;
+    overflow: hidden;
+  }
+  .reel-product-card.active {
+    display: block;
+  }
+  
+  .reel-card-header {
+    padding: {{ section.settings.product_card_padding }}px 15px 0 15px;
+  }
+  .reel-product-discount {
+    display: inline-block;
+    font-size: 12px;
+    font-weight: 400;
+    color: #000;
+    background: transparent;
+    padding: 0;
+  }
+
+  .reel-card-body {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    padding: {{ section.settings.product_card_padding | divided_by: 2 }}px 15px {{ section.settings.product_card_padding }}px 15px;
+  }
+  .reel-product-image-wrapper {
+    width: 48px;
+    height: 48px;
+    flex-shrink: 0;
+    border-radius: 50%;
+    overflow: hidden;
+    border: 1px solid rgba(0,0,0,0.1);
+  }
+  .reel-product-image-circle {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+  }
+  .reel-product-details-col {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+  }
+  .reel-product-name-text {
+    font-size: 14px;
+    color: #000;
+    margin: 0 0 4px 0;
+    font-weight: 500;
+    line-height: 1.2;
+    display: -webkit-box;
+    -webkit-line-clamp: 1;
+    -webkit-box-orient: vertical;
+    overflow: hidden;
+  }
+  .reel-product-price-row {
+    display: flex;
+    align-items: center;
+    gap: 6px;
+    flex-wrap: wrap;
+  }
+  .reel-price-selling {
+    font-weight: 700;
+    font-size: 14px;
+    color: #000;
+  }
+  .reel-price-original {
+    text-decoration: line-through;
+    font-size: 13px;
+    color: #555;
+  }
+  .reel-price-off-text {
+    font-size: 13px;
+    color: #000;
+    font-weight: 400;
+  }
+
+  .reel-card-footer {
+    border-top: 1px solid rgba(0,0,0,0.05);
+  }
+  .reel-buy-button-full {
+    width: 100%;
+    background: transparent;
+    color: #000;
+    border: none;
+    padding: {{ section.settings.product_card_padding }}px;
+    font-size: 15px;
+    font-weight: 500;
+    cursor: pointer;
+    text-align: center;
+    transition: background 0.2s;
+  }
+  .reel-buy-button-full:hover {
+    background: rgba(0,0,0,0.03);
+  }
+  .reel-buy-button-full.out-of-stock {
+    opacity: 0.6;
+    cursor: not-allowed;
+  }
+
+  /* --- NAVIGATION ARROWS --- */
+  .reel-nav-arrow {
+    position: absolute;
+    top: 50%;
+    transform: translateY(-50%);
+    width: 60px;
+    height: 60px;
+    border-radius: 50%;
+    background: transparent;
+    display: none;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+    z-index: 110;
+    border: none;
+    transition: transform 0.2s;
+  }
+  .reel-nav-arrow:hover {
+    background: rgba(255,255,255,0.1);
+    transform: translateY(-50%) scale(1.1);
+  }
+  .reel-nav-arrow svg {
+    width: 40px;
+    height: 40px;
+    fill: #3086ff;
+    filter: drop-shadow(0 2px 5px rgba(0,0,0,0.3));
+  }
+  
+  @media (min-width: 769px) {
+    .reel-nav-arrow {
+      display: flex;
+    }
+    .reel-nav-left {
+      left: 40px;
+    }
+    .reel-nav-right {
+      right: 40px;
+    }
+  }
+  
+  @media (max-width: 768px) {
+    .video-wrapper {
+      height: 360px;
+    }
+    .reel-nav-arrow {
+      display: none;
+    }
+  }
+</style>
+
+<div class="video-shop-wrapper">
+  <div class="page-width">
+    {% if section.settings.heading != blank %}
+      <h2 class="video-shop-header">{{ section.settings.heading }}</h2>
+    {% endif %}
+    
+    <div class="video-shop-container">
+      <div class="video-shop-scroll" id="videoShopScroll-{{ section.id }}">
+        {% for block in section.blocks %}
+          {% assign product = block.settings.product %}
+          {% if product %}
+            {% assign discount = 0 %}
+            {% if product.compare_at_price > product.price %}
+              {% assign discount = product.compare_at_price | minus: product.price | times: 100.0 | divided_by: product.compare_at_price %}
+            {% endif %}
+            <div class="video-card" data-video-index="{{ forloop.index0 }}" onclick="openReelViewer({{ forloop.index0 }}, '{{ section.id }}')" {{ block.shopify_attributes }}>
+              <div class="video-wrapper">
+                {% if block.settings.product_video != blank %}
+                  <video
+                    class="video-element"
+                    poster="{% if block.settings.video_poster %}{{ block.settings.video_poster | image_url: width: 400 }}{% else %}{{ product.featured_image | image_url: width: 400 }}{% endif %}"
+                    preload="metadata"
+                    playsinline
+                    webkit-playsinline
+                    loop
+                    muted="muted"
+                    autoplay
+                    data-preview-video
+                  >
+                    {% for source in block.settings.product_video.sources %}
+                      <source src="{{ source.url | default: '' }}" type="{{ source.mime_type }}">
+                    {% endfor %}
+                  </video>
+                  <div class="video-overlay">
+                    <div class="play-icon"></div>
+                  </div>
+                {% elsif block.settings.video_url != blank %}
+                  {% assign _is_ig = false %}
+                  {% if block.settings.video_url contains 'instagram.com' %}
+                    {% assign _is_ig = true %}
+                  {% endif %}
+                  {% if _is_ig %}
+                    <img
+                      src="{% if block.settings.video_poster %}{{ block.settings.video_poster | image_url: width: 400 }}{% else %}{{ product.featured_image | image_url: width: 400 }}{% endif %}"
+                      alt="{{ product.title }}"
+                      class="video-element"
+                      width="400" height="440" loading="lazy"
+                    >
+                    <div class="video-url-badge">
+                      <svg viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path d="M12 2.163c3.204 0 3.584.012 4.85.07 3.252.148 4.771 1.691 4.919 4.919.058 1.265.069 1.645.069 4.849 0 3.205-.012 3.584-.069 4.849-.149 3.225-1.664 4.771-4.919 4.919-1.266.058-1.644.07-4.85.07-3.204 0-3.584-.012-4.849-.07-3.26-.149-4.771-1.699-4.919-4.92-.058-1.265-.07-1.644-.07-4.849 0-3.204.013-3.583.07-4.849.149-3.227 1.664-4.771 4.919-4.919 1.266-.057 1.645-.069 4.849-.069zm0-2.163c-3.259 0-3.667.014-4.947.072-4.358.2-6.78 2.618-6.98 6.98-.059 1.281-.073 1.689-.073 4.948 0 3.259.014 3.668.072 4.948.2 4.358 2.618 6.78 6.98 6.98 1.281.058 1.689.072 4.948.072 3.259 0 3.668-.014 4.948-.072 4.354-.2 6.782-2.618 6.979-6.98.059-1.28.073-1.689.073-4.948 0-3.259-.014-3.667-.072-4.947-.196-4.354-2.617-6.78-6.979-6.98-1.281-.059-1.69-.073-4.949-.073zm0 5.838c-3.403 0-6.162 2.759-6.162 6.162s2.759 6.163 6.162 6.163 6.162-2.759 6.162-6.163c0-3.403-2.759-6.162-6.162-6.162zm0 10.162c-2.209 0-4-1.79-4-4 0-2.209 1.791-4 4-4s4 1.791 4 4c0 2.21-1.791 4-4 4zm6.406-11.845c-.796 0-1.441.645-1.441 1.44s.645 1.44 1.441 1.44c.795 0 1.439-.645 1.439-1.44s-.644-1.44-1.439-1.44z"/></svg>
+                      <span>Instagram</span>
+                    </div>
+                    <div class="video-overlay">
+                      <div class="play-icon"></div>
+                    </div>
+                  {% else %}
+                    <video
+                      class="video-element"
+                      poster="{% if block.settings.video_poster %}{{ block.settings.video_poster | image_url: width: 400 }}{% else %}{{ product.featured_image | image_url: width: 400 }}{% endif %}"
+                      preload="metadata"
+                      playsinline
+                      webkit-playsinline
+                      loop
+                      muted="muted"
+                      autoplay
+                      data-preview-video
+                    >
+                      <source src="{{ block.settings.video_url }}">
+                    </video>
+                    <div class="video-overlay">
+                      <div class="play-icon"></div>
+                    </div>
+                  {% endif %}
+                {% else %}
+                  <img src="{{ product.featured_image | image_url: width: 400 }}" alt="{{ product.title }}" class="video-element" width="400" height="440" loading="lazy">
+                {% endif %}
+                
+                {% if discount > 0 %}
+                  <div class="discount-badge">{{ discount | round }}% discount</div>
+                {% endif %}
+                
+                {% if block.settings.view_count != blank %}
+                  <div class="view-count">{{ block.settings.view_count }} Views</div>
+                {% endif %}
+                
+                <div class="action-buttons">
+                  <button class="action-btn like-btn" data-product-id="{{ product.id }}" type="button" onclick="event.stopPropagation(); toggleLike(this);">
+                    <svg viewBox="0 0 15 16" fill="none" stroke="#fff" stroke-width="1" xmlns="http://www.w3.org/2000/svg">
+                      <path d="M10.3128 2.31787C9.11857 2.31787 8.07301 2.8314 7.42127 3.69942C6.76953 2.8314 5.72396 2.31787 4.52978 2.31787C3.57919 2.31894 2.66784 2.69704 1.99567 3.36921C1.3235 4.04138 0.945407 4.95272 0.944336 5.90331C0.944336 9.9514 6.94648 13.228 7.20209 13.3634C7.26946 13.3996 7.34477 13.4186 7.42127 13.4186C7.49777 13.4186 7.57307 13.3996 7.64044 13.3634C7.89605 13.228 13.8982 9.9514 13.8982 5.90331C13.8971 4.95272 13.519 4.04138 12.8469 3.36921C12.1747 2.69704 11.2633 2.31894 10.3128 2.31787Z" fill="none"/>
+                    </svg>
+                  </button>
+                  <button class="action-btn share-btn" 
+                    data-share-url="{{ shop.url }}{{ product.url }}" 
+                    data-share-title="{{ product.title | escape }}"
+                    type="button" 
+                    onclick="event.stopPropagation(); shareReelFromElement(this, '{{ section.id }}');">
+                    <svg viewBox="0 0 16 16" fill="none" stroke="#fff" stroke-width="1">
+                      <path d="M14.0074 2.12578C13.8911 2.0095 13.7458 1.92634 13.5866 1.88487C13.4274 1.8434 13.2601 1.84511 13.1018 1.88983H13.0931L1.99328 5.25784C1.81259 5.3098 1.65202 5.41557 1.53295 5.56107C1.41388 5.70656 1.34196 5.88488 1.32676 6.07228C1.31156 6.25967 1.35381 6.44725 1.44788 6.61003C1.54195 6.77281 1.68338 6.90308 1.85333 6.98348L6.80471 9.32847L9.14971 14.2799C9.22374 14.4384 9.3416 14.5725 9.48936 14.6663C9.63712 14.76 9.80862 14.8095 9.98361 14.809C10.0102 14.809 10.0368 14.8078 10.0634 14.8055C10.2501 14.7904 10.4278 14.7185 10.5725 14.5996C10.7172 14.4806 10.8221 14.3202 10.873 14.1399L14.2387 3.04007C14.2387 3.03717 14.2387 3.03428 14.2387 3.03139C14.284 2.87349 14.2865 2.70638 14.2458 2.54723C14.2052 2.38807 14.1229 2.24261 14.0074 2.12578ZM9.98882 13.875L9.98592 13.8831L7.70975 9.07807L10.4416 6.34561C10.5247 6.25815 10.5704 6.14168 10.5688 6.02104C10.5673 5.9004 10.5187 5.78514 10.4334 5.69983C10.348 5.61452 10.2328 5.56591 10.1121 5.56436C9.9915 5.56282 9.87504 5.60846 9.78757 5.69156L7.05511 8.42344L2.24946 6.14726H2.25756L13.3528 2.78041L9.98882 13.875Z" fill="white"/>
+                    </svg>
+                  </button>
+                </div>
+              </div>
+              
+              <div class="container_sf_product_theme">
+                <div class="lively_sf_dc1_wrapper">
+                  <div class="productImgAndNameWrapper">
+                    <div class="imageContainer imageContainerBreakpoint">
+                      <img class="vudio_sf_product_image" src="{{ product.featured_image | image_url: width: 64 }}" alt="{{ product.title }}" width="64" height="64" loading="lazy">
+                    </div>
+                  </div>
+        
+                  <div>
+                    <div class="lively_sf_product_name_wrapper">
+                      <div class="productName productNameBreakpoint">{{ product.title }}</div>
+                    </div>
+                    <div class="productPricesWrapper">
+                      <div class="productSellingPrice">{{ product.price | money }}</div>
+                      {% if product.compare_at_price > product.price %}
+                        <div class="productOriginalPrice">{{ product.compare_at_price | money }}</div>
+                      {% endif %}
+                    </div>
+                    {% if product.compare_at_price > product.price %}
+                      <div class="lively_sf_product_offer_wrapper">
+                        <div class="productOfferPercentage">{{ discount | round }}% Off</div>
+                      </div>
+                    {% endif %}
+                  </div>
+                </div>
+                <button
+                  class="lively_sf_hf_buttonz {% if product.available %}available{% else %}out-of-stock{% endif %}"
+                  onclick="event.stopPropagation(); {% if product.available %}window.location.href='{{ product.url }}'{% endif %}"
+                  type="button"
+                >
+                  {% if product.available %}
+                    Buy Now
+                  {% else %}
+                    Out Of Stock
+                  {% endif %}
+                </button>
+              </div>
+            </div>
+          {% endif %}
+        {% endfor %}
+      </div>
+    </div>
+  </div>
+</div>
+
+<div class="reel-viewer" id="reelViewer-{{ section.id }}">
+  <button class="reel-nav-arrow reel-nav-left" onclick="prevSlide('{{ section.id }}')" type="button">
+    <svg viewBox="0 0 24 24">
+      <path d="M15.41 7.41L14 6l-6 6 6 6 1.41-1.41L10.83 12z"/>
+    </svg>
+  </button>
+  
+  <div class="reel-container" id="reelContainer-{{ section.id }}">
+  </div>
+  
+  <button class="reel-nav-arrow reel-nav-right" onclick="nextSlide('{{ section.id }}')" type="button">
+    <svg viewBox="0 0 24 24">
+      <path d="M10 6L8.59 7.41 13.17 12l-4.58 4.59L10 18l6-6z"/>
+    </svg>
+  </button>
+</div>
+
+<script>
+window.videoShopData = window.videoShopData || {};
+window.videoShopData['{{ section.id }}'] = {
+  videos: [
+    {% for block in section.blocks %}
+      {% assign product = block.settings.product %}
+      {% if product %}
+        {% assign discount = 0 %}
+        {% if product.compare_at_price > product.price %}
+          {% assign discount = product.compare_at_price | minus: product.price | times: 100.0 | divided_by: product.compare_at_price %}
+        {% endif %}
+        {
+          videoSources: [
+            {% if block.settings.product_video != blank %}
+              {% for source in block.settings.product_video.sources %}
+                { url: "{{ source.url }}", type: "{{ source.mime_type }}" }{% unless forloop.last %},{% endunless %}
+              {% endfor %}
+            {% endif %}
+          ],
+          videoUrl: {{ block.settings.video_url | default: '' | json }},
+          poster: "{% if block.settings.video_poster %}{{ block.settings.video_poster | image_url: width: 800 }}{% else %}{{ product.featured_image | image_url: width: 800 }}{% endif %}",
+          productId: "{{ product.id }}",
+          productTitle: {{ product.title | json }},
+          productUrl: "{{ shop.url }}{{ product.url }}",
+          productImage: "{{ product.featured_image | image_url: width: 100 }}",
+          price: "{{ product.price | money }}",
+          comparePrice: "{% if product.compare_at_price %}{{ product.compare_at_price | money }}{% endif %}",
+          discount: {{ discount | round }},
+          available: {{ product.available | json }},
+          viewCount: "{{ block.settings.view_count | default: '0' }}",
+          likeCount: 1,
+          shareCount: 0
+        }{% unless forloop.last %},{% endunless %}
+      {% endif %}
+    {% endfor %}
+  ],
+  currentIndex: 0,
+  isMuted: true
+};
+
+const speakerOnIcon = `<svg class="sound-icon" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+  <polygon points="11 5 6 9 2 9 2 15 6 15 11 19 11 5"></polygon>
+  <path d="M19.07 4.93a10 10 0 0 1 0 14.14M15.54 8.46a5 5 0 0 1 0 7.07"></path>
+</svg>`;
+const speakerOffIcon = `<svg class="sound-icon" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+  <polygon points="11 5 6 9 2 9 2 15 6 15 11 19 11 5"></polygon>
+  <line x1="23" y1="9" x2="17" y2="15"></line>
+  <line x1="17" y1="9" x2="23" y2="15"></line>
+</svg>`;
+
+function scrollVideoShop(sectionId, direction) {
+  const scrollContainer = document.getElementById(`videoShopScroll-${sectionId}`);
+  if (!scrollContainer) return;
+  const cardWidth = scrollContainer.querySelector('.video-card')?.offsetWidth || 240;
+  const scrollAmount = (cardWidth + 20) * 2;
+  if (direction === 'left') {
+    scrollContainer.scrollBy({ left: -scrollAmount, behavior: 'smooth' });
+  } else {
+    scrollContainer.scrollBy({ left: scrollAmount, behavior: 'smooth' });
+  }
+}
+
+function openReelViewer(startIndex, sectionId) {
+  const viewer = document.getElementById(`reelViewer-${sectionId}`);
+  const container = document.getElementById(`reelContainer-${sectionId}`);
+  const data = window.videoShopData[sectionId];
+  
+  if (!viewer || !container || !data) return;
+  pausePreviewVideos(sectionId);
+  data.currentIndex = startIndex;
+  container.innerHTML = '';
+
+  data.videos.forEach((videoData, index) => {
+    const slide = createReelSlide(videoData, index, sectionId);
+    container.appendChild(slide);
+    const muteBtn = slide.querySelector('.reel-mute-btn');
+    if (muteBtn) {
+      muteBtn.innerHTML = data.isMuted ? speakerOffIcon : speakerOnIcon;
+      muteBtn.classList.toggle('muted', data.isMuted);
+    }
+    // Start load-timeout for Instagram slides
+    if (slide.dataset.videoType === 'instagram') {
+      setupIgEmbedTimeout(index);
+    }
+  });
+
+  viewer.classList.add('active');
+  document.body.style.overflow = 'hidden';
+  scrollToSlide(sectionId, data.currentIndex, 'auto');
+  playCurrentVideo(sectionId);
+  attachScrollListener(sectionId);
+}
+
+function createReelSlide(videoData, index, sectionId) {
+  const slide = document.createElement('div');
+  slide.className = 'reel-video-wrapper';
+  slide.dataset.index = index;
+
+  let videoElement = '';
+
+  if (videoData.videoSources && videoData.videoSources.length > 0) {
+    // --- Uploaded Video File ---
+    videoElement = `
+      <video class="reel-video" data-index="${index}" poster="${videoData.poster}" preload="auto" playsinline loop onclick="togglePlay(this)">
+        ${videoData.videoSources.map(src => `<source src="${src.url}" type="${src.type}">`).join('')}
+      </video>
+    `;
+  } else if (videoData.videoUrl) {
+    const rawUrl = videoData.videoUrl.trim();
+
+    if (rawUrl.includes('instagram.com')) {
+      // --- ✅ FIXED: Instagram Direct iframe Embed ---
+      // Strip query strings, anchors, trailing slashes, then append /embed/captioned/
+      const cleanUrl = rawUrl.split('?')[0].split('#')[0].replace(/\/+$/, '');
+      const embedUrl = cleanUrl + '/embed/captioned/';
+
+      slide.dataset.videoType = 'instagram';
+      slide.dataset.igUrl = cleanUrl;
+
+      videoElement = `
+        <div class="ig-embed-wrapper">
+          <!-- Loading spinner: visible until iframe fires onload -->
+          <div class="ig-loading" id="ig-load-${index}">
+            <div class="ig-spinner"></div>
+            <span>Loading Instagram...</span>
+          </div>
+
+          <!-- Fallback: shown if iframe fails or times out -->
+          <div class="ig-fallback" id="ig-fallback-${index}">
+            <svg class="ig-fallback-icon" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+              <path d="M12 2.163c3.204 0 3.584.012 4.85.07 3.252.148 4.771 1.691 4.919 4.919.058 1.265.069 1.645.069 4.849 0 3.205-.012 3.584-.069 4.849-.149 3.225-1.664 4.771-4.919 4.919-1.266.058-1.644.07-4.85.07-3.204 0-3.584-.012-4.849-.07-3.26-.149-4.771-1.699-4.919-4.92-.058-1.265-.07-1.644-.07-4.849 0-3.204.013-3.583.07-4.849.149-3.227 1.664-4.771 4.919-4.919 1.266-.057 1.645-.069 4.849-.069zm0-2.163c-3.259 0-3.667.014-4.947.072-4.358.2-6.78 2.618-6.98 6.98-.059 1.281-.073 1.689-.073 4.948 0 3.259.014 3.668.072 4.948.2 4.358 2.618 6.78 6.98 6.98 1.281.058 1.689.072 4.948.072 3.259 0 3.668-.014 4.948-.072 4.354-.2 6.782-2.618 6.979-6.98.059-1.28.073-1.689.073-4.948 0-3.259-.014-3.667-.072-4.947-.196-4.354-2.617-6.78-6.979-6.98-1.281-.059-1.69-.073-4.949-.073zm0 5.838c-3.403 0-6.162 2.759-6.162 6.162s2.759 6.163 6.162 6.163 6.162-2.759 6.162-6.163c0-3.403-2.759-6.162-6.162-6.162zm0 10.162c-2.209 0-4-1.79-4-4 0-2.209 1.791-4 4-4s4 1.791 4 4c0 2.21-1.791 4-4 4zm6.406-11.845c-.796 0-1.441.645-1.441 1.44s.645 1.44 1.441 1.44c.795 0 1.439-.645 1.439-1.44s-.644-1.44-1.439-1.44z"/>
+            </svg>
+            <div class="ig-fallback-text">Could not load Instagram content.<br>View it directly on Instagram.</div>
+            <a class="ig-open-btn" href="${cleanUrl}" target="_blank" rel="noopener noreferrer">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                <path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6"></path>
+                <polyline points="15 3 21 3 21 9"></polyline>
+                <line x1="10" y1="14" x2="21" y2="3"></line>
+              </svg>
+              Open on Instagram
+            </a>
+          </div>
+
+          <!-- Direct embed iframe - no embed.js required -->
+          <iframe
+            id="ig-iframe-${index}"
+            class="reel-iframe"
+            src="${embedUrl}"
+            frameborder="0"
+            scrolling="no"
+            allowtransparency="true"
+            allowfullscreen="true"
+            onload="(function(){
+              var loader = document.getElementById('ig-load-${index}');
+              if (loader) loader.classList.add('hidden');
+            })()"
+            onerror="(function(){
+              var loader = document.getElementById('ig-load-${index}');
+              var fallback = document.getElementById('ig-fallback-${index}');
+              if (loader) loader.classList.add('hidden');
+              if (fallback) fallback.classList.add('visible');
+            })()"
+          ></iframe>
+        </div>
+      `;
+
+    } else {
+      // --- Direct MP4 / External Video URL ---
+      videoElement = `
+        <video class="reel-video" data-index="${index}" poster="${videoData.poster}" preload="auto" playsinline loop onclick="togglePlay(this)">
+          <source src="${rawUrl}">
+        </video>
+      `;
+    }
+  } else {
+    // --- Fallback: Product image only ---
+    videoElement = `<img src="${videoData.poster}" alt="${videoData.productTitle}" class="reel-video" />`;
+  }
+
+  const discountBadge = videoData.discount > 0
+    ? `<div class="reel-product-discount">${videoData.discount}% discount</div>`
+    : '';
+  const comparePrice = videoData.comparePrice
+    ? `<div class="reel-price-original">${videoData.comparePrice}</div>`
+    : '';
+  const offText = videoData.discount > 0
+    ? `<div class="reel-price-off-text">${videoData.discount}% Off</div>`
+    : '';
+  const buyButtonClass = videoData.available ? '' : 'out-of-stock';
+  const buyButtonText = videoData.available ? 'Buy Now' : 'Out Of Stock';
+  const viewCountText = videoData.viewCount ? `${videoData.viewCount}` : '0';
+  const isInstagram = slide.dataset.videoType === 'instagram';
+
+  slide.innerHTML = `
+    ${videoElement}
+
+    <button class="reel-close-btn" onclick="closeReelViewer('${sectionId}')" type="button">
+      <svg viewBox="0 0 32 32"><path d="M18.8,16l5.5-5.5c0.8-0.8,0.8-2,0-2.8l0,0C23.5,6.9,22.3,6.9,21.5,7.7L16,13.2l-5.5-5.5C9.7,6.9,8.5,6.9,7.7,7.7l0,0C6.9,8.5,6.9,9.7,7.7,10.5L13.2,16l-5.5,5.5c-0.8,0.8-0.8,2,0,2.8l0,0c0.8,0.8,2,0.8,2.8,0L16,18.8l5.5,5.5c0.8,0.8,2,0.8,2.8,0l0,0c0.8-0.8,0.8-2,0-2.8L18.8,16z"/></svg>
+    </button>
+
+    ${isInstagram ? '' : `<button class="reel-mute-btn" onclick="toggleMute('${sectionId}')" type="button" title="Mute/Unmute"></button>`}
+
+    <div class="reel-side-capsule">
+      <div class="reel-stat-group">
+        <div class="reel-view-count-num">${viewCountText}</div>
+        <div class="reel-view-label">Views</div>
+      </div>
+      <div class="reel-stat-group">
+        <button class="reel-icon-btn like-btn" onclick="toggleReelLike(this, '${videoData.productId}')" type="button">
+          <svg viewBox="0 0 24 24" fill="none" stroke="#fff" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+            <path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"></path>
+          </svg>
+        </button>
+        <div class="reel-stat-number">1</div>
+      </div>
+      <div class="reel-stat-group">
+        <button class="reel-icon-btn"
+          data-share-url="${videoData.productUrl}"
+          data-share-title="${videoData.productTitle.replace(/"/g, '&quot;')}"
+          onclick="shareReelFromElement(this, '${sectionId}')" type="button">
+          <svg viewBox="0 0 24 24" fill="none" stroke="#fff" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+            <line x1="22" y1="2" x2="11" y2="13"></line>
+            <polygon points="22 2 15 22 11 13 2 9 22 2"></polygon>
+          </svg>
+        </button>
+        <div class="reel-stat-number">0</div>
+      </div>
+    </div>
+
+    <div class="reel-product-card" id="reel-product-card-${index}">
+      <div class="reel-card-header">
+        ${discountBadge}
+      </div>
+      <div class="reel-card-body">
+        <div class="reel-product-image-wrapper">
+          <img class="reel-product-image-circle" src="${videoData.productImage}" alt="${videoData.productTitle}">
+        </div>
+        <div class="reel-product-details-col">
+          <div class="reel-product-name-text">${videoData.productTitle}</div>
+          <div class="reel-product-price-row">
+            <div class="reel-price-selling">${videoData.price}</div>
+            ${comparePrice}
+            ${offText}
+          </div>
+        </div>
+      </div>
+      <div class="reel-card-footer">
+        <button
+          class="reel-buy-button-full ${buyButtonClass}"
+          onclick="if(${videoData.available}) window.location.href='${videoData.productUrl}'"
+          type="button"
+        >
+          ${buyButtonText}
+        </button>
+      </div>
+    </div>
+  `;
+
+  return slide;
+}
+
+function closeReelViewer(sectionId) {
+  const viewer = document.getElementById(`reelViewer-${sectionId}`);
+  if (!viewer) return;
+  viewer.classList.remove('active');
+  document.body.style.overflow = '';
+  pauseAllVideos(sectionId);
+  resumePreviewVideos(sectionId);
+}
+
+function pauseAllVideos(sectionId) {
+  const container = document.getElementById(`reelContainer-${sectionId}`);
+  if (container) {
+    container.querySelectorAll('video').forEach(video => video.pause());
+  }
+}
+
+function playCurrentVideo(sectionId) {
+  pauseAllVideos(sectionId);
+  const data = window.videoShopData[sectionId];
+  const container = document.getElementById(`reelContainer-${sectionId}`);
+  const currentSlide = container.querySelector(`.reel-video-wrapper[data-index="${data.currentIndex}"]`);
+  
+  if (currentSlide) {
+    const isInstagram = currentSlide.dataset.videoType === 'instagram';
+    if (!isInstagram) {
+      const video = currentSlide.querySelector('video');
+      if (video) {
+        video.play().catch(e => console.error("Video play failed:", e));
+        video.muted = data.isMuted;
+        const muteBtn = currentSlide.querySelector('.reel-mute-btn');
+        if (muteBtn) {
+          muteBtn.innerHTML = data.isMuted ? speakerOffIcon : speakerOnIcon;
+          muteBtn.classList.toggle('muted', data.isMuted);
+        }
+      }
+    }
+    const productCard = document.getElementById(`reel-product-card-${data.currentIndex}`);
+    if (productCard) {
+      productCard.classList.add('active');
+    }
+  }
+}
+
+function scrollToSlide(sectionId, index, behavior = 'smooth') {
+  const container = document.getElementById(`reelContainer-${sectionId}`);
+  const slideHeight = container.clientHeight;
+  container.scrollTo({ top: index * slideHeight, behavior: behavior });
+  window.videoShopData[sectionId].currentIndex = index;
+}
+
+function nextSlide(sectionId) {
+  const data = window.videoShopData[sectionId];
+  const newIndex = (data.currentIndex + 1) % data.videos.length;
+  scrollToSlide(sectionId, newIndex);
+  playCurrentVideo(sectionId);
+}
+
+function prevSlide(sectionId) {
+  const data = window.videoShopData[sectionId];
+  const newIndex = (data.currentIndex - 1 + data.videos.length) % data.videos.length;
+  scrollToSlide(sectionId, newIndex);
+  playCurrentVideo(sectionId);
+}
+
+function togglePlay(videoElement) {
+  if (videoElement.paused) {
+    videoElement.play();
+  } else {
+    videoElement.pause();
+  }
+}
+
+function toggleLike(button) {
+  button.classList.toggle('liked');
+}
+
+function toggleReelLike(button, productId) {
+  button.classList.toggle('liked');
+  const cardButton = document.querySelector(`.video-card .like-btn[data-product-id="${productId}"]`);
+  if (cardButton) {
+    cardButton.classList.toggle('liked', button.classList.contains('liked'));
+  }
+}
+
+function shareReelFromElement(buttonElement, sectionId) {
+  const url = buttonElement.getAttribute('data-share-url');
+  const title = buttonElement.getAttribute('data-share-title');
+  shareReel(url, title, sectionId);
+}
+
+function shareReel(url, title, sectionId) {
+  if (navigator.share) {
+    navigator.share({
+      title: title,
+      text: `Check out this ${title}`,
+      url: url
+    }).catch((error) => console.log('Error sharing', error));
+  } else {
+    // Fallback for desktop browsers
+    prompt('Copy this link to share:', url);
+  }
+}
+
+function toggleMute(sectionId) {
+  const data = window.videoShopData[sectionId];
+  data.isMuted = !data.isMuted;
+  const container = document.getElementById(`reelContainer-${sectionId}`);
+  const currentSlide = container.querySelector(`.reel-video-wrapper[data-index="${data.currentIndex}"]`);
+  
+  if (currentSlide) {
+    const video = currentSlide.querySelector('video');
+    if (video) {
+      video.muted = data.isMuted;
+    }
+    const muteBtn = currentSlide.querySelector('.reel-mute-btn');
+    if (muteBtn) {
+      muteBtn.innerHTML = data.isMuted ? speakerOffIcon : speakerOnIcon;
+      muteBtn.classList.toggle('muted', data.isMuted);
+    }
+  }
+}
+
+function debounce(func, wait) {
+  let timeout;
+  return function executedFunction(...args) {
+    const later = () => {
+      clearTimeout(timeout);
+      func(...args);
+    };
+    clearTimeout(timeout);
+    timeout = setTimeout(later, wait);
+  };
+}
+
+function attachScrollListener(sectionId) {
+  const container = document.getElementById(`reelContainer-${sectionId}`);
+  const scrollHandler = debounce(() => {
+    const slideHeight = container.clientHeight;
+    const scrollTop = container.scrollTop;
+    const newIndex = Math.round(scrollTop / slideHeight);
+    const data = window.videoShopData[sectionId];
+    if (newIndex !== data.currentIndex && newIndex >= 0 && newIndex < data.videos.length) {
+      data.currentIndex = newIndex;
+      playCurrentVideo(sectionId);
+    }
+  }, 150);
+  container.removeEventListener('scroll', scrollHandler);
+  container.addEventListener('scroll', scrollHandler);
+}
+
+// ✅ FIXED: Fallback timeout now correctly references DOM elements created in createReelSlide
+function setupIgEmbedTimeout(index) {
+  setTimeout(function() {
+    var loader = document.getElementById('ig-load-' + index);
+    var fallback = document.getElementById('ig-fallback-' + index);
+    // If loader is still visible after 8 seconds, the iframe likely failed silently
+    if (loader && !loader.classList.contains('hidden')) {
+      loader.classList.add('hidden');
+      if (fallback) fallback.classList.add('visible');
+    }
+  }, 8000);
+}
+
+function getPreviewVideos(sectionId) {
+  const scrollContainer = document.getElementById(`videoShopScroll-${sectionId}`);
+  if (!scrollContainer) return [];
+  return Array.from(scrollContainer.querySelectorAll('video[data-preview-video]'));
+}
+
+function forcePlayPreviewVideo(video) {
+  if (!video) return;
+  video.muted = true;
+  video.defaultMuted = true;
+  const playPromise = video.play();
+  if (playPromise && typeof playPromise.catch === 'function') {
+    playPromise.catch(() => {});
+  }
+}
+
+function pausePreviewVideos(sectionId) {
+  getPreviewVideos(sectionId).forEach((video) => video.pause());
+}
+
+function resumePreviewVideos(sectionId) {
+  getPreviewVideos(sectionId).forEach((video) => {
+    const bounds = video.getBoundingClientRect();
+    const isInViewport = bounds.bottom > 0 && bounds.top < window.innerHeight;
+    if (isInViewport) forcePlayPreviewVideo(video);
+  });
+}
+
+function initPreviewAutoplay(sectionId) {
+  const previewVideos = getPreviewVideos(sectionId);
+  if (!previewVideos.length) return;
+
+  window.videoShopPreviewObservers = window.videoShopPreviewObservers || {};
+  if (window.videoShopPreviewObservers[sectionId]) {
+    window.videoShopPreviewObservers[sectionId].disconnect();
+  }
+
+  const observerOptions = {
+    root: null,
+    threshold: 0
+  };
+
+  const observer = new IntersectionObserver((entries) => {
+    entries.forEach((entry) => {
+      if (entry.isIntersecting) {
+        forcePlayPreviewVideo(entry.target);
+      } else {
+        entry.target.pause();
+      }
+    });
+  }, observerOptions);
+
+  previewVideos.forEach((video) => {
+    video.muted = true;
+    video.defaultMuted = true;
+    
+    // Force a play attempt right away
+    forcePlayPreviewVideo(video);
+    
+    observer.observe(video);
+  });
+
+  window.videoShopPreviewObservers[sectionId] = observer;
+}
+
+document.addEventListener('DOMContentLoaded', function() {
+  initPreviewAutoplay('{{ section.id }}');
+});
+
+document.addEventListener('shopify:section:load', function(event) {
+  if (!event.detail || event.detail.sectionId !== '{{ section.id }}') return;
+  initPreviewAutoplay('{{ section.id }}');
+});
+</script>
+
+{% schema %}
+{
+  "name": "Video Shopping",
+  "settings": [
+    {
+      "type": "text",
+      "id": "heading",
+      "label": "Heading",
+      "default": "Watch and Shop"
+    },
+    {
+      "type": "range",
+      "id": "header_size",
+      "label": "Header Font Size",
+      "min": 16,
+      "max": 40,
+      "step": 1,
+      "default": 23
+    },
+    {
+      "type": "range",
+      "id": "header_weight",
+      "label": "Header Font Weight",
+      "min": 300,
+      "max": 800,
+      "step": 100,
+      "default": 400
+    },
+    {
+      "type": "color",
+      "id": "header_color",
+      "label": "Header Color",
+      "default": "#000000"
+    },
+    {
+      "type": "color",
+      "id": "bg_color",
+      "label": "Background Color",
+      "default": "#ffffff"
+    },
+    {
+      "type": "header",
+      "content": "Section Padding"
+    },
+    {
+      "type": "range",
+      "id": "padding_top",
+      "label": "Top Padding",
+      "min": 0,
+      "max": 100,
+      "step": 4,
+      "unit": "px",
+      "default": 40
+    },
+    {
+      "type": "range",
+      "id": "padding_bottom",
+      "label": "Bottom Padding",
+      "min": 0,
+      "max": 100,
+      "step": 4,
+      "unit": "px",
+      "default": 40
+    },
+    {
+      "type": "header",
+      "content": "Card Styling"
+    },
+    {
+      "type": "range",
+      "id": "card_radius",
+      "label": "Card Roundness",
+      "min": 0,
+      "max": 40,
+      "step": 2,
+      "unit": "px",
+      "default": 8
+    },
+    {
+      "type": "color",
+      "id": "badge_bg",
+      "label": "Discount Badge Background",
+      "default": "#ECD4D4"
+    },
+    {
+      "type": "color",
+      "id": "badge_color",
+      "label": "Discount Badge Text",
+      "default": "#000000"
+    },
+    {
+      "type": "color",
+      "id": "button_bg",
+      "label": "Button Background",
+      "default": "#ECD4D4"
+    },
+    {
+      "type": "color",
+      "id": "button_color",
+      "label": "Button Text Color",
+      "default": "#000000"
+    },
+    {
+      "type": "header",
+      "content": "Action Bar Styling (Popup)"
+    },
+    {
+      "type": "range",
+      "id": "capsule_radius",
+      "label": "Action Bar Roundness",
+      "min": 0,
+      "max": 40,
+      "step": 2,
+      "unit": "px",
+      "default": 30
+    },
+    {
+      "type": "range",
+      "id": "capsule_opacity",
+      "label": "Action Bar Opacity",
+      "min": 0,
+      "max": 100,
+      "step": 5,
+      "unit": "%",
+      "default": 60,
+      "info": "0 is fully transparent, 100 is solid color."
+    },
+    {
+      "type": "header",
+      "content": "Product Card Styling (Popup)"
+    },
+    {
+      "type": "range",
+      "id": "product_card_padding",
+      "label": "Product Card Vertical Spacing",
+      "min": 0,
+      "max": 30,
+      "step": 1,
+      "unit": "px",
+      "default": 8,
+      "info": "Adjusts the height/compactness of the product popup card."
+    },
+    {
+      "type": "color",
+      "id": "product_card_bg",
+      "label": "Product Card Background Color",
+      "default": "#EADCDC"
+    },
+    {
+      "type": "header",
+      "content": "Desktop Player Styling"
+    },
+    {
+      "type": "range",
+      "id": "desktop_height",
+      "label": "Desktop Card Height (VH)",
+      "min": 50,
+      "max": 95,
+      "step": 5,
+      "unit": "vh",
+      "default": 85,
+      "info": "Adjusts the height relative to the screen size."
+    }
+  ],
+  "blocks": [
+    {
+      "type": "product_video",
+      "name": "Product Video",
+      "settings": [
+        {
+          "type": "product",
+          "id": "product",
+          "label": "Product"
+        },
+        {
+          "type": "video",
+          "id": "product_video",
+          "label": "Upload Video",
+          "info": "Upload a video file (MP4 recommended). Max 500MB."
+        },
+        {
+          "type": "text",
+          "id": "video_url",
+          "label": "Video URL",
+          "info": "Paste an Instagram post or reel URL (e.g. https://www.instagram.com/reel/ABC123/) or a direct MP4 link. Used only when no video file is uploaded above."
+        },
+        {
+          "type": "image_picker",
+          "id": "video_poster",
+          "label": "Video Poster Image (Optional)",
+          "info": "Thumbnail shown before video plays. If not set, product image will be used."
+        },
+        {
+          "type": "text",
+          "id": "view_count",
+          "label": "View Count",
+          "default": "0",
+          "info": "Display view count (e.g., '1.2K' or '500')"
+        }
+      ]
+    }
+  ],
+  "presets": [
+    {
+      "name": "Video Shopping",
+      "category": "Product"
+    }
+  ]
+}
+{% endschema %}

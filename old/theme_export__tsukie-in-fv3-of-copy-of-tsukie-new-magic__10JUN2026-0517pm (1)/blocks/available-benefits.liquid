@@ -1,0 +1,488 @@
+{%- style -%}
+  .available-benefits--{{ block.id }} {
+    margin-top: {{ block.settings.margin_top }}px;
+    margin-bottom: {{ block.settings.margin_bottom }}px;
+    width: 100%;
+    border: {{ block.settings.block_border_thickness }}px solid {{ block.settings.block_border_color }};
+    padding: {{ block.settings.block_padding }}px;
+    border-radius: {{ block.settings.block_border_radius }}px;
+  }
+  .available-benefits__header--{{ block.id }} {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 1.2rem;
+  }
+  .available-benefits__title--{{ block.id }} {
+    font-size: {{ block.settings.title_size }}px;
+    color: {{ block.settings.title_color }};
+    letter-spacing: 0.5px;
+    margin-bottom: 0;
+    font-weight: {{ block.settings.title_weight }};
+  }
+  .available-benefits__nav--{{ block.id }} {
+    display: flex;
+    gap: 0.5rem;
+  }
+  .available-benefits__arrow--{{ block.id }} {
+    background: transparent;
+    border: none;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+    color: {{ block.settings.title_color }};
+    padding: 4px;
+    transition: opacity 0.2s ease;
+  }
+  .available-benefits__arrow--{{ block.id }}:hover {
+    opacity: 0.6;
+  }
+  .available-benefits__grid--{{ block.id }} {
+    display: flex;
+    flex-wrap: nowrap;
+    overflow-x: auto;
+    scroll-snap-type: x mandatory;
+    gap: {{ block.settings.gap_between_cards }}px;
+    scrollbar-width: none;
+    -ms-overflow-style: none;
+    padding-bottom: 2px;
+  }
+  .available-benefits__grid--{{ block.id }}::-webkit-scrollbar {
+    display: none;
+  }
+  .benefit-card--{{ block.id }} {
+    flex: 0 0 {{ block.settings.card_width }}px;
+    {%- if block.settings.card_height > 0 -%}
+      height: {{ block.settings.card_height }}px;
+      justify-content: center;
+    {%- endif -%}
+    scroll-snap-align: start;
+    border: 1px dashed {{ block.settings.border_color }};
+    background-color: {{ block.settings.card_bg_color }};
+    padding: {{ block.settings.card_padding_vertical }}px {{ block.settings.card_padding_horizontal }}px;
+    border-radius: {{ block.settings.card_border_radius }}px;
+    display: flex;
+    flex-direction: column;
+    gap: 0.6rem;
+  }
+  .benefit-card__top--{{ block.id }} {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+  }
+  .benefit-card__code-wrap--{{ block.id }} {
+    font-size: {{ block.settings.main_text_size }}px;
+    color: {{ block.settings.main_text_color }};
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+    font-weight: 400;
+  }
+  .benefit-card__code--{{ block.id }} {
+    color: {{ block.settings.code_color }};
+    font-weight: 500;
+    text-transform: uppercase;
+    cursor: pointer;
+    transition: opacity 0.2s ease;
+  }
+  .benefit-card__code--{{ block.id }}:hover {
+    opacity: 0.7;
+  }
+  .benefit-card__tc--{{ block.id }} {
+    font-size: {{ block.settings.tc_text_size }}px;
+    color: {{ block.settings.tc_text_color }};
+    text-decoration: underline;
+    cursor: pointer;
+  }
+  .benefit-card__desc--{{ block.id }} {
+    font-size: {{ block.settings.desc_text_size }}px;
+    color: {{ block.settings.desc_text_color }};
+  }
+{%- endstyle -%}
+
+<div class="available-benefits--{{ block.id }}" {{ block.shopify_attributes }}>
+  <div class="available-benefits__header--{{ block.id }}">
+    {%- if block.settings.title != blank -%}
+      <div class="available-benefits__title--{{ block.id }}">{{ block.settings.title }}</div>
+    {%- endif -%}
+    <div class="available-benefits__nav--{{ block.id }}">
+      <button type="button" class="available-benefits__arrow--{{ block.id }}" aria-label="Previous" onclick="scrollBenefitsGrid(this, 'prev')">
+        <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M15 18l-6-6 6-6"/></svg>
+      </button>
+      <button type="button" class="available-benefits__arrow--{{ block.id }}" aria-label="Next" onclick="scrollBenefitsGrid(this, 'next')">
+        <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M9 18l6-6-6-6"/></svg>
+      </button>
+    </div>
+  </div>
+
+  <div class="available-benefits__grid--{{ block.id }}">
+    {%- for i in (1..3) -%}
+      {%- assign prefix_key = 'prefix_' | append: i -%}
+      {%- assign code_key = 'code_' | append: i -%}
+      {%- assign desc_key = 'desc_' | append: i -%}
+      {%- assign tc_link_key = 'tc_link_' | append: i -%}
+      
+      {%- assign prefix = block.settings[prefix_key] -%}
+      {%- assign code = block.settings[code_key] -%}
+      {%- assign desc = block.settings[desc_key] -%}
+      {%- assign tc_link = block.settings[tc_link_key] -%}
+
+      {%- if code != blank or desc != blank -%}
+        <div class="benefit-card--{{ block.id }}">
+          <div class="benefit-card__top--{{ block.id }}">
+            <div class="benefit-card__code-wrap--{{ block.id }}">
+              {% if prefix != blank %}{{ prefix }} {% endif %}<span class="benefit-card__code--{{ block.id }}" data-code="{{ code }}" onclick="copyBenefitCode(this)" title="Click to copy">{{ code }}</span>
+            </div>
+          </div>
+          <div class="benefit-card__desc--{{ block.id }}">
+            {{ desc }}
+          </div>
+        </div>
+      {%- endif -%}
+    {%- endfor -%}
+  </div>
+</div>
+
+<script>
+  if (typeof window.scrollBenefitsGrid !== 'function') {
+    window.scrollBenefitsGrid = function(btn, dir) {
+      const wrapper = btn.closest('[class*="available-benefits--"]');
+      const grid = wrapper.querySelector('[class*="available-benefits__grid--"]');
+      if (!grid || grid.children.length === 0) return;
+      
+      const gap = parseInt(window.getComputedStyle(grid).gap) || 0;
+      const scrollAmt = grid.children[0].offsetWidth + gap;
+      
+      grid.scrollBy({ left: dir === 'prev' ? -scrollAmt : scrollAmt, behavior: 'smooth' });
+    };
+  }
+
+  if (typeof window.copyBenefitCode !== 'function') {
+    window.copyBenefitCode = function(element) {
+      const code = element.getAttribute('data-code');
+      navigator.clipboard.writeText(code).then(function() {
+        element.innerText = 'COPIED!';
+        setTimeout(function() {
+          element.innerText = code;
+        }, 2000);
+      });
+    };
+  }
+</script>
+
+{% schema %}
+{
+  "name": "Available Benefits",
+  "settings": [
+    {
+      "type": "text",
+      "id": "title",
+      "label": "Heading",
+      "default": "AVAILABLE BENEFITS"
+    },
+    {
+      "type": "header",
+      "content": "Appearance"
+    },
+    {
+      "type": "color",
+      "id": "block_border_color",
+      "label": "Block border color",
+      "default": "#e0e0e0"
+    },
+    {
+      "type": "color",
+      "id": "card_bg_color",
+      "label": "Card background color",
+      "default": "#f4f4f4"
+    },
+    {
+      "type": "color",
+      "id": "border_color",
+      "label": "Card border color",
+      "default": "#b0b0b0"
+    },
+    {
+      "type": "color",
+      "id": "code_color",
+      "label": "Discount code color",
+      "default": "#c69c36"
+    },
+    {
+      "type": "color",
+      "id": "title_color",
+      "label": "Heading color",
+      "default": "#333333"
+    },
+    {
+      "type": "color",
+      "id": "main_text_color",
+      "label": "Main text color",
+      "default": "#333333"
+    },
+    {
+      "type": "color",
+      "id": "desc_text_color",
+      "label": "Description text color",
+      "default": "#666666"
+    },
+    {
+      "type": "color",
+      "id": "tc_text_color",
+      "label": "T&C text color",
+      "default": "#333333"
+    },
+    {
+      "type": "range",
+      "id": "title_size",
+      "min": 10,
+      "max": 24,
+      "step": 1,
+      "unit": "px",
+      "label": "Heading size",
+      "default": 14
+    },
+    {
+      "type": "range",
+      "id": "title_weight",
+      "min": 100,
+      "max": 900,
+      "step": 100,
+      "label": "Heading boldness",
+      "default": 500
+    },
+    {
+      "type": "range",
+      "id": "main_text_size",
+      "min": 10,
+      "max": 20,
+      "step": 1,
+      "unit": "px",
+      "label": "Main text size",
+      "default": 14
+    },
+    {
+      "type": "range",
+      "id": "desc_text_size",
+      "min": 10,
+      "max": 20,
+      "step": 1,
+      "unit": "px",
+      "label": "Description text size",
+      "default": 13
+    },
+    {
+      "type": "range",
+      "id": "tc_text_size",
+      "min": 10,
+      "max": 20,
+      "step": 1,
+      "unit": "px",
+      "label": "T&C text size",
+      "default": 12
+    },
+    {
+      "type": "header",
+      "content": "Layout & Spacing"
+    },
+    {
+      "type": "range",
+      "id": "block_border_thickness",
+      "min": 0,
+      "max": 5,
+      "step": 1,
+      "unit": "px",
+      "label": "Block outline thickness",
+      "default": 1
+    },
+    {
+      "type": "range",
+      "id": "block_padding",
+      "min": 0,
+      "max": 60,
+      "step": 2,
+      "unit": "px",
+      "label": "Block padding",
+      "default": 12
+    },
+    {
+      "type": "range",
+      "id": "block_border_radius",
+      "min": 0,
+      "max": 40,
+      "step": 2,
+      "unit": "px",
+      "label": "Block border radius",
+      "default": 8
+    },
+    {
+      "type": "range",
+      "id": "card_width",
+      "min": 150,
+      "max": 400,
+      "step": 5,
+      "unit": "px",
+      "label": "Card width",
+      "default": 240
+    },
+    {
+      "type": "range",
+      "id": "card_height",
+      "min": 0,
+      "max": 300,
+      "step": 5,
+      "unit": "px",
+      "label": "Card height (0 for auto)",
+      "default": 0
+    },
+    {
+      "type": "range",
+      "id": "card_border_radius",
+      "min": 0,
+      "max": 20,
+      "step": 1,
+      "unit": "px",
+      "label": "Card border radius",
+      "default": 0
+    },
+    {
+      "type": "range",
+      "id": "card_padding_horizontal",
+      "min": 0,
+      "max": 40,
+      "step": 2,
+      "unit": "px",
+      "label": "Card inner left/right padding",
+      "default": 16
+    },
+    {
+      "type": "range",
+      "id": "card_padding_vertical",
+      "min": 0,
+      "max": 40,
+      "step": 2,
+      "unit": "px",
+      "label": "Card inner top/bottom padding",
+      "default": 16
+    },
+    {
+      "type": "range",
+      "id": "gap_between_cards",
+      "min": 0,
+      "max": 40,
+      "step": 2,
+      "unit": "px",
+      "label": "Gap between cards",
+      "default": 16
+    },
+    {
+      "type": "range",
+      "id": "margin_top",
+      "min": 0,
+      "max": 60,
+      "step": 2,
+      "unit": "px",
+      "label": "Margin top",
+      "default": 24
+    },
+    {
+      "type": "range",
+      "id": "margin_bottom",
+      "min": 0,
+      "max": 60,
+      "step": 2,
+      "unit": "px",
+      "label": "Margin bottom",
+      "default": 24
+    },
+    {
+      "type": "header",
+      "content": "Benefit 1"
+    },
+    {
+      "type": "text",
+      "id": "prefix_1",
+      "label": "Prefix text",
+      "default": "Use code"
+    },
+    {
+      "type": "text",
+      "id": "code_1",
+      "label": "Discount Code",
+      "default": "SAVE10"
+    },
+    {
+      "type": "text",
+      "id": "desc_1",
+      "label": "Description",
+      "default": "Get 10% off your order"
+    },
+    {
+      "type": "url",
+      "id": "tc_link_1",
+      "label": "T&C Link"
+    },
+    {
+      "type": "header",
+      "content": "Benefit 2"
+    },
+    {
+      "type": "text",
+      "id": "prefix_2",
+      "label": "Prefix text",
+      "default": "Use code"
+    },
+    {
+      "type": "text",
+      "id": "code_2",
+      "label": "Discount Code",
+      "default": "SAVE20"
+    },
+    {
+      "type": "text",
+      "id": "desc_2",
+      "label": "Description",
+      "default": "Get 20% off your order"
+    },
+    {
+      "type": "url",
+      "id": "tc_link_2",
+      "label": "T&C Link"
+    },
+    {
+      "type": "header",
+      "content": "Benefit 3"
+    },
+    {
+      "type": "text",
+      "id": "prefix_3",
+      "label": "Prefix text",
+      "default": "Use code"
+    },
+    {
+      "type": "text",
+      "id": "code_3",
+      "label": "Discount Code",
+      "default": "SAVE30"
+    },
+    {
+      "type": "text",
+      "id": "desc_3",
+      "label": "Description",
+      "default": "Get 30% off your order"
+    },
+    {
+      "type": "url",
+      "id": "tc_link_3",
+      "label": "T&C Link"
+    }
+  ],
+  "presets": [
+    {
+      "name": "Available Benefits",
+      "category": "Basic"
+    }
+  ]
+}
+{% endschema %}

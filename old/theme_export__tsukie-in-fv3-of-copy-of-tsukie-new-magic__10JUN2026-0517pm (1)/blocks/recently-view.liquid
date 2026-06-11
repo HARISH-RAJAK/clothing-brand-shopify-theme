@@ -1,0 +1,329 @@
+{% doc %}
+  @prompt
+    please make a new recently viewed section and it's layout should be same to our recommended products section.
+    but this section should show the recently viewed products.
+{% enddoc %}
+{% assign ai_gen_id = block.id | replace: '_', '' | downcase %}
+
+{% style %}
+
+  .ai-recently-viewed-{{ ai_gen_id }} {
+    padding: {{ block.settings['padding-block-start'] }}px 0 {{ block.settings['padding-block-end'] }}px;
+  }
+
+  .ai-recently-viewed-container-{{ ai_gen_id }} {
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 0 20px;
+  }
+
+  .ai-recently-viewed-header-{{ ai_gen_id }} {
+    text-align: center;
+    margin-bottom: 16px;
+  }
+
+  .ai-recently-viewed-title-{{ ai_gen_id }} {
+    font-size: 28px;
+    margin: 0;
+  }
+
+  .ai-recently-viewed-grid-{{ ai_gen_id }} {
+    margin-top: 12px;
+  }
+
+  .ai-recently-viewed-{{ ai_gen_id }} .product-grid__card {
+    display: flex;
+    flex-flow: column nowrap;
+    gap: var(--product-card-gap, 16px);
+  }
+
+  .ai-recently-viewed-{{ ai_gen_id }} .card-gallery {
+    overflow: hidden;
+  }
+
+  .ai-recently-viewed-{{ ai_gen_id }} .card-gallery svg {
+    aspect-ratio: var(--gallery-aspect-ratio, 0.8);
+  }
+
+  .ai-recently-viewed-empty-{{ ai_gen_id }} {
+    text-align: center;
+    padding: 60px 20px;
+    color: #666;
+  }
+
+  .ai-recently-viewed-empty-{{ ai_gen_id }} p {
+    font-size: 16px;
+    margin: 0;
+  }
+{% endstyle %}
+
+<recently-viewed-products-{{ ai_gen_id }}
+  class="ai-recently-viewed-{{ ai_gen_id }}"
+  data-max-products="{{ block.settings.max_products }}"
+  data-layout-type="{{ block.settings.layout_type }}"
+  data-columns="{{ block.settings.columns }}"
+  data-mobile-columns="{{ block.settings.mobile_columns }}"
+  data-columns-gap="{{ block.settings.columns_gap }}"
+  data-rows-gap="{{ block.settings.rows_gap }}"
+  data-image-ratio="{{ block.settings.image_ratio }}"
+  data-image-border="{{ block.settings.image_border }}"
+  data-image-border-width="{{ block.settings.image_border_width }}"
+  data-image-border-radius="{{ block.settings.image_border_radius }}"
+  data-title-preset="{{ block.settings.title_preset }}"
+  data-title-font="{{ block.settings.title_font }}"
+  data-title-size="{{ block.settings.title_size }}"
+  data-title-alignment="{{ block.settings.title_alignment }}"
+  data-price-preset="{{ block.settings.price_preset }}"
+  data-price-font="{{ block.settings.price_font }}"
+  data-price-size="{{ block.settings.price_size }}"
+  data-price-alignment="{{ block.settings.price_alignment }}"
+  {{ block.shopify_attributes }}
+>
+  <div class="ai-recently-viewed-container-{{ ai_gen_id }}">
+    {% if block.settings.heading != blank %}
+      <div class="ai-recently-viewed-header-{{ ai_gen_id }}">
+        <h2 class="ai-recently-viewed-title-{{ ai_gen_id }}">{{ block.settings.heading }}</h2>
+      </div>
+    {% endif %}
+
+    <div
+      class="resource-list resource-list--grid ai-recently-viewed-grid-{{ ai_gen_id }}"
+      style="
+        --resource-list-column-gap-desktop: {{ block.settings.columns_gap }}px;
+        --resource-list-row-gap-desktop: {{ block.settings.rows_gap }}px;
+        --resource-list-columns: repeat({{ block.settings.columns }}, 1fr);
+        --resource-list-columns-mobile: repeat({{ block.settings.mobile_columns }}, 1fr);
+        --column-count-mobile: {{ block.settings.mobile_columns }};
+      "
+      data-products-container
+    ></div>
+
+    <div class="ai-recently-viewed-empty-{{ ai_gen_id }}" data-empty-state style="display: none;">
+      <p>{{ block.settings.empty_message }}</p>
+    </div>
+  </div>
+</recently-viewed-products-{{ ai_gen_id }}>
+
+<script>
+  (function() {
+    class RecentlyViewedProducts{{ ai_gen_id }} extends HTMLElement {
+      constructor() {
+        super();
+        this.storageKey = 'recently_viewed_products';
+        this.maxProducts = parseInt(this.dataset.maxProducts) || 8;
+        this.layoutType = this.dataset.layoutType || 'grid';
+        this.columns = parseInt(this.dataset.columns) || 4;
+        this.mobileColumns = parseInt(this.dataset.mobileColumns) || 2;
+        this.columnsGap = parseInt(this.dataset.columnsGap) || 12;
+        this.rowsGap = parseInt(this.dataset.rowsGap) || 24;
+        this.imageRatio = this.dataset.imageRatio || 'portrait';
+        this.imageBorder = this.dataset.imageBorder || 'none';
+        this.imageBorderWidth = parseInt(this.dataset.imageBorderWidth) || 1;
+        this.imageBorderRadius = parseInt(this.dataset.imageBorderRadius) || 0;
+        this.titlePreset = this.dataset.titlePreset || 'h4';
+        this.titleFont = this.dataset.titleFont || 'var(--font-body--family)';
+        this.titleSize = this.dataset.titleSize || '1rem';
+        this.titleAlignment = this.dataset.titleAlignment || 'left';
+        this.pricePreset = this.dataset.pricePreset || 'h6';
+        this.priceFont = this.dataset.priceFont || 'var(--font-body--family)';
+        this.priceSize = this.dataset.priceSize || '1rem';
+        this.priceAlignment = this.dataset.priceAlignment || 'left';
+        this.productsContainer = this.querySelector('[data-products-container]');
+        this.emptyState = this.querySelector('[data-empty-state]');
+      }
+
+      connectedCallback() {
+        this.saveCurrentProduct();
+        this.loadRecentlyViewed();
+      }
+
+      saveCurrentProduct() {
+        if (window.location.pathname.includes('/products/')) {
+          const productHandle = window.location.pathname.split('/products/')[1].split('?')[0];
+          
+          if (productHandle) {
+            let recentProducts = this.getRecentProducts();
+            recentProducts = recentProducts.filter(handle => handle !== productHandle);
+            recentProducts.unshift(productHandle);
+            recentProducts = recentProducts.slice(0, this.maxProducts);
+            
+            try {
+              localStorage.setItem(this.storageKey, JSON.stringify(recentProducts));
+            } catch (e) {
+              console.error('Error saving to localStorage:', e);
+            }
+          }
+        }
+      }
+
+      getRecentProducts() {
+        try {
+          const stored = localStorage.getItem(this.storageKey);
+          return stored ? JSON.parse(stored) : [];
+        } catch (e) {
+          console.error('Error reading from localStorage:', e);
+          return [];
+        }
+      }
+
+      async loadRecentlyViewed() {
+        let recentProducts = this.getRecentProducts();
+        
+        if (window.location.pathname.includes('/products/')) {
+          const currentHandle = window.location.pathname.split('/products/')[1].split('?')[0];
+          recentProducts = recentProducts.filter(handle => handle !== currentHandle);
+        }
+
+        if (recentProducts.length === 0) {
+          this.showEmptyState();
+          return;
+        }
+
+        try {
+          const productPromises = recentProducts.map(handle => 
+            fetch(`/products/${handle}.js`)
+              .then(response => response.ok ? response.json() : null)
+              .catch(() => null)
+          );
+
+          const products = await Promise.all(productPromises);
+          const validProducts = products.filter(product => product !== null);
+
+          if (validProducts.length === 0) {
+            this.showEmptyState();
+            return;
+          }
+
+          this.renderProducts(validProducts);
+        } catch (error) {
+          console.error('Error loading recently viewed products:', error);
+          this.showEmptyState();
+        }
+      }
+
+      renderProducts(products) {
+        this.productsContainer.innerHTML = products.map(product => {
+          const image = product.featured_image || '';
+          const price = this.formatMoney(product.price);
+          const comparePrice = product.compare_at_price > product.price 
+            ? this.formatMoney(product.compare_at_price) 
+            : null;
+
+          // Map aspect ratio values
+          const aspectRatioMap = { 
+            adapt: 'auto', 
+            portrait: '3 / 4', 
+            square: '1 / 1', 
+            landscape: '4 / 3' 
+          };
+          const aspectRatio = aspectRatioMap[this.imageRatio] || aspectRatioMap.portrait;
+
+          // Image border styles
+          const borderStyle = this.imageBorder === 'solid' 
+            ? `border: ${this.imageBorderWidth}px solid rgb(var(--color-foreground-rgb) / 0.15);` 
+            : '';
+          const borderRadius = `border-radius: ${this.imageBorderRadius}px;`;
+
+          // Output markup that mirrors the product-recommendations product-card layout
+          return `
+            <div class="resource-list__item">
+              <div class="product-card">
+                <a href="/products/${product.handle}" class="product-card__link"><span class="visually-hidden">${this.escapeHtml(product.title)}</span></a>
+                <div class="product-card__content product-grid__card">
+                  <div class="card-gallery">
+                    <a class="contents" href="/products/${product.handle}">
+                      <div class="product-media-container" style="aspect-ratio: ${aspectRatio}; width:100%; ${borderStyle} ${borderRadius} overflow:hidden;">
+                        ${image ? `
+                          <img
+                            src="${image}"
+                            alt="${this.escapeHtml(product.title)}"
+                            class="product-card__image"
+                            style="width:100%;height:100%;object-fit:cover;object-position:left center;"
+                            loading="lazy"
+                          />
+                        ` : `
+                          <div style="width:100%;height:100%;background-color:rgb(var(--color-foreground-rgb) / 0.04);"></div>
+                        `}
+                      </div>
+                    </a>
+                  </div>
+                  ${product.vendor ? `<div class="product-card__vendor" style="opacity:0.7;margin-top:6px;text-align:${this.titleAlignment};">${this.escapeHtml(product.vendor)}</div>` : ''}
+                  <h3 class="${this.titlePreset}" style="margin:0;text-align:${this.titleAlignment};font-family:${this.titleFont};font-size:${this.titleSize};">
+                    <a href="/products/${product.handle}" style="text-decoration:none;color:inherit;">${this.escapeHtml(product.title)}</a>
+                  </h3>
+                  <div class="${this.pricePreset}" style="margin-top:8px;font-family:${this.priceFont};font-size:${this.priceSize};text-align:${this.priceAlignment};">
+                    ${comparePrice ? `<s style="opacity:0.6;margin-right:8px;">${comparePrice}</s>` : ''}
+                    <span${comparePrice ? ' style="color: #d82c0d;"' : ''}>${price}</span>
+                  </div>
+                </div>
+              </div>
+            </div>
+          `;
+        }).join('');
+
+        this.emptyState.style.display = 'none';
+      }
+
+      showEmptyState() {
+        this.productsContainer.innerHTML = '';
+        this.emptyState.style.display = 'block';
+      }
+
+      formatMoney(cents) {
+        const amount = (cents / 100).toFixed(2);
+        return `₹${amount}`;
+      }
+
+      escapeHtml(text) {
+        const div = document.createElement('div');
+        div.textContent = text;
+        return div.innerHTML;
+      }
+    }
+
+    customElements.define('recently-viewed-products-{{ ai_gen_id }}', RecentlyViewedProducts{{ ai_gen_id }});
+  })();
+</script>
+
+{% schema %}
+{
+  "name": "Recently viewed products",
+  "tag": "div",
+  "settings": [
+    { "type": "header", "content": "Content" },
+    { "type": "inline_richtext", "id": "heading", "label": "Heading", "default": "Recently viewed" },
+    { "type": "range", "id": "max_products", "min": 1, "max": 12, "step": 1, "label": "Maximum products", "default": 8 },
+    { "type": "inline_richtext", "id": "empty_message", "label": "Empty state message", "default": "No recently viewed products" },
+    { "type": "header", "content": "Layout" },
+    { "type": "select", "id": "layout_type", "label": "Layout style", "options": [ { "value": "grid", "label": "Grid" }, { "value": "carousel", "label": "Carousel" } ], "default": "grid" },
+    { "type": "checkbox", "id": "carousel_on_mobile", "label": "Carousel on mobile", "default": false },
+    { "type": "range", "id": "columns", "label": "Columns (desktop)", "min": 1, "max": 8, "step": 1, "default": 4 },
+    { "type": "select", "id": "mobile_columns", "label": "Columns (mobile)", "options": [ { "value": "1", "label": "1" }, { "value": "2", "label": "2" } ], "default": "2" },
+    { "type": "range", "id": "columns_gap", "label": "Horizontal gap", "min": 0, "max": 100, "step": 1, "unit": "px", "default": 12 },
+    { "type": "range", "id": "rows_gap", "label": "Vertical gap", "min": 0, "max": 100, "step": 1, "unit": "px", "default": 24 },
+    { "type": "header", "content": "Product image" },
+    { "type": "select", "id": "image_ratio", "label": "Image aspect ratio", "options": [ { "value": "adapt", "label": "Adapt to image" }, { "value": "portrait", "label": "Portrait" }, { "value": "square", "label": "Square" }, { "value": "landscape", "label": "Landscape" } ], "default": "portrait" },
+    { "type": "select", "id": "image_border", "label": "Image border", "options": [ { "value": "none", "label": "None" }, { "value": "solid", "label": "Solid" } ], "default": "none" },
+    { "type": "range", "id": "image_border_width", "label": "Border width", "min": 0, "max": 10, "step": 1, "unit": "px", "default": 1 },
+    { "type": "range", "id": "image_border_radius", "label": "Border radius", "min": 0, "max": 32, "step": 1, "unit": "px", "default": 0 },
+    { "type": "header", "content": "Product title" },
+    { "type": "select", "id": "title_preset", "label": "Title preset", "options": [ { "value": "h4", "label": "H4" }, { "value": "h5", "label": "H5" }, { "value": "h6", "label": "H6" }, { "value": "custom", "label": "Custom" } ], "default": "h4" },
+    { "type": "select", "id": "title_font", "label": "Title font", "options": [ { "value": "var(--font-body--family)", "label": "Body" }, { "value": "var(--font-heading--family)", "label": "Heading" } ], "default": "var(--font-body--family)" },
+    { "type": "select", "id": "title_size", "label": "Title size", "options": [ { "value": "0.875rem", "label": "14px" }, { "value": "1rem", "label": "16px" }, { "value": "1.125rem", "label": "18px" }, { "value": "1.25rem", "label": "20px" } ], "default": "1rem" },
+    { "type": "select", "id": "title_alignment", "label": "Title alignment", "options": [ { "value": "left", "label": "Left" }, { "value": "center", "label": "Center" }, { "value": "right", "label": "Right" } ], "default": "left" },
+    { "type": "header", "content": "Product price" },
+    { "type": "select", "id": "price_preset", "label": "Price preset", "options": [ { "value": "h6", "label": "H6" }, { "value": "paragraph", "label": "Paragraph" }, { "value": "custom", "label": "Custom" } ], "default": "h6" },
+    { "type": "select", "id": "price_font", "label": "Price font", "options": [ { "value": "var(--font-body--family)", "label": "Body" }, { "value": "var(--font-heading--family)", "label": "Heading" } ], "default": "var(--font-body--family)" },
+    { "type": "select", "id": "price_size", "label": "Price size", "options": [ { "value": "0.875rem", "label": "14px" }, { "value": "1rem", "label": "16px" }, { "value": "1.125rem", "label": "18px" } ], "default": "1rem" },
+    { "type": "select", "id": "price_alignment", "label": "Price alignment", "options": [ { "value": "left", "label": "Left" }, { "value": "center", "label": "Center" }, { "value": "right", "label": "Right" } ], "default": "left" },
+    { "type": "header", "content": "Section layout" },
+    { "type": "select", "id": "section_width", "label": "Width", "options": [ { "value": "page-width", "label": "Page" }, { "value": "full-width", "label": "Full" } ], "default": "page-width" },
+    { "type": "range", "id": "gap", "label": "Section gap", "min": 0, "max": 100, "step": 1, "unit": "px", "default": 28 },
+    { "type": "color_scheme", "id": "color_scheme", "label": "Color scheme", "default": "scheme-1" },
+    { "type": "header", "content": "Padding" },
+    { "type": "range", "id": "padding-block-start", "label": "Top padding", "min": 0, "max": 200, "step": 4, "unit": "px", "default": 48 },
+    { "type": "range", "id": "padding-block-end", "label": "Bottom padding", "min": 0, "max": 200, "step": 4, "unit": "px", "default": 48 }
+  ],
+  "presets": [ { "name": "Recently viewed products" } ]
+}
+{% endschema %}

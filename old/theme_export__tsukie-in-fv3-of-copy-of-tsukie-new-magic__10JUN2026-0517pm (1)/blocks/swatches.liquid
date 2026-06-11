@@ -1,0 +1,344 @@
+
+
+{%- liquid
+  assign block_settings = block.settings
+  for product_option in closest.product.options_with_values
+    assign swatch_count = product_option.values | map: 'swatch' | compact | size
+
+    if swatch_count > 0
+      assign product_has_swatches = true
+    endif
+  endfor
+-%}
+
+{% if product_has_swatches %}
+  <product-swatches
+    data-product-id="{{ closest.product.id }}"
+    data-product-url="{{ closest.product.url }}"
+    style="
+      --overflow-list-alignment: {{ block_settings.product_swatches_alignment }};
+      --overflow-list-alignment-mobile: {{ block_settings.product_swatches_alignment_mobile }};
+      --product-swatches-alignment: {% if block_settings.product_swatches_alignment == 'flex-start' %}start{% elsif block_settings.product_swatches_alignment == 'flex-end' %}end{% else %}center{% endif %};
+      --product-swatches-alignment-mobile: {% if block_settings.product_swatches_alignment_mobile == 'flex-start' %}start{% elsif block_settings.product_swatches_alignment_mobile == 'flex-end' %}end{% else %}center{% endif %};
+      --product-swatches-padding-block-start: {{ block_settings.product_swatches_padding_top }}px;
+      --product-swatches-padding-block-end: {{ block_settings.product_swatches_padding_bottom }}px;
+      --product-swatches-padding-inline-start: {{ block_settings.product_swatches_padding_left }}px;
+      --product-swatches-padding-inline-end: {{ block_settings.product_swatches_padding_right }}px;
+    "
+    {{ block.shopify_attributes }}
+  >
+    {% render 'variant-swatches', product_resource: closest.product %}
+  </product-swatches>
+{% endif %}
+
+<script>
+  (function () {
+    function handleSwatchClick(e) {
+      var host = e.currentTarget;
+
+      // "+N more" button: expand swatches, don't navigate
+      if (e.target.closest('button.hidden-swatches__count')) {
+        e.stopPropagation();
+        return;
+      }
+
+      var label = e.target.closest('label.variant-option__button-label');
+
+      // Click landed inside the swatches area but not on a swatch label.
+      // Still stop propagation so the parent <a> doesn't fire.
+      if (!label) {
+        e.stopPropagation();
+        return;
+      }
+
+      // We'll handle navigation manually
+      e.preventDefault();
+      e.stopPropagation();
+
+      var input = label.querySelector('input[type="radio"]');
+      if (!input) return;
+
+      // Combined listings: each swatch links to a different product
+      var connectedUrl = input.getAttribute('data-connected-product-url');
+      if (connectedUrl) {
+        window.location.href = connectedUrl;
+        return;
+      }
+
+      var variantId = input.getAttribute('data-variant-id');
+      var productUrl = host.getAttribute('data-product-url');
+      if (!productUrl) return;
+
+      try {
+        var url = new URL(productUrl, window.location.origin);
+        if (variantId) url.searchParams.set('variant', variantId);
+        window.location.href = url.href;
+      } catch (err) {
+        window.location.href = productUrl + (variantId ? '?variant=' + variantId : '');
+      }
+    }
+
+    function bindSwatches() {
+      document.querySelectorAll('product-swatches:not([data-click-bound])').forEach(function (el) {
+        el.setAttribute('data-click-bound', '1');
+        el.addEventListener('click', handleSwatchClick);
+      });
+    }
+
+    if (document.readyState === 'loading') {
+      document.addEventListener('DOMContentLoaded', bindSwatches);
+    } else {
+      bindSwatches();
+    }
+
+    // Re-bind when new product cards are injected (e.g. quick-add, section reloads)
+    var observer = new MutationObserver(bindSwatches);
+    observer.observe(document.body, { childList: true, subtree: true });
+  })();
+</script>
+
+{% # theme-check-disable %}
+{% stylesheet %}
+  product-swatches {
+    width: 100%;
+    display: flex;
+    position: relative;
+    overflow: hidden;
+    gap: 0;
+    flex-shrink: 0;
+  }
+
+  swatches-variant-picker-component {
+    display: flex;
+    width: 100%;
+    flex-direction: row;
+    justify-content: var(--product-swatches-alignment-mobile);
+
+    @media (min-width: 750px) {
+      justify-content: var(--product-swatches-alignment);
+    }
+  }
+
+  swatches-variant-picker-component .variant-option--swatches {
+    padding-block: calc(
+        var(--product-swatches-padding-block-start) + var(--focus-outline-offset) + var(--focus-outline-width)
+      )
+      calc(var(--product-swatches-padding-block-end) + var(--focus-outline-offset) + var(--focus-outline-width));
+    padding-inline: calc(
+        var(--product-swatches-padding-inline-start) + var(--focus-outline-offset) + (1.5 * var(--focus-outline-width))
+      )
+      calc(var(--product-swatches-padding-inline-end) + var(--focus-outline-offset) + var(--focus-outline-width));
+  }
+
+  .variant-option--swatches {
+    overflow-list::part(list) {
+      gap: var(--gap-sm);
+    }
+
+    overflow-list[defer]::part(list) {
+      flex-wrap: nowrap;
+    }
+  }
+
+  .hidden-swatches__count {
+    display: flex;
+    align-self: center;
+    align-items: center;
+    justify-content: center;
+    color: rgb(var(--color-foreground-rgb) / var(--opacity-40-60));
+    background-color: transparent;
+    padding: 0;
+    border: 0;
+    border-radius: 0;
+
+    &::before {
+      /* This doesn't work in Safari without the counter-reset. https://stackoverflow.com/a/40179718 */
+      counter-reset: overflow-count var(--overflow-count);
+      content: '+' counter(overflow-count);
+      line-height: 1;
+      cursor: pointer;
+    }
+  }
+
+  .hidden-swatches__count:hover {
+    color: var(--color-foreground-rgb);
+  }
+
+  /* Small round swatches on product cards (overrides PDP swatch sizing) */
+  swatches-variant-picker-component .variant-option--swatches {
+    padding-block: 4px 0;
+    padding-inline: 0;
+  }
+
+  swatches-variant-picker-component .variant-option--swatches overflow-list::part(list) {
+    gap: 8px;
+    justify-content: var(--product-swatches-alignment-mobile);
+  }
+
+  @media (min-width: 750px) {
+    swatches-variant-picker-component .variant-option--swatches overflow-list::part(list) {
+      justify-content: var(--product-swatches-alignment);
+    }
+  }
+
+  swatches-variant-picker-component .variant-option__swatch {
+    margin: 0;
+  }
+
+  swatches-variant-picker-component .variant-option__button-label {
+    padding: 2px !important;
+    border: 1.5px solid transparent !important;
+    border-radius: 50% !important;
+    background: transparent !important;
+    min-width: 0 !important;
+    min-height: 0 !important;
+    width: auto !important;
+    height: auto !important;
+    line-height: 0 !important;
+    cursor: pointer;
+    transition: border-color 0.15s ease;
+    overflow: visible !important;
+  }
+
+  swatches-variant-picker-component .variant-option__button-label:hover {
+    border-color: rgb(var(--color-foreground-rgb) / 0.5) !important;
+  }
+
+  swatches-variant-picker-component .variant-option__button-label:has(input:checked) {
+    border-color: rgb(var(--color-foreground-rgb)) !important;
+    outline: none !important;
+  }
+
+  swatches-variant-picker-component .swatch {
+    width: 18px !important;
+    height: 18px !important;
+    border-radius: 50% !important;
+    background-size: cover !important;
+    background-position: center !important;
+    border: 1px solid rgb(var(--color-foreground-rgb) / 0.2) !important;
+    box-sizing: border-box !important;
+    display: block !important;
+    flex-shrink: 0 !important;
+  }
+
+  swatches-variant-picker-component .hidden-swatches__count {
+    font-size: 12px;
+    padding-inline-start: 4px;
+  }
+{% endstylesheet %}
+
+{% schema %}
+{
+  "name": "t:names.swatches",
+  "tag": null,
+  "settings": [
+    {
+      "type": "paragraph",
+      "content": "t:content.resource_reference_product_swatches"
+    },
+    {
+      "type": "select",
+      "id": "product_swatches_alignment",
+      "label": "t:settings.alignment",
+      "options": [
+        {
+          "value": "flex-start",
+          "label": "t:options.left"
+        },
+        {
+          "value": "center",
+          "label": "t:options.center"
+        },
+        {
+          "value": "flex-end",
+          "label": "t:options.right"
+        }
+      ],
+      "default": "flex-start"
+    },
+    {
+      "type": "select",
+      "id": "product_swatches_alignment_mobile",
+      "label": "t:settings.alignment_mobile",
+      "options": [
+        {
+          "value": "flex-start",
+          "label": "t:options.left"
+        },
+        {
+          "value": "center",
+          "label": "t:options.center"
+        },
+        {
+          "value": "flex-end",
+          "label": "t:options.right"
+        }
+      ],
+      "default": "flex-start"
+    },
+    {
+      "type": "header",
+      "content": "t:content.padding",
+      "visible_if": "{{ block.settings.hide_padding == false }}"
+    },
+    {
+      "type": "checkbox",
+      "id": "hide_padding",
+      "label": "t:settings.hide_padding",
+      "default": false,
+      "visible_if": "{{ false }}"
+    },
+    {
+      "type": "range",
+      "id": "product_swatches_padding_top",
+      "label": "t:settings.top",
+      "min": 0,
+      "max": 50,
+      "step": 1,
+      "unit": "px",
+      "default": 4,
+      "visible_if": "{{ block.settings.hide_padding == false }}"
+    },
+    {
+      "type": "range",
+      "id": "product_swatches_padding_bottom",
+      "label": "t:settings.bottom",
+      "min": 0,
+      "max": 50,
+      "step": 1,
+      "unit": "px",
+      "default": 0,
+      "visible_if": "{{ block.settings.hide_padding == false }}"
+    },
+    {
+      "type": "range",
+      "id": "product_swatches_padding_left",
+      "label": "t:settings.left",
+      "min": 0,
+      "max": 50,
+      "step": 1,
+      "unit": "px",
+      "default": 0,
+      "visible_if": "{{ block.settings.hide_padding == false }}"
+    },
+    {
+      "type": "range",
+      "id": "product_swatches_padding_right",
+      "label": "t:settings.right",
+      "min": 0,
+      "max": 50,
+      "step": 1,
+      "unit": "px",
+      "default": 0,
+      "visible_if": "{{ block.settings.hide_padding == false }}"
+    }
+  ],
+  "presets": [
+    {
+      "name": "t:names.swatches",
+      "category": "t:categories.product"
+    }
+  ]
+}
+{% endschema %}
+{% # theme-check-enable %}
