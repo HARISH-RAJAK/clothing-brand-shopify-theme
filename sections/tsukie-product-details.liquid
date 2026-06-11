@@ -831,20 +831,93 @@
     <div class="tsukie-pdp-media">
       {%- assign color_option_index = nil -%}
       {%- for option in product.options_with_values -%}
-        {%- if option.name == 'Color' or option.name == 'Colour' -%}
+        {%- assign option_name_downcase = option.name | downcase -%}
+        {%- if option_name_downcase == 'color' or option_name_downcase == 'colour' -%}
           {%- assign color_option_index = forloop.index -%}
         {%- endif -%}
       {%- endfor -%}
+      
+      {%- assign first_variant = product.variants.first -%}
       {%- assign first_variant_color = "" -%}
-      {%- if color_option_index != nil and product.variants.size > 0 -%}
+      {%- if color_option_index != nil and first_variant != nil -%}
         {%- if color_option_index == 1 -%}
-          {%- assign first_variant_color = product.variants[0].option1 -%}
+          {%- assign first_variant_color = first_variant.option1 -%}
         {%- elsif color_option_index == 2 -%}
-          {%- assign first_variant_color = product.variants[0].option2 -%}
+          {%- assign first_variant_color = first_variant.option2 -%}
         {%- elsif color_option_index == 3 -%}
-          {%- assign first_variant_color = product.variants[0].option3 -%}
+          {%- assign first_variant_color = first_variant.option3 -%}
         {%- endif -%}
       {%- endif -%}
+
+      {%- comment -%} Precompute image colors mapping to prevent scoping/nested loop issues {%- endcomment -%}
+      {%- assign image_colors_string = "" -%}
+      {%- assign current_color = first_variant_color -%}
+      {%- for img in product.images -%}
+        {%- assign img_colors = "" -%}
+        {%- comment -%} 1. Check if image alt text contains any of the color values {%- endcomment -%}
+        {%- for option in product.options_with_values -%}
+          {%- assign option_name_downcase = option.name | downcase -%}
+          {%- if option_name_downcase == 'color' or option_name_downcase == 'colour' -%}
+            {%- for color_val in option.values -%}
+              {%- assign color_val_down = color_val | downcase | strip -%}
+              {%- assign image_alt_down = img.alt | downcase | strip -%}
+              {%- if image_alt_down == color_val_down or image_alt_down contains color_val_down -%}
+                {%- assign img_colors = img_colors | append: ";" | append: color_val -%}
+              {%- endif -%}
+            {%- endfor -%}
+          {%- endif -%}
+        {%- endfor -%}
+        
+        {%- comment -%} 2. Check if this image is the featured image of any variant {%- endcomment -%}
+        {%- assign featured_var_color = "" -%}
+        {%- for variant in product.variants -%}
+          {%- assign var_img_id = nil -%}
+          {%- if variant.featured_image -%}
+            {%- assign var_img_id = variant.featured_image.id -%}
+          {%- elsif variant.featured_media -%}
+            {%- assign var_img_id = variant.featured_media.id -%}
+          {%- elsif variant.image -%}
+            {%- assign var_img_id = variant.image.id -%}
+          {%- endif -%}
+          {%- if var_img_id == img.id -%}
+            {%- if color_option_index == 1 -%}
+              {%- assign featured_var_color = variant.option1 -%}
+            {%- elsif color_option_index == 2 -%}
+              {%- assign featured_var_color = variant.option2 -%}
+            {%- elsif color_option_index == 3 -%}
+              {%- assign featured_var_color = variant.option3 -%}
+            {%- endif -%}
+            {%- if featured_var_color != blank -%}
+              {%- break -%}
+            {%- endif -%}
+          {%- endif -%}
+        {%- endfor -%}
+        
+        {%- if featured_var_color != blank -%}
+          {%- assign current_color = featured_var_color -%}
+          {%- assign img_colors = img_colors | append: ";" | append: featured_var_color -%}
+        {%- endif -%}
+        
+        {%- comment -%} 3. Fallback to active sequence color if no specific matches found {%- endcomment -%}
+        {%- if img_colors == blank and current_color != blank -%}
+          {%- assign img_colors = img_colors | append: ";" | append: current_color -%}
+        {%- endif -%}
+        
+        {%- comment -%} Convert option values to clean format like |black|gold| {%- endcomment -%}
+        {%- assign raw_colors = img_colors | split: ";" | uniq -%}
+        {%- assign clean_colors_formatted = "" -%}
+        {%- for rc in raw_colors -%}
+          {%- if rc != blank -%}
+            {%- assign clean_colors_formatted = clean_colors_formatted | append: "|" | append: rc | append: "|" -%}
+          {%- endif -%}
+        {%- endfor -%}
+        {%- if clean_colors_formatted == blank -%}
+          {%- assign clean_colors_formatted = "unknown" -%}
+        {%- endif -%}
+        
+        {%- assign image_colors_string = image_colors_string | append: clean_colors_formatted | append: "::" -%}
+      {%- endfor -%}
+      {%- assign image_colors_array = image_colors_string | split: "::" -%}
 
       <div class="tsukie-thumbnails-wrapper">
         {% if product.images.size > 6 %}
@@ -854,52 +927,8 @@
         {% endif %}
         
         <div class="tsukie-thumbnails" id="tsukie-thumbs-list">
-          {%- assign active_seq_color = first_variant_color -%}
           {% for image in product.images %}
-            {%- assign image_colors = "" -%}
-            {%- for option in product.options_with_values -%}
-              {%- if option.name == 'Color' or option.name == 'Colour' -%}
-                {%- for color_val in option.values -%}
-                  {%- assign color_val_down = color_val | downcase | strip -%}
-                  {%- assign image_alt_down = image.alt | downcase | strip -%}
-                  {%- if image_alt_down == color_val_down or image_alt_down contains color_val_down -%}
-                    {%- assign image_colors = image_colors | append: "," | append: color_val -%}
-                  {%- endif -%}
-                {%- endfor -%}
-              {%- endif -%}
-            {%- endfor -%}
-            
-            {%- assign featured_var_color = "" -%}
-            {%- for variant in product.variants -%}
-              {%- if variant.featured_image.id == image.id -%}
-                {%- if color_option_index == 1 -%}
-                  {%- assign featured_var_color = variant.option1 -%}
-                {%- elsif color_option_index == 2 -%}
-                  {%- assign featured_var_color = variant.option2 -%}
-                {%- elsif color_option_index == 3 -%}
-                  {%- assign featured_var_color = variant.option3 -%}
-                {%- endif -%}
-                {%- if featured_var_color != blank -%}
-                  {%- break -%}
-                {%- endif -%}
-              {%- endif -%}
-            {%- endfor -%}
-            
-            {%- if featured_var_color != blank -%}
-              {%- assign active_seq_color = featured_var_color -%}
-            {%- endif -%}
-            
-            {%- if active_seq_color != blank -%}
-              {%- assign image_colors = image_colors | append: "," | append: active_seq_color -%}
-            {%- endif -%}
-            
-            {%- assign image_colors_arr = image_colors | split: "," | uniq -%}
-            {%- assign image_colors_clean = "" -%}
-            {%- for c in image_colors_arr -%}
-              {%- if c != blank -%}
-                {%- assign image_colors_clean = image_colors_clean | append: "|" | append: c | append: "|" -%}
-              {%- endif -%}
-            {%- endfor -%}
+            {%- assign image_colors_clean = image_colors_array[forloop.index0] -%}
             <div class="tsukie-thumb {% if forloop.first %}active{% endif %}" onclick="tsukieChangeImage('{{ image | img_url: '1000x' }}', {{ forloop.index0 }}, this)" data-colors="{{ image_colors_clean | downcase | escape }}">
               <img src="{{ image | img_url: '200x' }}" alt="{{ product.title | escape }}" loading="lazy">
             </div>
@@ -921,52 +950,8 @@
           {%- endif -%}
           
           <div class="tsukie-main-image-slider" onscroll="tsukieOnSliderScroll(this)">
-            {%- assign active_seq_color = first_variant_color -%}
             {% for image in product.images %}
-              {%- assign image_colors = "" -%}
-              {%- for option in product.options_with_values -%}
-                {%- if option.name == 'Color' or option.name == 'Colour' -%}
-                  {%- for color_val in option.values -%}
-                    {%- assign color_val_down = color_val | downcase | strip -%}
-                    {%- assign image_alt_down = image.alt | downcase | strip -%}
-                    {%- if image_alt_down == color_val_down or image_alt_down contains color_val_down -%}
-                      {%- assign image_colors = image_colors | append: "," | append: color_val -%}
-                    {%- endif -%}
-                  {%- endfor -%}
-                {%- endif -%}
-              {%- endfor -%}
-              
-              {%- assign featured_var_color = "" -%}
-              {%- for variant in product.variants -%}
-                {%- if variant.featured_image.id == image.id -%}
-                  {%- if color_option_index == 1 -%}
-                    {%- assign featured_var_color = variant.option1 -%}
-                  {%- elsif color_option_index == 2 -%}
-                    {%- assign featured_var_color = variant.option2 -%}
-                  {%- elsif color_option_index == 3 -%}
-                    {%- assign featured_var_color = variant.option3 -%}
-                  {%- endif -%}
-                  {%- if featured_var_color != blank -%}
-                    {%- break -%}
-                  {%- endif -%}
-                {%- endfor -%}
-              {%- endfor -%}
-              
-              {%- if featured_var_color != blank -%}
-                {%- assign active_seq_color = featured_var_color -%}
-              {%- endif -%}
-              
-              {%- if active_seq_color != blank -%}
-                {%- assign image_colors = image_colors | append: "," | append: active_seq_color -%}
-              {%- endif -%}
-              
-              {%- assign image_colors_arr = image_colors | split: "," | uniq -%}
-              {%- assign image_colors_clean = "" -%}
-              {%- for c in image_colors_arr -%}
-                {%- if c != blank -%}
-                  {%- assign image_colors_clean = image_colors_clean | append: "|" | append: c | append: "|" -%}
-                {%- endif -%}
-              {%- endfor -%}
+              {%- assign image_colors_clean = image_colors_array[forloop.index0] -%}
               <div class="tsukie-main-image-slide" data-index="{{ forloop.index0 }}" data-colors="{{ image_colors_clean | downcase | escape }}">
                 <img src="{{ image | img_url: '1000x' }}" alt="{{ product.title | escape }}" loading="lazy">
               </div>
@@ -982,52 +967,8 @@
         </div>
         
         <div class="tsukie-carousel-dots">
-          {%- assign active_seq_color = first_variant_color -%}
           {% for image in product.images %}
-            {%- assign image_colors = "" -%}
-            {%- for option in product.options_with_values -%}
-              {%- if option.name == 'Color' or option.name == 'Colour' -%}
-                {%- for color_val in option.values -%}
-                  {%- assign color_val_down = color_val | downcase | strip -%}
-                  {%- assign image_alt_down = image.alt | downcase | strip -%}
-                  {%- if image_alt_down == color_val_down or image_alt_down contains color_val_down -%}
-                    {%- assign image_colors = image_colors | append: "," | append: color_val -%}
-                  {%- endif -%}
-                {%- endfor -%}
-              {%- endif -%}
-            {%- endfor -%}
-            
-            {%- assign featured_var_color = "" -%}
-            {%- for variant in product.variants -%}
-              {%- if variant.featured_image.id == image.id -%}
-                {%- if color_option_index == 1 -%}
-                  {%- assign featured_var_color = variant.option1 -%}
-                {%- elsif color_option_index == 2 -%}
-                  {%- assign featured_var_color = variant.option2 -%}
-                {%- elsif color_option_index == 3 -%}
-                  {%- assign featured_var_color = variant.option3 -%}
-                {%- endif -%}
-                {%- if featured_var_color != blank -%}
-                  {%- break -%}
-                {%- endif -%}
-              {%- endif -%}
-            {%- endfor -%}
-            
-            {%- if featured_var_color != blank -%}
-              {%- assign active_seq_color = featured_var_color -%}
-            {%- endif -%}
-            
-            {%- if active_seq_color != blank -%}
-              {%- assign image_colors = image_colors | append: "," | append: active_seq_color -%}
-            {%- endif -%}
-            
-            {%- assign image_colors_arr = image_colors | split: "," | uniq -%}
-            {%- assign image_colors_clean = "" -%}
-            {%- for c in image_colors_arr -%}
-              {%- if c != blank -%}
-                {%- assign image_colors_clean = image_colors_clean | append: "|" | append: c | append: "|" -%}
-              {%- endif -%}
-            {%- endfor -%}
+            {%- assign image_colors_clean = image_colors_array[forloop.index0] -%}
             <span class="tsukie-dot {% if forloop.first %}active{% endif %}" onclick="tsukieScrollToImage(this, {{ forloop.index0 }})" data-colors="{{ image_colors_clean | downcase | escape }}"></span>
           {% endfor %}
         </div>
@@ -1123,7 +1064,8 @@
               <div class="tsukie-variant-header">
                 <div style="display:flex; align-items:center; gap:8px;">
                   <div class="tsukie-variant-label">{{ option.name }}</div>
-                  {% if option.name == 'Size' or option.name == 'Size/Fits' or option.name == 'Fit' %}
+                  {% assign opt_name_down = option.name | downcase %}
+                  {% if opt_name_down == 'size' or opt_name_down == 'size/fits' or opt_name_down == 'fit' %}
                     {% if section.settings.show_size_guide %}
                       <span style="color:#d4c5a9;">|</span>
                       <a href="#" onclick="tsukieOpenSizeGuide(event, this)" class="tsukie-size-guide-link" style="color:#a08766; text-decoration:underline; font-size:11px; font-family:'Montserrat',sans-serif; text-transform:uppercase; font-weight:600; letter-spacing:1px;">Size Guide</a>
@@ -1133,7 +1075,8 @@
                 <div class="tsukie-variant-value" id="tsukie-selected-{{ option.name | handleize }}">{{ option.selected_value }}</div>
               </div>
               
-              {% if option.name == 'Color' or option.name == 'Colour' %}
+              {% assign opt_name_down = option.name | downcase %}
+              {% if opt_name_down == 'color' or opt_name_down == 'colour' %}
                 <div class="tsukie-color-swatches">
                   {% for value in option.values %}
                     <div 
