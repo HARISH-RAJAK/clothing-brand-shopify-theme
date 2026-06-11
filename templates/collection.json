@@ -197,6 +197,9 @@
     },
     "tsukie_recently_viewed_RrHd7p": {
       "type": "tsukie-recently-viewed",
+      "custom_css": [
+        "{margin-bottom: 0 !important; padding-bottom: 0 !important;}"
+      ],
       "name": "Recently Viewed Products",
       "settings": {}
     },
@@ -225,6 +228,7 @@
       "block_order": [
         "instafeed_app_block_B3Lnrq"
       ],
+      "custom_css": [],
       "settings": {
         "content_direction": "column",
         "vertical_on_mobile": true,
@@ -237,7 +241,7 @@
         "section_width": "page-width",
         "section_height": "",
         "section_height_custom": 50,
-        "color_scheme": "",
+        "color_scheme": "scheme-e5234ede-d196-4b3b-a9e2-6e7d24b8ca5c",
         "background_media": "none",
         "video_position": "cover",
         "background_image_position": "cover",
