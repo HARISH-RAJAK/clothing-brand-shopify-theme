@@ -1459,14 +1459,7 @@
   </div>
 
 <!-- Size Guide Modal Markup -->
-{%- assign size_guide_img = product.metafields.custom.sizechart.value | default: product.metafields.custom.sizechart -%}
-{%- if size_guide_img != blank -%}
-  {%- assign size_guide_img_url = size_guide_img | image_url: width: 1200 -%}
-{%- elsif section.settings.size_guide_image != blank -%}
-  {%- assign size_guide_img_url = section.settings.size_guide_image | image_url: width: 1200 -%}
-{%- else -%}
-  {%- assign size_guide_img_url = 'https://tsukie.in/cdn/shop/files/Relaxed-Fit-Balloon-Sleeve-Short-Dress.jpg?v=1777913683&width=1200' -%}
-{%- endif -%}
+{%- assign size_guide_img_url = section.settings.size_guide_image | image_url: width: 1200 | default: 'https://tsukie.in/cdn/shop/files/Relaxed-Fit-Balloon-Sleeve-Short-Dress.jpg?v=1777913683&width=1200' -%}
 <div class="tsukie-size-guide-modal" id="tsukie-size-guide-modal" style="display:none;">
   <div class="tsukie-size-guide-modal-overlay" onclick="tsukieCloseSizeGuide(this)"></div>
   <div class="tsukie-size-guide-modal-content">

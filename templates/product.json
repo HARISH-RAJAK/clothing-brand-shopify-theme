@@ -13,12 +13,15 @@
       "type": "tsukie-product-details",
       "settings": {
         "show_size_guide": true,
+        "size_guide_image": "shopify://shop_images/Relaxed-Fit-Balloon-Sleeve-Short-Dress.jpg",
         "show_inventory_urgency": true,
         "show_special_offers": true,
-        "default_offer1_code": "TSUKIE0",
-        "default_offer1_text": "Buy 1 get 10% off",
-        "default_offer2_code": "TSUKIE25",
-        "default_offer2_text": "Buy 2 get 25% off",
+        "show_offer_1": true,
+        "offer_1_text": "Buy 1 get 10% off",
+        "offer_1_code": "TSUKIE10",
+        "show_offer_2": true,
+        "offer_2_text": "Buy 2 get 25% off",
+        "offer_2_code": "TSUKIE25",
         "show_order_status": true,
         "tracker_title": "ORDER STATUS",
         "tracker_subtitle": "Track your delivery and expected arrival time!",
@@ -37,7 +40,14 @@
         "feature2_title": "EASY EXCHANGE",
         "feature2_desc": "7 days",
         "feature3_title": "SECURE PAYMENT",
-        "feature3_desc": "UPI · Cards · COD"
+        "feature3_desc": "UPI · Cards · COD",
+        "default_rating": "4.5",
+        "default_review_count": 12,
+        "enable_color_filter": true,
+        "show_trust_badge_1": true,
+        "trust_badge_text_1": "COD Available",
+        "show_order_status_bottom_text": true,
+        "order_status_bottom_text": "Hassle-free 7 day returns"
       }
     },
     "custom_liquid_AfqtEM": {
