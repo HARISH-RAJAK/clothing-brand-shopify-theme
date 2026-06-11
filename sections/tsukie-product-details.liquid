@@ -850,23 +850,34 @@
       {%- endif -%}
 
       {%- comment -%} Precompute image colors mapping to prevent scoping/nested loop issues {%- endcomment -%}
+      {%- assign color_option_values = nil -%}
+      {%- for option in product.options_with_values -%}
+        {%- assign option_name_downcase = option.name | downcase -%}
+        {%- if option_name_downcase == 'color' or option_name_downcase == 'colour' -%}
+          {%- assign color_option_values = option.values -%}
+        {%- endif -%}
+      {%- endfor -%}
+      {%- assign num_colors = color_option_values.size -%}
+      {%- assign config_group_size = section.settings.color_media_group_size | default: 6 -%}
+      {%- if config_group_size == 0 -%}
+        {%- assign config_group_size = 1 -%}
+      {%- endif -%}
+
       {%- assign image_colors_string = "" -%}
-      {%- assign current_color = first_variant_color -%}
       {%- for img in product.images -%}
+        {%- assign img_idx = forloop.index0 -%}
         {%- assign img_colors = "" -%}
+        
         {%- comment -%} 1. Check if image alt text contains any of the color values {%- endcomment -%}
-        {%- for option in product.options_with_values -%}
-          {%- assign option_name_downcase = option.name | downcase -%}
-          {%- if option_name_downcase == 'color' or option_name_downcase == 'colour' -%}
-            {%- for color_val in option.values -%}
-              {%- assign color_val_down = color_val | downcase | strip -%}
-              {%- assign image_alt_down = img.alt | downcase | strip -%}
-              {%- if image_alt_down == color_val_down or image_alt_down contains color_val_down -%}
-                {%- assign img_colors = img_colors | append: ";" | append: color_val -%}
-              {%- endif -%}
-            {%- endfor -%}
-          {%- endif -%}
-        {%- endfor -%}
+        {%- if num_colors > 0 -%}
+          {%- for color_val in color_option_values -%}
+            {%- assign color_val_down = color_val | downcase | strip -%}
+            {%- assign image_alt_down = img.alt | downcase | strip -%}
+            {%- if image_alt_down == color_val_down or image_alt_down contains color_val_down -%}
+              {%- assign img_colors = img_colors | append: ";" | append: color_val -%}
+            {%- endif -%}
+          {%- endfor -%}
+        {%- endif -%}
         
         {%- comment -%} 2. Check if this image is the featured image of any variant {%- endcomment -%}
         {%- assign featured_var_color = "" -%}
@@ -894,13 +905,19 @@
         {%- endfor -%}
         
         {%- if featured_var_color != blank -%}
-          {%- assign current_color = featured_var_color -%}
           {%- assign img_colors = img_colors | append: ";" | append: featured_var_color -%}
         {%- endif -%}
         
-        {%- comment -%} 3. Fallback to active sequence color if no specific matches found {%- endcomment -%}
-        {%- if img_colors == blank and current_color != blank -%}
-          {%- assign img_colors = img_colors | append: ";" | append: current_color -%}
+        {%- comment -%} 3. Fallback to chunk-based sequential grouping if no specific matches found {%- endcomment -%}
+        {%- if img_colors == blank and num_colors > 0 -%}
+          {%- assign color_val_index = img_idx | divided_by: config_group_size -%}
+          {%- if color_val_index >= num_colors -%}
+            {%- assign color_val_index = num_colors | minus: 1 -%}
+          {%- endif -%}
+          {%- assign chunk_color = color_option_values[color_val_index] -%}
+          {%- if chunk_color != blank -%}
+            {%- assign img_colors = img_colors | append: ";" | append: chunk_color -%}
+          {%- endif -%}
         {%- endif -%}
         
         {%- comment -%} Convert option values to clean format like |black|gold| {%- endcomment -%}
@@ -1716,6 +1733,23 @@ window.tsukieFilterImagesByColor = function(colorValue) {
     }
   });
 
+  // Toggle prev/next navigation arrows and dots container depending on whether there are multiple visible slides
+  const prevArrow = container.querySelector('.tsukie-carousel-nav.prev');
+  const nextArrow = container.querySelector('.tsukie-carousel-nav.next');
+  const dotsContainer = container.querySelector('.tsukie-carousel-dots');
+  
+  if (slideVisibleCount <= 1) {
+    if (prevArrow) prevArrow.style.display = 'none';
+    if (nextArrow) nextArrow.style.display = 'none';
+    if (dotsContainer) dotsContainer.style.setProperty('display', 'none', 'important');
+  } else {
+    if (prevArrow) prevArrow.style.display = 'flex';
+    if (nextArrow) nextArrow.style.display = 'flex';
+    if (dotsContainer) {
+      dotsContainer.style.removeProperty('display');
+    }
+  }
+
   const activeThumb = container.querySelector('.tsukie-thumb.active');
   if (!activeThumb || activeThumb.style.display === 'none') {
     if (firstVisibleIndex > -1) {
@@ -1870,9 +1904,12 @@ window.tsukieSelectOption = function(element, position, value) {
   }
   
   // Trigger Color Filtering if applicable
-  const optionName = container.tsukieProduct.options[optionIndex];
-  if (optionName && (optionName.toLowerCase() === 'color' || optionName.toLowerCase() === 'colour')) {
-    window.tsukieFilterImagesByColor(value);
+  const colorOptIdx = container.tsukieProduct.options.findIndex(opt => opt.toLowerCase() === 'color' || opt.toLowerCase() === 'colour');
+  if (colorOptIdx > -1) {
+    const selectedColor = container.tsukieSelectedOptions[colorOptIdx + 1];
+    if (selectedColor) {
+      window.tsukieFilterImagesByColor(selectedColor);
+    }
   }
   
   const matchedVariant = container.tsukieProduct.variants.find(variant => {
@@ -2406,6 +2443,12 @@ window.tsukieToggleAccordion = function(header) {
       "id": "enable_color_filter",
       "label": "Enable color-based image filtering",
       "default": true
+    },
+    {
+      "type": "number",
+      "id": "color_media_group_size",
+      "label": "Images per color (Fallback for sequential grouping)",
+      "default": 6
     },
     {
       "type": "header",
