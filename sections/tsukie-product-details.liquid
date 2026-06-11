@@ -1459,32 +1459,14 @@
   </div>
 
 <!-- Size Guide Modal Markup -->
+{%- assign size_guide_img_url = section.settings.size_guide_image | image_url: width: 1200 | default: 'https://tsukie.in/cdn/shop/files/Relaxed-Fit-Balloon-Sleeve-Short-Dress.jpg?v=1777913683&width=1200' -%}
 <div class="tsukie-size-guide-modal" id="tsukie-size-guide-modal" style="display:none;">
   <div class="tsukie-size-guide-modal-overlay" onclick="tsukieCloseSizeGuide(this)"></div>
   <div class="tsukie-size-guide-modal-content">
     <button class="tsukie-size-guide-modal-close" onclick="tsukieCloseSizeGuide(this)">&times;</button>
     <h3 class="tsukie-size-guide-modal-title">Size Guide</h3>
-    <div class="tsukie-size-guide-table-wrap">
-      <table>
-        <thead>
-          <tr>
-            <th>Size</th>
-            <th>Bust (in)</th>
-            <th>Waist (in)</th>
-            <th>Hips (in)</th>
-          </tr>
-        </thead>
-        <tbody>
-          <tr><td>XS</td><td>32</td><td>26</td><td>36</td></tr>
-          <tr><td>S</td><td>34</td><td>28</td><td>38</td></tr>
-          <tr><td>M</td><td>36</td><td>30</td><td>40</td></tr>
-          <tr><td>L</td><td>38</td><td>32</td><td>42</td></tr>
-          <tr><td>XL</td><td>40</td><td>34</td><td>44</td></tr>
-          <tr><td>XXL</td><td>42</td><td>36</td><td>46</td></tr>
-          <tr><td>3XL</td><td>44</td><td>38</td><td>48</td></tr>
-          <tr><td>4XL</td><td>46</td><td>40</td><td>50</td></tr>
-        </tbody>
-      </table>
+    <div class="tsukie-size-guide-img-wrap" style="text-align: center; margin-top: 10px; overflow: hidden; border-radius: 4px;">
+      <img src="{{ size_guide_img_url }}" alt="Size Guide" style="width: 100%; height: auto; display: block; max-width: 100%;" loading="lazy">
     </div>
   </div>
 </div>
@@ -2218,6 +2200,11 @@ window.tsukieToggleAccordion = function(header) {
       "id": "show_size_guide",
       "label": "Show Size Guide Link",
       "default": true
+    },
+    {
+      "type": "image_picker",
+      "id": "size_guide_image",
+      "label": "Size Guide Image"
     },
     {
       "type": "checkbox",
