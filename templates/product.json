@@ -13,7 +13,7 @@
       "type": "tsukie-product-details",
       "settings": {
         "show_size_guide": true,
-        "size_guide_image": "shopify://shop_images/Relaxed-Fit-Balloon-Sleeve-Short-Dress.jpg",
+        "size_guide_image": "{{ product.metafields.custom.sizechart.value }}",
         "show_inventory_urgency": true,
         "show_special_offers": true,
         "show_offer_1": true,
