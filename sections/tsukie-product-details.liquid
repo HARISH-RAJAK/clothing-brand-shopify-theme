@@ -814,15 +814,137 @@
   font-size: 11px;
   font-weight: 700;
   color: #1e2a38;
-}
-.tsukie-offer-coupon-btn .copy-lbl {
-  font-size: 9px;
-  text-transform: uppercase;
-  font-weight: 600;
-  color: #a08766;
-  border-left: 1px solid rgba(30,42,56,0.15);
-  padding-left: 8px;
-}
+}  .tsukie-offer-coupon-btn .copy-lbl {
+    font-size: 9px;
+    text-transform: uppercase;
+    font-weight: 600;
+    color: #a08766;
+    border-left: 1px solid rgba(30,42,56,0.15);
+    padding-left: 8px;
+  }
+
+  /* Dynamic Customizer Overrides */
+  #shopify-section-{{ section.id }} .tsukie-pdp-title {
+    {% if section.settings.title_font_size_desktop != blank %}
+      font-size: {{ section.settings.title_font_size_desktop }}px !important;
+    {% endif %}
+    {% if section.settings.title_alignment_desktop != blank %}
+      text-align: {{ section.settings.title_alignment_desktop }} !important;
+    {% endif %}
+  }
+  @media (max-width: 749px) {
+    #shopify-section-{{ section.id }} .tsukie-pdp-title {
+      {% if section.settings.title_font_size_mobile != blank %}
+        font-size: {{ section.settings.title_font_size_mobile }}px !important;
+      {% endif %}
+      {% if section.settings.title_alignment_mobile != blank %}
+        text-align: {{ section.settings.title_alignment_mobile }} !important;
+      {% endif %}
+    }
+  }
+
+  #shopify-section-{{ section.id }} .tsukie-price {
+    {% if section.settings.price_font_size_desktop != blank %}
+      font-size: {{ section.settings.price_font_size_desktop }}px !important;
+    {% endif %}
+    {% if section.settings.price_alignment_desktop != blank %}
+      text-align: {{ section.settings.price_alignment_desktop }} !important;
+    {% endif %}
+  }
+  @media (max-width: 749px) {
+    #shopify-section-{{ section.id }} .tsukie-price {
+      {% if section.settings.price_font_size_mobile != blank %}
+        font-size: {{ section.settings.price_font_size_mobile }}px !important;
+      {% endif %}
+      {% if section.settings.price_alignment_mobile != blank %}
+        text-align: {{ section.settings.price_alignment_mobile }} !important;
+      {% endif %}
+    }
+  }
+
+  #shopify-section-{{ section.id }} .tsukie-price-row {
+    {% if section.settings.price_alignment_desktop != blank %}
+      justify-content: {% if section.settings.price_alignment_desktop == 'center' %}center{% elif section.settings.price_alignment_desktop == 'right' %}flex-end{% else %}flex-start{% endif %} !important;
+    {% endif %}
+  }
+  @media (max-width: 749px) {
+    #shopify-section-{{ section.id }} .tsukie-price-row {
+      {% if section.settings.price_alignment_mobile != blank %}
+        justify-content: {% if section.settings.price_alignment_mobile == 'center' %}center{% elif section.settings.price_alignment_mobile == 'right' %}flex-end{% else %}flex-start{% endif %} !important;
+      {% endif %}
+    }
+  }
+
+  #shopify-section-{{ section.id }} .tsukie-quantity-selector {
+    {% if section.settings.qty_height != blank %}
+      height: {{ section.settings.qty_height }}px !important;
+    {% endif %}
+    {% if section.settings.qty_width != blank %}
+      width: {{ section.settings.qty_width }}px !important;
+    {% endif %}
+  }
+  #shopify-section-{{ section.id }} .tsukie-qty-input,
+  #shopify-section-{{ section.id }} .tsukie-qty-btn {
+    {% if section.settings.qty_font_size != blank %}
+      font-size: {{ section.settings.qty_font_size }}px !important;
+    {% endif %}
+  }
+
+  #shopify-section-{{ section.id }} .tsukie-btn-add {
+    {% if section.settings.btn_add_font_size_desktop != blank %}
+      font-size: {{ section.settings.btn_add_font_size_desktop }}px !important;
+    {% endif %}
+    {% if section.settings.btn_add_height_desktop != blank %}
+      height: {{ section.settings.btn_add_height_desktop }}px !important;
+    {% endif %}
+    {% if section.settings.btn_add_width_full_desktop %}
+      width: 100% !important;
+    {% elif section.settings.btn_add_width_desktop != blank %}
+      width: {{ section.settings.btn_add_width_desktop }}px !important;
+    {% endif %}
+  }
+  #shopify-section-{{ section.id }} .tsukie-btn-buy {
+    {% if section.settings.btn_buy_font_size_desktop != blank %}
+      font-size: {{ section.settings.btn_buy_font_size_desktop }}px !important;
+    {% endif %}
+    {% if section.settings.btn_buy_height_desktop != blank %}
+      height: {{ section.settings.btn_buy_height_desktop }}px !important;
+    {% endif %}
+    {% if section.settings.btn_buy_width_full_desktop %}
+      width: 100% !important;
+    {% elif section.settings.btn_buy_width_desktop != blank %}
+      width: {{ section.settings.btn_buy_width_desktop }}px !important;
+    {% endif %}
+  }
+
+  @media (max-width: 749px) {
+    #shopify-section-{{ section.id }} .tsukie-btn-add {
+      {% if section.settings.btn_add_font_size_mobile != blank %}
+        font-size: {{ section.settings.btn_add_font_size_mobile }}px !important;
+      {% endif %}
+      {% if section.settings.btn_add_height_mobile != blank %}
+        height: {{ section.settings.btn_add_height_mobile }}px !important;
+      {% endif %}
+      {% if section.settings.btn_add_width_full_mobile %}
+        width: 100% !important;
+      {% elif section.settings.btn_add_width_mobile != blank %}
+        width: {{ section.settings.btn_add_width_mobile }}px !important;
+      {% endif %}
+    }
+    #shopify-section-{{ section.id }} .tsukie-btn-buy {
+      {% if section.settings.btn_buy_font_size_mobile != blank %}
+        font-size: {{ section.settings.btn_buy_font_size_mobile }}px !important;
+      {% endif %}
+      {% if section.settings.btn_buy_height_mobile != blank %}
+        height: {{ section.settings.btn_buy_height_mobile }}px !important;
+      {% endif %}
+      {% if section.settings.btn_buy_width_full_mobile %}
+        width: 100% !important;
+      {% elif section.settings.btn_buy_width_mobile != blank %}
+        width: {{ section.settings.btn_buy_width_mobile }}px !important;
+      {% endif %}
+    }
+  }
 </style>
 
 <section class="tsukie-product" data-section-id="{{ section.id }}" data-section-type="product">
@@ -1351,16 +1473,37 @@
 {% if section.settings.show_trust_badges_v2 %}
 <div class="tsukie-trust-badges-v2">
   <div class="tsukie-badge-card-v2">
-    <svg fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M17 9V7a2 2 0 00-2-2H5a2 2 0 00-2 2v6a2 2 0 002 2h2m2 4h10a2 2 0 002-2v-6a2 2 0 00-2-2H9a2 2 0 00-2 2v6a2 2 0 002 2zm7-5a2 2 0 11-4 0 2 2 0 014 0z"></path></svg>
-    <div class="tsukie-badge-title-v2">COD Available</div>
+    {% if section.settings.feature1_icon != blank %}
+      {{ section.settings.feature1_icon }}
+    {% else %}
+      <svg fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M17 9V7a2 2 0 00-2-2H5a2 2 0 00-2 2v6a2 2 0 002 2h2m2 4h10a2 2 0 002-2v-6a2 2 0 00-2-2H9a2 2 0 00-2 2v6a2 2 0 002 2zm7-5a2 2 0 11-4 0 2 2 0 014 0z"></path></svg>
+    {% endif %}
+    <div class="tsukie-badge-title-v2">{{ section.settings.feature1_title }}</div>
+    {% if section.settings.feature1_desc != blank %}
+      <div class="tsukie-badge-desc-v2" style="font-family:'Montserrat',sans-serif; font-size:10px; color:#1e2a38; opacity:0.8; margin-top:2px;">{{ section.settings.feature1_desc }}</div>
+    {% endif %}
   </div>
   <div class="tsukie-badge-card-v2">
-    <svg fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M9 12l2 2 4-4m5.618-4.016A11.955 0 0112 2.944a11.955 11.955 0 01-8.618 3.04A12.02 12.02 0 003 9c0 5.591 3.824 10.29 9 11.622 5.176-1.332 9-6.03 9-11.622 0-1.042-.133-2.052-.382-3.016z"></path></svg>
-    <div class="tsukie-badge-title-v2">Secure Checkout</div>
+    {% if section.settings.feature2_icon != blank %}
+      {{ section.settings.feature2_icon }}
+    {% else %}
+      <svg fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M9 12l2 2 4-4m5.618-4.016A11.955 0 0112 2.944a11.955 11.955 0 01-8.618 3.04A12.02 12.02 0 003 9c0 5.591 3.824 10.29 9 11.622 5.176-1.332 9-6.03 9-11.622 0-1.042-.133-2.052-.382-3.016z"></path></svg>
+    {% endif %}
+    <div class="tsukie-badge-title-v2">{{ section.settings.feature2_title }}</div>
+    {% if section.settings.feature2_desc != blank %}
+      <div class="tsukie-badge-desc-v2" style="font-family:'Montserrat',sans-serif; font-size:10px; color:#1e2a38; opacity:0.8; margin-top:2px;">{{ section.settings.feature2_desc }}</div>
+    {% endif %}
   </div>
   <div class="tsukie-badge-card-v2">
-    <svg fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M20 7l-8-4-8 4m16 0l-8 4m8-4v10l-8 4m0-10L4 7m8 4v10M4 7v10l8 4"></path></svg>
-    <div class="tsukie-badge-title-v2">Premium Fabric</div>
+    {% if section.settings.feature3_icon != blank %}
+      {{ section.settings.feature3_icon }}
+    {% else %}
+      <svg fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M20 7l-8-4-8 4m16 0l-8 4m8-4v10l-8 4m0-10L4 7m8 4v10M4 7v10l8 4"></path></svg>
+    {% endif %}
+    <div class="tsukie-badge-title-v2">{{ section.settings.feature3_title }}</div>
+    {% if section.settings.feature3_desc != blank %}
+      <div class="tsukie-badge-desc-v2" style="font-family:'Montserrat',sans-serif; font-size:10px; color:#1e2a38; opacity:0.8; margin-top:2px;">{{ section.settings.feature3_desc }}</div>
+    {% endif %}
   </div>
 </div>
 {% endif %}
@@ -2342,6 +2485,208 @@ window.tsukieToggleAccordion = function(header) {
   "settings": [
     {
       "type": "header",
+      "content": "Product Title Controls"
+    },
+    {
+      "type": "number",
+      "id": "title_font_size_desktop",
+      "label": "Product Title Font Size Desktop (px)",
+      "default": 36
+    },
+    {
+      "type": "number",
+      "id": "title_font_size_mobile",
+      "label": "Product Title Font Size Mobile (px)",
+      "default": 28
+    },
+    {
+      "type": "select",
+      "id": "title_alignment_desktop",
+      "label": "Product Title Alignment Desktop",
+      "default": "left",
+      "options": [
+        { "value": "left", "label": "Left" },
+        { "value": "center", "label": "Center" },
+        { "value": "right", "label": "Right" }
+      ]
+    },
+    {
+      "type": "select",
+      "id": "title_alignment_mobile",
+      "label": "Product Title Alignment Mobile",
+      "default": "left",
+      "options": [
+        { "value": "left", "label": "Left" },
+        { "value": "center", "label": "Center" },
+        { "value": "right", "label": "Right" }
+      ]
+    },
+    {
+      "type": "header",
+      "content": "Product Price Controls"
+    },
+    {
+      "type": "number",
+      "id": "price_font_size_desktop",
+      "label": "Price Font Size Desktop (px)",
+      "default": 28
+    },
+    {
+      "type": "number",
+      "id": "price_font_size_mobile",
+      "label": "Price Font Size Mobile (px)",
+      "default": 24
+    },
+    {
+      "type": "select",
+      "id": "price_alignment_desktop",
+      "label": "Price Alignment Desktop",
+      "default": "left",
+      "options": [
+        { "value": "left", "label": "Left" },
+        { "value": "center", "label": "Center" },
+        { "value": "right", "label": "Right" }
+      ]
+    },
+    {
+      "type": "select",
+      "id": "price_alignment_mobile",
+      "label": "Price Alignment Mobile",
+      "default": "left",
+      "options": [
+        { "value": "left", "label": "Left" },
+        { "value": "center", "label": "Center" },
+        { "value": "right", "label": "Right" }
+      ]
+    },
+    {
+      "type": "header",
+      "content": "Quantity Selector Controls"
+    },
+    {
+      "type": "number",
+      "id": "qty_font_size",
+      "label": "Quantity Selector Font Size (px)",
+      "default": 14
+    },
+    {
+      "type": "number",
+      "id": "qty_height",
+      "label": "Quantity Selector Height (px)",
+      "default": 48
+    },
+    {
+      "type": "number",
+      "id": "qty_width",
+      "label": "Quantity Selector Width (px)",
+      "default": 120
+    },
+    {
+      "type": "header",
+      "content": "Add to Bag Button Controls"
+    },
+    {
+      "type": "number",
+      "id": "btn_add_font_size_desktop",
+      "label": "Add to Bag Font Size Desktop (px)",
+      "default": 11
+    },
+    {
+      "type": "number",
+      "id": "btn_add_font_size_mobile",
+      "label": "Add to Bag Font Size Mobile (px)",
+      "default": 11
+    },
+    {
+      "type": "number",
+      "id": "btn_add_height_desktop",
+      "label": "Add to Bag Height Desktop (px)",
+      "default": 48
+    },
+    {
+      "type": "number",
+      "id": "btn_add_height_mobile",
+      "label": "Add to Bag Height Mobile (px)",
+      "default": 48
+    },
+    {
+      "type": "checkbox",
+      "id": "btn_add_width_full_desktop",
+      "label": "Add to Bag Full Width Desktop",
+      "default": false
+    },
+    {
+      "type": "number",
+      "id": "btn_add_width_desktop",
+      "label": "Add to Bag Width Desktop (px)",
+      "default": 200
+    },
+    {
+      "type": "checkbox",
+      "id": "btn_add_width_full_mobile",
+      "label": "Add to Bag Full Width Mobile",
+      "default": false
+    },
+    {
+      "type": "number",
+      "id": "btn_add_width_mobile",
+      "label": "Add to Bag Width Mobile (px)",
+      "default": 180
+    },
+    {
+      "type": "header",
+      "content": "Buy Now Button Controls"
+    },
+    {
+      "type": "number",
+      "id": "btn_buy_font_size_desktop",
+      "label": "Buy Now Font Size Desktop (px)",
+      "default": 11
+    },
+    {
+      "type": "number",
+      "id": "btn_buy_font_size_mobile",
+      "label": "Buy Now Font Size Mobile (px)",
+      "default": 11
+    },
+    {
+      "type": "number",
+      "id": "btn_buy_height_desktop",
+      "label": "Buy Now Height Desktop (px)",
+      "default": 48
+    },
+    {
+      "type": "number",
+      "id": "btn_buy_height_mobile",
+      "label": "Buy Now Height Mobile (px)",
+      "default": 48
+    },
+    {
+      "type": "checkbox",
+      "id": "btn_buy_width_full_desktop",
+      "label": "Buy Now Full Width Desktop",
+      "default": true
+    },
+    {
+      "type": "number",
+      "id": "btn_buy_width_desktop",
+      "label": "Buy Now Width Desktop (px)",
+      "default": 300
+    },
+    {
+      "type": "checkbox",
+      "id": "btn_buy_width_full_mobile",
+      "label": "Buy Now Full Width Mobile",
+      "default": true
+    },
+    {
+      "type": "number",
+      "id": "btn_buy_width_mobile",
+      "label": "Buy Now Width Mobile (px)",
+      "default": 300
+    },
+    {
+      "type": "header",
       "content": "Product Information Settings"
     },
     {
@@ -2493,6 +2838,24 @@ window.tsukieToggleAccordion = function(header) {
       "id": "show_trust_badges_v2",
       "label": "Show Trust Badges Row (COD, Secure, Premium)",
       "default": true
+    },
+    {
+      "type": "html",
+      "id": "feature1_icon",
+      "label": "Feature 1 Icon (SVG/HTML)",
+      "default": "<svg fill=\"none\" stroke=\"currentColor\" viewBox=\"0 0 24 24\"><path stroke-linecap=\"round\" stroke-linejoin=\"round\" stroke-width=\"1.5\" d=\"M17 9V7a2 2 0 00-2-2H5a2 2 0 00-2 2v6a2 2 0 002 2h2m2 4h10a2 2 0 002-2v-6a2 2 0 00-2-2H9a2 2 0 00-2 2v6a2 2 0 002 2zm7-5a2 2 0 11-4 0 2 2 0 014 0z\"></path></svg>"
+    },
+    {
+      "type": "html",
+      "id": "feature2_icon",
+      "label": "Feature 2 Icon (SVG/HTML)",
+      "default": "<svg fill=\"none\" stroke=\"currentColor\" viewBox=\"0 0 24 24\"><path stroke-linecap=\"round\" stroke-linejoin=\"round\" stroke-width=\"1.5\" d=\"M9 12l2 2 4-4m5.618-4.016A11.955 0 0112 2.944a11.955 11.955 0 01-8.618 3.04A12.02 12.02 0 003 9c0 5.591 3.824 10.29 9 11.622 5.176-1.332 9-6.03 9-11.622 0-1.042-.133-2.052-.382-3.016z\"></path></svg>"
+    },
+    {
+      "type": "html",
+      "id": "feature3_icon",
+      "label": "Feature 3 Icon (SVG/HTML)",
+      "default": "<svg fill=\"none\" stroke=\"currentColor\" viewBox=\"0 0 24 24\"><path stroke-linecap=\"round\" stroke-linejoin=\"round\" stroke-width=\"1.5\" d=\"M20 7l-8-4-8 4m16 0l-8 4m8-4v10l-8 4m0-10L4 7m8 4v10M4 7v10l8 4\"></path></svg>"
     },
     {
       "type": "text",
