@@ -82,9 +82,9 @@
     -%}
 
     <div class="tsukie-product-price {% if has_color and color_option != blank %}has-swatches{% endif %}">
-      {{ product.price | money }}
+      {{ product.price | money | replace: '.00', '' }}
       {%- if product.compare_at_price > product.price -%}
-        <span class="tsukie-product-price--compare">{{ product.compare_at_price | money }}</span>
+        <span class="tsukie-product-price--compare">{{ product.compare_at_price | money | replace: '.00', '' }}</span>
       {%- endif -%}
     </div>
 

@@ -155,13 +155,13 @@ export function formatMoney(moneyValue, format, currency) {
   const currencyPrecision = CURRENCY_DECIMALS[currency.toUpperCase()] ?? DEFAULT_CURRENCY_DECIMALS;
   const divisor = Math.pow(10, currencyPrecision);
 
-  return format.replace(/{{\s*(\w+)\s*}}/g, (_, placeholder) => {
+  let result = format.replace(/{{\s*(\w+)\s*}}/g, (_, placeholder) => {
     if (typeof placeholder !== 'string') return '';
     if (placeholder === 'currency') return currency;
 
     let thousandsSeparator = ',';
     let decimalSeparator = '.';
-    let precision = currencyPrecision;
+    let precision = 0; // Force 0 decimals everywhere
 
     switch (placeholder) {
       case 'amount':
@@ -203,4 +203,6 @@ export function formatMoney(moneyValue, format, currency) {
 
     return formatCents(moneyValue, thousandsSeparator, decimalSeparator, precision, divisor);
   });
+
+  return result.replace(/\.00(?!\d)/g, '').replace(/,00(?!\d)/g, '');
 }

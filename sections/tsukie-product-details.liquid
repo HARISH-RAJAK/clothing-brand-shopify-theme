@@ -128,7 +128,7 @@
 }
 .tsukie-pdp-title{
   font-family:'Playfair Display',serif;
-  font-size:36px;
+  font-size:24px !important;
   font-weight:400;
   color:#1e2a38;
   margin:0 0 12px;
@@ -184,19 +184,19 @@
 .tsukie-price-row{
   margin-bottom:8px;
   display:flex;
-  align-items:baseline;
+  align-items:center !important;
   gap:12px;
   flex-wrap:wrap;
 }
 .tsukie-price{
   font-family:'Montserrat',sans-serif;
-  font-size:28px;
+  font-size:24px;
   font-weight:500;
   color:#1e2a38;
 }
 .tsukie-price-compare{
   font-family:'Montserrat',sans-serif;
-  font-size:16px;
+  font-size:12px;
   color:#999;
   text-decoration:line-through;
   font-weight:400;
@@ -346,9 +346,11 @@
 .tsukie-btn-add{
   background:#1e2a38;
   color:#d4c5a9;
+  border: 1px solid #1e2a38 !important;
 }
 .tsukie-btn-add:hover:not(:disabled){
   background:#2a3a4e;
+  border-color:#2a3a4e !important;
 }
 .tsukie-btn-buy{
   background:#5a4a3a;
@@ -460,10 +462,10 @@
     display:none;
   }
   .tsukie-pdp-title{
-    font-size:28px;
+    font-size:24px !important;
   }
   .tsukie-price{
-    font-size:24px;
+    font-size:20px;
   }
   .tsukie-btn-group{
     grid-template-columns:1fr;
@@ -543,6 +545,7 @@
   width: 65% !important;
   margin: 0 !important;
   height: 48px !important;
+  border: 1px solid #1e2a38 !important;
   box-sizing: border-box !important;
 }
 .tsukie-btn-row-2 {
@@ -551,10 +554,11 @@
 .tsukie-btn-buy {
   width: 100% !important;
   background: #1e2a38 !important;
-  color: #ffffff !important;
+  color: #D4C5A9 !important;
   border: none !important;
   margin: 0 !important;
   height: 48px !important;
+  font-size: 15px !important;
   box-sizing: border-box !important;
 }
 .tsukie-btn-buy:hover:not(:disabled) {
@@ -825,18 +829,14 @@
 
   /* Dynamic Customizer Overrides */
   #shopify-section-{{ section.id }} .tsukie-pdp-title {
-    {% if section.settings.title_font_size_desktop != blank %}
-      font-size: {{ section.settings.title_font_size_desktop }}px !important;
-    {% endif %}
+    font-size: 24px !important;
     {% if section.settings.title_alignment_desktop != blank %}
       text-align: {{ section.settings.title_alignment_desktop }} !important;
     {% endif %}
   }
   @media (max-width: 749px) {
     #shopify-section-{{ section.id }} .tsukie-pdp-title {
-      {% if section.settings.title_font_size_mobile != blank %}
-        font-size: {{ section.settings.title_font_size_mobile }}px !important;
-      {% endif %}
+      font-size: 24px !important;
       {% if section.settings.title_alignment_mobile != blank %}
         text-align: {{ section.settings.title_alignment_mobile }} !important;
       {% endif %}
@@ -845,7 +845,7 @@
 
   #shopify-section-{{ section.id }} .tsukie-price {
     {% if section.settings.price_font_size_desktop != blank %}
-      font-size: {{ section.settings.price_font_size_desktop }}px !important;
+      font-size: {{ section.settings.price_font_size_desktop | minus: 4 }}px !important;
     {% endif %}
     {% if section.settings.price_alignment_desktop != blank %}
       text-align: {{ section.settings.price_alignment_desktop }} !important;
@@ -854,7 +854,7 @@
   @media (max-width: 749px) {
     #shopify-section-{{ section.id }} .tsukie-price {
       {% if section.settings.price_font_size_mobile != blank %}
-        font-size: {{ section.settings.price_font_size_mobile }}px !important;
+        font-size: {{ section.settings.price_font_size_mobile | minus: 4 }}px !important;
       {% endif %}
       {% if section.settings.price_alignment_mobile != blank %}
         text-align: {{ section.settings.price_alignment_mobile }} !important;
@@ -905,7 +905,9 @@
   }
   #shopify-section-{{ section.id }} .tsukie-btn-buy {
     {% if section.settings.btn_buy_font_size_desktop != blank %}
-      font-size: {{ section.settings.btn_buy_font_size_desktop }}px !important;
+      font-size: {{ section.settings.btn_buy_font_size_desktop | plus: 4 }}px !important;
+    {% else %}
+      font-size: 15px !important;
     {% endif %}
     {% if section.settings.btn_buy_height_desktop != blank %}
       height: {{ section.settings.btn_buy_height_desktop }}px !important;
@@ -930,19 +932,21 @@
       {% elif section.settings.btn_add_width_mobile != blank %}
         width: {{ section.settings.btn_add_width_mobile }}px !important;
       {% endif %}
-    }
-    #shopify-section-{{ section.id }} .tsukie-btn-buy {
-      {% if section.settings.btn_buy_font_size_mobile != blank %}
-        font-size: {{ section.settings.btn_buy_font_size_mobile }}px !important;
-      {% endif %}
-      {% if section.settings.btn_buy_height_mobile != blank %}
-        height: {{ section.settings.btn_buy_height_mobile }}px !important;
-      {% endif %}
-      {% if section.settings.btn_buy_width_full_mobile %}
-        width: 100% !important;
-      {% elif section.settings.btn_buy_width_mobile != blank %}
-        width: {{ section.settings.btn_buy_width_mobile }}px !important;
-      {% endif %}
+    }      #shopify-section-{{ section.id }} .tsukie-btn-buy {
+        {% if section.settings.btn_buy_font_size_mobile != blank %}
+          font-size: {{ section.settings.btn_buy_font_size_mobile | plus: 4 }}px !important;
+        {% else %}
+          font-size: 15px !important;
+        {% endif %}
+        {% if section.settings.btn_buy_height_mobile != blank %}
+          height: {{ section.settings.btn_buy_height_mobile }}px !important;
+        {% endif %}
+        {% if section.settings.btn_buy_width_full_mobile %}
+          width: 100% !important;
+        {% elif section.settings.btn_buy_width_mobile != blank %}
+          width: {{ section.settings.btn_buy_width_mobile }}px !important;
+        {% endif %}
+      }
     }
   }
 </style>
@@ -1140,9 +1144,9 @@
       </div>
 
       <div class="tsukie-price-row" id="tsukie-price-wrapper">
-        <div class="tsukie-price" id="tsukie-price">{{ product.selected_or_first_available_variant.price | money }}</div>
+        <div class="tsukie-price" id="tsukie-price">{{ product.selected_or_first_available_variant.price | money | replace: '.00', '' }}</div>
         <div class="tsukie-price-compare" id="tsukie-compare-price" style="{% unless product.selected_or_first_available_variant.compare_at_price > product.selected_or_first_available_variant.price %}display:none;{% endunless %}">
-          {{ product.selected_or_first_available_variant.compare_at_price | money }}
+          {{ product.selected_or_first_available_variant.compare_at_price | money | replace: '.00', '' }}
         </div>
         <div class="tsukie-price-save" id="tsukie-save-badge" style="{% unless product.selected_or_first_available_variant.compare_at_price > product.selected_or_first_available_variant.price %}display:none;{% endunless %}">
           {% if product.selected_or_first_available_variant.compare_at_price > product.selected_or_first_available_variant.price %}
@@ -2049,11 +2053,12 @@ window.tsukieSelectOption = function(element, position, value) {
     if (varInput) varInput.value = matchedVariant.id;
     
     const formatter = new Intl.NumberFormat('en-IN', { style: 'currency', currency: 'INR', maximumFractionDigits: 0 });
+    const formatPrice = (val) => formatter.format(val).replace('₹', 'Rs. ').trim();
     const priceEl = container.querySelector('#tsukie-price');
     const emiEl = container.querySelector('#tsukie-emi-price');
     
-    if(priceEl) priceEl.textContent = formatter.format(matchedVariant.price / 100);
-    if(emiEl) emiEl.textContent = formatter.format((matchedVariant.price / 3) / 100) + '/month';
+    if(priceEl) priceEl.textContent = formatPrice(matchedVariant.price / 100);
+    if(emiEl) emiEl.textContent = formatPrice((matchedVariant.price / 3) / 100) + '/month';
     
     const compPriceEl = container.querySelector('#tsukie-compare-price');
     const saveBadgeEl = container.querySelector('#tsukie-save-badge');
@@ -2062,7 +2067,7 @@ window.tsukieSelectOption = function(element, position, value) {
     
     if(compPriceEl && saveBadgeEl) {
       if(matchedVariant.compare_at_price && matchedVariant.compare_at_price > matchedVariant.price) {
-        compPriceEl.textContent = formatter.format(matchedVariant.compare_at_price / 100);
+        compPriceEl.textContent = formatPrice(matchedVariant.compare_at_price / 100);
         compPriceEl.style.display = 'block';
         let pct = Math.round(((matchedVariant.compare_at_price - matchedVariant.price) * 100) / matchedVariant.compare_at_price);
         saveBadgeEl.textContent = `SAVE ${pct}%`;

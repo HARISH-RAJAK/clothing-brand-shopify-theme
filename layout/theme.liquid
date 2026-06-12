@@ -220,5 +220,61 @@
         if (modal) modal.classList.remove('open');
       }
     </script>
+
+    <!-- Global price decimal removal (Antigravity global patch) -->
+    <script>
+      (function() {
+        function removeDecimals(node) {
+          if (node.nodeType === Node.TEXT_NODE) {
+            const parent = node.parentElement;
+            if (!parent) return;
+            
+            const ignoreTags = ['SCRIPT', 'STYLE', 'TEXTAREA', 'INPUT', 'SELECT'];
+            if (ignoreTags.includes(parent.tagName)) return;
+            
+            const text = node.nodeValue;
+            const isPriceContainer = parent.closest('[class*="price"], [class*="money"], [class*="amount"], [class*="cart"], [class*="total"], [class*="badge"], [class*="qty"], [class*="quantity"]');
+            
+            if (isPriceContainer || /Rs\b|₹|INR/i.test(text)) {
+              const regex = /(\d+)(?:\.\d{2})\b/g;
+              const newVal = text.replace(regex, '$1');
+              if (text !== newVal) {
+                node.nodeValue = newVal;
+              }
+            }
+          } else {
+            const ignoreTags = ['SCRIPT', 'STYLE', 'TEXTAREA', 'INPUT', 'SELECT'];
+            if (!ignoreTags.includes(node.nodeName)) {
+              for (let i = 0; i < node.childNodes.length; i++) {
+                removeDecimals(node.childNodes[i]);
+              }
+            }
+          }
+        }
+
+        if (document.readyState === 'loading') {
+          document.addEventListener('DOMContentLoaded', () => removeDecimals(document.body));
+        } else {
+          removeDecimals(document.body);
+        }
+
+        const observer = new MutationObserver(function(mutations) {
+          mutations.forEach(function(mutation) {
+            mutation.addedNodes.forEach(function(node) {
+              removeDecimals(node);
+            });
+            if (mutation.type === 'characterData') {
+              removeDecimals(mutation.target);
+            }
+          });
+        });
+
+        observer.observe(document.body, {
+          childList: true,
+          subtree: true,
+          characterData: true
+        });
+      })();
+    </script>
   </body>
 </html>
