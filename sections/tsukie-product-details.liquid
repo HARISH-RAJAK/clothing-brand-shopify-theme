@@ -1,3 +1,2605 @@
+{% comment %} {% comment %}
+  Tsukie Product Page - Fixed Isolated Single Item Checkout Flow
+{% endcomment %}
+
+<style>
+/* Fonts loaded globally via theme.liquid — no @import needed here */
+
+.tsukie-product{
+  background:#f5f1ea;
+  padding:40px 0 80px;
+}
+.tsukie-product-container{
+  max-width:1400px;
+  margin:0 auto;
+  padding:0 40px;
+  display:grid;
+  grid-template-columns:1fr 1fr;
+  gap:60px;
+  align-items:start;
+}
+
+/* Left: Images */
+.tsukie-pdp-media{
+  position:sticky;
+  top:100px;
+  display:flex;
+  gap:12px;
+}
+.tsukie-thumbnails-wrapper {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 8px;
+  width: 80px;
+  flex-shrink: 0;
+}
+.tsukie-thumbnails{
+  display:flex;
+  flex-direction:column;
+  gap:8px;
+  max-height: 520px;
+  overflow-y: auto;
+  scroll-behavior: smooth;
+  scrollbar-width: none;
+}
+.tsukie-thumbnails::-webkit-scrollbar {
+  display: none;
+}
+.tsukie-thumb-nav {
+  background: none;
+  border: none;
+  cursor: pointer;
+  padding: 4px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: #1e2a38;
+}
+.tsukie-thumb-nav svg {
+  width: 16px;
+  height: 16px;
+}
+.tsukie-thumb{
+  background:#e8e4dd;
+  aspect-ratio:1;
+  cursor:pointer;
+  border:2px solid transparent;
+  transition:border 0.2s;
+  width: 80px;
+  height: 80px;
+}
+.tsukie-thumb.active{
+  border-color:#1e2a38;
+}
+.tsukie-thumb img{
+  width:100%;
+  height:100%;
+  object-fit:cover;
+  display:block;
+}
+.tsukie-main-image-wrap{
+  flex:1;
+}
+.tsukie-main-image{
+  position:relative;
+  background:#e8e4dd;
+}
+.tsukie-main-image img{
+  width:100%;
+  height:auto;
+  display:block;
+}
+.tsukie-badge{
+  position:absolute;
+  top:16px;
+  left:16px;
+  background:#1e2a38;
+  color:#d4c5a9;
+  font-family:'Montserrat',sans-serif;
+  font-size:10px;
+  letter-spacing:1px;
+  text-transform:uppercase;
+  padding:6px 12px;
+  font-weight:600;
+  z-index: 2;
+}
+.tsukie-carousel-nav{
+  position:absolute;
+  top:50%;
+  transform:translateY(-50%);
+  background:rgba(255,255,255,0.9);
+  border:none;
+  width:40px;
+  height:40px;
+  cursor:pointer;
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  z-index: 2;
+}
+.tsukie-carousel-nav.prev{left:12px}
+.tsukie-carousel-nav.next{right:12px}
+.tsukie-carousel-nav svg{width:18px;height:18px;color:#1e2a38}
+
+/* Right: Info */
+.tsukie-pdp-info{
+  padding-top:8px;
+}
+.tsukie-pdp-title{
+  font-family:'Playfair Display',serif;
+  font-size:36px;
+  font-weight:400;
+  color:#1e2a38;
+  margin:0 0 12px;
+  line-height:1.2;
+}
+.tsukie-product-subtitle{
+  font-family:'Montserrat',sans-serif;
+  font-size:13px;
+  color:#666;
+  margin:0 0 16px;
+  font-weight:300;
+}
+.tsukie-rating-row{
+  display:flex;
+  align-items:center;
+  gap:12px;
+  margin-bottom:20px;
+  padding-bottom:20px;
+  border-bottom:1px solid rgba(30,42,56,0.08);
+  flex-wrap:wrap;
+}
+.tsukie-stars{
+  display:flex;
+  gap:2px;
+}
+.tsukie-stars svg{
+  width:14px;
+  height:14px;
+  color:#1e2a38;
+  fill:#1e2a38;
+}
+.tsukie-rating-text{
+  font-family:'Montserrat',sans-serif;
+  font-size:13px;
+  color:#1e2a38;
+  font-weight:500;
+}
+.tsukie-rating-text span{
+  color:#666;
+  font-weight:400;
+}
+.tsukie-verified{
+  border:1px solid rgba(30,42,56,0.15);
+  padding:4px 10px;
+  font-family:'Montserrat',sans-serif;
+  font-size:10px;
+  letter-spacing:1px;
+  text-transform:uppercase;
+  color:#666;
+}
+
+/* Price */
+.tsukie-price-row{
+  margin-bottom:8px;
+  display:flex;
+  align-items:baseline;
+  gap:12px;
+  flex-wrap:wrap;
+}
+.tsukie-price{
+  font-family:'Montserrat',sans-serif;
+  font-size:28px;
+  font-weight:500;
+  color:#1e2a38;
+}
+.tsukie-price-compare{
+  font-family:'Montserrat',sans-serif;
+  font-size:16px;
+  color:#999;
+  text-decoration:line-through;
+  font-weight:400;
+}
+.tsukie-price-save{
+  background:#1e2a38;
+  color:#d4c5a9;
+  font-family:'Montserrat',sans-serif;
+  font-size:10px;
+  letter-spacing:1px;
+  padding:4px 8px;
+  font-weight:600;
+  text-transform:uppercase;
+}
+
+
+/* Variants */
+.tsukie-variant-section{
+  margin-bottom:20px;
+}
+.tsukie-variant-header{
+  display:flex;
+  justify-content:space-between;
+  align-items:center;
+  margin-bottom:12px;
+}
+.tsukie-variant-label{
+  font-family:'Montserrat',sans-serif;
+  font-size:11px;
+  letter-spacing:1.5px;
+  text-transform:uppercase;
+  color:#1e2a38;
+  font-weight:500;
+}
+.tsukie-variant-value{
+  font-family:'Montserrat',sans-serif;
+  font-size:11px;
+  color:#666;
+  font-weight:400;
+}
+.tsukie-color-swatches{
+  display:flex;
+  gap:10px;
+  flex-wrap:wrap;
+}
+.tsukie-color-swatch{
+  width:36px;
+  height:36px;
+  border-radius:50%;
+  border:2px solid transparent;
+  cursor:pointer;
+  transition:all 0.2s;
+}
+.tsukie-color-swatch.active{
+  border-color:#1e2a38;
+  box-shadow:0 0 0 2px #f5f1ea, 0 0 0 4px #1e2a38;
+}
+.tsukie-size-options{
+  display:flex;
+  gap:6px;
+  flex-wrap:wrap;
+}
+.tsukie-size-btn{
+  background:#fff;
+  border:1px solid rgba(30,42,56,0.15);
+  padding:8px 16px;
+  font-family:'Montserrat',sans-serif;
+  font-size:11px;
+  font-weight:500;
+  color:#1e2a38;
+  cursor:pointer;
+  transition:all 0.2s;
+  min-width:44px;
+}
+.tsukie-size-btn:hover{
+  border-color:#1e2a38;
+}
+.tsukie-size-btn.active{
+  background:#1e2a38;
+  color:#d4c5a9;
+  border-color:#1e2a38;
+}
+.tsukie-size-btn.disabled{
+  opacity:0.3;
+  cursor:not-allowed;
+  text-decoration:line-through;
+}
+.tsukie-size-guide{
+  margin-top:12px;
+  display:flex;
+  align-items:center;
+  gap:6px;
+  font-family:'Montserrat',sans-serif;
+  font-size:11px;
+  color:#666;
+}
+.tsukie-size-guide a{
+  color:#1e2a38;
+  text-decoration:underline;
+}
+.tsukie-inventory{
+  margin-top:12px;
+  font-family:'Montserrat',sans-serif;
+  font-size:11px;
+  color:#a08766;
+  display:flex;
+  align-items:center;
+  gap:6px;
+}
+.tsukie-inventory::before{
+  content:'';
+  width:6px;
+  height:6px;
+  background:#a08766;
+  border-radius:50%;
+}
+
+/* Buttons */
+.tsukie-product-form{
+  margin:32px 0;
+}
+.tsukie-btn-group{
+  display:grid;
+  grid-template-columns:1fr 1fr;
+  gap:12px;
+  margin-bottom:24px;
+}
+.tsukie-btn{
+  padding:16px;
+  font-family:'Montserrat',sans-serif;
+  font-size:11px;
+  letter-spacing:2px;
+  text-transform:uppercase;
+  font-weight:600;
+  cursor:pointer;
+  border:none;
+  transition:all 0.2s;
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  gap:8px;
+}
+.tsukie-btn:disabled{
+  opacity:0.5;
+  cursor:not-allowed;
+}
+.tsukie-btn-add{
+  background:#1e2a38;
+  color:#d4c5a9;
+}
+.tsukie-btn-add:hover:not(:disabled){
+  background:#2a3a4e;
+}
+.tsukie-btn-buy{
+  background:#5a4a3a;
+  color:#d4c5a9;
+  position: relative;
+}
+.tsukie-btn-buy:hover:not(:disabled){
+  background:#6a5a4a;
+}
+.tsukie-btn svg{width:16px;height:16px}
+
+/* Features Horizontal Row */
+.tsukie-features{
+  display:grid;
+  grid-template-columns:repeat(3,1fr);
+  gap:0;
+  border:1px solid rgba(30,42,56,0.08);
+  margin-bottom:24px;
+  background: transparent;
+}
+.tsukie-feature{
+  padding:20px 12px;
+  text-align:center;
+  border-right:1px solid rgba(30,42,56,0.08);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: flex-start;
+}
+.tsukie-feature:last-child{border-right:none}
+.tsukie-feature svg{
+  width:20px;
+  height:20px;
+  color:#1e2a38;
+  margin-bottom:8px;
+  flex-shrink: 0;
+}
+.tsukie-feature-title{
+  font-family:'Montserrat',sans-serif;
+  font-size:10px;
+  letter-spacing:1px;
+  text-transform:uppercase;
+  color:#1e2a38;
+  font-weight:600;
+  margin-bottom:4px;
+}
+.tsukie-feature-text{
+  font-family:'Montserrat',sans-serif;
+  font-size:11px;
+  color:#666;
+}
+
+/* Accordions */
+.tsukie-accordion{
+  border-top:1px solid rgba(30,42,56,0.08);
+}
+.tsukie-accordion-item{
+  border-bottom:1px solid rgba(30,42,56,0.08);
+}
+.tsukie-accordion-header{
+  padding:20px 0;
+  display:flex;
+  justify-content:space-between;
+  align-items:center;
+  cursor:pointer;
+  font-family:'Montserrat',sans-serif;
+  font-size:11px;
+  letter-spacing:2px;
+  text-transform:uppercase;
+  color:#1e2a38;
+  font-weight:500;
+}
+.tsukie-accordion-icon{
+  font-size:18px;
+  transition:transform 0.3s;
+  display: inline-block;
+  line-height: 1;
+}
+.tsukie-accordion-item.active .tsukie-accordion-icon{
+  transform:rotate(45deg);
+}
+.tsukie-accordion-content{
+  max-height:0;
+  overflow:hidden;
+  transition:all 0.3s ease-out;
+  font-family:'Montserrat',sans-serif;
+  font-size:13px;
+  line-height:1.8;
+  color:#666;
+}
+.tsukie-accordion-item.active .tsukie-accordion-content{
+  max-height:600px;
+  padding-bottom:20px;
+}
+
+/* Mobile Adjustments */
+@media(max-width:989px){
+  .tsukie-product-container{
+    grid-template-columns:1fr;
+    gap:24px;
+    padding:0 20px;
+  }
+  .tsukie-pdp-media{
+    position:relative;
+    top:0;
+    flex-direction:column;
+  }
+  .tsukie-thumbnails-wrapper{
+    display:none;
+  }
+  .tsukie-pdp-title{
+    font-size:28px;
+  }
+  .tsukie-price{
+    font-size:24px;
+  }
+  .tsukie-btn-group{
+    grid-template-columns:1fr;
+  }
+  /* STRICT Horizontal Lock on Mobile */
+  .tsukie-features{
+    grid-template-columns:repeat(3,1fr) !important;
+  }
+  .tsukie-feature{
+    padding:16px 4px;
+    border-right:1px solid rgba(30,42,56,0.08);
+    border-bottom:none;
+  }
+  .tsukie-feature-title{
+    font-size:8px;
+    letter-spacing:0.5px;
+  }
+  .tsukie-feature-text{
+    font-size:9px;
+  }
+}
+
+/* Custom Product Form Buttons Layout */
+.tsukie-btn-row-1 {
+  display: flex !important;
+  align-items: center !important;
+  gap: 8px !important;
+  margin-bottom: 8px !important;
+  width: 100% !important;
+}
+.tsukie-quantity-selector {
+  display: flex !important;
+  align-items: center !important;
+  width: 35% !important;
+  height: 48px !important;
+  border: 1px solid rgba(30,42,56,0.15) !important;
+  background: #fff !important;
+  box-sizing: border-box !important;
+}
+.tsukie-qty-btn {
+  background: none !important;
+  border: none !important;
+  width: 30% !important;
+  height: 100% !important;
+  cursor: pointer !important;
+  font-family: 'Montserrat', sans-serif !important;
+  font-size: 16px !important;
+  font-weight: 500 !important;
+  color: #1e2a38 !important;
+  display: flex !important;
+  align-items: center !important;
+  justify-content: center !important;
+  padding: 0 !important;
+}
+.tsukie-qty-btn:hover {
+  background: rgba(30,42,56,0.05) !important;
+}
+.tsukie-qty-input {
+  width: 40% !important;
+  height: 100% !important;
+  border: none !important;
+  text-align: center !important;
+  font-family: 'Montserrat', sans-serif !important;
+  font-size: 14px !important;
+  font-weight: 600 !important;
+  color: #1e2a38 !important;
+  background: transparent !important;
+  outline: none !important;
+  -moz-appearance: textfield !important;
+}
+.tsukie-qty-input::-webkit-outer-spin-button,
+.tsukie-qty-input::-webkit-inner-spin-button {
+  -webkit-appearance: none !important;
+  margin: 0 !important;
+}
+.tsukie-btn-add {
+  width: 65% !important;
+  margin: 0 !important;
+  height: 48px !important;
+  box-sizing: border-box !important;
+}
+.tsukie-btn-row-2 {
+  width: 100% !important;
+}
+.tsukie-btn-buy {
+  width: 100% !important;
+  background: #1e2a38 !important;
+  color: #ffffff !important;
+  border: none !important;
+  margin: 0 !important;
+  height: 48px !important;
+  box-sizing: border-box !important;
+}
+.tsukie-btn-buy:hover:not(:disabled) {
+  background: #2a3a4e !important;
+}
+/* Hide vertical thumbnail navigation arrows */
+.tsukie-thumb-nav, .product__media-thumbnails .slider-button {
+  display: none !important;
+}
+/* Fix empty space below main image */
+.product__media, .tsukie-main-image, .tsukie-main-image-slider, .tsukie-main-image-slide {
+  height: auto !important;
+  min-height: 0 !important;
+}
+.product__media img, .tsukie-main-image img, .tsukie-main-image-slide img {
+  object-fit: contain !important;
+  height: auto !important;
+  padding-bottom: 0 !important;
+}
+
+/* Image Slider Base Styles */
+.tsukie-main-image-slider {
+  display: flex !important;
+  overflow: hidden !important;
+  scroll-behavior: smooth !important;
+  scrollbar-width: none !important;
+  width: 100% !important;
+}
+.tsukie-main-image-slider::-webkit-scrollbar {
+  display: none !important;
+}
+.tsukie-main-image-slide {
+  flex: 0 0 100% !important;
+  width: 100% !important;
+}
+.tsukie-main-image-slide img {
+  width: 100% !important;
+  height: auto !important;
+  display: block !important;
+}
+.tsukie-carousel-dots {
+  display: none !important;
+}
+
+/* Mobile-only overrides (max-width: 749px) */
+@media (max-width: 749px) {
+  .tsukie-product-container {
+    padding: 0 !important;
+  }
+  .tsukie-pdp-media {
+    padding: 0 !important;
+    margin: 0 !important;
+    width: 100% !important;
+  }
+  .tsukie-pdp-info {
+    padding: 0 20px !important;
+  }
+  .tsukie-main-image-wrap {
+    width: 100vw !important;
+    max-width: 100vw !important;
+    overflow: hidden !important;
+    margin: 0 !important;
+    padding: 0 !important;
+  }
+  .tsukie-main-image-slider {
+    display: flex !important;
+    overflow-x: auto !important;
+    scroll-snap-type: x mandatory !important;
+    -webkit-overflow-scrolling: touch !important;
+    width: 100vw !important;
+    margin: 0 !important;
+    padding: 0 !important;
+  }
+  .tsukie-main-image-slide {
+    flex: 0 0 100vw !important;
+    width: 100vw !important;
+    scroll-snap-align: start !important;
+  }
+  .tsukie-carousel-nav {
+    display: none !important;
+  }
+  .tsukie-thumbnails-wrapper {
+    display: none !important;
+  }
+  .tsukie-carousel-dots {
+    display: flex !important;
+    justify-content: center !important;
+    gap: 8px !important;
+    margin-top: 16px !important;
+    margin-bottom: 8px !important;
+    width: 100% !important;
+  }
+  .tsukie-dot {
+    width: 8px !important;
+    height: 8px !important;
+    border-radius: 50% !important;
+    background-color: #D9D9D9 !important;
+    cursor: pointer !important;
+    transition: background-color 0.2s !important;
+  }
+  .tsukie-dot.active {
+    background-color: #1E2A38 !important;
+  }
+}
+
+/* Size Guide Modal Styles */
+.tsukie-size-guide-modal {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100vw;
+  height: 100vh;
+  z-index: 10000;
+  display: none;
+  align-items: center;
+  justify-content: center;
+}
+.tsukie-size-guide-modal-overlay {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: rgba(30, 42, 56, 0.6);
+  backdrop-filter: blur(4px);
+}
+.tsukie-size-guide-modal-content {
+  position: relative;
+  background: #fdfbf7;
+  border: 2px solid #d4c5a9;
+  border-radius: 8px;
+  width: 90%;
+  max-width: 500px;
+  padding: 30px;
+  box-shadow: 0 10px 30px rgba(0,0,0,0.15);
+  z-index: 10001;
+}
+.tsukie-size-guide-modal-close {
+  position: absolute;
+  top: 15px;
+  right: 15px;
+  background: none;
+  border: none;
+  font-size: 24px;
+  cursor: pointer;
+  color: #1e2a38;
+  line-height: 1;
+  padding: 0;
+  transition: color 0.2s;
+}
+.tsukie-size-guide-modal-close:hover {
+  color: #a08766;
+}
+.tsukie-size-guide-modal-title {
+  font-family: 'Playfair Display', serif;
+  font-size: 24px;
+  font-style: italic;
+  font-weight: 600;
+  color: #1e2a38;
+  margin: 0 0 20px;
+  text-align: center;
+}
+.tsukie-size-guide-table-wrap {
+  overflow-x: auto;
+}
+.tsukie-size-guide-table-wrap table {
+  width: 100%;
+  border-collapse: collapse;
+  font-family: 'Montserrat', sans-serif;
+  font-size: 13px;
+}
+.tsukie-size-guide-table-wrap th, 
+.tsukie-size-guide-table-wrap td {
+  padding: 12px;
+  border: 1px solid #e0d9cd;
+  text-align: center;
+}
+.tsukie-size-guide-table-wrap th {
+  background: #1e2a38;
+  color: #d4c5a9;
+  font-weight: 600;
+  text-transform: uppercase;
+  font-size: 11px;
+  letter-spacing: 1px;
+}
+.tsukie-size-guide-table-wrap tr:nth-child(even) {
+  background: rgba(212, 197, 169, 0.1);
+}
+
+/* Special Offers Section Styling (Vertical Stack) */
+.tsukie-special-offers-vertical {
+  background: #fdfbf7;
+  border: 1px solid #e0d9cd;
+  border-radius: 4px;
+  padding: 16px;
+  margin-bottom: 20px;
+  font-family: 'Montserrat', sans-serif;
+}
+.tsukie-offers-title-vertical {
+  font-size: 11px;
+  font-weight: 700;
+  color: #1e2a38;
+  text-transform: uppercase;
+  letter-spacing: 1px;
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  margin-bottom: 12px;
+  border-bottom: 1px solid rgba(30,42,56,0.08);
+  padding-bottom: 8px;
+}
+.tsukie-offers-title-vertical svg {
+  width: 14px;
+  height: 14px;
+  color: #a08766;
+}
+.tsukie-offers-list-vertical {
+  display: flex;
+  flex-direction: column;
+}
+.tsukie-offer-row-vertical {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 10px 0;
+  border-bottom: 1px solid rgba(30,42,56,0.08);
+  gap: 12px;
+}
+.tsukie-offer-row-vertical:last-child {
+  border-bottom: none;
+  padding-bottom: 0;
+}
+.tsukie-offer-text {
+  font-size: 12px;
+  color: #4a4a4a;
+  font-weight: 500;
+  text-align: left;
+}
+.tsukie-offer-coupon-btn {
+  background: #f5f1ea;
+  border: 1px dashed #d4c5a9;
+  border-radius: 3px;
+  padding: 6px 10px;
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  cursor: pointer;
+  transition: all 0.2s ease;
+  font-family: 'Montserrat', sans-serif;
+  flex-shrink: 0;
+}
+.tsukie-offer-coupon-btn:hover {
+  border-color: #1e2a38;
+  background: #e0d9cd;
+}
+.tsukie-offer-coupon-btn .coupon-code {
+  font-size: 11px;
+  font-weight: 700;
+  color: #1e2a38;
+}
+.tsukie-offer-coupon-btn .copy-lbl {
+  font-size: 9px;
+  text-transform: uppercase;
+  font-weight: 600;
+  color: #a08766;
+  border-left: 1px solid rgba(30,42,56,0.15);
+  padding-left: 8px;
+}
+</style>
+
+<section class="tsukie-product" data-section-id="{{ section.id }}" data-section-type="product">
+  <div class="tsukie-product-container">
+    <!-- Left Layout -->
+    <div class="tsukie-pdp-media">
+      {%- assign color_option_index = nil -%}
+      {%- for option in product.options_with_values -%}
+        {%- assign option_name_downcase = option.name | downcase -%}
+        {%- if option_name_downcase == 'color' or option_name_downcase == 'colour' -%}
+          {%- assign color_option_index = forloop.index -%}
+        {%- endif -%}
+      {%- endfor -%}
+      
+      {%- assign first_variant = product.variants.first -%}
+      {%- assign first_variant_color = "" -%}
+      {%- if color_option_index != nil and first_variant != nil -%}
+        {%- if color_option_index == 1 -%}
+          {%- assign first_variant_color = first_variant.option1 -%}
+        {%- elsif color_option_index == 2 -%}
+          {%- assign first_variant_color = first_variant.option2 -%}
+        {%- elsif color_option_index == 3 -%}
+          {%- assign first_variant_color = first_variant.option3 -%}
+        {%- endif -%}
+      {%- endif -%}
+
+      {%- comment -%} Precompute image colors mapping to prevent scoping/nested loop issues {%- endcomment -%}
+      {%- assign color_option_values = nil -%}
+      {%- for option in product.options_with_values -%}
+        {%- assign option_name_downcase = option.name | downcase -%}
+        {%- if option_name_downcase == 'color' or option_name_downcase == 'colour' -%}
+          {%- assign color_option_values = option.values -%}
+        {%- endif -%}
+      {%- endfor -%}
+      {%- assign num_colors = color_option_values.size -%}
+      {%- assign config_group_size = section.settings.color_media_group_size | default: 6 -%}
+      {%- if config_group_size == 0 -%}
+        {%- assign config_group_size = 1 -%}
+      {%- endif -%}
+
+      {%- assign image_colors_string = "" -%}
+      {%- for img in product.images -%}
+        {%- assign img_idx = forloop.index0 -%}
+        {%- assign img_colors = "" -%}
+        
+        {%- comment -%} 1. Check if image alt text contains any of the color values {%- endcomment -%}
+        {%- if num_colors > 0 -%}
+          {%- for color_val in color_option_values -%}
+            {%- assign color_val_down = color_val | downcase | strip -%}
+            {%- assign image_alt_down = img.alt | downcase | strip -%}
+            {%- if image_alt_down == color_val_down or image_alt_down contains color_val_down -%}
+              {%- assign img_colors = img_colors | append: ";" | append: color_val -%}
+            {%- endif -%}
+          {%- endfor -%}
+        {%- endif -%}
+        
+        {%- comment -%} 2. Check if this image is the featured image of any variant {%- endcomment -%}
+        {%- assign featured_var_color = "" -%}
+        {%- for variant in product.variants -%}
+          {%- assign var_img_id = nil -%}
+          {%- if variant.featured_image -%}
+            {%- assign var_img_id = variant.featured_image.id -%}
+          {%- elsif variant.featured_media -%}
+            {%- assign var_img_id = variant.featured_media.id -%}
+          {%- elsif variant.image -%}
+            {%- assign var_img_id = variant.image.id -%}
+          {%- endif -%}
+          {%- if var_img_id == img.id -%}
+            {%- if color_option_index == 1 -%}
+              {%- assign featured_var_color = variant.option1 -%}
+            {%- elsif color_option_index == 2 -%}
+              {%- assign featured_var_color = variant.option2 -%}
+            {%- elsif color_option_index == 3 -%}
+              {%- assign featured_var_color = variant.option3 -%}
+            {%- endif -%}
+            {%- if featured_var_color != blank -%}
+              {%- break -%}
+            {%- endif -%}
+          {%- endif -%}
+        {%- endfor -%}
+        
+        {%- if featured_var_color != blank -%}
+          {%- assign img_colors = img_colors | append: ";" | append: featured_var_color -%}
+        {%- endif -%}
+        
+        {%- comment -%} 3. Fallback to chunk-based sequential grouping if no specific matches found {%- endcomment -%}
+        {%- if img_colors == blank and num_colors > 0 -%}
+          {%- assign color_val_index = img_idx | divided_by: config_group_size -%}
+          {%- if color_val_index >= num_colors -%}
+            {%- assign color_val_index = num_colors | minus: 1 -%}
+          {%- endif -%}
+          {%- assign chunk_color = color_option_values[color_val_index] -%}
+          {%- if chunk_color != blank -%}
+            {%- assign img_colors = img_colors | append: ";" | append: chunk_color -%}
+          {%- endif -%}
+        {%- endif -%}
+        
+        {%- comment -%} Convert option values to clean format like |black|gold| {%- endcomment -%}
+        {%- assign raw_colors = img_colors | split: ";" | uniq -%}
+        {%- assign clean_colors_formatted = "" -%}
+        {%- for rc in raw_colors -%}
+          {%- if rc != blank -%}
+            {%- assign clean_colors_formatted = clean_colors_formatted | append: "|" | append: rc | append: "|" -%}
+          {%- endif -%}
+        {%- endfor -%}
+        {%- if clean_colors_formatted == blank -%}
+          {%- assign clean_colors_formatted = "unknown" -%}
+        {%- endif -%}
+        
+        {%- assign image_colors_string = image_colors_string | append: clean_colors_formatted | append: "::" -%}
+      {%- endfor -%}
+      {%- assign image_colors_array = image_colors_string | split: "::" -%}
+
+      <div class="tsukie-thumbnails-wrapper">
+        {% if product.images.size > 6 %}
+          <button class="tsukie-thumb-nav" type="button" onclick="tsukieScrollThumbs('up', this)">
+            <svg fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 15l7-7 7 7"></path></svg>
+          </button>
+        {% endif %}
+        
+        <div class="tsukie-thumbnails" id="tsukie-thumbs-list">
+          {% for image in product.images %}
+            {%- assign image_colors_clean = image_colors_array[forloop.index0] -%}
+            <div class="tsukie-thumb {% if forloop.first %}active{% endif %}" onclick="tsukieChangeImage('{{ image | img_url: '1000x' }}', {{ forloop.index0 }}, this)" data-colors="{{ image_colors_clean | downcase | escape }}">
+              <img src="{{ image | img_url: '200x' }}" alt="{{ product.title | escape }}" loading="lazy">
+            </div>
+          {% endfor %}
+        </div>
+
+        {% if product.images.size > 6 %}
+          <button class="tsukie-thumb-nav" type="button" onclick="tsukieScrollThumbs('down', this)">
+            <svg fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"></path></svg>
+          </button>
+        {% endif %}
+      </div>
+
+      <div class="tsukie-main-image-wrap">
+        <div class="tsukie-main-image">
+          {%- assign pdp_badge_text = product.metafields.custom.badge.value | default: product.metafields.custom.badge -%}
+          {%- if pdp_badge_text != blank -%}
+            <div class="tsukie-badge">{{ pdp_badge_text }}</div>
+          {%- endif -%}
+          
+          <div class="tsukie-main-image-slider" onscroll="tsukieOnSliderScroll(this)">
+            {% for image in product.images %}
+              {%- assign image_colors_clean = image_colors_array[forloop.index0] -%}
+              <div class="tsukie-main-image-slide" data-index="{{ forloop.index0 }}" data-colors="{{ image_colors_clean | downcase | escape }}">
+                <img src="{{ image | img_url: '1000x' }}" alt="{{ product.title | escape }}" loading="lazy">
+              </div>
+            {% endfor %}
+          </div>
+          
+          <button class="tsukie-carousel-nav prev" type="button" onclick="tsukiePrevImage(this)">
+            <svg fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M15 19l-7-7 7-7"></path></svg>
+          </button>
+          <button class="tsukie-carousel-nav next" type="button" onclick="tsukieNextImage(this)">
+            <svg fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M9 5l7 7-7 7"></path></svg>
+          </button>
+        </div>
+        
+        <div class="tsukie-carousel-dots">
+          {% for image in product.images %}
+            {%- assign image_colors_clean = image_colors_array[forloop.index0] -%}
+            <span class="tsukie-dot {% if forloop.first %}active{% endif %}" onclick="tsukieScrollToImage(this, {{ forloop.index0 }})" data-colors="{{ image_colors_clean | downcase | escape }}"></span>
+          {% endfor %}
+        </div>
+      </div>
+    </div>
+
+    <!-- Right Layout -->
+    <div class="tsukie-pdp-info">
+      <h1 class="tsukie-pdp-title">{{ product.title }}</h1>
+
+      {% if product.metafields.custom.subtitle %}
+        <p class="tsukie-product-subtitle">{{ product.metafields.custom.subtitle }}</p>
+      {% endif %}
+
+      {% if product.metafields.reviews.rating.value != blank and product.metafields.reviews.rating_count != blank and product.metafields.reviews.rating_count > 0 %}
+        {% assign pdp_rating = product.metafields.reviews.rating.value %}
+        {% assign pdp_reviews_count = product.metafields.reviews.rating_count %}
+      {% else %}
+        {% assign pdp_rating = section.settings.default_rating | default: '4.5' %}
+        {% assign pdp_reviews_count = section.settings.default_review_count | default: 12 %}
+      {% endif %}
+      <div class="tsukie-rating-row">
+        <div class="tsukie-stars">
+          {% for i in (1..5) %}
+            <svg viewBox="0 0 20 20"><path d="M10 15l-5.878 3.09 1.123-6.545L.489 6.91l6.572-.955L10 0l2.939 5.955 6.572.955-4.756 4.635 1.123 6.545z"/></svg>
+          {% endfor %}
+        </div>
+        <div class="tsukie-rating-text">{{ pdp_rating }} <span>{{ pdp_reviews_count }} reviews</span></div>
+        <div class="tsukie-verified">VERIFIED PURCHASE</div>
+      </div>
+
+      <div class="tsukie-price-row" id="tsukie-price-wrapper">
+        <div class="tsukie-price" id="tsukie-price">{{ product.selected_or_first_available_variant.price | money }}</div>
+        <div class="tsukie-price-compare" id="tsukie-compare-price" style="{% unless product.selected_or_first_available_variant.compare_at_price > product.selected_or_first_available_variant.price %}display:none;{% endunless %}">
+          {{ product.selected_or_first_available_variant.compare_at_price | money }}
+        </div>
+        <div class="tsukie-price-save" id="tsukie-save-badge" style="{% unless product.selected_or_first_available_variant.compare_at_price > product.selected_or_first_available_variant.price %}display:none;{% endunless %}">
+          {% if product.selected_or_first_available_variant.compare_at_price > product.selected_or_first_available_variant.price %}
+            SAVE {{ product.selected_or_first_available_variant.compare_at_price | minus: product.selected_or_first_available_variant.price | times: 100 | divided_by: product.selected_or_first_available_variant.compare_at_price }}%
+          {% endif %}
+        </div>
+      </div>
+      
+      <!-- 1. PNG Trust Badges Section -->
+      <style>
+        .tsukie-pdp-badges {
+          display: flex;
+          flex-wrap: wrap;
+          justify-content: flex-start;
+          gap: 12px;
+          margin-top: 14px;
+          margin-bottom: 24px;
+          width: 100%;
+        }
+        .tsukie-pdp-badge {
+          display: inline-flex;
+          align-items: center;
+          justify-content: center;
+          background-color: transparent;
+          padding: 0px;
+          border-radius: 6px;
+          flex: 0 0 auto !important;
+          width: fit-content;
+          max-width: 100%;
+        }
+        .tsukie-pdp-badge img {
+          height: 18px !important;
+          width: auto !important;
+          object-fit: contain;
+          flex-shrink: 0;
+          image-rendering: -webkit-optimize-contrast;
+        }
+      </style>
+      <div class="tsukie-pdp-badges">
+        <div class="tsukie-pdp-badge">
+          <img src="//tsukie.in/cdn/shop/files/1-01.png?v=1776420000&width=200" alt="Free Shipping" width="100" height="23" loading="lazy">
+        </div>
+        <div class="tsukie-pdp-badge">
+          <img src="//tsukie.in/cdn/shop/files/1-03.png?v=1776420000&width=200" alt="7 Days Return" width="100" height="23" loading="lazy">
+        </div>
+        <div class="tsukie-pdp-badge">
+          <img src="//tsukie.in/cdn/shop/files/1-02.png?v=1776419999&width=200" alt="Secure Payment" width="100" height="23" loading="lazy">
+        </div>
+      </div>
+
+      {% form 'product', product, class: 'tsukie-product-form', id: 'tsukie-product-form' %}
+        <input type="hidden" name="id" value="{{ product.selected_or_first_available_variant.id }}" id="tsukie-variant-id">
+        
+        {% unless product.has_only_default_variant %}
+          {% for option in product.options_with_values %}
+            {% assign option_index = forloop.index %}
+            <div class="tsukie-variant-section">
+              <div class="tsukie-variant-header">
+                <div style="display:flex; align-items:center; gap:8px;">
+                  <div class="tsukie-variant-label">{{ option.name }}</div>
+                  {% assign opt_name_down = option.name | downcase %}
+                  {% if opt_name_down == 'size' or opt_name_down == 'size/fits' or opt_name_down == 'fit' %}
+                    {% if section.settings.show_size_guide %}
+                      <span style="color:#d4c5a9;">|</span>
+                      <a href="#" onclick="tsukieOpenSizeGuide(event, this)" class="tsukie-size-guide-link" style="color:#a08766; text-decoration:underline; font-size:11px; font-family:'Montserrat',sans-serif; text-transform:uppercase; font-weight:600; letter-spacing:1px;">Size Guide</a>
+                    {% endif %}
+                  {% endif %}
+                </div>
+                <div class="tsukie-variant-value" id="tsukie-selected-{{ option.name | handleize }}">{{ option.selected_value }}</div>
+              </div>
+              
+              {% assign opt_name_down = option.name | downcase %}
+              {% if opt_name_down == 'color' or opt_name_down == 'colour' %}
+                <div class="tsukie-color-swatches">
+                  {% for value in option.values %}
+                    <div 
+                      class="tsukie-color-swatch {% if option.selected_value == value %}active{% endif %}" 
+                      style="background-color: {{ value | handleize }};"
+                      data-option-position="{{ option_index }}"
+                      onclick='tsukieSelectOption(this, {{ option_index }}, {{ value | json }})'
+                    ></div>
+                  {% endfor %}
+                </div>
+              {% else %}
+                <div class="tsukie-size-options">
+                  {% for value in option.values %}
+                    <button 
+                      type="button"
+                      class="tsukie-size-btn {% if option.selected_value == value %}active{% endif %}"
+                      data-option-position="{{ option_index }}"
+                      onclick='tsukieSelectOption(this, {{ option_index }}, {{ value | json }})'
+                    >{{ value }}</button>
+                  {% endfor %}
+                </div>
+              {% endif %}
+            </div>
+          {% endfor %}
+        {% endunless %}
+
+        <div class="tsukie-inventory" id="tsukie-inventory" {% if product.selected_or_first_available_variant.inventory_management and product.selected_or_first_available_variant.inventory_quantity < 10 and product.selected_or_first_available_variant.inventory_quantity > 0 %}{% else %}style="display:none"{% endif %}>
+          Only <span id="tsukie-nav-qty">{{ product.selected_or_first_available_variant.inventory_quantity }}</span> left in stock
+        </div>
+
+        {% if section.settings.show_trust_badge_1 %}
+          <div class="tsukie-cod-badge" style="font-size: 13px; margin-top: 12px; margin-bottom: 16px; display: flex; align-items: center; gap: 6px; font-family: 'Montserrat', sans-serif; color: #1e2a38; font-weight: 500;">
+            <svg class="tsukie-tick-icon" fill="none" stroke="currentColor" stroke-width="2.5" viewBox="0 0 24 24" style="width: 16px; height: 16px; color: #1e2a38; flex-shrink: 0;"><path stroke-linecap="round" stroke-linejoin="round" d="M5 13l4 4L19 7"></path></svg>
+            <span>{{ section.settings.trust_badge_text_1 | default: 'COD Available' }}</span>
+          </div>
+        {% endif %}
+
+        {% assign offer1_code = section.settings.offer_1_code | default: 'TSUKIE10' %}
+        {% assign offer1_text = section.settings.offer_1_text | default: 'Buy 1 get 10% off' %}
+        {% assign offer2_code = section.settings.offer_2_code | default: 'TSUKIE25' %}
+        {% assign offer2_text = section.settings.offer_2_text | default: 'Buy 2 get 25% off' %}
+        {% if section.settings.show_special_offers %}
+        <div class="tsukie-special-offers-vertical">
+          <div class="tsukie-offers-title-vertical">
+            <svg fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M9.568 3H5.25A2.25 2.25 0 003 5.25v4.318c0 .597.237 1.17.659 1.591l9.581 9.581a1.125 1.125 0 001.59 0l4.318-4.318a1.125 1.125 0 000-1.59l-9.58-9.581a1.125 1.125 0 00-1.591-.659zm5.432 4.5a1.125 1.125 0 11-2.25 0 1.125 1.125 0 012.25 0z" /></svg>
+            <span>SPECIAL OFFERS</span>
+          </div>
+          <div class="tsukie-offers-list-vertical">
+            {% if section.settings.show_offer_1 %}
+              <div class="tsukie-offer-row-vertical">
+                <span class="tsukie-offer-text">{{ offer1_text }}</span>
+                <button type="button" class="tsukie-offer-coupon-btn" onclick="tsukieCopyCode(this, '{{ offer1_code }}')" title="Click to copy {{ offer1_code }}">
+                  <span class="coupon-code">{{ offer1_code }}</span>
+                  <span class="copy-lbl">COPY</span>
+                </button>
+              </div>
+            {% endif %}
+            {% if section.settings.show_offer_2 %}
+              <div class="tsukie-offer-row-vertical">
+                <span class="tsukie-offer-text">{{ offer2_text }}</span>
+                <button type="button" class="tsukie-offer-coupon-btn" onclick="tsukieCopyCode(this, '{{ offer2_code }}')" title="Click to copy {{ offer2_code }}">
+                  <span class="coupon-code">{{ offer2_code }}</span>
+                  <span class="copy-lbl">COPY</span>
+                </button>
+              </div>
+            {% endif %}
+          </div>
+        </div>
+        {% endif %}
+
+        <div class="tsukie-btn-row-1">
+          <div class="tsukie-quantity-selector">
+            <button type="button" class="tsukie-qty-btn minus" onclick="tsukieUpdateQty(this, -1)">-</button>
+            <input type="number" name="quantity" value="1" min="1" class="tsukie-qty-input" readonly>
+            <button type="button" class="tsukie-qty-btn plus" onclick="tsukieUpdateQty(this, 1)">+</button>
+          </div>
+          
+          <button type="submit" name="add" id="tsukie-add-to-cart-btn" class="tsukie-btn ss-add-to-cart tsukie-btn-add" {% unless product.selected_or_first_available_variant.available %}disabled{% endunless %}>
+            {{ 'icon-cart.svg' | inline_asset_content }}
+            <span id="tsukie-add-btn-text">{% if product.selected_or_first_available_variant.available %}ADD TO BAG{% else %}SOLD OUT{% endif %}</span>
+          </button>
+        </div>
+        
+        <div class="tsukie-btn-row-2">
+          <!-- Pure Clean Isolated Dynamic Buy Button -->
+          <button type="button" id="tsukie-buy-now-btn" class="tsukie-btn tsukie-btn-buy" onclick="tsukieBuyNowClean(this)" {% unless product.selected_or_first_available_variant.available %}disabled{% endunless %}>
+            <span id="tsukie-buy-text">BUY NOW</span>
+          </button>
+        </div>
+      {% endform %}
+<!-- BUY NOW BUTTON KE THEEK NEECHE YAHAN SE PASTE KAREIN -->
+<style>
+  /* 3 Badges - Exact Image Match & Fully Responsive */
+  .tsukie-trust-badges-v2 {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 10px;
+    margin: 24px 0;
+  }
+  .tsukie-badge-card-v2 {
+    background: #b6b9a6; /* Exact olive-gray shade from image */
+    border-radius: 8px;
+    padding: 14px 4px;
+    text-align: center;
+    border: 1px solid rgba(0, 0, 0, 0.05);
+  }
+  .tsukie-badge-card-v2 svg {
+    width: 28px;
+    height: 28px;
+    color: #1e2a38; /* Theme Primary Navy */
+    margin-bottom: 4px;
+    display: inline-block;
+  }
+  .tsukie-badge-title-v2 {
+    font-family: 'Montserrat', sans-serif;
+    font-size: 13px;
+    font-weight: 700;
+    color: #1e2a38;
+    letter-spacing: -0.2px;
+    line-height: 1.2;
+  }
+
+  /* Order Status Section */
+  .tsukie-order-status-v2 {
+    text-align: center;
+    margin-top: 28px;
+    background: transparent;
+    margin-bottom: 24px !important;
+  }
+  .tsukie-status-title-v2 {
+    font-family: 'Montserrat', sans-serif;
+    font-size: 16px;
+    font-weight: 800;
+    color: #1e2a38;
+    letter-spacing: 0.5px;
+    margin: 0 0 6px 0;
+    text-transform: uppercase;
+  }
+  .tsukie-status-subtitle-v2 {
+    font-family: 'Montserrat', sans-serif;
+    font-size: 13px;
+    color: #4a4a4a;
+    margin: 0 0 24px 0;
+    font-weight: 400;
+  }
+  
+  /* Timeline Grid Base Line (Zero Breaking on Mobile) */
+  .tsukie-timeline-v2 {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    position: relative;
+    max-width: 420px;
+    margin: 0 auto 12px;
+    padding: 0 35px;
+  }
+  /* The Solid Connecting Line */
+  .tsukie-timeline-v2::before {
+    content: '';
+    position: absolute;
+    top: 50%;
+    left: 45px;
+    right: 45px;
+    height: 2px;
+    background: #1e2a38;
+    transform: translateY(-50%);
+    z-index: 1;
+  }
+  .tsukie-node-v2 {
+    position: relative;
+    z-index: 2;
+  }
+  .tsukie-circle-v2 {
+    width: 34px;
+    height: 34px;
+    border-radius: 50%;
+    border: 2px solid #1e2a38;
+    background: #f5f1ea; /* Matching your theme background */
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+  .tsukie-circle-v2 svg {
+    width: 18px;
+    height: 18px;
+    color: #1e2a38;
+    stroke-width: 2.5;
+  }
+  
+  /* Bottom Text Labels Layout */
+  .tsukie-labels-grid-v2 {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    max-width: 480px;
+    margin: 0 auto;
+    gap: 4px;
+  }
+  .tsukie-label-item-v2 {
+    text-align: center;
+    padding: 0 2px;
+  }
+  .tsukie-lbl-title-v2 {
+    font-family: 'Montserrat', sans-serif;
+    font-size: 12px;
+    font-weight: 700;
+    color: #1e2a38;
+    margin-bottom: 3px;
+    line-height: 1.2;
+  }
+  .tsukie-lbl-date-v2 {
+    font-family: 'Montserrat', sans-serif;
+    font-size: 11px;
+    color: #666666;
+    font-weight: 500;
+    line-height: 1.2;
+  }
+
+  /* Mobile Responsive Viewport Tweaks */
+  @media (max-width: 480px) {
+    .tsukie-badge-title-v2 {
+      font-size: 10px;
+    }
+    .tsukie-badge-card-v2 {
+      padding: 10px 2px;
+    }
+    .tsukie-badge-card-v2 svg {
+      width: 22px;
+      height: 22px;
+    }
+    .tsukie-lbl-title-v2 {
+      font-size: 10px;
+    }
+    .tsukie-lbl-date-v2 {
+      font-size: 9px;
+    }
+    .tsukie-timeline-v2 {
+      padding: 0 25px;
+    }
+    .tsukie-timeline-v2::before {
+      left: 35px;
+      right: 35px;
+    }
+    .tsukie-circle-v2 {
+      width: 28px;
+      height: 28px;
+    }
+    .tsukie-circle-v2 svg {
+      width: 14px;
+      height: 14px;
+    }
+  }
+</style>
+
+<!-- 1. Three Colored Trust Badges Section -->
+{% if section.settings.show_trust_badges_v2 %}
+<div class="tsukie-trust-badges-v2">
+  <div class="tsukie-badge-card-v2">
+    <svg fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M17 9V7a2 2 0 00-2-2H5a2 2 0 00-2 2v6a2 2 0 002 2h2m2 4h10a2 2 0 002-2v-6a2 2 0 00-2-2H9a2 2 0 00-2 2v6a2 2 0 002 2zm7-5a2 2 0 11-4 0 2 2 0 014 0z"></path></svg>
+    <div class="tsukie-badge-title-v2">COD Available</div>
+  </div>
+  <div class="tsukie-badge-card-v2">
+    <svg fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M9 12l2 2 4-4m5.618-4.016A11.955 0 0112 2.944a11.955 11.955 0 01-8.618 3.04A12.02 12.02 0 003 9c0 5.591 3.824 10.29 9 11.622 5.176-1.332 9-6.03 9-11.622 0-1.042-.133-2.052-.382-3.016z"></path></svg>
+    <div class="tsukie-badge-title-v2">Secure Checkout</div>
+  </div>
+  <div class="tsukie-badge-card-v2">
+    <svg fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M20 7l-8-4-8 4m16 0l-8 4m8-4v10l-8 4m0-10L4 7m8 4v10M4 7v10l8 4"></path></svg>
+    <div class="tsukie-badge-title-v2">Premium Fabric</div>
+  </div>
+</div>
+{% endif %}
+
+<!-- 2. Tracker Section -->
+{% if section.settings.show_order_status %}
+<div class="tsukie-order-status-v2">
+  <h3 class="tsukie-status-title-v2">{{ section.settings.tracker_title | default: 'ORDER STATUS' }}</h3>
+  <p class="tsukie-status-subtitle-v2">{{ section.settings.tracker_subtitle | default: 'Track your delivery and expected arrival time!' }}</p>
+  
+  <!-- Tracker Node Line -->
+  <div class="tsukie-timeline-v2">
+    <div class="tsukie-node-v2">
+      <div class="tsukie-circle-v2 active">
+        <svg fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="3" d="M5 13l4 4L19 7"></path></svg>
+      </div>
+    </div>
+    <div class="tsukie-node-v2">
+      <div class="tsukie-circle-v2 active">
+        <svg fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="3" d="M5 13l4 4L19 7"></path></svg>
+      </div>
+    </div>
+    <div class="tsukie-node-v2">
+      <div class="tsukie-circle-v2">
+        <svg fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z"></path></svg>
+      </div>
+    </div>
+  </div>
+  
+  <!-- Labels with Automated Live Real Dates -->
+  <div class="tsukie-labels-grid-v2">
+    <div class="tsukie-label-item-v2">
+      <div class="tsukie-lbl-title-v2">{{ section.settings.tracker_node1_title | default: 'Order Confirmed' }}</div>
+      <div class="tsukie-lbl-date-v2">{{ "now" | date: "%b %d %A" }}</div>
+    </div>
+    <div class="tsukie-label-item-v2">
+      <div class="tsukie-lbl-title-v2">{{ section.settings.tracker_node2_title | default: 'On Its Way' }}</div>
+      <div class="tsukie-lbl-date-v2">{{ "now" | date: "%s" | plus: 86400 | date: "%b %d %A" }}</div>
+    </div>
+    <div class="tsukie-label-item-v2">
+      <div class="tsukie-lbl-title-v2">{{ section.settings.tracker_node3_title | default: 'Arriving Soon' }}</div>
+      <div class="tsukie-lbl-date-v2">Expected {{ "now" | date: "%s" | plus: 259200 | date: "%b %d %A" }}</div>
+    </div>
+  </div>
+  {% if section.settings.show_order_status_bottom_text %}
+    <div class="tsukie-order-status-bottom-text" style="font-family: 'Montserrat', sans-serif; font-size: 13px; color: #1e2a38; margin-top: 16px; font-weight: 500; text-align: center;">
+      {{ section.settings.order_status_bottom_text | default: 'Hassle-free 7 day returns' }}
+    </div>
+  {% endif %}
+</div>
+{% endif %}
+<!-- END OF TRACKER CODES -->
+      <div class="tsukie-features">
+        <div class="tsukie-feature">
+          <svg fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M5 3v4M3 5h4M6 17v4m-2-2h4m5-16l2.286 6.857L21 12l-5.714 2.143L13 21l-2.286-6.857L5 12l5.714-2.143L13 3z"></path></svg>
+          <div class="tsukie-feature-title">PREMIUM FABRIC</div>
+          <div class="tsukie-feature-text">100% Viscose</div>
+        </div>
+        <div class="tsukie-feature">
+          <svg fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M4 4v5h.582m15.356 2A8.001 0 004.582 9m0 0H9m11 11v-5h-.581m0 0a8.003 0 01-15.357-2m15.357 2H15"></path></svg>
+          <div class="tsukie-feature-title">EASY EXCHANGE</div>
+          <div class="tsukie-feature-text">14 days</div>
+        </div>
+        <div class="tsukie-feature">
+          <svg fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M9 12l2 2 4-4m5.618-4.016A11.955 0 0112 2.944a11.955 11.955 0 01-8.618 3.04A12.02 12.02 0 003 9c0 5.591 3.824 10.29 9 11.622 5.176-1.332 9-6.03 9-11.622 0-1.042-.133-2.052-.382-3.016z"></path></svg>
+          <div class="tsukie-feature-title">SECURE PAYMENT</div>
+          <div class="tsukie-feature-text">UPI · Cards · COD</div>
+        </div>
+      </div>
+
+      <!-- Accordion Blocks -->
+      <div class="tsukie-accordion">
+        {% assign t1_title = section.settings.tab1_title | default: "WHY YOU'LL LOVE IT" %}
+        {% assign t1_content = section.settings.tab1_content | default: product.description %}
+        {% if t1_content != blank %}
+          <div class="tsukie-accordion-item">
+            <div class="tsukie-accordion-header" onclick="tsukieToggleAccordion(this)">
+              {{ t1_title | upcase }} <span class="tsukie-accordion-icon">+</span>
+            </div>
+            <div class="tsukie-accordion-content">
+              <div style="padding-top:12px;">{{ t1_content }}</div>
+            </div>
+          </div>
+        {% endif %}
+        
+        {% assign t2_title = section.settings.tab2_title | default: "FABRIC & CARE" %}
+        {% assign t2_content = section.settings.tab2_content | default: product.metafields.custom.fabric_care | default: 'Dry clean only. Do not tumble dry. Iron on low heat.' %}
+        {% if t2_content != blank %}
+          <div class="tsukie-accordion-item">
+            <div class="tsukie-accordion-header" onclick="tsukieToggleAccordion(this)">
+              {{ t2_title | upcase }} <span class="tsukie-accordion-icon">+</span>
+            </div>
+            <div class="tsukie-accordion-content">
+              <div style="padding-top:12px;">{{ t2_content }}</div>
+            </div>
+          </div>
+        {% endif %}
+        
+        {% assign t3_title = section.settings.tab3_title | default: "SHIPPING & RETURNS" %}
+        {% assign t3_content = section.settings.tab3_content | default: 'Free shipping on orders above ₹1,999. Easy 14-day returns and exchanges. Delivery within 5-7 business days across India.' %}
+        {% if t3_content != blank %}
+          <div class="tsukie-accordion-item">
+            <div class="tsukie-accordion-header" onclick="tsukieToggleAccordion(this)">
+              {{ t3_title | upcase }} <span class="tsukie-accordion-icon">+</span>
+            </div>
+            <div class="tsukie-accordion-content">
+              <div style="padding-top:12px;">{{ t3_content }}</div>
+            </div>
+          </div>
+        {% endif %}
+      </div>
+    </div>
+  </div>
+
+<!-- Size Guide Modal Markup -->
+{%- assign size_guide_img_url = section.settings.size_guide_image | image_url: width: 1200 | default: 'https://tsukie.in/cdn/shop/files/Relaxed-Fit-Balloon-Sleeve-Short-Dress.jpg?v=1777913683&width=1200' -%}
+<div class="tsukie-size-guide-modal" id="tsukie-size-guide-modal" style="display:none;">
+  <div class="tsukie-size-guide-modal-overlay" onclick="tsukieCloseSizeGuide(this)"></div>
+  <div class="tsukie-size-guide-modal-content">
+    <button class="tsukie-size-guide-modal-close" onclick="tsukieCloseSizeGuide(this)">&times;</button>
+    <h3 class="tsukie-size-guide-modal-title">Size Guide</h3>
+    <div class="tsukie-size-guide-img-wrap" style="text-align: center; margin-top: 10px; overflow: hidden; border-radius: 4px;">
+      <img src="{{ size_guide_img_url }}" alt="Size Guide" style="width: 100%; height: auto; display: block; max-width: 100%;" loading="lazy">
+    </div>
+  </div>
+</div>
+</section>
+
+<script>
+// Save product to Recently Viewed in localStorage
+(function() {
+  var currentId = '{{ product.id }}';
+  var currentHandle = '{{ product.handle }}';
+  if (currentId && currentHandle) {
+    try {
+      // 1. Update recentlyViewedProducts (array of handles)
+      var recentlyViewed = [];
+      try {
+        var raw = localStorage.getItem('recentlyViewedProducts');
+        if (raw) {
+          recentlyViewed = JSON.parse(raw);
+        }
+      } catch(e) {
+        recentlyViewed = [];
+      }
+      if (!Array.isArray(recentlyViewed)) {
+        recentlyViewed = [];
+      }
+
+      recentlyViewed = recentlyViewed.filter(function(x) {
+        var h = (typeof x === 'object' && x !== null) ? x.handle : x;
+        return h && h !== currentHandle;
+      });
+      recentlyViewed.unshift(currentHandle);
+      if (recentlyViewed.length > 10) recentlyViewed = recentlyViewed.slice(0, 10);
+      localStorage.setItem('recentlyViewedProducts', JSON.stringify(recentlyViewed));
+
+      // 2. Update viewedProducts (backward compatibility)
+      var viewed = [];
+      try {
+        var rawViewed = localStorage.getItem('viewedProducts');
+        if (rawViewed) {
+          viewed = JSON.parse(rawViewed);
+        }
+      } catch(e) {
+        viewed = [];
+      }
+      if (!Array.isArray(viewed)) {
+        viewed = [];
+      }
+
+      viewed = viewed.filter(function(x) {
+        var h = (typeof x === 'object' && x !== null) ? x.handle : x;
+        if (h === currentHandle) return false;
+        if (typeof x === 'string' && x === currentId) return false;
+        return true;
+      });
+      viewed.unshift({ id: currentId, handle: currentHandle });
+      if (viewed.length > 10) viewed = viewed.slice(0, 10);
+      localStorage.setItem('viewedProducts', JSON.stringify(viewed));
+    } catch(e) { /* silent */ }
+  }
+})();
+
+function tsukieGetContext(el) {
+  let container = null;
+  if (el && typeof el.closest === 'function') {
+    container = el.closest('.tsukie-product');
+  }
+  if (!container) {
+    container = document.querySelector('#tsukie-quick-add-modal.is-open .tsukie-product');
+  }
+  if (!container) {
+    container = document.querySelector('.tsukie-product') || document.body;
+  }
+  
+  if (container && !container.tsukieProduct) {
+    container.tsukieCurrentImage = 0;
+    container.tsukieImages = [{% for image in product.images %}'{{ image | img_url: '1000x' }}'{% unless forloop.last %},{% endunless %}{% endfor %}];
+    container.tsukieImageIds = [{% for image in product.images %}{{ image.id }}{% unless forloop.last %},{% endunless %}{% endfor %}];
+    container.tsukieProduct = {{ product | json }};
+    container.tsukieSelectedOptions = { 1: null, 2: null, 3: null };
+    
+    const defaultVariantId = {{ product.selected_or_first_available_variant.id | default: 'null' }};
+    if (defaultVariantId && container.tsukieProduct) {
+      const defaultVar = container.tsukieProduct.variants.find(v => v.id === defaultVariantId);
+      if (defaultVar) {
+        container.tsukieSelectedOptions[1] = defaultVar.option1;
+        container.tsukieSelectedOptions[2] = defaultVar.option2;
+        container.tsukieSelectedOptions[3] = defaultVar.option3;
+      }
+    }
+  }
+  return container;
+}
+
+// Initial kickoff block to pre-populate main page container
+(function() {
+  const container = document.querySelector('.tsukie-product') || document.body;
+  if (container) {
+    const ctx = tsukieGetContext(container);
+    if (ctx && ctx.tsukieProduct) {
+      const colorOptIdx = ctx.tsukieProduct.options.findIndex(opt => opt.toLowerCase() === 'color' || opt.toLowerCase() === 'colour');
+      if (colorOptIdx > -1) {
+        const selectedColor = ctx.tsukieSelectedOptions[colorOptIdx + 1];
+        if (selectedColor) {
+          setTimeout(() => {
+            if (typeof window.tsukieFilterImagesByColor === 'function') {
+              window.tsukieFilterImagesByColor(selectedColor);
+            }
+          }, 100);
+        }
+      }
+    }
+  }
+})();
+
+// Touch Swipe Support for Mobile Gallery
+(function() {
+  function initTouchSwipe() {
+    document.querySelectorAll('.tsukie-main-image').forEach(function(mainImg) {
+      if (mainImg.dataset.swipeInitialized) return;
+      mainImg.dataset.swipeInitialized = 'true';
+
+      var touchStartX = 0;
+      var touchStartY = 0;
+      var isDragging = false;
+
+      mainImg.addEventListener('touchstart', function(e) {
+        touchStartX = e.touches[0].clientX;
+        touchStartY = e.touches[0].clientY;
+        isDragging = false;
+      }, { passive: true });
+
+      mainImg.addEventListener('touchmove', function(e) {
+        if (!isDragging) {
+          var dx = Math.abs(e.touches[0].clientX - touchStartX);
+          var dy = Math.abs(e.touches[0].clientY - touchStartY);
+          if (dx > dy && dx > 8) {
+            isDragging = true;
+          }
+        }
+      }, { passive: true });
+
+      mainImg.addEventListener('touchend', function(e) {
+        if (!isDragging) return;
+        var deltaX = e.changedTouches[0].clientX - touchStartX;
+        if (Math.abs(deltaX) < 40) return;
+        if (deltaX < 0) {
+          window.tsukieNextImage(mainImg);
+        } else {
+          window.tsukiePrevImage(mainImg);
+        }
+        isDragging = false;
+      }, { passive: true });
+    });
+  }
+
+  if (document.readyState === 'loading') {
+    document.addEventListener('DOMContentLoaded', initTouchSwipe);
+  } else {
+    initTouchSwipe();
+  }
+})();
+
+// Size Guide Modal JS
+window.tsukieOpenSizeGuide = function(e, element) {
+  if (e) e.preventDefault();
+  const container = tsukieGetContext(element || (e && e.target));
+  const modal = container.querySelector('#tsukie-size-guide-modal, .tsukie-size-guide-modal');
+  if (modal) modal.style.display = 'flex';
+};
+
+window.tsukieCloseSizeGuide = function(element) {
+  const container = tsukieGetContext(element);
+  const modal = container.querySelector('#tsukie-size-guide-modal, .tsukie-size-guide-modal');
+  if (modal) modal.style.display = 'none';
+};
+
+window.tsukieCopyCode = function(el, code) {
+  navigator.clipboard.writeText(code).then(() => {
+    const copyLbl = el.querySelector('.copy-lbl');
+    if (copyLbl) {
+      const origText = copyLbl.textContent;
+      copyLbl.textContent = 'COPIED!';
+      copyLbl.style.color = '#1e2a38';
+      setTimeout(() => {
+        copyLbl.textContent = origText;
+        copyLbl.style.color = '#a08766';
+      }, 1500);
+    }
+  });
+};
+window.tsukieFilterImagesByColor = function(colorValue) {
+  const container = document.querySelector('.tsukie-product') || document.body;
+  if (!container) return;
+  
+  const enableFilter = {% if section.settings.enable_color_filter %}true{% else %}false{% endif %};
+  if (!enableFilter) return;
+
+  const cleanColor = colorValue ? colorValue.toLowerCase().trim() : '';
+  if (!cleanColor) return;
+
+  const thumbs = container.querySelectorAll('.tsukie-thumb');
+  const slides = container.querySelectorAll('.tsukie-main-image-slide');
+  const dots = container.querySelectorAll('.tsukie-dot');
+
+  let firstVisibleIndex = -1;
+  let visibleCount = 0;
+
+  function matchesColor(el) {
+    const colorsAttr = el.getAttribute('data-colors');
+    if (!colorsAttr) return false;
+    return colorsAttr.includes('|' + cleanColor + '|');
+  }
+
+  thumbs.forEach((thumb, index) => {
+    if (matchesColor(thumb)) {
+      thumb.style.display = 'block';
+      thumb.setAttribute('data-visible-index', visibleCount);
+      if (firstVisibleIndex === -1) firstVisibleIndex = index;
+      visibleCount++;
+    } else {
+      thumb.style.display = 'none';
+      thumb.removeAttribute('data-visible-index');
+    }
+  });
+
+  let slideVisibleCount = 0;
+  slides.forEach((slide, index) => {
+    if (matchesColor(slide)) {
+      slide.style.display = 'block';
+      slide.setAttribute('data-visible-index', slideVisibleCount);
+      slideVisibleCount++;
+    } else {
+      slide.style.display = 'none';
+      slide.removeAttribute('data-visible-index');
+    }
+  });
+
+  let dotVisibleCount = 0;
+  dots.forEach((dot, index) => {
+    if (matchesColor(dot)) {
+      dot.style.display = 'block';
+      dot.setAttribute('data-visible-index', dotVisibleCount);
+      dotVisibleCount++;
+    } else {
+      dot.style.display = 'none';
+      dot.removeAttribute('data-visible-index');
+    }
+  });
+
+  // Toggle prev/next navigation arrows and dots container depending on whether there are multiple visible slides
+  const prevArrow = container.querySelector('.tsukie-carousel-nav.prev');
+  const nextArrow = container.querySelector('.tsukie-carousel-nav.next');
+  const dotsContainer = container.querySelector('.tsukie-carousel-dots');
+  
+  if (slideVisibleCount <= 1) {
+    if (prevArrow) prevArrow.style.display = 'none';
+    if (nextArrow) nextArrow.style.display = 'none';
+    if (dotsContainer) dotsContainer.style.setProperty('display', 'none', 'important');
+  } else {
+    if (prevArrow) prevArrow.style.display = 'flex';
+    if (nextArrow) nextArrow.style.display = 'flex';
+    if (dotsContainer) {
+      dotsContainer.style.removeProperty('display');
+    }
+  }
+
+  const activeThumb = container.querySelector('.tsukie-thumb.active');
+  if (!activeThumb || activeThumb.style.display === 'none') {
+    if (firstVisibleIndex > -1) {
+      const targetThumb = thumbs[firstVisibleIndex];
+      const targetSlide = slides[firstVisibleIndex];
+      const targetImg = targetSlide ? targetSlide.querySelector('img') : null;
+      const src = targetImg ? targetImg.src : '';
+      window.tsukieChangeImage(src, firstVisibleIndex, container);
+    }
+  } else {
+    const activeIndex = Array.from(thumbs).indexOf(activeThumb);
+    window.tsukieChangeImage('', activeIndex, container);
+  }
+};
+
+window.tsukieChangeImage = function(src, index, element) {
+  const container = tsukieGetContext(element);
+  if (!container) return;
+  const slider = container.querySelector('.tsukie-main-image-slider');
+  const slides = container.querySelectorAll('.tsukie-main-image-slide');
+  if (slider && slides[index]) {
+    const slideEl = slides[index];
+    slider.scrollTo({
+      left: slideEl.offsetLeft,
+      behavior: 'smooth'
+    });
+  } else {
+    const mainImg = container.querySelector('#tsukie-main-img');
+    if(mainImg) mainImg.src = src;
+  }
+  container.tsukieCurrentImage = index;
+  container.querySelectorAll('.tsukie-thumb').forEach((thumb, i) => {
+    thumb.classList.toggle('active', i === index);
+  });
+  container.querySelectorAll('.tsukie-dot').forEach((dot, i) => {
+    dot.classList.toggle('active', i === index);
+  });
+};
+
+window.tsukieScrollToImage = function(dotEl, index) {
+  const container = tsukieGetContext(dotEl);
+  if (!container) return;
+  const slider = container.querySelector('.tsukie-main-image-slider');
+  const slides = container.querySelectorAll('.tsukie-main-image-slide');
+  if (slider && slides[index]) {
+    const slideEl = slides[index];
+    slider.scrollTo({
+      left: slideEl.offsetLeft,
+      behavior: 'smooth'
+    });
+  }
+  container.tsukieCurrentImage = index;
+  container.querySelectorAll('.tsukie-dot').forEach((dot, i) => {
+    dot.classList.toggle('active', i === index);
+  });
+  container.querySelectorAll('.tsukie-thumb').forEach((thumb, i) => {
+    thumb.classList.toggle('active', i === index);
+  });
+};
+
+window.tsukieOnSliderScroll = function(slider) {
+  const container = tsukieGetContext(slider);
+  if (!container) return;
+  const scrollLeft = slider.scrollLeft;
+  const slides = container.querySelectorAll('.tsukie-main-image-slide');
+  
+  let minDiff = Infinity;
+  let index = 0;
+  slides.forEach((slide, i) => {
+    if (slide.style.display !== 'none') {
+      const diff = Math.abs(slide.offsetLeft - scrollLeft);
+      if (diff < minDiff) {
+        minDiff = diff;
+        index = i;
+      }
+    }
+  });
+  
+  if (container.tsukieCurrentImage !== index) {
+    container.tsukieCurrentImage = index;
+    
+    container.querySelectorAll('.tsukie-dot').forEach((dot, i) => {
+      dot.classList.toggle('active', i === index);
+    });
+    
+    container.querySelectorAll('.tsukie-thumb').forEach((thumb, i) => {
+      thumb.classList.toggle('active', i === index);
+    });
+  }
+};
+
+window.tsukieScrollThumbs = function(direction, element) {
+  const container = tsukieGetContext(element);
+  if (!container) return;
+  const thumbsList = container.querySelector('#tsukie-thumbs-list');
+  if(!thumbsList) return;
+  thumbsList.scrollTop += (direction === 'up') ? -88 : 88;
+};
+
+window.tsukiePrevImage = function(element) {
+  const container = tsukieGetContext(element);
+  if (!container || !container.tsukieImages) return;
+  const thumbs = container.querySelectorAll('.tsukie-thumb');
+  if(!thumbs.length) return;
+  
+  let curr = container.tsukieCurrentImage;
+  let prev = curr;
+  do {
+    prev = (prev - 1 + thumbs.length) % thumbs.length;
+  } while (thumbs[prev] && thumbs[prev].style.display === 'none' && prev !== curr);
+  
+  if (thumbs[prev] && thumbs[prev].style.display !== 'none') {
+    const img = thumbs[prev].querySelector('img');
+    window.tsukieChangeImage(img ? img.src : '', prev, container);
+  }
+};
+
+window.tsukieNextImage = function(element) {
+  const container = tsukieGetContext(element);
+  if (!container || !container.tsukieImages) return;
+  const thumbs = container.querySelectorAll('.tsukie-thumb');
+  if(!thumbs.length) return;
+  
+  let curr = container.tsukieCurrentImage;
+  let next = curr;
+  do {
+    next = (next + 1) % thumbs.length;
+  } while (thumbs[next] && thumbs[next].style.display === 'none' && next !== curr);
+  
+  if (thumbs[next] && thumbs[next].style.display !== 'none') {
+    const img = thumbs[next].querySelector('img');
+    window.tsukieChangeImage(img ? img.src : '', next, container);
+  }
+};
+
+window.tsukieSelectOption = function(element, position, value) {
+  const container = tsukieGetContext(element);
+  if (!container || !container.tsukieProduct) return;
+  
+  container.tsukieSelectedOptions[position] = value;
+  
+  container.querySelectorAll(`[data-option-position="${position}"]`).forEach(el => {
+    el.classList.remove('active');
+  });
+  element.classList.add('active');
+  
+  const optionIndex = position - 1;
+  if(container.tsukieProduct.options[optionIndex]) {
+    const name = container.tsukieProduct.options[optionIndex].toLowerCase().replace(/\s+/g, '-');
+    const selectedLabel = container.querySelector(`#tsukie-selected-${name}`);
+    if(selectedLabel) selectedLabel.textContent = value;
+  }
+  
+  // Trigger Color Filtering if applicable
+  const colorOptIdx = container.tsukieProduct.options.findIndex(opt => opt.toLowerCase() === 'color' || opt.toLowerCase() === 'colour');
+  if (colorOptIdx > -1) {
+    const selectedColor = container.tsukieSelectedOptions[colorOptIdx + 1];
+    if (selectedColor) {
+      window.tsukieFilterImagesByColor(selectedColor);
+    }
+  }
+  
+  const matchedVariant = container.tsukieProduct.variants.find(variant => {
+    return (!variant.option1 || variant.option1 === container.tsukieSelectedOptions[1]) &&
+           (!variant.option2 || variant.option2 === container.tsukieSelectedOptions[2]) &&
+           (!variant.option3 || variant.option3 === container.tsukieSelectedOptions[3]);
+  });
+  
+  if (matchedVariant) {
+    const varInput = container.querySelector('#tsukie-variant-id');
+    if (varInput) varInput.value = matchedVariant.id;
+    
+    const formatter = new Intl.NumberFormat('en-IN', { style: 'currency', currency: 'INR', maximumFractionDigits: 0 });
+    const priceEl = container.querySelector('#tsukie-price');
+    const emiEl = container.querySelector('#tsukie-emi-price');
+    
+    if(priceEl) priceEl.textContent = formatter.format(matchedVariant.price / 100);
+    if(emiEl) emiEl.textContent = formatter.format((matchedVariant.price / 3) / 100) + '/month';
+    
+    const compPriceEl = container.querySelector('#tsukie-compare-price');
+    const saveBadgeEl = container.querySelector('#tsukie-save-badge');
+    const inventoryEl = container.querySelector('#tsukie-inventory');
+    const qtyEl = container.querySelector('#tsukie-nav-qty');
+    
+    if(compPriceEl && saveBadgeEl) {
+      if(matchedVariant.compare_at_price && matchedVariant.compare_at_price > matchedVariant.price) {
+        compPriceEl.textContent = formatter.format(matchedVariant.compare_at_price / 100);
+        compPriceEl.style.display = 'block';
+        let pct = Math.round(((matchedVariant.compare_at_price - matchedVariant.price) * 100) / matchedVariant.compare_at_price);
+        saveBadgeEl.textContent = `SAVE ${pct}%`;
+        saveBadgeEl.style.display = 'block';
+      } else {
+        compPriceEl.style.display = 'none';
+        saveBadgeEl.style.display = 'none';
+      }
+    }
+    
+    if (matchedVariant.featured_image && matchedVariant.featured_image.id && container.tsukieImageIds) {
+      const imgIndex = container.tsukieImageIds.indexOf(matchedVariant.featured_image.id);
+      if(imgIndex > -1 && container.tsukieImages) {
+        window.tsukieChangeImage(container.tsukieImages[imgIndex], imgIndex, container);
+      }
+    }
+    
+    // Update inventory stock urgency
+    if (inventoryEl && qtyEl) {
+      if (matchedVariant.inventory_management && matchedVariant.inventory_quantity < 10 && matchedVariant.inventory_quantity > 0) {
+        qtyEl.textContent = matchedVariant.inventory_quantity;
+        inventoryEl.style.display = 'block';
+      } else {
+        inventoryEl.style.display = 'none';
+      }
+    }
+    
+    const addBtn = container.querySelector('#tsukie-add-to-cart-btn');
+    const buyBtn = container.querySelector('#tsukie-buy-now-btn');
+    const addText = container.querySelector('#tsukie-add-btn-text');
+    if(matchedVariant.available) {
+      if(addBtn) addBtn.removeAttribute('disabled');
+      if(buyBtn) buyBtn.removeAttribute('disabled');
+      if(addText) addText.textContent = "ADD TO BAG";
+    } else {
+      if(addBtn) addBtn.setAttribute('disabled', 'disabled');
+      if(buyBtn) buyBtn.setAttribute('disabled', 'disabled');
+      if(addText) addText.textContent = "SOLD OUT";
+    }
+  }
+};
+window.tsukieUpdateQty = function(btn, change) {
+  const container = tsukieGetContext(btn);
+  const input = container.querySelector('.tsukie-qty-input');
+  if (input) {
+    let val = parseInt(input.value) || 1;
+    val += change;
+    if (val < 1) val = 1;
+    input.value = val;
+  }
+};
+
+window.tsukieBuyNowClean = function(element) {
+  const container = tsukieGetContext(element);
+  const varInput = container.querySelector('#tsukie-variant-id');
+  const variantId = varInput ? varInput.value : null;
+  if (!variantId) return;
+  
+  const buyBtn = container.querySelector('#tsukie-buy-now-btn');
+  const buyTxt = container.querySelector('#tsukie-buy-text');
+  
+  if(buyBtn) buyBtn.setAttribute('disabled', 'disabled');
+  if(buyTxt) buyTxt.textContent = "PROCESSING...";
+
+  const qtyInput = container.querySelector('.tsukie-qty-input');
+  const qty = qtyInput ? parseInt(qtyInput.value) || 1 : 1;
+
+  const rootPath = (window.Shopify && window.Shopify.routes && window.Shopify.routes.root) || '/';
+
+  fetch(rootPath + 'cart/clear.js', {
+    method: 'POST',
+    headers: { 'Content-Type': 'application/json' }
+  })
+  .then(() => {
+    return fetch(rootPath + 'cart/add.js', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({
+        'items': [{ 'id': parseInt(variantId), 'quantity': qty }]
+      })
+    });
+  })
+  .then(res => res.json())
+  .then(() => {
+    window.location.href = '/checkout';
+  })
+  .catch(err => {
+    console.error('Checkout error:', err);
+    window.location.href = '/checkout?updates[' + variantId + ']=' + qty;
+  });
+};
+
+window.tsukieToggleAccordion = function(header) {
+  const currentItem = header.parentElement;
+  const container = tsukieGetContext(header);
+  container.querySelectorAll('.tsukie-accordion-item').forEach(item => {
+    if (item !== currentItem) item.classList.remove('active');
+  });
+  currentItem.classList.toggle('active');
+};
+
+// Custom reviews pagination to 1+3 logic
+(function() {
+  function initCustomReviewsWidget() {
+    const widget = document.querySelector('.jdgm-review-widget, #judgeme_product_reviews');
+    if (!widget) return false;
+
+    const origList = widget.querySelector('.jdgm-rev-list');
+    if (!origList) return false;
+
+    // Avoid double initialization
+    if (widget.querySelector('.tsukie-custom-reviews-wrapper')) return true;
+
+    const customWrap = document.createElement('div');
+    customWrap.className = 'tsukie-custom-reviews-wrapper';
+    customWrap.innerHTML = `
+      <div class="tsukie-custom-rev-list"></div>
+      <div class="tsukie-jdgm-load-more-wrapper" style="display: none; justify-content: center; margin-top: 24px; margin-bottom: 24px;">
+        <button type="button" class="tsukie-jdgm-load-more-btn">
+          Load More Reviews
+        </button>
+      </div>
+    `;
+
+    widget.appendChild(customWrap);
+
+    const customList = customWrap.querySelector('.tsukie-custom-rev-list');
+    const loadMoreWrapper = customWrap.querySelector('.tsukie-jdgm-load-more-wrapper');
+    const loadMoreBtn = customWrap.querySelector('.tsukie-jdgm-load-more-btn');
+
+    let allReviews = [];
+    let visibleCount = 1;
+
+    function renderCustomReviews() {
+      customList.innerHTML = '';
+      const reviewsToRender = allReviews.slice(0, visibleCount);
+      reviewsToRender.forEach(function(rev) {
+        const clone = rev.cloneNode(true);
+        clone.style.setProperty('display', 'block', 'important');
+        customList.appendChild(clone);
+      });
+
+      const nativeNextBtn = widget.querySelector('.jdgm-paginate__next-page, .jdgm-next-page, [data-page="next"], .jdgm-paginate__page[data-page="next"]');
+
+      const hasMoreToRevealLocal = visibleCount < allReviews.length;
+      const hasNativeNextPage = !!nativeNextBtn && !nativeNextBtn.classList.contains('jdgm-paginate__last-page') && !nativeNextBtn.disabled;
+
+      if (hasMoreToRevealLocal || hasNativeNextPage) {
+        loadMoreWrapper.style.setProperty('display', 'flex', 'important');
+      } else {
+        loadMoreWrapper.style.setProperty('display', 'none', 'important');
+      }
+    }
+
+    function scanNativeReviews() {
+      const origRevs = origList.querySelectorAll('.jdgm-rev');
+      let addedAny = false;
+
+      origRevs.forEach(function(rev) {
+        const revId = rev.getAttribute('data-review-id') || rev.innerHTML.substring(0, 150);
+        const alreadyExists = allReviews.some(function(existingRev) {
+          const existingId = existingRev.getAttribute('data-review-id') || existingRev.innerHTML.substring(0, 150);
+          return existingId === revId;
+        });
+
+        if (!alreadyExists) {
+          allReviews.push(rev);
+          addedAny = true;
+        }
+      });
+
+      if (addedAny) {
+        renderCustomReviews();
+      }
+    }
+
+    scanNativeReviews();
+
+    const listObserver = new MutationObserver(function() {
+      scanNativeReviews();
+    });
+    listObserver.observe(origList, { childList: true, subtree: true });
+
+    loadMoreBtn.addEventListener('click', function() {
+      if (visibleCount < allReviews.length) {
+        visibleCount += 3;
+        renderCustomReviews();
+      } else {
+        const nativeNextBtn = widget.querySelector('.jdgm-paginate__next-page, .jdgm-next-page, [data-page="next"], .jdgm-paginate__page[data-page="next"]');
+        if (nativeNextBtn) {
+          loadMoreBtn.disabled = true;
+          const origText = loadMoreBtn.textContent;
+          loadMoreBtn.textContent = 'Loading...';
+
+          visibleCount += 3;
+
+          nativeNextBtn.click();
+
+          setTimeout(function() {
+            loadMoreBtn.disabled = false;
+            loadMoreBtn.textContent = origText;
+            renderCustomReviews();
+          }, 1500);
+        } else {
+          loadMoreWrapper.style.setProperty('display', 'none', 'important');
+        }
+      }
+    });
+
+    return true;
+  }
+
+  const bodyObserver = new MutationObserver(function() {
+    initCustomReviewsWidget();
+  });
+  bodyObserver.observe(document.body, { childList: true, subtree: true });
+
+  initCustomReviewsWidget();
+})();
+
+// Tsukie Custom AJAX Add to Cart & Open Cart Drawer
+(function() {
+  function initTsukieAddToCartAjax() {
+    const form = document.getElementById('tsukie-product-form');
+    if (!form || form.dataset.ajaxInitialized) return;
+    form.dataset.ajaxInitialized = 'true';
+
+    form.addEventListener('submit', function(e) {
+      e.preventDefault();
+
+      const addBtn = document.getElementById('tsukie-add-to-cart-btn');
+      const addText = document.getElementById('tsukie-add-btn-text');
+      if (!addBtn || addBtn.disabled) return;
+
+      const originalText = addText ? addText.textContent : "ADD TO BAG";
+      if (addText) addText.textContent = "ADDING...";
+      addBtn.disabled = true;
+
+      const formData = new FormData(form);
+      
+      // Select all cart items component section IDs to update their HTML
+      const cartItemsComponents = document.querySelectorAll('cart-items-component');
+      const sectionsToUpdate = [];
+      cartItemsComponents.forEach(function(item) {
+        if (item.dataset.sectionId) {
+          sectionsToUpdate.push(item.dataset.sectionId);
+        }
+      });
+      
+      if (sectionsToUpdate.length > 0) {
+        formData.append('sections', sectionsToUpdate.join(','));
+      }
+
+      const rootPath = (window.Shopify && window.Shopify.routes && window.Shopify.routes.root) || '/';
+
+      fetch(rootPath + 'cart/add.js', {
+        method: 'POST',
+        body: formData,
+        headers: {
+          'X-Requested-With': 'XMLHttpRequest'
+        }
+      })
+      .then(function(res) {
+        return res.json();
+      })
+      .then(function(response) {
+        if (response.status) {
+          // Show error message
+          alert(response.description || response.message);
+          if (addText) addText.textContent = originalText;
+          addBtn.disabled = false;
+          return;
+        }
+
+        // Fetch updated cart data to refresh count and components
+        fetch(rootPath + 'cart.js')
+        .then(function(res) {
+          return res.json();
+        })
+        .then(function(cart) {
+          // Dispatch cart:update event so cart-icon and cart-items-component update automatically
+          const event = new CustomEvent('cart:update', {
+            bubbles: true,
+            detail: {
+              resource: cart,
+              sourceId: 'tsukie-product-form',
+              data: {
+                source: 'product-form-component',
+                itemCount: cart.item_count,
+                productId: '{{ product.id }}',
+                sections: response.sections
+              }
+            }
+          });
+          document.dispatchEvent(event);
+
+          // Force open the cart drawer component
+          const drawer = document.querySelector('cart-drawer-component');
+          if (drawer && typeof drawer.open === 'function') {
+            drawer.open();
+          }
+
+          // Show confirmation on button
+          if (addText) addText.textContent = "ADDED!";
+          setTimeout(function() {
+            if (addText) addText.textContent = originalText;
+            addBtn.disabled = false;
+          }, 1500);
+        });
+      })
+      .catch(function(err) {
+        console.error('AJAX add to cart error:', err);
+        if (addText) addText.textContent = originalText;
+        addBtn.disabled = false;
+      });
+    });
+  }
+
+  // Initialize on load
+  if (document.readyState === 'loading') {
+    document.addEventListener('DOMContentLoaded', initTsukieAddToCartAjax);
+  } else {
+    initTsukieAddToCartAjax();
+  }
+  
+  // Watch for dynamic insertions
+  const observer = new MutationObserver(function() {
+    initTsukieAddToCartAjax();
+  });
+  observer.observe(document.body, { childList: true, subtree: true });
+})();
+</script>
+
+<style>
+/* Custom Load More button styling matching Montserrat, 12px uppercase, bg #1e2a38, text #A08766 */
+.tsukie-jdgm-load-more-btn {
+  background-color: #1e2a38 !important;
+  color: #A08766 !important;
+  font-family: 'Montserrat', sans-serif !important;
+  font-size: 12px !important;
+  text-transform: uppercase !important;
+  font-weight: 600 !important;
+  border: none !important;
+  padding: 14px 32px !important;
+  letter-spacing: 1.5px !important;
+  cursor: pointer !important;
+  transition: all 0.3s ease !important;
+  display: inline-block !important;
+  border-radius: 0 !important;
+}
+
+.tsukie-jdgm-load-more-btn:hover {
+  opacity: 0.9 !important;
+}
+
+.tsukie-jdgm-load-more-btn[disabled] {
+  opacity: 0.6 !important;
+  cursor: not-allowed !important;
+}
+
+/* Hide native Judge.me pagination and header elements completely to show ONLY reviews + custom button */
+.jdgm-widget-header,
+.jdgm-histogram,
+.jdgm-summary,
+.jdgm-rev-widg__summary,
+.jdgm-rev-widg__header,
+.jdgm-widget-actions-wrapper,
+.jdgm-paginate,
+.jdgm-all-reviews-rating,
+.jdgm-widget-title,
+.jdgm-widget-actions,
+.jdgm-rev-list {
+  display: none !important;
+}
+
+/* Ensure our custom wrapper and elements are displayed properly */
+.jdgm-widget {
+  display: block !important;
+}
+
+.tsukie-custom-reviews-wrapper {
+  display: block !important;
+  width: 100% !important;
+}
+
+.tsukie-custom-rev-list {
+  display: flex !important;
+  flex-direction: column !important;
+  gap: 16px !important;
+  width: 100% !important;
+}
+
+.tsukie-custom-rev-list .jdgm-rev {
+  display: block !important;
+}
+</style>
+
+{% schema %}
+{
+  "name": "Tsukie Product Details",
+  "tag": "section",
+  "class": "shopify-section-tsukie-product",
+  "settings": [
+    {
+      "type": "header",
+      "content": "Product Information Settings"
+    },
+    {
+      "type": "checkbox",
+      "id": "show_size_guide",
+      "label": "Show Size Guide Link",
+      "default": true
+    },
+    {
+      "type": "image_picker",
+      "id": "size_guide_image",
+      "label": "Size Guide Image"
+    },
+    {
+      "type": "checkbox",
+      "id": "show_inventory_urgency",
+      "label": "Show Inventory Urgency Message",
+      "default": true
+    },
+    {
+      "type": "header",
+      "content": "Special Offers Settings"
+    },
+    {
+      "type": "checkbox",
+      "id": "show_special_offers",
+      "label": "Show Special Offers Block",
+      "default": true
+    },
+    {
+      "type": "checkbox",
+      "id": "show_offer_1",
+      "label": "Show Special Offer 1",
+      "default": true
+    },
+    {
+      "type": "text",
+      "id": "offer_1_text",
+      "label": "Offer 1 Text",
+      "default": "Buy 1 get 10% off"
+    },
+    {
+      "type": "text",
+      "id": "offer_1_code",
+      "label": "Offer 1 Code",
+      "default": "TSUKIE10"
+    },
+    {
+      "type": "checkbox",
+      "id": "show_offer_2",
+      "label": "Show Special Offer 2",
+      "default": true
+    },
+    {
+      "type": "text",
+      "id": "offer_2_text",
+      "label": "Offer 2 Text",
+      "default": "Buy 2 get 25% off"
+    },
+    {
+      "type": "text",
+      "id": "offer_2_code",
+      "label": "Offer 2 Code",
+      "default": "TSUKIE25"
+    },
+    {
+      "type": "header",
+      "content": "Order Status Timeline"
+    },
+    {
+      "type": "checkbox",
+      "id": "show_order_status",
+      "label": "Show Order Status Tracker",
+      "default": true
+    },
+    {
+      "type": "text",
+      "id": "tracker_title",
+      "label": "Tracker Title",
+      "default": "ORDER STATUS"
+    },
+    {
+      "type": "text",
+      "id": "tracker_subtitle",
+      "label": "Tracker Subtitle",
+      "default": "Track your delivery and expected arrival time!"
+    },
+    {
+      "type": "text",
+      "id": "tracker_node1_title",
+      "label": "Tracker Step 1 Title",
+      "default": "Order Confirmed"
+    },
+    {
+      "type": "text",
+      "id": "tracker_node2_title",
+      "label": "Tracker Step 2 Title",
+      "default": "On Its Way"
+    },
+    {
+      "type": "text",
+      "id": "tracker_node3_title",
+      "label": "Tracker Step 3 Title",
+      "default": "Arriving Soon"
+    },
+    {
+      "type": "header",
+      "content": "Accordion Tabs"
+    },
+    {
+      "type": "text",
+      "id": "tab1_title",
+      "label": "Tab 1 Title",
+      "default": "WHY YOU'LL LOVE IT"
+    },
+    {
+      "type": "richtext",
+      "id": "tab1_content",
+      "label": "Tab 1 Content (Fallback to Product Description if empty)"
+    },
+    {
+      "type": "text",
+      "id": "tab2_title",
+      "label": "Tab 2 Title",
+      "default": "FABRIC & CARE"
+    },
+    {
+      "type": "richtext",
+      "id": "tab2_content",
+      "label": "Tab 2 Content (Fallback to Fabric & Care metafield if empty)"
+    },
+    {
+      "type": "text",
+      "id": "tab3_title",
+      "label": "Tab 3 Title",
+      "default": "SHIPPING & RETURNS"
+    },
+    {
+      "type": "richtext",
+      "id": "tab3_content",
+      "label": "Tab 3 Content (Fallback to shipping text if empty)"
+    },
+    {
+      "type": "header",
+      "content": "Trust Badges Section"
+    },
+    {
+      "type": "checkbox",
+      "id": "show_trust_badges_v2",
+      "label": "Show Trust Badges Row (COD, Secure, Premium)",
+      "default": true
+    },
+    {
+      "type": "text",
+      "id": "feature1_title",
+      "label": "Feature 1 Title",
+      "default": "PREMIUM FABRIC"
+    },
+    {
+      "type": "text",
+      "id": "feature1_desc",
+      "label": "Feature 1 Description",
+      "default": "100% Viscose"
+    },
+    {
+      "type": "text",
+      "id": "feature2_title",
+      "label": "Feature 2 Title",
+      "default": "EASY EXCHANGE"
+    },
+    {
+      "type": "text",
+      "id": "feature2_desc",
+      "label": "Feature 2 Description",
+      "default": "14 days"
+    },
+    {
+      "type": "text",
+      "id": "feature3_title",
+      "label": "Feature 3 Title",
+      "default": "SECURE PAYMENT"
+    },
+    {
+      "type": "text",
+      "id": "feature3_desc",
+      "label": "Feature 3 Description",
+      "default": "UPI · Cards · COD"
+    },
+    {
+      "type": "header",
+      "content": "Dynamic Reviews Settings"
+    },
+    {
+      "type": "text",
+      "id": "default_rating",
+      "label": "Default Rating Fallback",
+      "default": "4.5"
+    },
+    {
+      "type": "number",
+      "id": "default_review_count",
+      "label": "Default Review Count Fallback",
+      "default": 12
+    },
+    {
+      "type": "header",
+      "content": "Image Filter Settings"
+    },
+    {
+      "type": "checkbox",
+      "id": "enable_color_filter",
+      "label": "Enable color-based image filtering",
+      "default": true
+    },
+    {
+      "type": "number",
+      "id": "color_media_group_size",
+      "label": "Images per color (Fallback for sequential grouping)",
+      "default": 6
+    },
+    {
+      "type": "header",
+      "content": "Trust Badge Settings"
+    },
+    {
+      "type": "checkbox",
+      "id": "show_trust_badge_1",
+      "label": "Show Trust Badge 1",
+      "default": true
+    },
+    {
+      "type": "text",
+      "id": "trust_badge_text_1",
+      "label": "Trust Badge Text 1",
+      "default": "COD Available"
+    },
+    {
+      "type": "header",
+      "content": "Order Status Bottom settings"
+    },
+    {
+      "type": "checkbox",
+      "id": "show_order_status_bottom_text",
+      "label": "Show Order Status Bottom Text",
+      "default": true
+    },
+    {
+      "type": "text",
+      "id": "order_status_bottom_text",
+      "label": "Order Status Bottom Text",
+      "default": "Hassle-free 7 day returns"
+    }
+  ]
+}
+{% endschema %} {% endcomment %}
+
+
+
 {% comment %}
   Tsukie Product Page - Fixed Isolated Single Item Checkout Flow
 {% endcomment %}
@@ -869,13 +3471,13 @@
 
   #shopify-section-{{ section.id }} .tsukie-price-row {
     {% if section.settings.price_alignment_desktop != blank %}
-      justify-content: {% if section.settings.price_alignment_desktop == 'center' %}center{% elif section.settings.price_alignment_desktop == 'right' %}flex-end{% else %}flex-start{% endif %} !important;
+      justify-content: {% if section.settings.price_alignment_desktop == 'center' %}center{% elsif section.settings.price_alignment_desktop == 'right' %}flex-end{% else %}flex-start{% endif %} !important;
     {% endif %}
   }
   @media (max-width: 749px) {
     #shopify-section-{{ section.id }} .tsukie-price-row {
       {% if section.settings.price_alignment_mobile != blank %}
-        justify-content: {% if section.settings.price_alignment_mobile == 'center' %}center{% elif section.settings.price_alignment_mobile == 'right' %}flex-end{% else %}flex-start{% endif %} !important;
+        justify-content: {% if section.settings.price_alignment_mobile == 'center' %}center{% elsif section.settings.price_alignment_mobile == 'right' %}flex-end{% else %}flex-start{% endif %} !important;
       {% endif %}
     }
   }
@@ -903,7 +3505,7 @@
     height: {{ section.settings.qty_height | default: 48 }}px !important;
     {% if section.settings.btn_add_width_full_desktop %}
       width: 100% !important;
-    {% elif section.settings.btn_add_width_desktop != blank %}
+    {% elsif section.settings.btn_add_width_desktop != blank %}
       width: {{ section.settings.btn_add_width_desktop }}px !important;
     {% endif %}
   }
@@ -919,7 +3521,7 @@
     {% endif %}
     {% if section.settings.btn_buy_width_full_desktop %}
       width: 100% !important;
-    {% elif section.settings.btn_buy_width_desktop != blank %}
+    {% elsif section.settings.btn_buy_width_desktop != blank %}
       width: {{ section.settings.btn_buy_width_desktop }}px !important;
     {% endif %}
   }
@@ -933,7 +3535,7 @@
       height: {{ section.settings.qty_height | default: 48 }}px !important;
       {% if section.settings.btn_add_width_full_mobile %}
         width: 100% !important;
-      {% elif section.settings.btn_add_width_mobile != blank %}
+      {% elsif section.settings.btn_add_width_mobile != blank %}
         width: {{ section.settings.btn_add_width_mobile }}px !important;
       {% endif %}
     }      #shopify-section-{{ section.id }} .tsukie-btn-buy {
@@ -947,7 +3549,7 @@
         {% endif %}
         {% if section.settings.btn_buy_width_full_mobile %}
           width: 100% !important;
-        {% elif section.settings.btn_buy_width_mobile != blank %}
+        {% elsif section.settings.btn_buy_width_mobile != blank %}
           width: {{ section.settings.btn_buy_width_mobile }}px !important;
         {% endif %}
       }
@@ -2946,3 +5548,4 @@ window.tsukieToggleAccordion = function(header) {
   ]
 }
 {% endschema %}
+
