@@ -3,7 +3,7 @@
   Usage: {% render 'tsukie-product-card', product: product %}
 {%- endcomment -%}
 
-{{%- liquid
+{%- liquid
   assign variant_to_link = product.selected_or_first_available_variant
   assign onboarding = false
   if product == empty or product == blank
@@ -81,14 +81,14 @@
       endfor
     -%}
 
-    <div class="tsukie-product-price {% if product.variants.size > 1 and has_color and color_option != blank %}has-swatches{% endif %}">
+    <div class="tsukie-product-price {% if has_color and color_option != blank %}has-swatches{% endif %}">
       {{ product.price | money }}
       {%- if product.compare_at_price > product.price -%}
         <span class="tsukie-product-price--compare">{{ product.compare_at_price | money }}</span>
       {%- endif -%}
     </div>
 
-    {%- if product.variants.size > 1 and has_color and color_option != blank -%}
+    {%- if has_color and color_option != blank -%}
       <div class="tsukie-color-swatches">
         {%- for value in color_option.values limit: 4 -%}
           {%- liquid
