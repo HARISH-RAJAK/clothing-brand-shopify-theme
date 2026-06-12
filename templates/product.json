@@ -709,6 +709,7 @@
       "name": "t:names.product_recommendations",
       "settings": {
         "product": "{{ closest.product }}",
+        "recommendation_source": "metafield",
         "recommendation_type": "complementary",
         "layout_type": "carousel",
         "carousel_on_mobile": false,

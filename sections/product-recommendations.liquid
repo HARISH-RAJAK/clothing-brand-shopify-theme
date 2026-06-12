@@ -8,6 +8,14 @@
 {{ 'tsukie-mobile-pdp.css' | asset_url | stylesheet_tag: media: '(max-width:749px)' }}
 
 {% liquid
+  assign is_metafield = false
+  if section.settings.recommendation_source == 'metafield'
+    assign is_metafield = true
+  endif
+
+  assign current_product = section.settings.product | default: product
+  assign metafield_products = current_product.metafields.custom.style_it_with.value
+
   case section.settings.layout_type
     when 'grid'
       assign classes = 'resource-list--grid'
@@ -30,18 +38,30 @@
 {% render 'quick-add-styles' %}
 {% render 'quick-add-modal-styles' %}
 {% render 'product-badges-styles' %}
-<product-recommendations
-  id="product-recommendations-{{ section.id }}"
-  class="product-recommendations"
-  data-url="{{ routes.product_recommendations_url }}?limit={{ section.settings.max_products }}"
-  data-section-id="{{ section.id }}"
-  data-product-id="{{ section.settings.product.id | default: product.id }}"
-  data-intent="{{ section.settings.recommendation_type }}"
-  data-testid="product-recommendations-section"
-  data-recommendations-performed="{{ recommendations.performed }}"
-  data-hydration-key="product-recommendations-{{ section.id }}"
-  {{ section.shopify_attributes }}
->
+
+{%- if is_metafield -%}
+  <div
+    id="product-recommendations-{{ section.id }}"
+    class="product-recommendations"
+    data-section-id="{{ section.id }}"
+    data-testid="product-recommendations-section"
+    data-recommendations-performed="true"
+    {{ section.shopify_attributes }}
+  >
+{%- else -%}
+  <product-recommendations
+    id="product-recommendations-{{ section.id }}"
+    class="product-recommendations"
+    data-url="{{ routes.product_recommendations_url }}?limit={{ section.settings.max_products }}"
+    data-section-id="{{ section.id }}"
+    data-product-id="{{ section.settings.product.id | default: product.id }}"
+    data-intent="{{ section.settings.recommendation_type }}"
+    data-testid="product-recommendations-section"
+    data-recommendations-performed="{{ recommendations.performed }}"
+    data-hydration-key="product-recommendations-{{ section.id }}"
+    {{ section.shopify_attributes }}
+  >
+{%- endif -%}
   <div class="section-background color-{{ section.settings.color_scheme }}"></div>
   <div
     class="
@@ -62,9 +82,11 @@
       {% content_for 'blocks' %}
     </div>
 
-    {%- if recommendations.performed or section.settings.product == blank -%}
+    {%- if recommendations.performed or section.settings.product == blank or is_metafield -%}
       {% liquid
-        if section.settings.product == blank
+        if is_metafield
+          assign products = metafield_products
+        elsif section.settings.product == blank
           assign products = null
           # Onboarding mode: Show placeholder products
           for i in (1..section.settings.max_products)
@@ -130,7 +152,7 @@
             {% render 'resource-list-carousel',
               ref: 'resourceListCarousel',
               slides: slides,
-              slide_count: recommendations.products.size,
+              slide_count: products.size,
               settings: section.settings
             %}
         {% endcase %}
@@ -154,7 +176,7 @@
           {% render 'resource-list-carousel',
             ref: 'resourceListCarouselMobile',
             slides: slides,
-            slide_count: recommendations.products.size,
+            slide_count: products.size,
             settings: section.settings
           %}
         </div>
@@ -172,7 +194,11 @@
       </div>
     {%- endif -%}
   </div>
-</product-recommendations>
+{%- if is_metafield -%}
+  </div>
+{%- else -%}
+  </product-recommendations>
+{%- endif -%}
 
 {% schema %}
 {
@@ -220,6 +246,22 @@
     },
     {
       "type": "select",
+      "id": "recommendation_source",
+      "label": "Recommendation Source",
+      "options": [
+        {
+          "value": "recommendations",
+          "label": "Shopify Recommendations API"
+        },
+        {
+          "value": "metafield",
+          "label": "Style It With Metafield"
+        }
+      ],
+      "default": "recommendations"
+    },
+    {
+      "type": "select",
       "id": "recommendation_type",
       "label": "t:settings.type",
       "options": [
@@ -232,11 +274,13 @@
           "label": "t:options.complementary"
         }
       ],
-      "default": "related"
+      "default": "related",
+      "visible_if": "{{ section.settings.recommendation_source == 'recommendations' }}"
     },
     {
       "type": "paragraph",
-      "content": "t:content.complementary_products"
+      "content": "t:content.complementary_products",
+      "visible_if": "{{ section.settings.recommendation_source == 'recommendations' }}"
     },
     {
       "type": "header",
