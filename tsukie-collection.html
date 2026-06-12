@@ -1,83 +1,119 @@
 <style>
-  .tsukie-bestsellers-head {
-    background: #f5f1ea;
-    padding: 20px 0 0;
+  .tsukie-insta-section {
+    background: #fdfbf7;
+    padding: 10px 20px;
     text-align: center;
+    width: 100%;
   }
 
-  .tsukie-bestsellers-inner {
-    max-width: 1400px;
-    margin: 0 auto;
-    padding: 0 40px;
+  .tsukie-insta-inner {
+    width: 100%;
+    padding: 0 20px;
   }
 
-  .tsukie-bestsellers-header {
-    text-align: center;
-    margin-bottom: 5px;
-  }
-
-  .tsukie-bestsellers-eyebrow {
-    color: #a08766;
-    font-size: 11px;
-    letter-spacing: 3px;
-    text-transform: uppercase;
-    margin: 0 0 16px;
-    font-weight: 500;
-    font-family: 'Montserrat', sans-serif;
-  }
-
-  .tsukie-bestsellers-heading {
+  .tsukie-insta-heading {
     font-family: 'Playfair Display', serif;
     font-size: 52px;
     font-style: italic;
     font-weight: 600;
-    line-height: 1.15;
-    margin: 0 0 20px;
+    margin: 0 0 8px;
     color: #1e2a38;
+    line-height: 1.15;
+    padding-bottom: 3px;
   }
 
-  .tsukie-bestsellers-subtext {
-    font-size: 15px;
-    line-height: 1.6;
-    color: #6b6b6b;
-    margin: 0 auto;
-    max-width: 580px;
+  .tsukie-insta-subheading {
     font-family: 'Montserrat', sans-serif;
+    font-size: 13px;
+    letter-spacing: 2px;
+    text-transform: uppercase;
+    color: #1e2a38;
+    margin: 0 0 6px;
+    font-weight: 600;
+  }
+
+  .tsukie-insta-divider {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 14px;
+    max-width: 280px;
+    margin: 0 auto 18px;
+  }
+
+  .tsukie-insta-line {
+    flex: 1;
+    height: 1px;
+    background: linear-gradient(90deg, transparent, #a08766, transparent);
+  }
+
+  .tsukie-insta-desc {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 18px;
+    font-style: italic;
+    color: #5a5a5a;
+    margin: 0 0 24px;
+    line-height: 1.5;
+  }
+
+  .tsukie-insta-handle {
+    display: inline-block;
+    background: #1e2a38;
+    color: #a08766;
+    padding: 12px 32px;
+    border-radius: 50px;
+    text-decoration: none;
+    font-family: 'Montserrat', sans-serif;
+    font-size: 13px;
+    letter-spacing: 1.5px;
+    font-weight: 600;
+    text-transform: lowercase;
+    transition: transform 0.3s ease;
+  }
+
+  .tsukie-insta-handle:hover {
+    transform: translateY(-2px);
   }
 
   @media(max-width:749px) {
-    .tsukie-bestsellers-head {
-      padding: 50px 0 0
+    .tsukie-insta-section {
+      padding: 50px 0
     }
 
-    .tsukie-bestsellers-inner {
-      padding: 0 20px
+    .tsukie-insta-inner {
+      padding: 0 15px
     }
 
-    .tsukie-bestsellers-heading {
+    .tsukie-insta-heading {
       font-size: 36px;
-      margin: 0 0 16px;
+      margin: 0 0 6px;
       line-height: 1.2
     }
 
-    .tsukie-bestsellers-header {
-      margin-bottom: 35px
+    .tsukie-insta-subheading {
+      margin: 0 0 5px
     }
 
-    .tsukie-bestsellers-eyebrow {
-      margin: 0 0 12px
+    .tsukie-insta-divider {
+      margin: 0 auto 16px
+    }
+
+    .tsukie-insta-desc {
+      font-size: 16px;
+      margin: 0 0 20px
     }
   }
 </style>
 
-<div class="tsukie-bestsellers-head">
-  <div class="tsukie-bestsellers-inner">
-    <div class="tsukie-bestsellers-header">
-      <p class="tsukie-bestsellers-eyebrow">CUSTOMER FAVOURITES</p>
-      <h2 class="tsukie-bestsellers-heading">Best Sellers</h2>
-      <p class="tsukie-bestsellers-subtext">
-        The pieces our community keeps coming back for - tried, loved, and almost always sold out.
-      </p>
+<div class="tsukie-insta-section">
+  <div class="tsukie-insta-inner">
+    <p class="tsukie-insta-subheading">Follow Our Journey</p>
+    <h2 class="tsukie-insta-heading">Style in Motion</h2>
+    <div class="tsukie-insta-divider">
+      <span class="tsukie-insta-line"></span>
+      <span style="color:#a08766;font-size:18px">✦</span>
+      <span class="tsukie-insta-line"></span>
     </div>
+    <p class="tsukie-insta-desc">See how real women style Tsukie. Tag us to be featured.</p>
   </div>
 </div>

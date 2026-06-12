@@ -65,12 +65,15 @@
     {%- endif -%}
 
     <a href="/collections/all" class="tsukie-filter-chip {% if current_handle == 'all' or current_handle == blank %}tsukie-active tsukie-gold{% endif %}">All</a>
-    <a href="/collections/tops" class="tsukie-filter-chip {% if current_handle == 'tops' %}tsukie-active tsukie-gold{% endif %}">Tops</a>
-    <a href="/collections/co-ord-set" class="tsukie-filter-chip {% if current_handle == 'co-ord-set' %}tsukie-active tsukie-gold{% endif %}">Co-ord Set</a>
-    <a href="/collections/dresses" class="tsukie-filter-chip {% if current_handle == 'dresses' %}tsukie-active tsukie-gold{% endif %}">Dresses</a>
-    <a href="/collections/skirts" class="tsukie-filter-chip {% if current_handle == 'skirts' %}tsukie-active tsukie-gold{% endif %}">Skirts</a>
-    <a href="/collections/shirts" class="tsukie-filter-chip {% if current_handle == 'shirts' %}tsukie-active tsukie-gold{% endif %}">Shirts</a>
-    <a href="/collections/bottoms" class="tsukie-filter-chip {% if current_handle == 'bottoms' %}tsukie-active tsukie-gold{% endif %}">Bottoms</a>
+    
+    <div class="tsukie-filter-scroll-area">
+      <a href="/collections/tops" class="tsukie-filter-chip {% if current_handle == 'tops' %}tsukie-active tsukie-gold{% endif %}">Tops</a>
+      <a href="/collections/co-ord-set" class="tsukie-filter-chip {% if current_handle == 'co-ord-set' %}tsukie-active tsukie-gold{% endif %}">Co-ord Set</a>
+      <a href="/collections/dresses" class="tsukie-filter-chip {% if current_handle == 'dresses' %}tsukie-active tsukie-gold{% endif %}">Dresses</a>
+      <a href="/collections/skirts" class="tsukie-filter-chip {% if current_handle == 'skirts' %}tsukie-active tsukie-gold{% endif %}">Skirts</a>
+      <a href="/collections/shirts" class="tsukie-filter-chip {% if current_handle == 'shirts' %}tsukie-active tsukie-gold{% endif %}">Shirts</a>
+      <a href="/collections/bottoms" class="tsukie-filter-chip {% if current_handle == 'bottoms' %}tsukie-active tsukie-gold{% endif %}">Bottoms</a>
+    </div>
   </div>
 
   <div class="tsukie-filter-right">
@@ -84,7 +87,6 @@
 
     <button class="tsukie-filter-toggle-btn" id="tsukieFilterToggle" type="button">
       <svg viewBox="0 0 24 24" fill="none" stroke="currentColor"><line x1="4" y1="6" x2="20" y2="6"/><line x1="4" y1="12" x2="14" y2="12"/><line x1="4" y1="18" x2="10" y2="18"/></svg>
-      Filters
       {%- if total_active_values > 0 -%}
         <span class="tsukie-filter-count">{{ total_active_values }}</span>
       {%- endif -%}
