@@ -8,6 +8,21 @@
   ></script>
 {% endif %}
 
+{%- style -%}
+  #shopify-section-{{ section.id }} .announcement-bar {
+    background-color: {{ section.settings.background_color | default: '#1e2a38' }} !important;
+    color: {{ section.settings.text_color | default: '#d4c5a9' }} !important;
+  }
+  #shopify-section-{{ section.id }} .announcement-bar__text,
+  #shopify-section-{{ section.id }} .announcement-bar__slides,
+  #shopify-section-{{ section.id }} .announcement-bar__slider slideshow-arrows .slideshow-control {
+    color: {{ section.settings.text_color | default: '#d4c5a9' }} !important;
+  }
+  #shopify-section-{{ section.id }} .announcement-bar__slider slideshow-arrows .slideshow-control svg {
+    stroke: {{ section.settings.text_color | default: '#d4c5a9' }} !important;
+  }
+{%- endstyle -%}
+
 <div class="section-background color-{{ section.settings.color_scheme }}"></div>
 <aside
   class="announcement-bar spacing-style section section--{{ section.settings.section_width }} color-{{ section.settings.color_scheme }}"
@@ -17,14 +32,16 @@
     assign autoplay = false
     assign show_arrows = false
     if section.blocks.size > 1
-      assign autoplay = true
+      if section.settings.auto_rotate
+        assign autoplay = true
+      endif
       assign show_arrows = true
     endif
   %}
 
   <announcement-bar-component
     class="announcement-bar__slider"
-    {% if autoplay == true %}
+    {% if autoplay %}
       autoplay="{{ section.settings.speed }}" aria-live="polite"
     {% endif %}
   >
@@ -135,6 +152,24 @@
     "groups": ["header"]
   },
   "settings": [
+    {
+      "type": "color",
+      "id": "background_color",
+      "label": "Background Color",
+      "default": "#1e2a38"
+    },
+    {
+      "type": "color",
+      "id": "text_color",
+      "label": "Text Color",
+      "default": "#d4c5a9"
+    },
+    {
+      "type": "checkbox",
+      "id": "auto_rotate",
+      "label": "Enable Auto-rotation",
+      "default": true
+    },
     {
       "type": "range",
       "id": "speed",

@@ -1,0 +1,272 @@
+<section class="tsukie-trust-badges-section-{{ section.id }}" style="background-color: {{ section.settings.background_color }}; color: {{ section.settings.text_color }};">
+  <div class="tsukie-trust-badges-wrapper">
+    <div class="tsukie-trust-badges-grid">
+      {%- for block in section.blocks -%}
+        <div class="tsukie-trust-badge-item" {{ block.shopify_attributes }}>
+          <div class="tsukie-trust-badge-icon">
+            {%- render 'icon-or-image',
+              icon: block.settings.icon,
+              image_upload: block.settings.custom_icon,
+              width: section.settings.icon_size,
+              class_name: 'tsukie-trust-badge-svg'
+            -%}
+          </div>
+          <h4 class="tsukie-trust-badge-heading">{{ block.settings.heading }}</h4>
+          <p class="tsukie-trust-badge-subtext">{{ block.settings.subtext }}</p>
+        </div>
+      {%- endfor -%}
+    </div>
+  </div>
+</section>
+
+<style>
+.tsukie-trust-badges-section-{{ section.id }} {
+  width: 100%;
+  padding-top: {{ section.settings.padding_top }}px;
+  padding-bottom: {{ section.settings.padding_bottom }}px;
+  padding-left: {{ section.settings.padding_left_right }}px;
+  padding-right: {{ section.settings.padding_left_right }}px;
+  box-sizing: border-box;
+}
+
+.tsukie-trust-badges-section-{{ section.id }} .tsukie-trust-badges-wrapper {
+  max-width: 1400px;
+  margin: 0 auto;
+}
+
+.tsukie-trust-badges-section-{{ section.id }} .tsukie-trust-badges-grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 40px;
+  justify-content: center;
+  align-items: flex-start;
+}
+
+.tsukie-trust-badges-section-{{ section.id }} .tsukie-trust-badge-item {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  text-align: center;
+  padding: 24px;
+  background: rgba(255, 255, 255, 0.03);
+  border-radius: 8px;
+  transition: transform 0.3s cubic-bezier(0.25, 0.46, 0.45, 0.94), box-shadow 0.3s ease;
+}
+
+.tsukie-trust-badges-section-{{ section.id }} .tsukie-trust-badge-item:hover {
+  transform: translateY(-6px);
+}
+
+.tsukie-trust-badges-section-{{ section.id }} .tsukie-trust-badge-icon {
+  margin-bottom: 16px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: transform 0.3s ease;
+}
+
+.tsukie-trust-badges-section-{{ section.id }} .tsukie-trust-badge-item:hover .tsukie-trust-badge-icon {
+  transform: scale(1.1) rotate(2deg);
+}
+
+.tsukie-trust-badges-section-{{ section.id }} .tsukie-trust-badge-icon svg,
+.tsukie-trust-badges-section-{{ section.id }} .tsukie-trust-badge-icon img {
+  display: block;
+  max-width: 100%;
+  height: auto;
+}
+
+.tsukie-trust-badges-section-{{ section.id }} .tsukie-trust-badge-icon svg {
+  color: {{ section.settings.text_color }} !important;
+  fill: none;
+  stroke: {{ section.settings.text_color }} !important;
+}
+
+.tsukie-trust-badges-section-{{ section.id }} .tsukie-trust-badge-heading {
+  font-family: 'Montserrat', sans-serif;
+  font-size: {{ section.settings.heading_size }}px;
+  font-weight: 700;
+  letter-spacing: 1.5px;
+  text-transform: uppercase;
+  margin: 0 0 8px 0;
+  line-height: 1.2;
+}
+
+.tsukie-trust-badges-section-{{ section.id }} .tsukie-trust-badge-subtext {
+  font-family: 'Montserrat', sans-serif;
+  font-size: {{ section.settings.subtext_size }}px;
+  margin: 0;
+  opacity: 0.85;
+  line-height: 1.4;
+}
+
+@media (max-width: 989px) {
+  .tsukie-trust-badges-section-{{ section.id }} .tsukie-trust-badges-grid {
+    grid-template-columns: 1fr;
+    gap: 24px;
+  }
+  
+  .tsukie-trust-badges-section-{{ section.id }} {
+    padding-left: 20px;
+    padding-right: 20px;
+  }
+}
+</style>
+
+{% schema %}
+{
+  "name": "Trust Badges",
+  "class": "shopify-section-trust-badges",
+  "settings": [
+    {
+      "type": "color",
+      "id": "background_color",
+      "label": "Background Color",
+      "default": "#f5f1ea"
+    },
+    {
+      "type": "color",
+      "id": "text_color",
+      "label": "Text Color",
+      "default": "#1e2a38"
+    },
+    {
+      "type": "range",
+      "id": "heading_size",
+      "label": "Heading Font Size",
+      "min": 10,
+      "max": 30,
+      "step": 1,
+      "unit": "px",
+      "default": 13
+    },
+    {
+      "type": "range",
+      "id": "subtext_size",
+      "label": "Sub-text Font Size",
+      "min": 10,
+      "max": 24,
+      "step": 1,
+      "unit": "px",
+      "default": 11
+    },
+    {
+      "type": "range",
+      "id": "icon_size",
+      "label": "Icon Size",
+      "min": 16,
+      "max": 64,
+      "step": 2,
+      "unit": "px",
+      "default": 28
+    },
+    {
+      "type": "header",
+      "content": "Section Padding"
+    },
+    {
+      "type": "range",
+      "id": "padding_top",
+      "label": "Padding Top",
+      "min": 0,
+      "max": 100,
+      "step": 5,
+      "unit": "px",
+      "default": 40
+    },
+    {
+      "type": "range",
+      "id": "padding_bottom",
+      "label": "Padding Bottom",
+      "min": 0,
+      "max": 100,
+      "step": 5,
+      "unit": "px",
+      "default": 40
+    },
+    {
+      "type": "range",
+      "id": "padding_left_right",
+      "label": "Left & Right Padding",
+      "min": 0,
+      "max": 120,
+      "step": 5,
+      "unit": "px",
+      "default": 40
+    }
+  ],
+  "blocks": [
+    {
+      "type": "badge",
+      "name": "Badge Item",
+      "settings": [
+        {
+          "type": "select",
+          "id": "icon",
+          "label": "Icon",
+          "options": [
+            { "value": "none", "label": "None" },
+            { "value": "shirt", "label": "Shirt (Premium Fabric)" },
+            { "value": "return", "label": "Return (Easy Exchange)" },
+            { "value": "lock", "label": "Lock (Secure Payment)" },
+            { "value": "truck", "label": "Truck" },
+            { "value": "price_tag", "label": "Price Tag" },
+            { "value": "heart", "label": "Heart" },
+            { "value": "star", "label": "Star" },
+            { "value": "stopwatch", "label": "Stopwatch" }
+          ],
+          "default": "shirt"
+        },
+        {
+          "type": "image_picker",
+          "id": "custom_icon",
+          "label": "Custom Icon Image (Overrides select icon)"
+        },
+        {
+          "type": "text",
+          "id": "heading",
+          "label": "Heading Text",
+          "default": "PREMIUM FABRIC"
+        },
+        {
+          "type": "text",
+          "id": "subtext",
+          "label": "Sub-text",
+          "default": "100% Viscose"
+        }
+      ]
+    }
+  ],
+  "presets": [
+    {
+      "name": "Trust Badges",
+      "blocks": [
+        {
+          "type": "badge",
+          "settings": {
+            "icon": "shirt",
+            "heading": "PREMIUM FABRIC",
+            "subtext": "100% Viscose"
+          }
+        },
+        {
+          "type": "badge",
+          "settings": {
+            "icon": "return",
+            "heading": "EASY EXCHANGE",
+            "subtext": "14 days"
+          }
+        },
+        {
+          "type": "badge",
+          "settings": {
+            "icon": "lock",
+            "heading": "SECURE PAYMENT",
+            "subtext": "UPI · Cards · COD"
+          }
+        }
+      ]
+    }
+  ]
+}
+{% endschema %}
