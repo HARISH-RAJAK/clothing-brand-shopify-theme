@@ -164,6 +164,7 @@
       <button
         class="header-actions__action button-unstyled{% if display_style == 'text' %} header-actions__text-style{% endif %}"
         on:click="/open"
+        onclick="const drawer = document.querySelector('cart-drawer-component'); if (drawer && typeof drawer.open === 'function') { drawer.open(); event.preventDefault(); event.stopPropagation(); }"
         aria-haspopup="dialog"
         aria-label="{{ 'accessibility.cart' | t }}"
         aria-describedby="cart-bubble-text"
