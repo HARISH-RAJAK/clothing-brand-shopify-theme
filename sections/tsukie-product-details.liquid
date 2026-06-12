@@ -1190,7 +1190,49 @@
         }
       </style>
       {%- comment -%} AG Fix - Task #8 - 2026-06-12 {%- endcomment -%}
-      {% unless section.settings.show_trust_badges_v2 %}
+      {% if section.settings.show_trust_badges_v2 %}
+      <div class="tsukie-trust-badges-v2" style="margin-bottom: 24px;">
+        <div class="tsukie-badge-card-v2">
+          {% if section.settings.feature1_custom_icon != blank %}
+            <img src="{{ section.settings.feature1_custom_icon | image_url: width: 60 }}" alt="{{ section.settings.feature1_title | escape }}" style="width: 28px; height: 28px; object-fit: contain; display: inline-block; margin-bottom: 4px;">
+          {% elsif section.settings.feature1_icon != blank %}
+            {{ section.settings.feature1_icon }}
+          {% else %}
+            <svg fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M17 9V7a2 2 0 00-2-2H5a2 2 0 00-2 2v6a2 2 0 002 2h2m2 4h10a2 2 0 002-2v-6a2 2 0 00-2-2H9a2 2 0 00-2 2v6a2 2 0 002 2zm7-5a2 2 0 11-4 0 2 2 0 014 0z"></path></svg>
+          {% endif %}
+          <div class="tsukie-badge-title-v2">{{ section.settings.feature1_title }}</div>
+          {% if section.settings.feature1_desc != blank %}
+            <div class="tsukie-badge-desc-v2" style="font-family:'Montserrat',sans-serif; font-size:10px; color:#1e2a38; opacity:0.8; margin-top:2px;">{{ section.settings.feature1_desc }}</div>
+          {% endif %}
+        </div>
+        <div class="tsukie-badge-card-v2">
+          {% if section.settings.feature2_custom_icon != blank %}
+            <img src="{{ section.settings.feature2_custom_icon | image_url: width: 60 }}" alt="{{ section.settings.feature2_title | escape }}" style="width: 28px; height: 28px; object-fit: contain; display: inline-block; margin-bottom: 4px;">
+          {% elsif section.settings.feature2_icon != blank %}
+            {{ section.settings.feature2_icon }}
+          {% else %}
+            <svg fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M9 12l2 2 4-4m5.618-4.016A11.955 0 0112 2.944a11.955 11.955 0 01-8.618 3.04A12.02 12.02 0 003 9c0 5.591 3.824 10.29 9 11.622 5.176-1.332 9-6.03 9-11.622 0-1.042-.133-2.052-.382-3.016z"></path></svg>
+          {% endif %}
+          <div class="tsukie-badge-title-v2">{{ section.settings.feature2_title }}</div>
+          {% if section.settings.feature2_desc != blank %}
+            <div class="tsukie-badge-desc-v2" style="font-family:'Montserrat',sans-serif; font-size:10px; color:#1e2a38; opacity:0.8; margin-top:2px;">{{ section.settings.feature2_desc }}</div>
+          {% endif %}
+        </div>
+        <div class="tsukie-badge-card-v2">
+          {% if section.settings.feature3_custom_icon != blank %}
+            <img src="{{ section.settings.feature3_custom_icon | image_url: width: 60 }}" alt="{{ section.settings.feature3_title | escape }}" style="width: 28px; height: 28px; object-fit: contain; display: inline-block; margin-bottom: 4px;">
+          {% elsif section.settings.feature3_icon != blank %}
+            {{ section.settings.feature3_icon }}
+          {% else %}
+            <svg fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M20 7l-8-4-8 4m16 0l-8 4m8-4v10l-8 4m0-10L4 7m8 4v10M4 7v10l8 4"></path></svg>
+          {% endif %}
+          <div class="tsukie-badge-title-v2">{{ section.settings.feature3_title }}</div>
+          {% if section.settings.feature3_desc != blank %}
+            <div class="tsukie-badge-desc-v2" style="font-family:'Montserrat',sans-serif; font-size:10px; color:#1e2a38; opacity:0.8; margin-top:2px;">{{ section.settings.feature3_desc }}</div>
+          {% endif %}
+        </div>
+      </div>
+      {% else %}
       <div class="tsukie-pdp-badges">
         <div class="tsukie-pdp-badge">
           <img src="//tsukie.in/cdn/shop/files/1-01.png?v=1776420000&width=200" alt="Free Shipping" width="100" height="23" loading="lazy">
@@ -1202,7 +1244,7 @@
           <img src="//tsukie.in/cdn/shop/files/1-02.png?v=1776419999&width=200" alt="Secure Payment" width="100" height="23" loading="lazy">
         </div>
       </div>
-      {% endunless %}
+      {% endif %}
 
       {% form 'product', product, class: 'tsukie-product-form', id: 'tsukie-product-form' %}
         <input type="hidden" name="id" value="{{ product.selected_or_first_available_variant.id }}" id="tsukie-variant-id">
@@ -1484,50 +1526,7 @@
   }
 </style>
 
-<!-- 1. Three Colored Trust Badges Section - AG Fix - Task #8 - 2026-06-12 -->
-{% if section.settings.show_trust_badges_v2 %}
-<div class="tsukie-trust-badges-v2">
-  <div class="tsukie-badge-card-v2">
-    {% if section.settings.feature1_custom_icon != blank %}
-      <img src="{{ section.settings.feature1_custom_icon | image_url: width: 60 }}" alt="{{ section.settings.feature1_title | escape }}" style="width: 28px; height: 28px; object-fit: contain; display: inline-block; margin-bottom: 4px;">
-    {% elsif section.settings.feature1_icon != blank %}
-      {{ section.settings.feature1_icon }}
-    {% else %}
-      <svg fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M17 9V7a2 2 0 00-2-2H5a2 2 0 00-2 2v6a2 2 0 002 2h2m2 4h10a2 2 0 002-2v-6a2 2 0 00-2-2H9a2 2 0 00-2 2v6a2 2 0 002 2zm7-5a2 2 0 11-4 0 2 2 0 014 0z"></path></svg>
-    {% endif %}
-    <div class="tsukie-badge-title-v2">{{ section.settings.feature1_title }}</div>
-    {% if section.settings.feature1_desc != blank %}
-      <div class="tsukie-badge-desc-v2" style="font-family:'Montserrat',sans-serif; font-size:10px; color:#1e2a38; opacity:0.8; margin-top:2px;">{{ section.settings.feature1_desc }}</div>
-    {% endif %}
-  </div>
-  <div class="tsukie-badge-card-v2">
-    {% if section.settings.feature2_custom_icon != blank %}
-      <img src="{{ section.settings.feature2_custom_icon | image_url: width: 60 }}" alt="{{ section.settings.feature2_title | escape }}" style="width: 28px; height: 28px; object-fit: contain; display: inline-block; margin-bottom: 4px;">
-    {% elsif section.settings.feature2_icon != blank %}
-      {{ section.settings.feature2_icon }}
-    {% else %}
-      <svg fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M9 12l2 2 4-4m5.618-4.016A11.955 0 0112 2.944a11.955 11.955 0 01-8.618 3.04A12.02 12.02 0 003 9c0 5.591 3.824 10.29 9 11.622 5.176-1.332 9-6.03 9-11.622 0-1.042-.133-2.052-.382-3.016z"></path></svg>
-    {% endif %}
-    <div class="tsukie-badge-title-v2">{{ section.settings.feature2_title }}</div>
-    {% if section.settings.feature2_desc != blank %}
-      <div class="tsukie-badge-desc-v2" style="font-family:'Montserrat',sans-serif; font-size:10px; color:#1e2a38; opacity:0.8; margin-top:2px;">{{ section.settings.feature2_desc }}</div>
-    {% endif %}
-  </div>
-  <div class="tsukie-badge-card-v2">
-    {% if section.settings.feature3_custom_icon != blank %}
-      <img src="{{ section.settings.feature3_custom_icon | image_url: width: 60 }}" alt="{{ section.settings.feature3_title | escape }}" style="width: 28px; height: 28px; object-fit: contain; display: inline-block; margin-bottom: 4px;">
-    {% elsif section.settings.feature3_icon != blank %}
-      {{ section.settings.feature3_icon }}
-    {% else %}
-      <svg fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M20 7l-8-4-8 4m16 0l-8 4m8-4v10l-8 4m0-10L4 7m8 4v10M4 7v10l8 4"></path></svg>
-    {% endif %}
-    <div class="tsukie-badge-title-v2">{{ section.settings.feature3_title }}</div>
-    {% if section.settings.feature3_desc != blank %}
-      <div class="tsukie-badge-desc-v2" style="font-family:'Montserrat',sans-serif; font-size:10px; color:#1e2a38; opacity:0.8; margin-top:2px;">{{ section.settings.feature3_desc }}</div>
-    {% endif %}
-  </div>
-</div>
-{% endif %}
+{%- comment -%} AG Fix - Task #8 - Moved trust badges to the top position {%- endcomment -%}
 
 <!-- 2. Tracker Section -->
 {% if section.settings.show_order_status %}
