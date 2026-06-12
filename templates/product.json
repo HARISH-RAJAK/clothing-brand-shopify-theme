@@ -30,7 +30,7 @@
         "btn_add_height_mobile": 48,
         "btn_add_width_full_desktop": true,
         "btn_add_width_desktop": 200,
-        "btn_add_width_full_mobile": false,
+        "btn_add_width_full_mobile": true,
         "btn_add_width_mobile": 180,
         "btn_buy_font_size_desktop": 11,
         "btn_buy_font_size_mobile": 11,
