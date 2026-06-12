@@ -94,6 +94,15 @@
   backdrop-filter: blur(2px);
   z-index: 2;
   pointer-events: none;
+  transition: opacity 0.3s, visibility 0.3s;
+}
+.tsukie-real-women-item.is-playing .tsukie-real-women-play {
+  opacity: 0;
+  visibility: hidden;
+}
+.tsukie-real-women-item:not(.is-playing) .tsukie-real-women-play {
+  opacity: 1;
+  visibility: visible;
 }
 
 @media(max-width: 989px) {
@@ -154,13 +163,23 @@
             {% endif %}
 
           {% elsif block.type == 'video_item' %}
+            {%- comment -%} AG Fix - Task #3 - 2026-06-12 {%- endcomment -%}
+            {%- assign poster_url = '' -%}
+            {%- if block.settings.video_poster != blank -%}
+              {%- assign poster_url = block.settings.video_poster | image_url: width: 800 -%}
+            {%- endif -%}
+
             {% if block.settings.video_url != blank %}
-              <video class="tsukie-real-women-video" autoplay loop muted playsinline>
+              <video class="tsukie-real-women-video" loop muted playsinline{% if poster_url != blank %} poster="{{ poster_url }}"{% endif %}>
                 <source src="{{ block.settings.video_url }}" type="video/mp4">
               </video>
               <span class="tsukie-real-women-play">&#9654;</span>
             {% elsif block.settings.shopify_video != blank %}
-              {{ block.settings.shopify_video | video_tag: autoplay: true, loop: true, muted: true, class: 'tsukie-real-women-video' }}
+              {% if poster_url != blank %}
+                {{ block.settings.shopify_video | video_tag: autoplay: false, loop: true, muted: true, class: 'tsukie-real-women-video', poster: poster_url }}
+              {% else %}
+                {{ block.settings.shopify_video | video_tag: image_size: '800x', autoplay: false, loop: true, muted: true, class: 'tsukie-real-women-video' }}
+              {% endif %}
               <span class="tsukie-real-women-play">&#9654;</span>
             {% else %}
               {{ 'lifestyle-2' | placeholder_svg_tag: 'tsukie-real-women-img' }}
@@ -176,6 +195,54 @@
     {% endif %}
   </div>
 </div>
+
+<script>
+/* AG Fix - Task #3 - 2026-06-12 */
+document.addEventListener('DOMContentLoaded', function() {
+  const initRealWomenVideos = () => {
+    const items = document.querySelectorAll('.tsukie-real-women-item');
+    items.forEach(item => {
+      const video = item.querySelector('video');
+      if (video) {
+        item.style.cursor = 'pointer';
+        item.addEventListener('click', function(e) {
+          if (video.paused) {
+            // Pause all other videos first
+            document.querySelectorAll('.tsukie-real-women-video').forEach(otherVideo => {
+              if (otherVideo !== video) {
+                otherVideo.pause();
+                const otherItem = otherVideo.closest('.tsukie-real-women-item');
+                if (otherItem) otherItem.classList.remove('is-playing');
+              }
+            });
+            video.play();
+            item.classList.add('is-playing');
+          } else {
+            video.pause();
+            item.classList.remove('is-playing');
+          }
+        });
+
+        // Sync state if controlled externally or by browser controls
+        video.addEventListener('play', () => {
+          item.classList.add('is-playing');
+        });
+        video.addEventListener('pause', () => {
+          item.classList.remove('is-playing');
+        });
+      }
+    });
+  };
+  
+  initRealWomenVideos();
+  // Support theme editor reload
+  document.addEventListener('shopify:section:load', function(e) {
+    if (e.target.classList.contains('tsukie-real-women-section') || e.target.querySelector('.tsukie-real-women')) {
+      initRealWomenVideos();
+    }
+  });
+});
+</script>
 
 {% schema %}
 {
@@ -234,6 +301,11 @@
           "type": "video",
           "id": "shopify_video",
           "label": "Or Upload Video (Shopify hosted)"
+        },
+        {
+          "type": "image_picker",
+          "id": "video_poster",
+          "label": "Poster / Thumbnail Image"
         },
         {
           "type": "text",

@@ -117,10 +117,17 @@
                       assign first_accordion_open = true
                       assign should_open_first = true
                     endif
+
+                    # AG Fix - Task #2 - 2026-06-12
+                    assign link_title_clean = link.title | downcase | strip
+                    if link_title_clean == 'shop all'
+                      assign should_open_first = true
+                    endif
                   %}
                   {% capture accordion_children %}
                     <details
                       id="Details-menu-drawer-{{ link.handle }}"
+                      {%- if link_title_clean == 'shop all' %} open{% endif -%}
                     >
                       <summary
                         id="HeaderDrawer-{{ link.handle }}"
@@ -371,6 +378,12 @@
                                     assign first_accordion_open = true
                                     assign should_open_first_nested = true
                                   endif
+
+                                  # AG Fix - Task #2 - 2026-06-12
+                                  assign childlink_title_clean = childlink.title | downcase | strip
+                                  if childlink_title_clean == 'shop all'
+                                    assign should_open_first_nested = true
+                                  endif
                                 %}
                                 {% if block_settings.drawer_accordion %}
                                   {%- comment -%}
@@ -379,6 +392,7 @@
                                   {% capture accordion_children_nested %}
                                     <details
                                       id="Details-menu-drawer-{{ link.handle }}-{{ childlink.handle }}"
+                                      {%- if childlink_title_clean == 'shop all' %} open{% endif -%}
                                     >
                                       <summary
                                         id="HeaderDrawer-{{ link.handle }}-{{ childlink.handle }}"
