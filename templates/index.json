@@ -485,20 +485,20 @@
     "tsukie_seen_on_real_women": {
       "type": "tsukie-seen-on-real-women",
       "blocks": {
-        "video_item_hGHimA": {
-          "type": "video_item",
-          "settings": {
-            "video_url": "",
-            "shopify_video": "shopify://files/videos/Tsukie_Influencer_collaboration_Premium_Clothing_Brand.mp4",
-            "tag": "@vagmichettri"
-          }
-        },
         "video_item_YrxNFr": {
           "type": "video_item",
           "settings": {
             "video_url": "",
             "shopify_video": "shopify://files/videos/moast-AQMYDpAfX_RKdR1NkSmtkW0FooAA_TE2rDXj1qL1CA5Q-lPIq150uVEyTZ3dUJcBB2jFBi0p503vCR-OSZ_tnhRX0nIDxrBdC1v6Ito.mp4",
             "tag": "@shubhisrivastava__"
+          }
+        },
+        "video_item_hGHimA": {
+          "type": "video_item",
+          "settings": {
+            "video_url": "",
+            "shopify_video": "shopify://files/videos/Tsukie_Influencer_collaboration_Premium_Clothing_Brand.mp4",
+            "tag": "@vagmichettri"
           }
         },
         "item_2": {
@@ -513,7 +513,7 @@
           "type": "image_item",
           "settings": {
             "image": "shopify://shop_images/Rujuta.jpg",
-            "tag": "@MEERA_M"
+            "tag": "@rujuta_bahirat_zambare"
           }
         },
         "item_4": {
@@ -529,11 +529,12 @@
           "settings": {
             "video_url": "",
             "shopify_video": "shopify://files/videos/moast-AQMBBXoIJekeIJRYD4YvUKM6NZHdgTkoFH7jJVNUTOh3gafgAlvc-sEauAgZkrCU_q1ZsDVgtMJS6zgIGJfVQq9VzW4B4Vc0S9Fng3U.mp4",
-            "tag": "@RIYA.SEN"
+            "tag": "@tsukieofficial"
           }
         },
         "item_1": {
           "type": "image_item",
+          "disabled": true,
           "settings": {
             "image": "shopify://shop_images/Women_s_Waist-Tie_Shirt_Top_04.jpg",
             "tag": "@PRIYA_ANAND"
@@ -541,8 +542,8 @@
         }
       },
       "block_order": [
-        "video_item_hGHimA",
         "video_item_YrxNFr",
+        "video_item_hGHimA",
         "item_2",
         "item_3",
         "item_4",
