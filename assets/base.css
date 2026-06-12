@@ -4337,11 +4337,16 @@ product-recommendations:has([data-has-recommendations='false']) {
 /* ===== JUDGE.ME TSUKIE THEME OVERRIDE - COMPACT UI ===== */
 
 /* Main Widget Reset */
-.jdgm-rev-widg{
+.jdgm-rev-widg,
+.jdgm-widget,
+.jdgm-review-widget,
+.jdgm-revs-tab-content {
   padding:0 !important;
   margin:0 !important;
   border:none !important;
   font-family:'Montserrat',sans-serif !important;
+  background: transparent !important;
+  background-color: transparent !important;
 }
 
 /* Hide Default Title */
