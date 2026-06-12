@@ -2156,6 +2156,118 @@ window.tsukieToggleAccordion = function(header) {
 
   initCustomReviewsWidget();
 })();
+
+// Tsukie Custom AJAX Add to Cart & Open Cart Drawer
+(function() {
+  function initTsukieAddToCartAjax() {
+    const form = document.getElementById('tsukie-product-form');
+    if (!form || form.dataset.ajaxInitialized) return;
+    form.dataset.ajaxInitialized = 'true';
+
+    form.addEventListener('submit', function(e) {
+      e.preventDefault();
+
+      const addBtn = document.getElementById('tsukie-add-to-cart-btn');
+      const addText = document.getElementById('tsukie-add-btn-text');
+      if (!addBtn || addBtn.disabled) return;
+
+      const originalText = addText ? addText.textContent : "ADD TO BAG";
+      if (addText) addText.textContent = "ADDING...";
+      addBtn.disabled = true;
+
+      const formData = new FormData(form);
+      
+      // Select all cart items component section IDs to update their HTML
+      const cartItemsComponents = document.querySelectorAll('cart-items-component');
+      const sectionsToUpdate = [];
+      cartItemsComponents.forEach(function(item) {
+        if (item.dataset.sectionId) {
+          sectionsToUpdate.push(item.dataset.sectionId);
+        }
+      });
+      
+      if (sectionsToUpdate.length > 0) {
+        formData.append('sections', sectionsToUpdate.join(','));
+      }
+
+      const rootPath = (window.Shopify && window.Shopify.routes && window.Shopify.routes.root) || '/';
+
+      fetch(rootPath + 'cart/add.js', {
+        method: 'POST',
+        body: formData,
+        headers: {
+          'X-Requested-With': 'XMLHttpRequest'
+        }
+      })
+      .then(function(res) {
+        return res.json();
+      })
+      .then(function(response) {
+        if (response.status) {
+          // Show error message
+          alert(response.description || response.message);
+          if (addText) addText.textContent = originalText;
+          addBtn.disabled = false;
+          return;
+        }
+
+        // Fetch updated cart data to refresh count and components
+        fetch(rootPath + 'cart.js')
+        .then(function(res) {
+          return res.json();
+        })
+        .then(function(cart) {
+          // Dispatch cart:update event so cart-icon and cart-items-component update automatically
+          const event = new CustomEvent('cart:update', {
+            bubbles: true,
+            detail: {
+              resource: cart,
+              sourceId: 'tsukie-product-form',
+              data: {
+                source: 'product-form-component',
+                itemCount: cart.item_count,
+                productId: '{{ product.id }}',
+                sections: response.sections
+              }
+            }
+          });
+          document.dispatchEvent(event);
+
+          // Force open the cart drawer component
+          const drawer = document.querySelector('cart-drawer-component');
+          if (drawer && typeof drawer.open === 'function') {
+            drawer.open();
+          }
+
+          // Show confirmation on button
+          if (addText) addText.textContent = "ADDED!";
+          setTimeout(function() {
+            if (addText) addText.textContent = originalText;
+            addBtn.disabled = false;
+          }, 1500);
+        });
+      })
+      .catch(function(err) {
+        console.error('AJAX add to cart error:', err);
+        if (addText) addText.textContent = originalText;
+        addBtn.disabled = false;
+      });
+    });
+  }
+
+  // Initialize on load
+  if (document.readyState === 'loading') {
+    document.addEventListener('DOMContentLoaded', initTsukieAddToCartAjax);
+  } else {
+    initTsukieAddToCartAjax();
+  }
+  
+  // Watch for dynamic insertions
+  const observer = new MutationObserver(function() {
+    initTsukieAddToCartAjax();
+  });
+  observer.observe(document.body, { childList: true, subtree: true });
+})();
 </script>
 
 <style>
