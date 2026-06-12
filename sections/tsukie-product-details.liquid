@@ -1318,36 +1318,6 @@
       {% endform %}
 <!-- BUY NOW BUTTON KE THEEK NEECHE YAHAN SE PASTE KAREIN -->
 <style>
-  /* 3 Badges - Exact Image Match & Fully Responsive */
-  .tsukie-trust-badges-v2 {
-    display: grid;
-    grid-template-columns: repeat(3, 1fr);
-    gap: 10px;
-    margin: 24px 0;
-  }
-  .tsukie-badge-card-v2 {
-    background: #b6b9a6; /* Exact olive-gray shade from image */
-    border-radius: 8px;
-    padding: 14px 4px;
-    text-align: center;
-    border: 1px solid rgba(0, 0, 0, 0.05);
-  }
-  .tsukie-badge-card-v2 svg {
-    width: 28px;
-    height: 28px;
-    color: #1e2a38; /* Theme Primary Navy */
-    margin-bottom: 4px;
-    display: inline-block;
-  }
-  .tsukie-badge-title-v2 {
-    font-family: 'Montserrat', sans-serif;
-    font-size: 13px;
-    font-weight: 700;
-    color: #1e2a38;
-    letter-spacing: -0.2px;
-    line-height: 1.2;
-  }
-
   /* Order Status Section */
   /* Order Status Section - AG Fix - Task #7 - 2026-06-12 */
   .tsukie-order-status-v2 {
@@ -1534,47 +1504,41 @@
 {% endif %}
 <!-- END OF TRACKER CODES -->
 
-      {%- comment -%} AG Fix - Task #8 - Dynamic trust badges row below order status tracker - 2026-06-12 {%- endcomment -%}
+      {%- comment -%} AG Fix - Task #8 - Dynamic trust badges row below order status tracker - 2026-06-13 {%- endcomment -%}
       {% if section.settings.show_trust_badges_v2 %}
-      <div class="tsukie-trust-badges-v2" style="margin-bottom: 24px;">
-        <div class="tsukie-badge-card-v2">
+      <div class="tsukie-features" style="margin-bottom: 24px;">
+        <div class="tsukie-feature">
           {% if section.settings.feature1_custom_icon != blank %}
-            <img src="{{ section.settings.feature1_custom_icon | image_url: width: 60 }}" alt="{{ section.settings.feature1_title | escape }}" style="width: 28px; height: 28px; object-fit: contain; display: inline-block; margin-bottom: 4px;">
+            <img src="{{ section.settings.feature1_custom_icon | image_url: width: 60 }}" alt="{{ section.settings.feature1_title | escape }}" style="width: 20px; height: 20px; object-fit: contain; display: inline-block; margin-bottom: 8px;">
           {% elsif section.settings.feature1_icon != blank %}
             {{ section.settings.feature1_icon }}
           {% else %}
-            <svg fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M17 9V7a2 2 0 00-2-2H5a2 2 0 00-2 2v6a2 2 0 002 2h2m2 4h10a2 2 0 002-2v-6a2 2 0 00-2-2H9a2 2 0 00-2 2v6a2 2 0 002 2zm7-5a2 2 0 11-4 0 2 2 0 014 0z"></path></svg>
+            <svg fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M5 3v4M3 5h4M6 17v4m-2-2h4m5-16l2.286 6.857L21 12l-5.714 2.143L13 21l-2.286-6.857L5 12l5.714-2.143L13 3z"></path></svg>
           {% endif %}
-          <div class="tsukie-badge-title-v2">{{ section.settings.feature1_title }}</div>
-          {% if section.settings.feature1_desc != blank %}
-            <div class="tsukie-badge-desc-v2" style="font-family:'Montserrat',sans-serif; font-size:10px; color:#1e2a38; opacity:0.8; margin-top:2px;">{{ section.settings.feature1_desc }}</div>
-          {% endif %}
+          <div class="tsukie-feature-title">{{ section.settings.feature1_title }}</div>
+          <div class="tsukie-feature-text">{{ section.settings.feature1_desc }}</div>
         </div>
-        <div class="tsukie-badge-card-v2">
+        <div class="tsukie-feature">
           {% if section.settings.feature2_custom_icon != blank %}
-            <img src="{{ section.settings.feature2_custom_icon | image_url: width: 60 }}" alt="{{ section.settings.feature2_title | escape }}" style="width: 28px; height: 28px; object-fit: contain; display: inline-block; margin-bottom: 4px;">
+            <img src="{{ section.settings.feature2_custom_icon | image_url: width: 60 }}" alt="{{ section.settings.feature2_title | escape }}" style="width: 20px; height: 20px; object-fit: contain; display: inline-block; margin-bottom: 8px;">
           {% elsif section.settings.feature2_icon != blank %}
             {{ section.settings.feature2_icon }}
           {% else %}
-            <svg fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M9 12l2 2 4-4m5.618-4.016A11.955 0 0112 2.944a11.955 11.955 0 01-8.618 3.04A12.02 12.02 0 003 9c0 5.591 3.824 10.29 9 11.622 5.176-1.332 9-6.03 9-11.622 0-1.042-.133-2.052-.382-3.016z"></path></svg>
+            <svg fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M4 4v5h.582m15.356 2A8.001 0 004.582 9m0 0H9m11 11v-5h-.581m0 0a8.003 0 01-15.357-2m15.357 2H15"></path></svg>
           {% endif %}
-          <div class="tsukie-badge-title-v2">{{ section.settings.feature2_title }}</div>
-          {% if section.settings.feature2_desc != blank %}
-            <div class="tsukie-badge-desc-v2" style="font-family:'Montserrat',sans-serif; font-size:10px; color:#1e2a38; opacity:0.8; margin-top:2px;">{{ section.settings.feature2_desc }}</div>
-          {% endif %}
+          <div class="tsukie-feature-title">{{ section.settings.feature2_title }}</div>
+          <div class="tsukie-feature-text">{{ section.settings.feature2_desc }}</div>
         </div>
-        <div class="tsukie-badge-card-v2">
+        <div class="tsukie-feature">
           {% if section.settings.feature3_custom_icon != blank %}
-            <img src="{{ section.settings.feature3_custom_icon | image_url: width: 60 }}" alt="{{ section.settings.feature3_title | escape }}" style="width: 28px; height: 28px; object-fit: contain; display: inline-block; margin-bottom: 4px;">
+            <img src="{{ section.settings.feature3_custom_icon | image_url: width: 60 }}" alt="{{ section.settings.feature3_title | escape }}" style="width: 20px; height: 20px; object-fit: contain; display: inline-block; margin-bottom: 8px;">
           {% elsif section.settings.feature3_icon != blank %}
             {{ section.settings.feature3_icon }}
           {% else %}
-            <svg fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M20 7l-8-4-8 4m16 0l-8 4m8-4v10l-8 4m0-10L4 7m8 4v10M4 7v10l8 4"></path></svg>
+            <svg fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M9 12l2 2 4-4m5.618-4.016A11.955 0 0112 2.944a11.955 11.955 0 01-8.618 3.04A12.02 12.02 0 003 9c0 5.591 3.824 10.29 9 11.622 5.176-1.332 9-6.03 9-11.622 0-1.042-.133-2.052-.382-3.016z"></path></svg>
           {% endif %}
-          <div class="tsukie-badge-title-v2">{{ section.settings.feature3_title }}</div>
-          {% if section.settings.feature3_desc != blank %}
-            <div class="tsukie-badge-desc-v2" style="font-family:'Montserrat',sans-serif; font-size:10px; color:#1e2a38; opacity:0.8; margin-top:2px;">{{ section.settings.feature3_desc }}</div>
-          {% endif %}
+          <div class="tsukie-feature-title">{{ section.settings.feature3_title }}</div>
+          <div class="tsukie-feature-text">{{ section.settings.feature3_desc }}</div>
         </div>
       </div>
       {% endif %}
@@ -2855,7 +2819,7 @@ window.tsukieToggleAccordion = function(header) {
       "type": "html",
       "id": "feature1_icon",
       "label": "Feature 1 Icon (SVG/HTML)",
-      "default": "<svg fill=\"none\" stroke=\"currentColor\" viewBox=\"0 0 24 24\"><path stroke-linecap=\"round\" stroke-linejoin=\"round\" stroke-width=\"1.5\" d=\"M17 9V7a2 2 0 00-2-2H5a2 2 0 00-2 2v6a2 2 0 002 2h2m2 4h10a2 2 0 002-2v-6a2 2 0 00-2-2H9a2 2 0 00-2 2v6a2 2 0 002 2zm7-5a2 2 0 11-4 0 2 2 0 014 0z\"></path></svg>"
+      "default": "<svg fill=\"none\" stroke=\"currentColor\" viewBox=\"0 0 24 24\"><path stroke-linecap=\"round\" stroke-linejoin=\"round\" stroke-width=\"1.5\" d=\"M5 3v4M3 5h4M6 17v4m-2-2h4m5-16l2.286 6.857L21 12l-5.714 2.143L13 21l-2.286-6.857L5 12l5.714-2.143L13 3z\"></path></svg>"
     },
     {
       "type": "image_picker",
@@ -2866,7 +2830,7 @@ window.tsukieToggleAccordion = function(header) {
       "type": "html",
       "id": "feature2_icon",
       "label": "Feature 2 Icon (SVG/HTML)",
-      "default": "<svg fill=\"none\" stroke=\"currentColor\" viewBox=\"0 0 24 24\"><path stroke-linecap=\"round\" stroke-linejoin=\"round\" stroke-width=\"1.5\" d=\"M9 12l2 2 4-4m5.618-4.016A11.955 0 0112 2.944a11.955 11.955 0 01-8.618 3.04A12.02 12.02 0 003 9c0 5.591 3.824 10.29 9 11.622 5.176-1.332 9-6.03 9-11.622 0-1.042-.133-2.052-.382-3.016z\"></path></svg>"
+      "default": "<svg fill=\"none\" stroke=\"currentColor\" viewBox=\"0 0 24 24\"><path stroke-linecap=\"round\" stroke-linejoin=\"round\" stroke-width=\"1.5\" d=\"M4 4v5h.582m15.356 2A8.001 0 004.582 9m0 0H9m11 11v-5h-.581m0 0a8.003 0 01-15.357-2m15.357 2H15\"></path></svg>"
     },
     {
       "type": "image_picker",
@@ -2877,7 +2841,7 @@ window.tsukieToggleAccordion = function(header) {
       "type": "html",
       "id": "feature3_icon",
       "label": "Feature 3 Icon (SVG/HTML)",
-      "default": "<svg fill=\"none\" stroke=\"currentColor\" viewBox=\"0 0 24 24\"><path stroke-linecap=\"round\" stroke-linejoin=\"round\" stroke-width=\"1.5\" d=\"M20 7l-8-4-8 4m16 0l-8 4m8-4v10l-8 4m0-10L4 7m8 4v10M4 7v10l8 4\"></path></svg>"
+      "default": "<svg fill=\"none\" stroke=\"currentColor\" viewBox=\"0 0 24 24\"><path stroke-linecap=\"round\" stroke-linejoin=\"round\" stroke-width=\"1.5\" d=\"M9 12l2 2 4-4m5.618-4.016A11.955 0 0112 2.944a11.955 11.955 0 01-8.618 3.04A12.02 12.02 0 003 9c0 5.591 3.824 10.29 9 11.622 5.176-1.332 9-6.03 9-11.622 0-1.042-.133-2.052-.382-3.016z\"></path></svg>"
     },
     {
       "type": "text",
