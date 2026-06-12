@@ -485,11 +485,20 @@
     "tsukie_seen_on_real_women": {
       "type": "tsukie-seen-on-real-women",
       "blocks": {
-        "item_1": {
-          "type": "image_item",
+        "video_item_hGHimA": {
+          "type": "video_item",
           "settings": {
-            "image": "shopify://shop_images/Women_s_Waist-Tie_Shirt_Top_04.jpg",
-            "tag": "@PRIYA_ANAND"
+            "video_url": "",
+            "shopify_video": "shopify://files/videos/Tsukie_Influencer_collaboration_Premium_Clothing_Brand.mp4",
+            "tag": "@vagmichettri"
+          }
+        },
+        "video_item_YrxNFr": {
+          "type": "video_item",
+          "settings": {
+            "video_url": "",
+            "shopify_video": "shopify://files/videos/moast-AQMYDpAfX_RKdR1NkSmtkW0FooAA_TE2rDXj1qL1CA5Q-lPIq150uVEyTZ3dUJcBB2jFBi0p503vCR-OSZ_tnhRX0nIDxrBdC1v6Ito.mp4",
+            "tag": "@shubhisrivastava__"
           }
         },
         "item_2": {
@@ -503,7 +512,7 @@
         "item_3": {
           "type": "image_item",
           "settings": {
-            "image": "shopify://shop_images/Pink_Smocked_Peplum_Top_Tsukie_Womens_Premium_Clothing_2.jpg",
+            "image": "shopify://shop_images/Rujuta.jpg",
             "tag": "@MEERA_M"
           }
         },
@@ -511,16 +520,34 @@
           "type": "video_item",
           "settings": {
             "video_url": "",
+            "shopify_video": "shopify://files/videos/Tsukie_Influencer_Collaboration_Premium_Clothing_Brand FInal.mp4",
+            "tag": "@RIYA.SEN"
+          }
+        },
+        "video_item_LtrJwL": {
+          "type": "video_item",
+          "settings": {
+            "video_url": "",
             "shopify_video": "shopify://files/videos/moast-AQMBBXoIJekeIJRYD4YvUKM6NZHdgTkoFH7jJVNUTOh3gafgAlvc-sEauAgZkrCU_q1ZsDVgtMJS6zgIGJfVQq9VzW4B4Vc0S9Fng3U.mp4",
             "tag": "@RIYA.SEN"
+          }
+        },
+        "item_1": {
+          "type": "image_item",
+          "settings": {
+            "image": "shopify://shop_images/Women_s_Waist-Tie_Shirt_Top_04.jpg",
+            "tag": "@PRIYA_ANAND"
           }
         }
       },
       "block_order": [
-        "item_1",
+        "video_item_hGHimA",
+        "video_item_YrxNFr",
         "item_2",
         "item_3",
-        "item_4"
+        "item_4",
+        "video_item_LtrJwL",
+        "item_1"
       ],
       "custom_css": [],
       "settings": {
