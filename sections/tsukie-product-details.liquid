@@ -1249,14 +1249,14 @@
         {% if section.settings.show_trust_badge_1 %}
           <div class="tsukie-cod-badge" style="font-size: 13px; margin-top: 12px; margin-bottom: 16px; display: flex; align-items: center; gap: 6px; font-family: 'Montserrat', sans-serif; color: #1e2a38; font-weight: 500;">
             <svg class="tsukie-tick-icon" fill="none" stroke="currentColor" stroke-width="2.5" viewBox="0 0 24 24" style="width: 16px; height: 16px; color: #1e2a38; flex-shrink: 0;"><path stroke-linecap="round" stroke-linejoin="round" d="M5 13l4 4L19 7"></path></svg>
-            <span>{{ section.settings.trust_badge_text_1 | default: 'COD Available' }}</span>
+            <span>{{ section.settings.trust_badge_text_1 | default: 'COD Available: Pay 20% Now. Rest On Delivery' }}</span>
           </div>
         {% endif %}
 
         {% assign offer1_code = section.settings.offer_1_code | default: 'TSUKIE10' %}
-        {% assign offer1_text = section.settings.offer_1_text | default: 'Buy 1 get 10% off' %}
+        {% assign offer1_text = section.settings.offer_1_text | default: 'BUY 1 GET 10% OFF' %}
         {% assign offer2_code = section.settings.offer_2_code | default: 'TSUKIE25' %}
-        {% assign offer2_text = section.settings.offer_2_text | default: 'Buy 2 get 25% off' %}
+        {% assign offer2_text = section.settings.offer_2_text | default: 'BUY 2 GET 25% OFF' %}
         {% if section.settings.show_special_offers %}
         <div class="tsukie-special-offers-vertical">
           <div class="tsukie-offers-title-vertical">
@@ -1550,29 +1550,12 @@
   </div>
   {% if section.settings.show_order_status_bottom_text %}
     <div class="tsukie-order-status-bottom-text" style="font-family: 'Montserrat', sans-serif; font-size: 13px; color: #1e2a38; margin-top: 16px; font-weight: 500; text-align: center;">
-      {{ section.settings.order_status_bottom_text | default: 'Hassle-free 7 day returns' }}
+      {{ section.settings.order_status_bottom_text | default: 'Shipped in 24 Hours' }}
     </div>
   {% endif %}
 </div>
 {% endif %}
 <!-- END OF TRACKER CODES -->
-      <div class="tsukie-features">
-        <div class="tsukie-feature">
-          <svg fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M5 3v4M3 5h4M6 17v4m-2-2h4m5-16l2.286 6.857L21 12l-5.714 2.143L13 21l-2.286-6.857L5 12l5.714-2.143L13 3z"></path></svg>
-          <div class="tsukie-feature-title">PREMIUM FABRIC</div>
-          <div class="tsukie-feature-text">100% Viscose</div>
-        </div>
-        <div class="tsukie-feature">
-          <svg fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M4 4v5h.582m15.356 2A8.001 0 004.582 9m0 0H9m11 11v-5h-.581m0 0a8.003 0 01-15.357-2m15.357 2H15"></path></svg>
-          <div class="tsukie-feature-title">EASY EXCHANGE</div>
-          <div class="tsukie-feature-text">14 days</div>
-        </div>
-        <div class="tsukie-feature">
-          <svg fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M9 12l2 2 4-4m5.618-4.016A11.955 0 0112 2.944a11.955 11.955 0 01-8.618 3.04A12.02 12.02 0 003 9c0 5.591 3.824 10.29 9 11.622 5.176-1.332 9-6.03 9-11.622 0-1.042-.133-2.052-.382-3.016z"></path></svg>
-          <div class="tsukie-feature-title">SECURE PAYMENT</div>
-          <div class="tsukie-feature-text">UPI · Cards · COD</div>
-        </div>
-      </div>
 
       <!-- Accordion Blocks -->
       <div class="tsukie-accordion">
@@ -1603,7 +1586,7 @@
         {% endif %}
         
         {% assign t3_title = section.settings.tab3_title | default: "SHIPPING & RETURNS" %}
-        {% assign t3_content = section.settings.tab3_content | default: 'Free shipping on orders above ₹1,999. Easy 14-day returns and exchanges. Delivery within 5-7 business days across India.' %}
+        {% assign t3_content = section.settings.tab3_content | default: 'Free shipping on all orders. Easy 7-day returns & exchanges. Delivery within 3-5 business days.' %}
         {% if t3_content != blank %}
           <div class="tsukie-accordion-item">
             <div class="tsukie-accordion-header" onclick="tsukieToggleAccordion(this)">
@@ -2726,7 +2709,7 @@ window.tsukieToggleAccordion = function(header) {
       "type": "text",
       "id": "offer_1_text",
       "label": "Offer 1 Text",
-      "default": "Buy 1 get 10% off"
+      "default": "BUY 1 GET 10% OFF"
     },
     {
       "type": "text",
@@ -2744,7 +2727,7 @@ window.tsukieToggleAccordion = function(header) {
       "type": "text",
       "id": "offer_2_text",
       "label": "Offer 2 Text",
-      "default": "Buy 2 get 25% off"
+      "default": "BUY 2 GET 25% OFF"
     },
     {
       "type": "text",
@@ -2827,7 +2810,8 @@ window.tsukieToggleAccordion = function(header) {
     {
       "type": "richtext",
       "id": "tab3_content",
-      "label": "Tab 3 Content (Fallback to shipping text if empty)"
+      "label": "Tab 3 Content (Fallback to shipping text if empty)",
+      "default": "<p>Free shipping on all orders.<br>Easy 7-day returns & exchanges.<br>Delivery within 3-5 business days.</p>"
     },
     {
       "type": "header",
@@ -2867,7 +2851,7 @@ window.tsukieToggleAccordion = function(header) {
       "type": "text",
       "id": "feature1_desc",
       "label": "Feature 1 Description",
-      "default": "100% Viscose"
+      "default": "100%"
     },
     {
       "type": "text",
@@ -2879,7 +2863,7 @@ window.tsukieToggleAccordion = function(header) {
       "type": "text",
       "id": "feature2_desc",
       "label": "Feature 2 Description",
-      "default": "14 days"
+      "default": "7 days"
     },
     {
       "type": "text",
@@ -2939,7 +2923,7 @@ window.tsukieToggleAccordion = function(header) {
       "type": "text",
       "id": "trust_badge_text_1",
       "label": "Trust Badge Text 1",
-      "default": "COD Available"
+      "default": "COD Available: Pay 20% Now. Rest On Delivery"
     },
     {
       "type": "header",
@@ -2955,7 +2939,7 @@ window.tsukieToggleAccordion = function(header) {
       "type": "text",
       "id": "order_status_bottom_text",
       "label": "Order Status Bottom Text",
-      "default": "Hassle-free 7 day returns"
+      "default": "Shipped in 24 Hours"
     }
   ]
 }
