@@ -11,6 +11,7 @@
   "sections": {
     "product_details": {
       "type": "tsukie-product-details",
+      "custom_css": [],
       "settings": {
         "show_size_guide": true,
         "size_guide_image": "{{ product.metafields.custom.sizechart.value }}",
@@ -910,7 +911,7 @@
           "settings": {
             "video_url": "",
             "shopify_video": "shopify://files/videos/Tsukie_Influencer_Collaboration_Premium_Clothing_Brand FInal.mp4",
-            "tag": "@RIYA.SEN"
+            "tag": "@dimpss28_"
           }
         },
         "video_item_WMGbEV": {
