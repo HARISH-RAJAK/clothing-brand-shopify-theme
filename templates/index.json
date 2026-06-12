@@ -582,10 +582,10 @@
         "padding-block-end": 0
       }
     },
-    "1780660222ceb4784a": {
+    "17812698504b56d1ce": {
       "type": "_blocks",
       "blocks": {
-        "instafeed_app_block_DikV4A": {
+        "instafeed_app_block_iWTBUR": {
           "type": "shopify://apps/instafeed/blocks/app-block/c447db20-095d-4a10-9725-b5977662c9d5",
           "settings": {
             "title": "",
@@ -593,19 +593,19 @@
             "title_size_v2": 0,
             "alignment": "center",
             "instafeed_margin_top": 0,
-            "instafeed_margin_bottom": 12,
+            "instafeed_margin_bottom": 0,
             "instafeed_margin_sides": 0,
             "show_instagram_link": false,
             "link_alignment": "left",
             "link_color": "#000000",
-            "background_color": "#fdfbf7",
+            "background_color": "",
             "feed_id": "",
             "html_area": ""
           }
         }
       },
       "block_order": [
-        "instafeed_app_block_DikV4A"
+        "instafeed_app_block_iWTBUR"
       ],
       "settings": {
         "content_direction": "column",
@@ -615,11 +615,11 @@
         "align_baseline": false,
         "horizontal_alignment_flex_direction_column": "flex-start",
         "vertical_alignment_flex_direction_column": "center",
-        "gap": 12,
-        "section_width": "page-width",
+        "gap": 0,
+        "section_width": "full-width",
         "section_height": "",
         "section_height_custom": 50,
-        "color_scheme": "scheme-e5234ede-d196-4b3b-a9e2-6e7d24b8ca5c",
+        "color_scheme": "",
         "background_media": "none",
         "video_position": "cover",
         "background_image_position": "cover",
@@ -632,7 +632,7 @@
         "overlay_style": "solid",
         "gradient_direction": "to top",
         "padding-block-start": 0,
-        "padding-block-end": 12
+        "padding-block-end": 0
       }
     },
     "custom_liquid_UBFqBf": {
@@ -670,7 +670,7 @@
     "custom_liquid_wbebBy",
     "divider_YiFWDU",
     "custom_liquid_MMecBe",
-    "1780660222ceb4784a",
+    "17812698504b56d1ce",
     "custom_liquid_UBFqBf"
   ]
 }
