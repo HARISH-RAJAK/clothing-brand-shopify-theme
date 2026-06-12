@@ -4337,37 +4337,11 @@ product-recommendations:has([data-has-recommendations='false']) {
 /* ===== JUDGE.ME TSUKIE THEME OVERRIDE - COMPACT UI ===== */
 
 /* Main Widget Reset */
-#judgeme_product_reviews,
-#judgeme_product_reviews.jdgm-widget,
-#judgeme_product_reviews.jdgm-review-widget,
-#judgeme_product_reviews .jdgm-rev-widg,
-#judgeme_product_reviews .jdgm-widget,
-#judgeme_product_reviews .jdgm-review-widget,
-#judgeme_product_reviews .jdgm-revs-tab-content,
-#judgeme_product_reviews .jdgm-revs-tab,
-#judgeme_product_reviews .jdgm-form,
-#judgeme_product_reviews .jdgm-form-wrapper,
-#judgeme_product_reviews .jdgm-widget-actions-wrapper,
-#judgeme_product_reviews .jdgm-widget-actions,
-#judgeme_product_reviews .jdgm-rev-list,
-#judgeme_product_reviews .jdgm-rev-list-wrapper,
-.jdgm-rev-widg,
-.jdgm-widget,
-.jdgm-review-widget,
-.jdgm-revs-tab-content,
-.jdgm-revs-tab,
-.jdgm-form,
-.jdgm-form-wrapper,
-.jdgm-widget-actions-wrapper,
-.jdgm-widget-actions,
-.jdgm-rev-list,
-.jdgm-rev-list-wrapper {
+.jdgm-rev-widg{
   padding:0 !important;
   margin:0 !important;
   border:none !important;
   font-family:'Montserrat',sans-serif !important;
-  background: transparent !important;
-  background-color: transparent !important;
 }
 
 /* Hide Default Title */
@@ -4410,11 +4384,8 @@ product-recommendations:has([data-has-recommendations='false']) {
 }
 
 /* Individual Review Box - Chhota & Clean */
-#judgeme_product_reviews .jdgm-rev,
-.tsukie-custom-rev-list .jdgm-rev,
 .jdgm-rev{
-  background: transparent !important;
-  background-color: transparent !important;
+  background:#fdfbf7 !important;
   border:1px solid #e0d9cd !important;
   border-radius:6px !important;
   padding:12px 14px !important;
