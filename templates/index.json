@@ -10,22 +10,17 @@
 {
   "sections": {
     "tsukie_hero_banner": {
-      "type": "tsukie-hero-banner",
+      "type": "hero-carousel",
       "blocks": {
         "slide_1": {
           "type": "slide",
           "settings": {
             "image": "shopify://shop_images/Elevate_Your_Everyday_12.png",
             "mobile_image": "shopify://shop_images/Shop_The_Collection_9.png",
-            "image_size": "cover",
-            "mobile_image_size": "fill",
+            "image_size": "auto-adapt",
+            "mobile_image_size": "auto-adapt",
             "mobile_image_width": 100,
-            "eyebrow": "",
-            "heading": "",
-            "description": "",
-            "button_text": "",
-            "button_url": "/collections/new-arrivals",
-            "link": ""
+            "link": "/collections/new-arrivals"
           }
         },
         "slide_3": {
@@ -33,15 +28,10 @@
           "settings": {
             "image": "shopify://shop_images/website_Banner_2.png",
             "mobile_image": "shopify://shop_images/858073789-img_2918.jpg",
-            "image_size": "cover",
-            "mobile_image_size": "fill",
+            "image_size": "auto-adapt",
+            "mobile_image_size": "auto-adapt",
             "mobile_image_width": 100,
-            "eyebrow": "",
-            "heading": "",
-            "description": "",
-            "button_text": "",
-            "button_url": "/collections",
-            "link": ""
+            "link": "/collections"
           }
         },
         "slide_2": {
@@ -49,15 +39,10 @@
           "settings": {
             "image": "shopify://shop_images/Website_Banner.png",
             "mobile_image": "shopify://shop_images/858073787-img_2919.jpg",
-            "image_size": "cover",
-            "mobile_image_size": "fill",
+            "image_size": "auto-adapt",
+            "mobile_image_size": "auto-adapt",
             "mobile_image_width": 100,
-            "eyebrow": "",
-            "heading": "",
-            "description": "",
-            "button_text": "",
-            "button_url": "/collections/all",
-            "link": ""
+            "link": "/collections/all"
           }
         }
       },
@@ -69,12 +54,15 @@
       "settings": {
         "autoplay": true,
         "autoplay_speed": 5,
-        "slide_effect": "zoom",
-        "hover_effect": "brightness",
-        "section_height": "full-screen",
-        "section_height_custom": 70,
-        "section_height_mobile": "small",
-        "section_height_mobile_custom": 60
+        "slide_effect": "default",
+        "hover_effect": "none",
+        "icons_style": "chevron",
+        "icons_shape": "circle",
+        "section_height": "auto",
+        "section_height_custom": 100,
+        "section_height_mobile": "auto",
+        "section_height_mobile_custom": 60,
+        "color_scheme": ""
       }
     },
     "custom_liquid_UPURke": {
