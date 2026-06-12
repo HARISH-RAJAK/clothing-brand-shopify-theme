@@ -899,13 +899,6 @@
             "tag": "@tanishkatomar_18"
           }
         },
-        "image_item_gRLCE8": {
-          "type": "image_item",
-          "settings": {
-            "image": "shopify://shop_images/Rujuta.jpg",
-            "tag": "@rujuta_bahirat_zambare"
-          }
-        },
         "video_item_WnCtEE": {
           "type": "video_item",
           "settings": {
@@ -922,12 +915,25 @@
             "tag": "@tsukieofficial"
           }
         },
+        "image_item_gRLCE8": {
+          "type": "image_item",
+          "settings": {
+            "image": "shopify://shop_images/Rujuta.jpg",
+            "tag": "@rujuta_bahirat_zambare"
+          }
+        },
         "image_item_kYU8FL": {
           "type": "image_item",
-          "disabled": true,
           "settings": {
-            "image": "shopify://shop_images/Women_s_Waist-Tie_Shirt_Top_04.jpg",
-            "tag": "@PRIYA_ANAND"
+            "image": "shopify://shop_images/619345387_17854462839610585_3393727187212946355_n.jpg",
+            "tag": "@spoohsoni"
+          }
+        },
+        "image_item_pGrkik": {
+          "type": "image_item",
+          "settings": {
+            "image": "shopify://shop_images/687342070_17949321729168938_8957151586094591694_n.jpg",
+            "tag": "@tanishkatomar_18"
           }
         }
       },
@@ -935,10 +941,11 @@
         "video_item_AGxedR",
         "video_item_iyVLNF",
         "video_item_X7MAqi",
-        "image_item_gRLCE8",
         "video_item_WnCtEE",
         "video_item_WMGbEV",
-        "image_item_kYU8FL"
+        "image_item_gRLCE8",
+        "image_item_kYU8FL",
+        "image_item_pGrkik"
       ],
       "settings": {
         "eyebrow": "AS SEEN ON YOU",
