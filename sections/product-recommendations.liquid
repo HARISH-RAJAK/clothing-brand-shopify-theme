@@ -96,6 +96,175 @@
       {{ section.shopify_attributes }}
     >
   {%- endif -%}
+
+    {% if section.settings.header_style != 'none' %}
+      {%- style -%}
+        #tsukie-header-{{ section.id }} {
+          padding-top: 20px;
+          padding-bottom: 0px;
+          text-align: center;
+          position: relative;
+          overflow: hidden;
+          width: 100%;
+        }
+
+        {% if section.settings.header_background_style == 'solid' %}
+        #tsukie-header-{{ section.id }} {
+          background: #f5f1ea;
+        }
+        {% elsif section.settings.header_background_style == 'gradient' %}
+        #tsukie-header-{{ section.id }} {
+          background: linear-gradient(180deg, #fff 0%, #f5f1ea 100%);
+        }
+        #tsukie-header-{{ section.id }}::before {
+          content: '';
+          position: absolute;
+          top: 0;
+          left: 50%;
+          transform: translateX(-50%);
+          width: 200px;
+          height: 200px;
+          background: radial-gradient(circle, rgba(160,135,102,0.08) 0%, transparent 70%);
+          pointer-events: none;
+        }
+        {% endif %}
+
+        #tsukie-header-{{ section.id }} .tsukie-header-inner {
+          max-width: 1400px;
+          margin: 0 auto;
+          padding: 0 40px;
+        }
+
+        /* Style 1: Collection Head Style */
+        #tsukie-header-{{ section.id }} .tsukie-style-simple .tsukie-header-eyebrow {
+          color: #a08766;
+          font-size: 10px;
+          letter-spacing: 2.5px;
+          text-transform: uppercase;
+          margin: 0 0 8px;
+          font-weight: 500;
+          font-family: 'Montserrat', sans-serif;
+        }
+        #tsukie-header-{{ section.id }} .tsukie-style-simple .tsukie-header-title {
+          font-family: 'Playfair Display', serif;
+          font-size: 52px;
+          font-style: italic;
+          font-weight: 600;
+          line-height: 1.15;
+          margin: 0 0 16px;
+          padding-bottom: 4px;
+          color: #1e2a38;
+          display: inline-block;
+        }
+        #tsukie-header-{{ section.id }} .tsukie-style-simple .tsukie-header-subtext {
+          font-size: 14px;
+          line-height: 1.4;
+          margin: 0 auto;
+          font-family: 'Montserrat', sans-serif;
+          color: #6b6b6b;
+        }
+
+        /* Style 2: Premium Heading with Divider Style */
+        #tsukie-header-{{ section.id }} .tsukie-style-premium .tsukie-header-eyebrow {
+          font-size: 11px;
+          letter-spacing: 4px;
+          text-transform: uppercase;
+          color: #a08766;
+          margin: 0 0 16px;
+          font-weight: 600;
+          position: relative;
+          font-family: 'Montserrat', sans-serif;
+        }
+        #tsukie-header-{{ section.id }} .tsukie-style-premium .tsukie-header-title {
+          font-family: 'Playfair Display', serif;
+          font-size: 58px;
+          font-weight: 600;
+          font-style: italic;
+          margin: 0 0 20px;
+          color: #1e2a38;
+          line-height: 1.1;
+          position: relative;
+        }
+        #tsukie-header-{{ section.id }} .tsukie-style-premium .tsukie-header-divider {
+          display: flex;
+          align-items: center;
+          justify-content: center;
+          gap: 12px;
+          margin: 0 auto;
+        }
+        #tsukie-header-{{ section.id }} .tsukie-style-premium .tsukie-header-line {
+          width: 80px;
+          height: 1px;
+          background: linear-gradient(90deg, transparent, #a08766, transparent);
+        }
+        #tsukie-header-{{ section.id }} .tsukie-style-premium .tsukie-header-icon {
+          font-size: 14px;
+          color: #a08766;
+        }
+        #tsukie-header-{{ section.id }} .tsukie-style-premium .tsukie-header-subtext {
+          font-family: 'Cormorant Garamond', serif;
+          font-size: 18px;
+          font-style: italic;
+          color: #6b6b6b;
+          margin: 16px 0 0;
+          letter-spacing: 0.5px;
+        }
+
+        @media (max-width: 749px) {
+          #tsukie-header-{{ section.id }} {
+            padding-top: 50px;
+            padding-bottom: 0px;
+          }
+          #tsukie-header-{{ section.id }} .tsukie-header-inner {
+            padding: 0 20px;
+          }
+          #tsukie-header-{{ section.id }} .tsukie-style-simple .tsukie-header-eyebrow {
+            font-size: 9px;
+            margin: 0 0 6px;
+          }
+          #tsukie-header-{{ section.id }} .tsukie-style-simple .tsukie-header-title {
+            font-size: 36px;
+            margin: 0 0 12px;
+            line-height: 1.2;
+            padding-bottom: 3px;
+          }
+          #tsukie-header-{{ section.id }} .tsukie-style-simple .tsukie-header-subtext {
+            font-size: 13px;
+          }
+          #tsukie-header-{{ section.id }} .tsukie-style-premium .tsukie-header-title {
+            font-size: 40px;
+          }
+          #tsukie-header-{{ section.id }} .tsukie-style-premium .tsukie-header-subtext {
+            font-size: 16px;
+          }
+        }
+      {%- endstyle -%}
+
+      <div id="tsukie-header-{{ section.id }}" class="tsukie-header-wrapper">
+        <div class="tsukie-header-inner tsukie-style-{{ section.settings.header_style }}">
+          {% if section.settings.eyebrow != blank %}
+            <p class="tsukie-header-eyebrow">{{ section.settings.eyebrow | escape }}</p>
+          {% endif %}
+          
+          {% if section.settings.heading != blank %}
+            <h2 class="tsukie-header-title">{{ section.settings.heading | escape }}</h2>
+          {% endif %}
+          
+          {% if section.settings.header_style == 'premium' %}
+            <div class="tsukie-header-divider">
+              <span class="tsukie-header-line"></span>
+              <span class="tsukie-header-icon">✦</span>
+              <span class="tsukie-header-line"></span>
+            </div>
+          {% endif %}
+          
+          {% if section.settings.subtext != blank %}
+            <p class="tsukie-header-subtext">{{ section.settings.subtext | escape }}</p>
+          {% endif %}
+        </div>
+      </div>
+    {% endif %}
+
     <div class="section-background color-{{ section.settings.color_scheme }}"></div>
     <div
       class="
@@ -297,6 +466,68 @@
     }
   ],
   "settings": [
+    {
+      "type": "header",
+      "content": "Custom Section Header"
+    },
+    {
+      "type": "select",
+      "id": "header_style",
+      "label": "Header Style",
+      "options": [
+        {
+          "value": "none",
+          "label": "None (No Header)"
+        },
+        {
+          "value": "simple",
+          "label": "Simple Title"
+        },
+        {
+          "value": "premium",
+          "label": "Premium Title with Divider"
+        }
+      ],
+      "default": "none"
+    },
+    {
+      "type": "text",
+      "id": "eyebrow",
+      "label": "Eyebrow Text",
+      "default": "Loved By Our Community"
+    },
+    {
+      "type": "text",
+      "id": "heading",
+      "label": "Heading Text",
+      "default": "Style it with"
+    },
+    {
+      "type": "textarea",
+      "id": "subtext",
+      "label": "Subtext",
+      "default": "Real experiences from women who wear Tsukie."
+    },
+    {
+      "type": "select",
+      "id": "header_background_style",
+      "label": "Header Background Style",
+      "options": [
+        {
+          "value": "none",
+          "label": "None (Transparent)"
+        },
+        {
+          "value": "solid",
+          "label": "Solid Beige (#f5f1ea)"
+        },
+        {
+          "value": "gradient",
+          "label": "White to Beige Gradient"
+        }
+      ],
+      "default": "none"
+    },
     {
       "type": "product",
       "id": "product",
