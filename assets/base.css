@@ -5854,6 +5854,8 @@ button[name="add"]:hover,
   [class*="instafeed"] .instafeed-wrapper {
     padding-left: 15px !important;
     padding-right: 15px !important;
+    scroll-padding-left: 15px !important;
+    scroll-padding-right: 15px !important;
   }
 }
 
