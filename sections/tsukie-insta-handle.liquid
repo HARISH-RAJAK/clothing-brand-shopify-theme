@@ -1,5 +1,6 @@
 {%- style -%}
 #tsukie-insta-{{ section.id }} {
+  position: relative;
   background: transparent;
   padding-top: {{ section.settings.padding_top }}px;
   padding-bottom: {{ section.settings.padding_bottom }}px;
@@ -39,8 +40,9 @@
 }
 {%- endstyle -%}
 
-<div id="tsukie-insta-{{ section.id }}" class="tsukie-insta-section">
-  <div class="tsukie-insta-inner">
+<div id="tsukie-insta-{{ section.id }}" class="tsukie-insta-section color-{{ section.settings.color_scheme }} section">
+  <div class="section-background color-{{ section.settings.color_scheme }}"></div>
+  <div class="tsukie-insta-inner" style="position: relative; z-index: 2;">
     <a href="{{ section.settings.button_link | default: 'https://www.instagram.com/tsukieofficial/' }}" target="_blank" class="tsukie-insta-handle">
       {{ section.settings.button_text | default: '@tsukieofficial' }}
     </a>
@@ -153,6 +155,12 @@
       "step": 2,
       "unit": "px",
       "default": 50
+    },
+    {
+      "type": "color_scheme",
+      "id": "color_scheme",
+      "label": "t:settings.color_scheme",
+      "default": "scheme-1"
     }
   ],
   "presets": [
