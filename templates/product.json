@@ -233,7 +233,7 @@
       "name": "t:names.product_recommendations",
       "settings": {
         "product": "{{ closest.product }}",
-        "recommendation_source": "recommendations",
+        "recommendation_source": "metafield",
         "recommendation_type": "related",
         "layout_type": "grid",
         "carousel_on_mobile": false,
@@ -727,6 +727,7 @@
           ]
         }
       },
+      "disabled": true,
       "name": "t:names.product_recommendations",
       "settings": {
         "product": "{{ closest.product }}",
