@@ -1597,6 +1597,8 @@ function tsukieGetContext(el) {
   if (container) {
     const ctx = tsukieGetContext(container);
     if (ctx && ctx.tsukieProduct) {
+      // Disabled: Prevent auto-scrolling/filtering on initial page load
+      /*
       const colorOptIdx = ctx.tsukieProduct.options.findIndex(opt => opt.toLowerCase() === 'color' || opt.toLowerCase() === 'colour');
       if (colorOptIdx > -1) {
         const selectedColor = ctx.tsukieSelectedOptions[colorOptIdx + 1];
@@ -1608,6 +1610,7 @@ function tsukieGetContext(el) {
           }, 100);
         }
       }
+      */
     }
   }
 })();
@@ -4144,6 +4147,8 @@ function tsukieGetContext(el) {
   if (container) {
     const ctx = tsukieGetContext(container);
     if (ctx && ctx.tsukieProduct) {
+      // Disabled: Prevent auto-scrolling/filtering on initial page load
+      /*
       const colorOptIdx = ctx.tsukieProduct.options.findIndex(opt => opt.toLowerCase() === 'color' || opt.toLowerCase() === 'colour');
       if (colorOptIdx > -1) {
         const selectedColor = ctx.tsukieSelectedOptions[colorOptIdx + 1];
@@ -4155,6 +4160,7 @@ function tsukieGetContext(el) {
           }, 100);
         }
       }
+      */
     }
   }
 })();
