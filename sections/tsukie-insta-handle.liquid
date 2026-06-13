@@ -1,0 +1,164 @@
+{%- style -%}
+#tsukie-insta-{{ section.id }} {
+  background: transparent;
+  padding-top: {{ section.settings.padding_top }}px;
+  padding-bottom: {{ section.settings.padding_bottom }}px;
+  text-align: center;
+  width: 100%;
+}
+
+#tsukie-insta-{{ section.id }} .tsukie-insta-inner {
+  width: 100%;
+  padding: 0 15px;
+}
+
+#tsukie-insta-{{ section.id }} .tsukie-insta-handle {
+  display: inline-block;
+  background: {{ section.settings.button_bg_color | default: '#1e2a38' }};
+  color: {{ section.settings.button_text_color | default: '#a08766' }};
+  padding: {{ section.settings.btn_padding_vertical }}px {{ section.settings.btn_padding_horizontal }}px;
+  border-radius: 50px;
+  text-decoration: none;
+  font-family: 'Montserrat', sans-serif;
+  font-size: {{ section.settings.btn_font_size }}px;
+  letter-spacing: 1.5px;
+  font-weight: 600;
+  text-transform: lowercase;
+  transition: transform 0.3s ease;
+}
+
+#tsukie-insta-{{ section.id }} .tsukie-insta-handle:hover {
+  transform: translateY(-2px);
+}
+
+@media (max-width: 749px) {
+  #tsukie-insta-{{ section.id }} {
+    padding-top: {{ section.settings.padding_top_mobile }}px;
+    padding-bottom: {{ section.settings.padding_bottom_mobile }}px;
+  }
+}
+{%- endstyle -%}
+
+<div id="tsukie-insta-{{ section.id }}" class="tsukie-insta-section">
+  <div class="tsukie-insta-inner">
+    <a href="{{ section.settings.button_link | default: 'https://www.instagram.com/tsukieofficial/' }}" target="_blank" class="tsukie-insta-handle">
+      {{ section.settings.button_text | default: '@tsukieofficial' }}
+    </a>
+  </div>
+</div>
+
+{% schema %}
+{
+  "name": "Tsukie Insta Handle",
+  "tag": "section",
+  "class": "tsukie-insta-handle-section",
+  "settings": [
+    {
+      "type": "header",
+      "content": "Button Settings"
+    },
+    {
+      "type": "text",
+      "id": "button_text",
+      "label": "Button Text",
+      "default": "@tsukieofficial"
+    },
+    {
+      "type": "url",
+      "id": "button_link",
+      "label": "Button Link"
+    },
+    {
+      "type": "color",
+      "id": "button_bg_color",
+      "label": "Button Background Color",
+      "default": "#1e2a38"
+    },
+    {
+      "type": "color",
+      "id": "button_text_color",
+      "label": "Button Text Color",
+      "default": "#a08766"
+    },
+    {
+      "type": "range",
+      "id": "btn_font_size",
+      "label": "Button Font Size",
+      "min": 10,
+      "max": 30,
+      "step": 1,
+      "unit": "px",
+      "default": 13
+    },
+    {
+      "type": "range",
+      "id": "btn_padding_vertical",
+      "label": "Button Vertical Padding",
+      "min": 6,
+      "max": 30,
+      "step": 1,
+      "unit": "px",
+      "default": 12
+    },
+    {
+      "type": "range",
+      "id": "btn_padding_horizontal",
+      "label": "Button Horizontal Padding",
+      "min": 16,
+      "max": 80,
+      "step": 2,
+      "unit": "px",
+      "default": 32
+    },
+    {
+      "type": "header",
+      "content": "Section Spacing"
+    },
+    {
+      "type": "range",
+      "id": "padding_top",
+      "label": "Padding Top (Desktop)",
+      "min": 0,
+      "max": 100,
+      "step": 2,
+      "unit": "px",
+      "default": 10
+    },
+    {
+      "type": "range",
+      "id": "padding_bottom",
+      "label": "Padding Bottom (Desktop)",
+      "min": 0,
+      "max": 100,
+      "step": 2,
+      "unit": "px",
+      "default": 10
+    },
+    {
+      "type": "range",
+      "id": "padding_top_mobile",
+      "label": "Padding Top (Mobile)",
+      "min": 0,
+      "max": 100,
+      "step": 2,
+      "unit": "px",
+      "default": 50
+    },
+    {
+      "type": "range",
+      "id": "padding_bottom_mobile",
+      "label": "Padding Bottom (Mobile)",
+      "min": 0,
+      "max": 100,
+      "step": 2,
+      "unit": "px",
+      "default": 50
+    }
+  ],
+  "presets": [
+    {
+      "name": "Tsukie Insta Handle"
+    }
+  ]
+}
+{% endschema %}
