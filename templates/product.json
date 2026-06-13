@@ -210,7 +210,19 @@
         "gap": 28,
         "color_scheme": "scheme-e5234ede-d196-4b3b-a9e2-6e7d24b8ca5c",
         "padding-block-start": 0,
-        "padding-block-end": 48
+        "padding-block-end": 48,
+        "padding_top": 10,
+        "padding_bottom": 10,
+        "padding_top_mobile": 10,
+        "padding_bottom_mobile": 10,
+        "margin_top": 0,
+        "margin_bottom": 0,
+        "margin_top_mobile": 0,
+        "margin_bottom_mobile": 0,
+        "header_padding_top": 20,
+        "header_padding_bottom": 0,
+        "header_padding_top_mobile": 30,
+        "header_padding_bottom_mobile": 0
       }
     },
     "custom_liquid_DjpTpA": {
@@ -431,7 +443,19 @@
         "gap": 28,
         "color_scheme": "scheme-e5234ede-d196-4b3b-a9e2-6e7d24b8ca5c",
         "padding-block-start": 48,
-        "padding-block-end": 48
+        "padding-block-end": 48,
+        "padding_top": 10,
+        "padding_bottom": 10,
+        "padding_top_mobile": 10,
+        "padding_bottom_mobile": 10,
+        "margin_top": 0,
+        "margin_bottom": 0,
+        "margin_top_mobile": 0,
+        "margin_bottom_mobile": 0,
+        "header_padding_top": 20,
+        "header_padding_bottom": 0,
+        "header_padding_top_mobile": 30,
+        "header_padding_bottom_mobile": 0
       }
     },
     "divider_PBHQqb": {
@@ -576,7 +600,19 @@
         "gap": 28,
         "color_scheme": "scheme-e5234ede-d196-4b3b-a9e2-6e7d24b8ca5c",
         "padding-block-start": 0,
-        "padding-block-end": 48
+        "padding-block-end": 48,
+        "padding_top": 10,
+        "padding_bottom": 10,
+        "padding_top_mobile": 0,
+        "padding_bottom_mobile": 0,
+        "margin_top": 0,
+        "margin_bottom": 0,
+        "margin_top_mobile": 0,
+        "margin_bottom_mobile": 0,
+        "header_padding_top": 20,
+        "header_padding_bottom": 0,
+        "header_padding_top_mobile": 30,
+        "header_padding_bottom_mobile": 0
       }
     },
     "product_recommendations_qggXJq": {
@@ -704,7 +740,19 @@
         "gap": 28,
         "color_scheme": "scheme-e5234ede-d196-4b3b-a9e2-6e7d24b8ca5c",
         "padding-block-start": 48,
-        "padding-block-end": 48
+        "padding-block-end": 48,
+        "padding_top": 10,
+        "padding_bottom": 10,
+        "padding_top_mobile": 10,
+        "padding_bottom_mobile": 10,
+        "margin_top": 0,
+        "margin_bottom": 0,
+        "margin_top_mobile": 0,
+        "margin_bottom_mobile": 0,
+        "header_padding_top": 20,
+        "header_padding_bottom": 0,
+        "header_padding_top_mobile": 30,
+        "header_padding_bottom_mobile": 0
       }
     },
     "divider_gNTBjU": {
@@ -800,7 +848,8 @@
         "eyebrow": "AS SEEN ON YOU",
         "heading": "Seen on Real Women",
         "description": "Candid moments of real women styling our timeless silhouettes. Tag us at #TsukieWomen to get featured.",
-        "color_scheme": "scheme-e5234ede-d196-4b3b-a9e2-6e7d24b8ca5c"
+        "color_scheme": "scheme-e5234ede-d196-4b3b-a9e2-6e7d24b8ca5c",
+        "custom_bg_color": ""
       }
     },
     "divider_m8E7Ma": {
@@ -821,7 +870,7 @@
       "type": "custom-liquid",
       "name": "Instagram Feed",
       "settings": {
-        "custom_liquid": "<style>\n.tsukie-insta-section{\n  background:transparent;\n  padding:10px 20px;\n  text-align:center;\n  width:100%;\n}\n.tsukie-insta-inner{\n  width:100%;\n  padding:0 20px;\n}\n.tsukie-insta-heading{\n  font-family:'Playfair Display',serif;\n  font-size:52px;\n  font-style:italic;\n  font-weight:600;\n  margin:0 0 8px;\n  color:#1e2a38;\n  line-height:1.15;\n  padding-bottom:3px;\n}\n.tsukie-insta-subheading{\n  font-family:'Montserrat',sans-serif;\n  font-size:13px;\n  letter-spacing:2px;\n  text-transform:uppercase;\n  color:#D4C5A9 !important; /* Force golden color */\n  margin:0 0 6px;\n  font-weight:600;\n}\n.tsukie-insta-divider{\n  display:flex;\n  align-items:center;\n  justify-content:center;\n  gap:14px;\n  max-width:280px;\n  margin:0 auto 18px;\n}\n.tsukie-insta-line{\n  flex:1;\n  height:1px;\n  background:linear-gradient(90deg, transparent, #D4C5A9, transparent);\n}\n.tsukie-insta-desc{\n  font-family:'Cormorant Garamond',serif;\n  font-size:18px;\n  font-style:italic;\n  color:#5a5a5a;\n  margin:0;\n  line-height:1.5;\n}\n\n@media(max-width:749px){\n  .tsukie-insta-section{padding:50px 0}\n  .tsukie-insta-inner{padding:0 15px}\n  .tsukie-insta-heading{font-size:36px;margin:0 0 6px;line-height:1.2}\n  .tsukie-insta-subheading{margin:0 0 5px}\n  .tsukie-insta-divider{margin:0 auto 16px}\n  .tsukie-insta-desc{font-size:16px;margin:0}\n}\n</style>\n\n<div class=\"tsukie-insta-section\">\n  <div class=\"tsukie-insta-inner\">\n    <p class=\"tsukie-insta-subheading\">Follow Our Journey</p>\n    <h2 class=\"tsukie-insta-heading\">Style in Motion</h2>\n    <div class=\"tsukie-insta-divider\">\n      <span class=\"tsukie-insta-line\"></span>\n      <span style=\"color:#D4C5A9;font-size:18px\">✦</span>\n      <span class=\"tsukie-insta-line\"></span>\n    </div>\n    <p class=\"tsukie-insta-desc\">See how real women style Tsukie. Tag us to be featured.</p>\n  </div>\n</div>",
+        "custom_liquid": "",
         "color_scheme": "scheme-e5234ede-d196-4b3b-a9e2-6e7d24b8ca5c",
         "section_width": "full-width",
         "padding-block-start": 0,
@@ -846,7 +895,7 @@
             "link_color": "#000000",
             "background_color": "",
             "feed_id": "",
-            "html_area": ""
+            "html_area": "<style>\n.tsukie-insta-section{\n  background:transparent;\n  padding:10px 20px;\n  text-align:center;\n  width:100%;\n}\n.tsukie-insta-inner{\n  width:100%;\n  padding:0 20px;\n}\n.tsukie-insta-heading{\n  font-family:'Playfair Display',serif;\n  font-size:52px;\n  font-style:italic;\n  font-weight:600;\n  margin:0 0 8px;\n  color:#1e2a38;\n  line-height:1.15;\n  padding-bottom:3px;\n}\n.tsukie-insta-subheading{\n  font-family:'Montserrat',sans-serif;\n  font-size:13px;\n  letter-spacing:2px;\n  text-transform:uppercase;\n  color:#D4C5A9 !important; /* Force golden color */\n  margin:0 0 6px;\n  font-weight:600;\n}\n.tsukie-insta-divider{\n  display:flex;\n  align-items:center;\n  justify-content:center;\n  gap:14px;\n  max-width:280px;\n  margin:0 auto 18px;\n}\n.tsukie-insta-line{\n  flex:1;\n  height:1px;\n  background:linear-gradient(90deg, transparent, #D4C5A9, transparent);\n}\n.tsukie-insta-desc{\n  font-family:'Cormorant Garamond',serif;\n  font-size:18px;\n  font-style:italic;\n  color:#5a5a5a;\n  margin:0;\n  line-height:1.5;\n}\n\n@media(max-width:749px){\n  .tsukie-insta-section{padding:50px 0}\n  .tsukie-insta-inner{padding:0 15px}\n  .tsukie-insta-heading{font-size:36px;margin:0 0 6px;line-height:1.2}\n  .tsukie-insta-subheading{margin:0 0 5px}\n  .tsukie-insta-divider{margin:0 auto 16px}\n  .tsukie-insta-desc{font-size:16px;margin:0}\n}\n</style>\n\n<div class=\"tsukie-insta-section\">\n  <div class=\"tsukie-insta-inner\">\n    <p class=\"tsukie-insta-subheading\">Follow Our Journey</p>\n    <h2 class=\"tsukie-insta-heading\">Style in Motion</h2>\n    <div class=\"tsukie-insta-divider\">\n      <span class=\"tsukie-insta-line\"></span>\n      <span style=\"color:#D4C5A9;font-size:18px\">✦</span>\n      <span class=\"tsukie-insta-line\"></span>\n    </div>\n    <p class=\"tsukie-insta-desc\">See how real women style Tsukie. Tag us to be featured.</p>\n  </div>\n</div>"
           }
         }
       },
@@ -926,18 +975,6 @@
         "padding-block-end": 0
       }
     },
-    "recently_viewed": {
-      "type": "tsukie-recently-viewed",
-      "custom_css": [
-        "{margin-bottom: 0 !important; padding-bottom: 0 !important;}"
-      ],
-      "settings": {
-        "header_style": "premium",
-        "eyebrow": "JUST EXPLORED",
-        "heading": "Recently Viewed",
-        "subtext": "Seen Before, Loved Again"
-      }
-    },
     "divider_n3PfQi": {
       "type": "divider",
       "name": "t:names.divider_section",
@@ -950,6 +987,30 @@
         "alignment_horizontal": "center",
         "padding-block-start": 16,
         "padding-block-end": 16
+      }
+    },
+    "recently_viewed": {
+      "type": "tsukie-recently-viewed",
+      "custom_css": [
+        "{margin-bottom: 0 !important; padding-bottom: 0 !important;}"
+      ],
+      "settings": {
+        "header_style": "premium",
+        "eyebrow": "JUST EXPLORED",
+        "heading": "Recently Viewed",
+        "subtext": "Seen Before, Loved Again",
+        "padding_top": 40,
+        "padding_bottom": 80,
+        "padding_top_mobile": 6,
+        "padding_bottom_mobile": 30,
+        "margin_top": 0,
+        "margin_bottom": 0,
+        "margin_top_mobile": 0,
+        "margin_bottom_mobile": 0,
+        "header_padding_top": 20,
+        "header_padding_bottom": 30,
+        "header_padding_top_mobile": 30,
+        "header_padding_bottom_mobile": 20
       }
     },
     "main": {
@@ -1257,8 +1318,8 @@
     "custom_liquid_G3kYiU",
     "divider_iK6mhf",
     "custom_liquid_khNBCT",
-    "recently_viewed",
     "divider_n3PfQi",
+    "recently_viewed",
     "main"
   ]
 }
