@@ -97,14 +97,17 @@
       }
     },
     "custom_liquid_DjpTpA": {
-      "type": "custom-liquid",
-      "name": "t:names.custom_liquid",
+      "type": "tsukie-section-header",
       "settings": {
-        "custom_liquid": "<style>\n.tsukie-collection-head{\n  background:#f5f1ea;\n  padding:20px 0 0;\n  text-align:center;\n}\n.tsukie-collection-inner{\n  max-width:1400px;\n  margin:0 auto;\n  padding:0 40px;\n}\n.tsukie-collection-eyebrow{\n  color:#a08766;\n  font-size:10px;\n  letter-spacing:2.5px;\n  text-transform:uppercase;\n  margin:0 0 8px;\n  font-weight:500;\n  font-family:'Montserrat',sans-serif;\n}\n.tsukie-collection-heading{\n  font-family:'Playfair Display',serif;\n  font-size:52px;\n  font-style:italic;\n  font-weight:600;\n  line-height:1.15;\n  margin:0 0 16px;\n  padding-bottom:4px;\n  color:#1e2a38;\n  display:inline-block;\n}\n.tsukie-collection-subtext{\n  font-size:14px;\n  line-height:1.4;\n  margin:0 auto;\n  font-family:'Montserrat',sans-serif;\n  color:#6b6b6b;\n}\n\n@media(max-width:749px){\n  .tsukie-collection-head{padding:50px 0 0}\n  .tsukie-collection-inner{padding:0 20px}\n  .tsukie-collection-eyebrow{font-size:9px;margin:0 0 6px}\n  .tsukie-collection-heading{font-size:36px;margin:0 0 12px;line-height:1.2;padding-bottom:3px}\n  .tsukie-collection-subtext{font-size:13px}\n}\n</style>\n\n<div class=\"tsukie-collection-head\">\n  <div class=\"tsukie-collection-inner\">\n    <p class=\"tsukie-collection-eyebrow\">Loved By Our Community</p>\n    <h2 class=\"tsukie-collection-heading\">Style it with</h2>\n    <p class=\"tsukie-collection-subtext\">\n      Real experiences from women who wear Tsukie.\n    </p>\n  </div>\n</div>",
-        "color_scheme": "scheme-e5234ede-d196-4b3b-a9e2-6e7d24b8ca5c",
-        "section_width": "full-width",
-        "padding-block-start": 0,
-        "padding-block-end": 0
+        "header_style": "simple",
+        "eyebrow": "Loved By Our Community",
+        "heading": "Style it with",
+        "subtext": "Real experiences from women who wear Tsukie.",
+        "background_style": "solid",
+        "padding_top": 20,
+        "padding_bottom": 0,
+        "padding_top_mobile": 50,
+        "padding_bottom_mobile": 0
       }
     },
     "product_recommendations_UcJyfr": {
@@ -560,14 +563,17 @@
       }
     },
     "custom_liquid_mYHLRp": {
-      "type": "custom-liquid",
-      "name": "t:names.custom_liquid",
+      "type": "tsukie-section-header",
       "settings": {
-        "custom_liquid": "<style>\n.tsukie-collection-head{\n  background:#f5f1ea;\n  padding:20px 0 0;\n  text-align:center;\n}\n.tsukie-collection-inner{\n  max-width:1400px;\n  margin:0 auto;\n  padding:0 40px;\n}\n.tsukie-collection-eyebrow{\n  color:#a08766;\n  font-size:10px;\n  letter-spacing:2.5px;\n  text-transform:uppercase;\n  margin:0 0 8px;\n  font-weight:500;\n  font-family:'Montserrat',sans-serif;\n}\n.tsukie-collection-heading{\n  font-family:'Playfair Display',serif;\n  font-size:52px;\n  font-style:italic;\n  font-weight:600;\n  line-height:1.15;\n  margin:0 0 16px;\n  padding-bottom:4px;\n  color:#1e2a38;\n  display:inline-block;\n}\n.tsukie-collection-subtext{\n  font-size:14px;\n  line-height:1.4;\n  margin:0 auto;\n  font-family:'Montserrat',sans-serif;\n  color:#6b6b6b;\n}\n\n@media(max-width:749px){\n  .tsukie-collection-head{padding:50px 0 0}\n  .tsukie-collection-inner{padding:0 20px}\n  .tsukie-collection-eyebrow{font-size:9px;margin:0 0 6px}\n  .tsukie-collection-heading{font-size:36px;margin:0 0 12px;line-height:1.2;padding-bottom:3px}\n  .tsukie-collection-subtext{font-size:13px}\n}\n</style>\n\n<div class=\"tsukie-collection-head\">\n  <div class=\"tsukie-collection-inner\">\n    <p class=\"tsukie-collection-eyebrow\">Loved By Our Community</p>\n    <h2 class=\"tsukie-collection-heading\">CUSTOMER STORIES</h2>\n    <p class=\"tsukie-collection-subtext\">\n      Real experiences from women who wear Tsukie.\n    </p>\n  </div>\n</div>",
-        "color_scheme": "scheme-e5234ede-d196-4b3b-a9e2-6e7d24b8ca5c",
-        "section_width": "full-width",
-        "padding-block-start": 0,
-        "padding-block-end": 0
+        "header_style": "simple",
+        "eyebrow": "Loved By Our Community",
+        "heading": "CUSTOMER STORIES",
+        "subtext": "Real experiences from women who wear Tsukie.",
+        "background_style": "solid",
+        "padding_top": 20,
+        "padding_bottom": 0,
+        "padding_top_mobile": 50,
+        "padding_bottom_mobile": 0
       }
     },
     "custom_liquid_style_it_with_header": {
@@ -764,14 +770,17 @@
       }
     },
     "custom_liquid_fQbTBM": {
-      "type": "custom-liquid",
-      "name": "t:names.custom_liquid",
+      "type": "tsukie-section-header",
       "settings": {
-        "custom_liquid": "<style>\n.tsukie-section-header{\n  text-align:center;\n  padding:20px 40px 20px;\n  background:#f5f1ea;\n  position:relative;\n  overflow:hidden;\n}\n.tsukie-section-header::before{\n  content:'';\n  position:absolute;\n  top:0;\n  left:50%;\n  transform:translateX(-50%);\n  width:200px;\n  height:200px;\n  background:radial-gradient(circle, rgba(160,135,102,0.08) 0%, transparent 70%);\n  pointer-events:none;\n}\n.tsukie-header-eyebrow{\n  font-size:11px;\n  letter-spacing:4px;\n  text-transform:uppercase;\n  color:#a08766;\n  margin:0 0 16px;\n  font-weight:600;\n  position:relative;\n}\n.tsukie-header-title{\n  font-family:'Playfair Display',serif;\n  font-size:58px;\n  font-weight:600;\n  font-style:italic;\n  margin:0 0 20px;\n  color:#1e2a38;\n  line-height:1.1;\n  position:relative;\n}\n.tsukie-header-divider{\n  display:flex;\n  align-items:center;\n  justify-content:center;\n  gap:12px;\n  margin:0 auto;\n}\n.tsukie-header-line{\n  width:80px;\n  height:1px;\n  background:linear-gradient(90deg, transparent, #a08766, transparent);\n}\n.tsukie-header-icon{\n  font-size:14px;\n  color:#a08766;\n}\n.tsukie-header-subtitle{\n  font-family:'Cormorant Garamond',serif;\n  font-size:18px;\n  font-style:italic;\n  color:#6b6b6b;\n  margin:16px 0 0;\n  letter-spacing:0.5px;\n}\n@media(max-width:749px){\n.tsukie-section-header{padding:50px 20px 40px}\n.tsukie-header-title{font-size:40px}\n.tsukie-header-subtitle{font-size:16px}\n}\n</style>\n\n<div class=\"tsukie-section-header\">\n  <p class=\"tsukie-header-eyebrow\">Complete The Look</p>\n  <h2 class=\"tsukie-header-title\">You May Also Adore</h2>\n  <div class=\"tsukie-header-divider\">\n    <span class=\"tsukie-header-line\"></span>\n    <span class=\"tsukie-header-icon\">✦</span>\n    <span class=\"tsukie-header-line\"></span>\n  </div>\n  <p class=\"tsukie-header-subtitle\">Handpicked pieces that complement your style</p>\n</div>",
-        "color_scheme": "scheme-e5234ede-d196-4b3b-a9e2-6e7d24b8ca5c",
-        "section_width": "full-width",
-        "padding-block-start": 0,
-        "padding-block-end": 0
+        "header_style": "premium",
+        "eyebrow": "Complete The Look",
+        "heading": "You May Also Adore",
+        "subtext": "Handpicked pieces that complement your style",
+        "background_style": "gradient",
+        "padding_top": 20,
+        "padding_bottom": 20,
+        "padding_top_mobile": 50,
+        "padding_bottom_mobile": 40
       }
     },
     "product_recommendations_4TF8zJ": {
@@ -1196,14 +1205,17 @@
       }
     },
     "custom_liquid_khNBCT": {
-      "type": "custom-liquid",
-      "name": "t:names.custom_liquid",
+      "type": "tsukie-section-header",
       "settings": {
-        "custom_liquid": "<style>\n.tsukie-collection-head{\n  background:#f5f1ea;\n  padding:20px 0 0;\n  text-align:center;\n}\n.tsukie-collection-inner{\n  max-width:1400px;\n  margin:0 auto;\n  padding:0 40px;\n}\n.tsukie-collection-eyebrow{\n  color:#a08766;\n  font-size:10px;\n  letter-spacing:2.5px;\n  text-transform:uppercase;\n  margin:0 0 8px;\n  font-weight:500;\n  font-family:'Montserrat',sans-serif;\n}\n.tsukie-collection-heading{\n  font-family:'Playfair Display',serif;\n  font-size:52px;\n  font-style:italic;\n  font-weight:600;\n  line-height:1.15;\n  margin:0 0 16px;\n  padding-bottom:4px;\n  color:#1e2a38;\n  display:inline-block;\n}\n.tsukie-collection-subtext{\n  font-size:14px;\n  line-height:1.4;\n  margin:0 auto;\n  font-family:'Montserrat',sans-serif;\n  color:#6b6b6b;\n}\n\n@media(max-width:749px){\n  .tsukie-collection-head{padding:50px 0 0}\n  .tsukie-collection-inner{padding:0 20px}\n  .tsukie-collection-eyebrow{font-size:9px;margin:0 0 6px}\n  .tsukie-collection-heading{font-size:36px;margin:0 0 12px;line-height:1.2;padding-bottom:3px}\n  .tsukie-collection-subtext{font-size:13px}\n}\n</style>\n\n<div class=\"tsukie-collection-head\">\n  <div class=\"tsukie-collection-inner\">\n    <p class=\"tsukie-collection-eyebrow\">JUST EXPLORED</p>\n    <h2 class=\"tsukie-collection-heading\">Recently Viewed</h2>\n    <p class=\"tsukie-collection-subtext\">\n      Seen Before, Loved Again \n    </p>\n  </div>\n</div>",
-        "color_scheme": "scheme-e5234ede-d196-4b3b-a9e2-6e7d24b8ca5c",
-        "section_width": "full-width",
-        "padding-block-start": 0,
-        "padding-block-end": 0
+        "header_style": "simple",
+        "eyebrow": "JUST EXPLORED",
+        "heading": "Recently Viewed",
+        "subtext": "Seen Before, Loved Again",
+        "background_style": "solid",
+        "padding_top": 20,
+        "padding_bottom": 0,
+        "padding_top_mobile": 50,
+        "padding_bottom_mobile": 0
       }
     },
     "recently_viewed": {
