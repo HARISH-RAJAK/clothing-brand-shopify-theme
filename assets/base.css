@@ -5954,3 +5954,20 @@ button[name="add"]:hover,
   }
 }
 
+/* Hide dynamically injected Google Merchant Center Store Quality floating badge */
+[jslog*="merchantverse-metadata"],
+[merchantverse-metadata],
+iframe[src*="merchantverse"],
+iframe[id*="merchantverse"],
+iframe[src*="merchantwidget"],
+iframe[id*="merchantwidget"],
+iframe[src*="shopping/merchant"],
+.merchant-widget-container,
+#merchant-widget,
+[id*="merchantWidget"],
+div[class*="merchant-widget"],
+.mat-icon[alt*="Store quality"],
+div[class*="button-extra-touch-target"] {
+  display: none !important;
+}
+
