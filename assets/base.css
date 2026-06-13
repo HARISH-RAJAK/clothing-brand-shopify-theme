@@ -5887,3 +5887,70 @@ button[name="add"]:hover,
     transform: translateY(0) !important;
   }
 }
+
+/* Match Tsukie trust badges and standard trust badges to Order Status style */
+.tsukie-features,
+.product__trust-badges,
+.multicolumn__item,
+.icon-with-text {
+  background-color: #fdfbf7 !important;
+  background: #fdfbf7 !important;
+  border: 1px solid #e0d9cd !important;
+  border-radius: 4px !important;
+}
+
+/* For standard trust badge items/boxes, add padding so content doesn't touch the border */
+.product__trust-badges,
+.multicolumn__item,
+.icon-with-text {
+  padding: 16px !important;
+}
+
+/* For Tsukie specific layout: keep inner column padding and update vertical divider color */
+.tsukie-features {
+  padding: 0 !important;
+}
+.tsukie-feature {
+  border-right: 1px solid #e0d9cd !important;
+}
+
+/* Reduce mobile bottom padding after accordion section */
+@media (max-width: 749px) {
+  .tsukie-product {
+    padding-bottom: 5px !important;
+  }
+  .tsukie-accordion {
+    margin-bottom: 5px !important;
+    padding-bottom: 5px !important;
+  }
+  
+  /* Standard Dawn/Horizon accordion classes */
+  .collapsible-content,
+  .accordion,
+  .product__accordion,
+  .product__info-accordion {
+    margin-bottom: 5px !important;
+    padding-bottom: 5px !important;
+  }
+  
+  /* Hide the divider section between product and recommendations on mobile */
+  [id*="divider_UNcRBV"] {
+    margin-top: 5px !important;
+    margin-bottom: 5px !important;
+    padding-top: 0 !important;
+    padding-bottom: 0 !important;
+    display: none !important;
+  }
+
+  /* Style it with section top padding on mobile */
+  .tsukie-collection-head {
+    padding-top: 5px !important;
+    margin-top: 5px !important;
+  }
+  .style-it-with,
+  .product-recommendations {
+    margin-top: 5px !important;
+    padding-top: 5px !important;
+  }
+}
+

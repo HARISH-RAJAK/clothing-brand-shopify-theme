@@ -165,6 +165,17 @@
 (function() {
   var sectionId = '{{ section.id }}';
 
+  function hideHeading() {
+    var heading = document.querySelector('[id$="__custom_liquid_khNBCT"]');
+    if (heading) {
+      heading.style.setProperty('display', 'none', 'important');
+    }
+    var divider = document.querySelector('[id$="__divider_iK6mhf"]');
+    if (divider) {
+      divider.style.setProperty('display', 'none', 'important');
+    }
+  }
+
   function initRecentlyViewed() {
     var container = document.getElementById('tsukie-recently-viewed-' + sectionId);
     if (!container) return;
@@ -193,7 +204,10 @@
       }
     }
 
-    if (!Array.isArray(viewedProducts) || viewedProducts.length === 0) return;
+    if (!Array.isArray(viewedProducts) || viewedProducts.length === 0) {
+      hideHeading();
+      return;
+    }
 
     // If on a product page, filter out the current product
     var currentHandle = '{{ product.handle }}';
@@ -213,7 +227,10 @@
       }
     });
 
-    if (uniqueHandles.length === 0) return;
+    if (uniqueHandles.length === 0) {
+      hideHeading();
+      return;
+    }
 
     // Keep up to 8 unique products
     uniqueHandles = uniqueHandles.slice(0, 8);
@@ -279,6 +296,8 @@
     if (hasCards) {
       var container = document.getElementById('tsukie-recently-viewed-' + sectionId);
       if (container) container.style.display = 'block';
+    } else {
+      hideHeading();
     }
 
     // Show "Load More" button only if there are hidden items

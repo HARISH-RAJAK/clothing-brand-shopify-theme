@@ -26,6 +26,12 @@
         "info": "t:content.inverse_logo_info"
       },
       {
+        "type": "image_picker",
+        "id": "footer_logo",
+        "label": "Footer Logo",
+        "info": "Upload a custom logo to display in the footer."
+      },
+      {
         "type": "range",
         "id": "logo_height",
         "label": "t:settings.desktop_height",

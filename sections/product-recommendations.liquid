@@ -33,171 +33,206 @@
     echo '--column-count: ' | append: section.settings.columns | append: ';'
     echo '--column-count-mobile: ' | append: section.settings.mobile_columns | append: ';'
   endcapture
+
+  assign products = recommendations.products
+  if is_metafield
+    assign products = metafield_products
+  elsif section.settings.product == blank
+    assign products = null
+    # Onboarding mode: Show placeholder products
+    for i in (1..section.settings.max_products)
+      assign products = products | append: ', '
+      assign products = products | split: ','
+    endfor
+  elsif recommendations.performed and recommendations.products_count == 0
+    if section.settings.recommendation_type == 'related'
+      assign products = collections.all.products | reject: 'id', section.settings.product.id
+    elsif section.settings.recommendation_type == 'complementary'
+      assign products = null
+    endif
+  else
+    assign products = recommendations.products
+  endif
+
+  assign show_section = false
+  if is_metafield
+    if products.size > 0
+      assign show_section = true
+    endif
+  else
+    if recommendations.performed == false
+      assign show_section = true
+    elsif products.size > 0
+      assign show_section = true
+    endif
+  endif
 %}
 
 {% render 'quick-add-styles' %}
 {% render 'quick-add-modal-styles' %}
 {% render 'product-badges-styles' %}
 
-{%- if is_metafield -%}
-  <div
-    id="product-recommendations-{{ section.id }}"
-    class="product-recommendations"
-    data-section-id="{{ section.id }}"
-    data-testid="product-recommendations-section"
-    data-recommendations-performed="true"
-    {{ section.shopify_attributes }}
-  >
-{%- else -%}
-  <product-recommendations
-    id="product-recommendations-{{ section.id }}"
-    class="product-recommendations"
-    data-url="{{ routes.product_recommendations_url }}?limit={{ section.settings.max_products }}"
-    data-section-id="{{ section.id }}"
-    data-product-id="{{ section.settings.product.id | default: product.id }}"
-    data-intent="{{ section.settings.recommendation_type }}"
-    data-testid="product-recommendations-section"
-    data-recommendations-performed="{{ recommendations.performed }}"
-    data-hydration-key="product-recommendations-{{ section.id }}"
-    {{ section.shopify_attributes }}
-  >
-{%- endif -%}
-  <div class="section-background color-{{ section.settings.color_scheme }}"></div>
-  <div
-    class="
-      section
-      section--{{ section.settings.section_width }}
-      color-{{ section.settings.color_scheme }}
-      section-resource-list
-      spacing-style
-      gap-style
-    "
-    style="
-      {%  render 'spacing-style', settings: section.settings %}
-      {%  render 'gap-style', value: section.settings.gap %}
-      {{ styles }}
-    "
-  >
-    <div class="section-resource-list__content">
-      {% content_for 'blocks' %}
-    </div>
+{%- if show_section -%}
+  {%- if is_metafield -%}
+    <div
+      id="product-recommendations-{{ section.id }}"
+      class="product-recommendations"
+      data-section-id="{{ section.id }}"
+      data-testid="product-recommendations-section"
+      data-recommendations-performed="true"
+      {{ section.shopify_attributes }}
+    >
+  {%- else -%}
+    <product-recommendations
+      id="product-recommendations-{{ section.id }}"
+      class="product-recommendations"
+      data-url="{{ routes.product_recommendations_url }}?limit={{ section.settings.max_products }}"
+      data-section-id="{{ section.id }}"
+      data-product-id="{{ section.settings.product.id | default: product.id }}"
+      data-intent="{{ section.settings.recommendation_type }}"
+      data-testid="product-recommendations-section"
+      data-recommendations-performed="{{ recommendations.performed }}"
+      data-hydration-key="product-recommendations-{{ section.id }}"
+      {{ section.shopify_attributes }}
+    >
+  {%- endif -%}
+    <div class="section-background color-{{ section.settings.color_scheme }}"></div>
+    <div
+      class="
+        section
+        section--{{ section.settings.section_width }}
+        color-{{ section.settings.color_scheme }}
+        section-resource-list
+        spacing-style
+        gap-style
+      "
+      style="
+        {%  render 'spacing-style', settings: section.settings %}
+        {%  render 'gap-style', value: section.settings.gap %}
+        {{ styles }}
+      "
+    >
+      <div class="section-resource-list__content">
+        {% content_for 'blocks' %}
+      </div>
 
-    {%- if recommendations.performed or section.settings.product == blank or is_metafield -%}
-      {% liquid
-        if is_metafield
-          assign products = metafield_products
-        elsif section.settings.product == blank
-          assign products = null
-          # Onboarding mode: Show placeholder products
-          for i in (1..section.settings.max_products)
-            assign products = products | append: ', '
-            assign products = products | split: ','
-          endfor
-        elsif recommendations.performed and recommendations.products_count == 0
-          # No recommendations found, pull from catalog
-          if section.settings.recommendation_type == 'related'
-            assign products = collections.all.products | reject: 'id', section.settings.product.id
-          elsif section.settings.recommendation_type == 'complementary'
-            # Do not recommend the All collection as complementary products
+      {%- if recommendations.performed or section.settings.product == blank or is_metafield -%}
+        {% liquid
+          if is_metafield
+            assign products = metafield_products
+          elsif section.settings.product == blank
             assign products = null
+            # Onboarding mode: Show placeholder products
+            for i in (1..section.settings.max_products)
+              assign products = products | append: ', '
+              assign products = products | split: ','
+            endfor
+          elsif recommendations.performed and recommendations.products_count == 0
+            # No recommendations found, pull from catalog
+            if section.settings.recommendation_type == 'related'
+              assign products = collections.all.products | reject: 'id', section.settings.product.id
+            elsif section.settings.recommendation_type == 'complementary'
+              # Do not recommend the All collection as complementary products
+              assign products = null
+            endif
+
+          else
+            assign products = recommendations.products
           endif
+        %}
+        {% capture list_items %}
+          {% for product in products limit: section.settings.max_products %}
+            <div class="resource-list__item">
+              {% content_for 'block', type: '_product-card', id: 'static-product-card', closest.product: product %}
+            </div>
+            {% unless forloop.last %}
+              <!--@list/split-->
+            {% endunless %}
+          {% endfor %}
+        {% endcapture %}
 
-        else
-          assign products = recommendations.products
-        endif
-      %}
-      {% capture list_items %}
-        {% for product in products limit: section.settings.max_products %}
-          <div class="resource-list__item">
-            {% content_for 'block', type: '_product-card', id: 'static-product-card', closest.product: product %}
-          </div>
-          {% unless forloop.last %}
-            <!--@list/split-->
-          {% endunless %}
-        {% endfor %}
-      {% endcapture %}
+        {% liquid
+          # Create an array from the list items to be used in the carousel
+          assign slide_content = list_items | strip
+          assign slides = slide_content | split: '<!--@list/split-->'
 
-      {% liquid
-        # Create an array from the list items to be used in the carousel
-        assign slide_content = list_items | strip
-        assign slides = slide_content | split: '<!--@list/split-->'
+          if products != blank and products.size > 0
+            assign has_recommendations = 'true'
+          else
+            assign has_recommendations = 'false'
+          endif
+        %}
 
-        if products != blank and products.size > 0
-          assign has_recommendations = 'true'
-        else
-          assign has_recommendations = 'false'
-        endif
-      %}
-
-      <div
-        class="
-          resource-list
-          {% if section.settings.layout_type == 'carousel' %}
-            force-full-width
+        <div
+          class="
+            resource-list
+            {% if section.settings.layout_type == 'carousel' %}
+              force-full-width
+            {% endif %}
+            {% if section.settings.carousel_on_mobile and section.settings.layout_type != 'carousel' %}
+              hidden--mobile
+            {% endif %}
+            {{ classes }}
+          "
+          {% if section.settings.layout_type == 'grid' %}
+            data-testid="resource-list-grid"
           {% endif %}
-          {% if section.settings.carousel_on_mobile and section.settings.layout_type != 'carousel' %}
-            hidden--mobile
-          {% endif %}
-          {{ classes }}
-        "
-        {% if section.settings.layout_type == 'grid' %}
-          data-testid="resource-list-grid"
-        {% endif %}
-        data-has-recommendations="{{ has_recommendations }}"
-      >
-        {% case section.settings.layout_type %}
-          {% when 'grid' %}
-            {{ list_items }}
-          {% when 'carousel' %}
+          data-has-recommendations="{{ has_recommendations }}"
+        >
+          {% case section.settings.layout_type %}
+            {% when 'grid' %}
+              {{ list_items }}
+            {% when 'carousel' %}
+              {% render 'resource-list-carousel',
+                ref: 'resourceListCarousel',
+                slides: slides,
+                slide_count: products.size,
+                settings: section.settings
+              %}
+          {% endcase %}
+        </div>
+
+        {% if section.settings.carousel_on_mobile and section.settings.layout_type != 'carousel' %}
+          {% liquid
+            assign mobile_carousel_gap = section.settings.columns_gap
+          %}
+          <div
+            class="
+              resource-list
+              hidden--desktop
+              force-full-width
+            "
+            style="
+              --resource-list-gap: {{ mobile_carousel_gap }}px;
+              --column-count: {{ section.settings.columns }};
+            "
+          >
             {% render 'resource-list-carousel',
-              ref: 'resourceListCarousel',
+              ref: 'resourceListCarouselMobile',
               slides: slides,
               slide_count: products.size,
               settings: section.settings
             %}
-        {% endcase %}
-      </div>
-
-      {% if section.settings.carousel_on_mobile and section.settings.layout_type != 'carousel' %}
-        {% liquid
-          assign mobile_carousel_gap = section.settings.columns_gap
-        %}
+          </div>
+        {% endif %}
+      {%- else -%}
         <div
-          class="
-            resource-list
-            hidden--desktop
-            force-full-width
-          "
-          style="
-            --resource-list-gap: {{ mobile_carousel_gap }}px;
-            --column-count: {{ section.settings.columns }};
-          "
+          class="resource-list resource-list--grid"
         >
-          {% render 'resource-list-carousel',
-            ref: 'resourceListCarouselMobile',
-            slides: slides,
-            slide_count: products.size,
-            settings: section.settings
-          %}
+          {% for i in (1..section.settings.columns) %}
+            <div
+              class="product-recommendations__skeleton-item"
+              aria-label="{{ 'accessibility.loading_product_recommendations' | t }}"
+            ></div>
+          {% endfor %}
         </div>
-      {% endif %}
-    {%- else -%}
-      <div
-        class="resource-list resource-list--grid"
-      >
-        {% for i in (1..section.settings.columns) %}
-          <div
-            class="product-recommendations__skeleton-item"
-            aria-label="{{ 'accessibility.loading_product_recommendations' | t }}"
-          ></div>
-        {% endfor %}
-      </div>
-    {%- endif -%}
-  </div>
-{%- if is_metafield -%}
-  </div>
-{%- else -%}
-  </product-recommendations>
+      {%- endif -%}
+    </div>
+  {%- if is_metafield -%}
+    </div>
+  {%- else -%}
+    </product-recommendations>
+  {%- endif -%}
 {%- endif -%}
 
 {% schema %}
