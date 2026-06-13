@@ -852,6 +852,90 @@
         "custom_bg_color": ""
       }
     },
+    "tsukie_seen_on_real_women_whpGFc": {
+      "type": "tsukie-seen-on-real-women",
+      "blocks": {
+        "video_item_FMAmjR": {
+          "type": "video_item",
+          "settings": {
+            "video_url": "",
+            "shopify_video": "shopify://files/videos/moast-AQMYDpAfX_RKdR1NkSmtkW0FooAA_TE2rDXj1qL1CA5Q-lPIq150uVEyTZ3dUJcBB2jFBi0p503vCR-OSZ_tnhRX0nIDxrBdC1v6Ito.mp4",
+            "tag": "@shubhisrivastava__"
+          }
+        },
+        "video_item_EeMiaU": {
+          "type": "video_item",
+          "settings": {
+            "video_url": "",
+            "shopify_video": "shopify://files/videos/Tsukie_Influencer_collaboration_Premium_Clothing_Brand.mp4",
+            "tag": "@vagmichettri"
+          }
+        },
+        "video_item_DeVxyE": {
+          "type": "video_item",
+          "settings": {
+            "video_url": "",
+            "shopify_video": "shopify://files/videos/moast-AQNbSFUXHfJFt8BIDh-h6mwBwG77o7zB1_bvWLalDsvRkvuQZq0xSkczP8e28f0HuelmkjKHAiSmZbuIXOaSsbEeD7Sbgy1GULLT0Ys.mp4",
+            "tag": "@tanishkatomar_18"
+          }
+        },
+        "video_item_ftQd4n": {
+          "type": "video_item",
+          "settings": {
+            "video_url": "",
+            "shopify_video": "shopify://files/videos/Tsukie_Influencer_Collaboration_Premium_Clothing_Brand FInal.mp4",
+            "tag": "@dimpss28_"
+          }
+        },
+        "video_item_LcfjPV": {
+          "type": "video_item",
+          "settings": {
+            "video_url": "",
+            "shopify_video": "shopify://files/videos/moast-AQMBBXoIJekeIJRYD4YvUKM6NZHdgTkoFH7jJVNUTOh3gafgAlvc-sEauAgZkrCU_q1ZsDVgtMJS6zgIGJfVQq9VzW4B4Vc0S9Fng3U.mp4",
+            "tag": "@tsukieofficial"
+          }
+        },
+        "image_item_c9Rciq": {
+          "type": "image_item",
+          "settings": {
+            "image": "shopify://shop_images/Rujuta.jpg",
+            "tag": "@rujuta_bahirat_zambare"
+          }
+        },
+        "image_item_HQ6XYp": {
+          "type": "image_item",
+          "settings": {
+            "image": "shopify://shop_images/619345387_17854462839610585_3393727187212946355_n.jpg",
+            "tag": "@spoohsoni"
+          }
+        },
+        "image_item_mCitQE": {
+          "type": "image_item",
+          "settings": {
+            "image": "shopify://shop_images/687342070_17949321729168938_8957151586094591694_n.jpg",
+            "tag": "@tanishkatomar_18"
+          }
+        }
+      },
+      "block_order": [
+        "video_item_FMAmjR",
+        "video_item_EeMiaU",
+        "video_item_DeVxyE",
+        "video_item_ftQd4n",
+        "video_item_LcfjPV",
+        "image_item_c9Rciq",
+        "image_item_HQ6XYp",
+        "image_item_mCitQE"
+      ],
+      "disabled": true,
+      "settings": {
+        "eyebrow": "AS SEEN ON YOU",
+        "heading": "Seen on Real Women",
+        "description": "Candid moments of real women styling our timeless silhouettes. Tag us at #TsukieWomen to get featured.",
+        "color_scheme": "scheme-e5234ede-d196-4b3b-a9e2-6e7d24b8ca5c",
+        "custom_bg_color": ""
+      }
+    },
     "divider_m8E7Ma": {
       "type": "divider",
       "name": "t:names.divider_section",
@@ -1312,6 +1396,7 @@
     "product_recommendations_qggXJq",
     "divider_gNTBjU",
     "tsukie_seen_on_real_women_DJY8Q7",
+    "tsukie_seen_on_real_women_whpGFc",
     "divider_m8E7Ma",
     "custom_liquid_khNBCT",
     "instagram_feed",
