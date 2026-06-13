@@ -645,8 +645,7 @@
         "padding_top": 10,
         "padding_bottom": 10,
         "padding_top_mobile": 50,
-        "padding_bottom_mobile": 50,
-        "color_scheme": ""
+        "padding_bottom_mobile": 50
       }
     }
   },
