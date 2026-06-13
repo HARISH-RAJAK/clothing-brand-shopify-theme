@@ -5872,3 +5872,18 @@ button[name="add"]:hover,
   background-color: #f5f1ea !important;
   background: #f5f1ea !important;
 }
+
+/* Prevent Quick Add button subpixel line bleed on desktop */
+.tsukie-quick-add-btn {
+  transform: translateY(calc(100% + 2px)) !important;
+}
+
+.tsukie-product-card:hover .tsukie-quick-add-btn {
+  transform: translateY(0) !important;
+}
+
+@media (max-width: 749px) {
+  .tsukie-quick-add-btn {
+    transform: translateY(0) !important;
+  }
+}
