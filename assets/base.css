@@ -4591,7 +4591,7 @@ product-recommendations:has([data-has-recommendations='false']) {
 .tsukie-product-media {
   position: relative !important;
   overflow: hidden !important;
-  background: #fdfbf7 !important;
+  background: #f5f1ea !important;
   aspect-ratio: 3/4 !important;
   width: 100% !important;
 }
@@ -5869,6 +5869,6 @@ button[name="add"]:hover,
 
 /* Product Card Media Background Color Fix */
 .tsukie-product-media {
-  background-color: #FDFBF6 !important;
-  background: #FDFBF6 !important;
+  background-color: #f5f1ea !important;
+  background: #f5f1ea !important;
 }
