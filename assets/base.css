@@ -5841,3 +5841,26 @@ button[name="add"]:hover,
     background: #FDFBF6 !important;
   }
 }
+
+/* Mobile Slider Edge Spacing Fix */
+@media (max-width: 749px) {
+  .slider-mobile-gutter,
+  .tsukie-testimonials-grid,
+  .tsukie-real-women-grid,
+  .tsukie-recently-viewed ul.product-grid,
+  .instafeed-container,
+  #instafeed,
+  [id*="insta-feed"],
+  [class*="instafeed"] .instafeed-wrapper {
+    padding-left: 2px !important;
+    padding-right: 2px !important;
+  }
+}
+
+/* Remove Announcement Bar Navigation Arrows */
+.announcement-bar .slider-button,
+.announcement-bar__arrow,
+.announcement-bar slideshow-arrows,
+.announcement-bar .slideshow-control {
+  display: none !important;
+}
