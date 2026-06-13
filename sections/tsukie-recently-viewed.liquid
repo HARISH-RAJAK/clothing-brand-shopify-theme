@@ -240,11 +240,13 @@
 #tsukie-recently-viewed-{{ section.id }} .tsukie-quick-add-btn:hover {
   background: #1e2a38;
 }
-#tsukie-recently-viewed-{{ section.id }} .tsukie-product-card:hover .tsukie-quick-add-btn {
-  transform: translateY(0);
-}
-#tsukie-recently-viewed-{{ section.id }} .tsukie-product-card:hover img {
-  transform: scale(1.05);
+@media (min-width: 750px) {
+  #tsukie-recently-viewed-{{ section.id }} .tsukie-product-card:hover .tsukie-quick-add-btn {
+    transform: translateY(0);
+  }
+  #tsukie-recently-viewed-{{ section.id }} .tsukie-product-card:hover img {
+    transform: scale(1.05);
+  }
 }
 
 /* Load More Button styling (navy background, gold text) */

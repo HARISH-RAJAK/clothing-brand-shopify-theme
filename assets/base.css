@@ -4627,13 +4627,15 @@ product-recommendations:has([data-has-recommendations='false']) {
 }
 
 /* Double Image Hover Transition */
-.tsukie-product-card:hover .tsukie-product-img--featured {
-  transform: scale(1.05) !important;
-}
+@media (min-width: 750px) {
+  .tsukie-product-card:hover .tsukie-product-img--featured {
+    transform: scale(1.05) !important;
+  }
 
-.tsukie-product-card:hover .tsukie-product-img--secondary {
-  opacity: 1 !important;
-  transform: scale(1.05) !important;
+  .tsukie-product-card:hover .tsukie-product-img--secondary {
+    opacity: 1 !important;
+    transform: scale(1.05) !important;
+  }
 }
 
 /* Badges styling */
@@ -4706,8 +4708,10 @@ product-recommendations:has([data-has-recommendations='false']) {
   cursor: not-allowed !important;
 }
 
-.tsukie-product-card:hover .tsukie-quick-add-btn {
-  transform: translateY(0) !important;
+@media (min-width: 750px) {
+  .tsukie-product-card:hover .tsukie-quick-add-btn {
+    transform: translateY(0) !important;
+  }
 }
 
 /* Mobile Quick Add visible always */
@@ -5878,8 +5882,10 @@ button[name="add"]:hover,
   transform: translateY(calc(100% + 2px)) !important;
 }
 
-.tsukie-product-card:hover .tsukie-quick-add-btn {
-  transform: translateY(0) !important;
+@media (min-width: 750px) {
+  .tsukie-product-card:hover .tsukie-quick-add-btn {
+    transform: translateY(0) !important;
+  }
 }
 
 @media (max-width: 749px) {
