@@ -1179,8 +1179,22 @@
         
         <div class="tsukie-btn-row-2">
           <!-- Pure Clean Isolated Dynamic Buy Button -->
-          <button type="button" id="tsukie-buy-now-btn" class="tsukie-btn tsukie-btn-buy" onclick="tsukieBuyNowClean(this)" {% unless product.selected_or_first_available_variant.available %}disabled{% endunless %}>
-            <span id="tsukie-buy-text">BUY NOW</span>
+          <button type="button" id="tsukie-buy-now-btn" class="tsukie-btn tsukie-btn-buy sr-headless-checkout" name="sr-headless-button" onclick="shiprocketCheckoutEvents.buyProduct(event)" {% unless product.selected_or_first_available_variant.available %}disabled{% endunless %}>
+            <div class="sr-d-flex flex-center">
+              <div class="sr-d-flex full-width flex-center">
+                <div class="sr-button-text-container">
+                  <span class="sr-checkout-visible2">BUY NOW</span>
+                </div>
+                <img src="https://fastrr-boost-ui.pickrr.com/assets/images/boost_button/upi_options.svg" alt="Google Pay | Phone Pay | UPI" class="sr-pl-15 sr-checkout-visible sr-payment-icons">
+                <div class="loader5"></div>
+              </div>
+              <div class="sr-discount-label"><span></span></div>
+              <div class="sr-brand-badge-container">
+                <span class="sr-powered-by">
+                  <img src="https://fastrr-boost-ui.pickrr.com/assets/images/boost_button/powered_by.svg" alt="">
+                </span>
+              </div>
+            </div>
           </button>
         </div>
       {% endform %}
@@ -3732,8 +3746,22 @@ window.tsukieToggleAccordion = function(header) {
         
         <div class="tsukie-btn-row-2">
           <!-- Pure Clean Isolated Dynamic Buy Button -->
-          <button type="button" id="tsukie-buy-now-btn" class="tsukie-btn tsukie-btn-buy" onclick="tsukieBuyNowClean(this)" {% unless product.selected_or_first_available_variant.available %}disabled{% endunless %}>
-            <span id="tsukie-buy-text">BUY NOW</span>
+          <button type="button" id="tsukie-buy-now-btn" class="tsukie-btn tsukie-btn-buy sr-headless-checkout" name="sr-headless-button" onclick="shiprocketCheckoutEvents.buyProduct(event)" {% unless product.selected_or_first_available_variant.available %}disabled{% endunless %}>
+            <div class="sr-d-flex flex-center">
+              <div class="sr-d-flex full-width flex-center">
+                <div class="sr-button-text-container">
+                  <span class="sr-checkout-visible2">BUY NOW</span>
+                </div>
+                <img src="https://fastrr-boost-ui.pickrr.com/assets/images/boost_button/upi_options.svg" alt="Google Pay | Phone Pay | UPI" class="sr-pl-15 sr-checkout-visible sr-payment-icons">
+                <div class="loader5"></div>
+              </div>
+              <div class="sr-discount-label"><span></span></div>
+              <div class="sr-brand-badge-container">
+                <span class="sr-powered-by">
+                  <img src="https://fastrr-boost-ui.pickrr.com/assets/images/boost_button/powered_by.svg" alt="">
+                </span>
+              </div>
+            </div>
           </button>
         </div>
       {% endform %}
