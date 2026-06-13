@@ -1,5 +1,152 @@
 <div class="tsukie-recently-viewed" id="tsukie-recently-viewed-{{ section.id }}" style="display: none;">
-  <div class="recently-viewed-inner" style="max-width: 1400px; margin: 0 auto; padding: 80px 40px; background: #f5f1ea;">
+  <div class="recently-viewed-inner" style="max-width: 1400px; margin: 0 auto; padding: 40px 40px 80px; background: #f5f1ea;">
+    
+    {% if section.settings.header_style != 'none' %}
+      {%- style -%}
+        #tsukie-header-{{ section.id }} {
+          padding-top: 20px;
+          padding-bottom: 30px;
+          text-align: center;
+          position: relative;
+          overflow: hidden;
+          width: 100%;
+        }
+
+        #tsukie-header-{{ section.id }} .tsukie-header-inner {
+          max-width: 1400px;
+          margin: 0 auto;
+        }
+
+        /* Style 1: Collection Head Style */
+        #tsukie-header-{{ section.id }} .tsukie-style-simple .tsukie-header-eyebrow {
+          color: #a08766;
+          font-size: 10px;
+          letter-spacing: 2.5px;
+          text-transform: uppercase;
+          margin: 0 0 8px;
+          font-weight: 500;
+          font-family: 'Montserrat', sans-serif;
+        }
+        #tsukie-header-{{ section.id }} .tsukie-style-simple .tsukie-header-title {
+          font-family: 'Playfair Display', serif;
+          font-size: 52px;
+          font-style: italic;
+          font-weight: 600;
+          line-height: 1.15;
+          margin: 0 0 16px;
+          padding-bottom: 4px;
+          color: #1e2a38;
+          display: inline-block;
+        }
+        #tsukie-header-{{ section.id }} .tsukie-style-simple .tsukie-header-subtext {
+          font-size: 14px;
+          line-height: 1.4;
+          margin: 0 auto;
+          font-family: 'Montserrat', sans-serif;
+          color: #6b6b6b;
+        }
+
+        /* Style 2: Premium Heading with Divider Style */
+        #tsukie-header-{{ section.id }} .tsukie-style-premium .tsukie-header-eyebrow {
+          font-size: 11px;
+          letter-spacing: 4px;
+          text-transform: uppercase;
+          color: #a08766;
+          margin: 0 0 16px;
+          font-weight: 600;
+          position: relative;
+          font-family: 'Montserrat', sans-serif;
+        }
+        #tsukie-header-{{ section.id }} .tsukie-style-premium .tsukie-header-title {
+          font-family: 'Playfair Display', serif;
+          font-size: 58px;
+          font-weight: 600;
+          font-style: italic;
+          margin: 0 0 20px;
+          color: #1e2a38;
+          line-height: 1.1;
+          position: relative;
+        }
+        #tsukie-header-{{ section.id }} .tsukie-style-premium .tsukie-header-divider {
+          display: flex;
+          align-items: center;
+          justify-content: center;
+          gap: 12px;
+          margin: 0 auto;
+        }
+        #tsukie-header-{{ section.id }} .tsukie-style-premium .tsukie-header-line {
+          width: 80px;
+          height: 1px;
+          background: linear-gradient(90deg, transparent, #a08766, transparent);
+        }
+        #tsukie-header-{{ section.id }} .tsukie-style-premium .tsukie-header-icon {
+          font-size: 14px;
+          color: #a08766;
+        }
+        #tsukie-header-{{ section.id }} .tsukie-style-premium .tsukie-header-subtext {
+          font-family: 'Cormorant Garamond', serif;
+          font-size: 18px;
+          font-style: italic;
+          color: #6b6b6b;
+          margin: 16px 0 0;
+          letter-spacing: 0.5px;
+        }
+
+        @media (max-width: 749px) {
+          #tsukie-header-{{ section.id }} {
+            padding-top: 30px;
+            padding-bottom: 20px;
+          }
+          #tsukie-header-{{ section.id }} .tsukie-header-inner {
+            padding: 0 20px;
+          }
+          #tsukie-header-{{ section.id }} .tsukie-style-simple .tsukie-header-eyebrow {
+            font-size: 9px;
+            margin: 0 0 6px;
+          }
+          #tsukie-header-{{ section.id }} .tsukie-style-simple .tsukie-header-title {
+            font-size: 36px;
+            margin: 0 0 12px;
+            line-height: 1.2;
+            padding-bottom: 3px;
+          }
+          #tsukie-header-{{ section.id }} .tsukie-style-simple .tsukie-header-subtext {
+            font-size: 13px;
+          }
+          #tsukie-header-{{ section.id }} .tsukie-style-premium .tsukie-header-title {
+            font-size: 40px;
+          }
+          #tsukie-header-{{ section.id }} .tsukie-style-premium .tsukie-header-subtext {
+            font-size: 16px;
+          }
+        }
+      {%- endstyle -%}
+
+      <div id="tsukie-header-{{ section.id }}" class="tsukie-header-wrapper">
+        <div class="tsukie-header-inner tsukie-style-{{ section.settings.header_style }}">
+          {% if section.settings.eyebrow != blank %}
+            <p class="tsukie-header-eyebrow">{{ section.settings.eyebrow | escape }}</p>
+          {% endif %}
+          
+          {% if section.settings.heading != blank %}
+            <h2 class="tsukie-header-title">{{ section.settings.heading | escape }}</h2>
+          {% endif %}
+          
+          {% if section.settings.header_style == 'premium' %}
+            <div class="tsukie-header-divider">
+              <span class="tsukie-header-line"></span>
+              <span class="tsukie-header-icon">✦</span>
+              <span class="tsukie-header-line"></span>
+            </div>
+          {% endif %}
+          
+          {% if section.settings.subtext != blank %}
+            <p class="tsukie-header-subtext">{{ section.settings.subtext | escape }}</p>
+          {% endif %}
+        </div>
+      </div>
+    {% endif %}
+
     <ul class="product-grid" id="tsukie-rv-grid-{{ section.id }}">
     </ul>
     <div class="tsukie-rv-view-more-wrap" id="tsukie-rv-more-wrap-{{ section.id }}" style="display:none; text-align:center; margin-top:40px;">
@@ -332,7 +479,50 @@
   "name": "Recently Viewed Products",
   "tag": "section",
   "class": "tsukie-recently-viewed-section-wrapper",
-  "settings": [],
+  "settings": [
+    {
+      "type": "header",
+      "content": "Custom Section Header"
+    },
+    {
+      "type": "select",
+      "id": "header_style",
+      "label": "Header Style",
+      "options": [
+        {
+          "value": "none",
+          "label": "None (No Header)"
+        },
+        {
+          "value": "simple",
+          "label": "Simple Title"
+        },
+        {
+          "value": "premium",
+          "label": "Premium Title with Divider"
+        }
+      ],
+      "default": "simple"
+    },
+    {
+      "type": "text",
+      "id": "eyebrow",
+      "label": "Eyebrow Text",
+      "default": "JUST EXPLORED"
+    },
+    {
+      "type": "text",
+      "id": "heading",
+      "label": "Heading Text",
+      "default": "Recently Viewed"
+    },
+    {
+      "type": "textarea",
+      "id": "subtext",
+      "label": "Subtext",
+      "default": "Seen Before, Loved Again"
+    }
+  ],
   "presets": [
     {
       "name": "Recently Viewed Products"
