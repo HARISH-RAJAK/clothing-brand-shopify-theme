@@ -344,19 +344,6 @@
       display: none !important;
     }
   }
-
-  {%- if section.settings.custom_video_width != blank or section.settings.custom_video_height != blank -%}
-    #tsukie-real-women-{{ section.id }} .tsukie-real-women-grid-wrapper .tsukie-real-women-item.type-video {
-      {%- if section.settings.custom_video_width != blank -%}
-        width: {{ section.settings.custom_video_width }} !important;
-        flex: 0 0 {{ section.settings.custom_video_width }} !important;
-      {%- endif -%}
-      {%- if section.settings.custom_video_height != blank -%}
-        height: {{ section.settings.custom_video_height }} !important;
-      {%- endif -%}
-      aspect-ratio: auto !important;
-    }
-  {%- endif -%}
 {%- endstyle -%}
 
 <div class="tsukie-real-women color-{{ section.settings.color_scheme }} gradient" id="tsukie-real-women-{{ section.id }}">
@@ -380,7 +367,7 @@
     <div class="tsukie-real-women-grid-wrapper layout-{{ section.settings.feed_design }} spacing-{{ section.settings.post_spacing }} format-{{ section.settings.post_format }} corners-{{ section.settings.rounded_corners }}" id="tsukie-rw-grid-{{ section.id }}">
       <div class="tsukie-real-women-grid">
         {% for block in section.blocks %}
-          <div class="tsukie-real-women-item type-{{ block.type | replace: '_item', '' }}" {{ block.shopify_attributes }}>
+          <div class="tsukie-real-women-item" {{ block.shopify_attributes }}>
             {% if block.type == 'image_item' %}
               {% if block.settings.image %}
                 <img class="tsukie-real-women-img"
@@ -842,22 +829,6 @@
       "max": 6,
       "step": 1,
       "default": 4
-    },
-    {
-      "type": "header",
-      "content": "Custom Video Dimensions"
-    },
-    {
-      "type": "text",
-      "id": "custom_video_width",
-      "label": "Custom Video Width (e.g. 350px, 100%)",
-      "default": ""
-    },
-    {
-      "type": "text",
-      "id": "custom_video_height",
-      "label": "Custom Video Height (e.g. 500px, auto)",
-      "default": ""
     },
     {
       "type": "header",
