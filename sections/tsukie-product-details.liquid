@@ -578,10 +578,12 @@
 /* Image Slider Base Styles */
 .tsukie-main-image-slider {
   display: flex !important;
-  overflow: hidden !important;
-  scroll-behavior: smooth !important;
+  overflow-x: auto !important;
+  scroll-behavior: auto !important;
   scrollbar-width: none !important;
   width: 100% !important;
+  scroll-snap-type: x mandatory !important;
+  -webkit-overflow-scrolling: touch !important;
 }
 .tsukie-main-image-slider::-webkit-scrollbar {
   display: none !important;
@@ -589,6 +591,7 @@
 .tsukie-main-image-slide {
   flex: 0 0 100% !important;
   width: 100% !important;
+  scroll-snap-align: start !important;
 }
 .tsukie-main-image-slide img {
   width: 100% !important;
@@ -970,7 +973,11 @@
             {% for image in product.images %}
               {%- assign image_colors_clean = image_colors_array[forloop.index0] -%}
               <div class="tsukie-main-image-slide" data-index="{{ forloop.index0 }}" data-colors="{{ image_colors_clean | downcase | escape }}">
-                <img src="{{ image | img_url: '1000x' }}" alt="{{ product.title | escape }}" loading="lazy">
+                <img 
+                  src="{{ image | img_url: '1000x' }}" 
+                  alt="{{ product.title | escape }}" 
+                  {% if forloop.first %}fetchpriority="high"{% else %}loading="eager"{% endif %}
+                >
               </div>
             {% endfor %}
           </div>
@@ -1791,34 +1798,21 @@ window.tsukieChangeImage = function(src, index, element, isInitial) {
   const slides = container.querySelectorAll('.tsukie-main-image-slide');
   if (slider && slides[index]) {
     const slideEl = slides[index];
-    if (isInitial) {
-      // Temporarily disable scroll snap on load to prevent Safari/WebKit snapback issues
-      slider.style.scrollSnapType = 'none';
-      slider.scrollLeft = slideEl.offsetLeft;
-      slider.scrollTo({
-        left: slideEl.offsetLeft,
-        behavior: 'auto'
-      });
-      requestAnimationFrame(() => {
-        setTimeout(() => {
-          slider.style.scrollSnapType = '';
-          if (slider.scrollLeft !== slideEl.offsetLeft) {
-            slider.scrollLeft = slideEl.offsetLeft;
-          }
-        }, 50);
-      });
-    } else {
-      slider.style.scrollSnapType = 'none';
-      slider.scrollTo({
-        left: slideEl.offsetLeft,
-        behavior: 'smooth'
-      });
-      requestAnimationFrame(() => {
-        setTimeout(() => {
-          slider.style.scrollSnapType = '';
-        }, 500);
-      });
-    }
+    // Disable scroll snap temporarily to prevent browser snapback/glitch issues
+    slider.style.scrollSnapType = 'none';
+    slider.scrollLeft = slideEl.offsetLeft;
+    slider.scrollTo({
+      left: slideEl.offsetLeft,
+      behavior: 'auto'
+    });
+    requestAnimationFrame(() => {
+      setTimeout(() => {
+        slider.style.scrollSnapType = '';
+        if (slider.scrollLeft !== slideEl.offsetLeft) {
+          slider.scrollLeft = slideEl.offsetLeft;
+        }
+      }, 50);
+    });
   } else {
     const mainImg = container.querySelector('#tsukie-main-img');
     if(mainImg) mainImg.src = src;
@@ -1840,14 +1834,18 @@ window.tsukieScrollToImage = function(dotEl, index) {
   if (slider && slides[index]) {
     const slideEl = slides[index];
     slider.style.scrollSnapType = 'none';
+    slider.scrollLeft = slideEl.offsetLeft;
     slider.scrollTo({
       left: slideEl.offsetLeft,
-      behavior: 'smooth'
+      behavior: 'auto'
     });
     requestAnimationFrame(() => {
       setTimeout(() => {
         slider.style.scrollSnapType = '';
-      }, 500);
+        if (slider.scrollLeft !== slideEl.offsetLeft) {
+          slider.scrollLeft = slideEl.offsetLeft;
+        }
+      }, 50);
     });
   }
   container.tsukieCurrentImage = index;
@@ -3060,10 +3058,12 @@ window.tsukieToggleAccordion = function(header) {
 /* Image Slider Base Styles */
 .tsukie-main-image-slider {
   display: flex !important;
-  overflow: hidden !important;
-  scroll-behavior: smooth !important;
+  overflow-x: auto !important;
+  scroll-behavior: auto !important;
   scrollbar-width: none !important;
   width: 100% !important;
+  scroll-snap-type: x mandatory !important;
+  -webkit-overflow-scrolling: touch !important;
 }
 .tsukie-main-image-slider::-webkit-scrollbar {
   display: none !important;
@@ -3071,6 +3071,7 @@ window.tsukieToggleAccordion = function(header) {
 .tsukie-main-image-slide {
   flex: 0 0 100% !important;
   width: 100% !important;
+  scroll-snap-align: start !important;
 }
 .tsukie-main-image-slide img {
   width: 100% !important;
@@ -3570,7 +3571,11 @@ window.tsukieToggleAccordion = function(header) {
             {% for image in product.images %}
               {%- assign image_colors_clean = image_colors_array[forloop.index0] -%}
               <div class="tsukie-main-image-slide" data-index="{{ forloop.index0 }}" data-colors="{{ image_colors_clean | downcase | escape }}">
-                <img src="{{ image | img_url: '1000x' }}" alt="{{ product.title | escape }}" loading="lazy">
+                <img 
+                  src="{{ image | img_url: '1000x' }}" 
+                  alt="{{ product.title | escape }}" 
+                  {% if forloop.first %}fetchpriority="high"{% else %}loading="eager"{% endif %}
+                >
               </div>
             {% endfor %}
           </div>
@@ -4402,34 +4407,21 @@ window.tsukieChangeImage = function(src, index, element, isInitial) {
   const slides = container.querySelectorAll('.tsukie-main-image-slide');
   if (slider && slides[index]) {
     const slideEl = slides[index];
-    if (isInitial) {
-      // Temporarily disable scroll snap on load to prevent Safari/WebKit snapback issues
-      slider.style.scrollSnapType = 'none';
-      slider.scrollLeft = slideEl.offsetLeft;
-      slider.scrollTo({
-        left: slideEl.offsetLeft,
-        behavior: 'auto'
-      });
-      requestAnimationFrame(() => {
-        setTimeout(() => {
-          slider.style.scrollSnapType = '';
-          if (slider.scrollLeft !== slideEl.offsetLeft) {
-            slider.scrollLeft = slideEl.offsetLeft;
-          }
-        }, 50);
-      });
-    } else {
-      slider.style.scrollSnapType = 'none';
-      slider.scrollTo({
-        left: slideEl.offsetLeft,
-        behavior: 'smooth'
-      });
-      requestAnimationFrame(() => {
-        setTimeout(() => {
-          slider.style.scrollSnapType = '';
-        }, 500);
-      });
-    }
+    // Disable scroll snap temporarily to prevent browser snapback/glitch issues
+    slider.style.scrollSnapType = 'none';
+    slider.scrollLeft = slideEl.offsetLeft;
+    slider.scrollTo({
+      left: slideEl.offsetLeft,
+      behavior: 'auto'
+    });
+    requestAnimationFrame(() => {
+      setTimeout(() => {
+        slider.style.scrollSnapType = '';
+        if (slider.scrollLeft !== slideEl.offsetLeft) {
+          slider.scrollLeft = slideEl.offsetLeft;
+        }
+      }, 50);
+    });
   } else {
     const mainImg = container.querySelector('#tsukie-main-img');
     if(mainImg) mainImg.src = src;
@@ -4451,14 +4443,18 @@ window.tsukieScrollToImage = function(dotEl, index) {
   if (slider && slides[index]) {
     const slideEl = slides[index];
     slider.style.scrollSnapType = 'none';
+    slider.scrollLeft = slideEl.offsetLeft;
     slider.scrollTo({
       left: slideEl.offsetLeft,
-      behavior: 'smooth'
+      behavior: 'auto'
     });
     requestAnimationFrame(() => {
       setTimeout(() => {
         slider.style.scrollSnapType = '';
-      }, 500);
+        if (slider.scrollLeft !== slideEl.offsetLeft) {
+          slider.scrollLeft = slideEl.offsetLeft;
+        }
+      }, 50);
     });
   }
   container.tsukieCurrentImage = index;
