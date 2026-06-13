@@ -53,11 +53,14 @@
   #tsukie-real-women-{{ section.id }} {
     padding: 80px 0;
     text-align: center;
+    position: relative;
   }
   #tsukie-real-women-{{ section.id }} .tsukie-real-women-inner {
     max-width: 1400px;
     margin: 0 auto;
     padding: 0 40px;
+    position: relative;
+    z-index: 2;
   }
   #tsukie-real-women-{{ section.id }} .tsukie-real-women-head {
     margin-bottom: 45px;
@@ -344,6 +347,7 @@
 {%- endstyle -%}
 
 <div class="tsukie-real-women color-{{ section.settings.color_scheme }} gradient" id="tsukie-real-women-{{ section.id }}">
+  <div class="section-background color-{{ section.settings.color_scheme }}"></div>
   <div class="tsukie-real-women-inner">
     {% if section.settings.eyebrow != blank or section.settings.heading != blank or section.settings.description != blank %}
     <div class="tsukie-real-women-head">
