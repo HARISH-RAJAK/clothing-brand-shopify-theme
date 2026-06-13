@@ -278,22 +278,12 @@
       })();
     </script>
 
-    <!-- Global Safari Double-Tap Fix for Product Cards -->
+    <!-- Global Safari Double-Tap Fix for Product Cards (Desktop only) -->
     <script>
       (function() {
-        let touchStartX = 0;
-        let touchStartY = 0;
         let isNavigating = false;
 
-        document.addEventListener('touchstart', function(e) {
-          const touch = e.changedTouches[0];
-          if (touch) {
-            touchStartX = touch.clientX;
-            touchStartY = touch.clientY;
-          }
-        }, { passive: true });
-
-        function handleProductCardNavigation(e, isTouch) {
+        function handleProductCardNavigation(e) {
           if (isNavigating) return;
 
           const card = e.target.closest('.tsukie-product-card');
@@ -305,15 +295,6 @@
               e.target.closest('.tsukie-color-swatches') || 
               e.target.closest('.tsukie-color-swatch')) {
             return;
-          }
-
-          if (isTouch) {
-            const touch = e.changedTouches[0];
-            if (!touch) return;
-            const diffX = Math.abs(touch.clientX - touchStartX);
-            const diffY = Math.abs(touch.clientY - touchStartY);
-            // If scrolled/dragged more than 10px, treat as scroll, not click/tap
-            if (diffX > 10 || diffY > 10) return;
           }
 
           const link = card.querySelector('.tsukie-product-link');
@@ -330,11 +311,6 @@
           }
         }
 
-        // Handle touch tap for mobile Safari / iPads
-        document.addEventListener('touchend', function(e) {
-          handleProductCardNavigation(e, true);
-        });
-
         // Handle mouse/trackpad click for macOS Safari / desktops
         document.addEventListener('mouseup', function(e) {
           // Only left click
@@ -342,7 +318,10 @@
           // Ignore with modifier keys (like Cmd + click or Ctrl + click to open in new tab)
           if (e.ctrlKey || e.shiftKey || e.metaKey || e.altKey) return;
           
-          handleProductCardNavigation(e, false);
+          // Only run on desktop screen widths where hover transitions are active
+          if (window.innerWidth >= 750) {
+            handleProductCardNavigation(e);
+          }
         });
       })();
     </script>
