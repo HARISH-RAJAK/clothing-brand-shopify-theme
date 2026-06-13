@@ -5836,8 +5836,8 @@ button[name="add"]:hover,
   .card__inner,
   .card .media,
   .card__content,
-  .product-card-wrapper .card__media {
-    background-color: #F5F1EA !important;
-    background: #F5F1EA !important;
+  .product-card-wrapper {
+    background-color: #FDFBF6 !important;
+    background: #FDFBF6 !important;
   }
 }
