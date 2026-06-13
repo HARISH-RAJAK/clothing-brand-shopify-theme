@@ -1784,17 +1784,41 @@ window.tsukieFilterImagesByColor = function(colorValue) {
   }
 };
 
-window.tsukieChangeImage = function(src, index, element) {
+window.tsukieChangeImage = function(src, index, element, isInitial) {
   const container = tsukieGetContext(element);
   if (!container) return;
   const slider = container.querySelector('.tsukie-main-image-slider');
   const slides = container.querySelectorAll('.tsukie-main-image-slide');
   if (slider && slides[index]) {
     const slideEl = slides[index];
-    slider.scrollTo({
-      left: slideEl.offsetLeft,
-      behavior: 'smooth'
-    });
+    if (isInitial) {
+      // Temporarily disable scroll snap on load to prevent Safari/WebKit snapback issues
+      slider.style.scrollSnapType = 'none';
+      slider.scrollLeft = slideEl.offsetLeft;
+      slider.scrollTo({
+        left: slideEl.offsetLeft,
+        behavior: 'auto'
+      });
+      requestAnimationFrame(() => {
+        setTimeout(() => {
+          slider.style.scrollSnapType = '';
+          if (slider.scrollLeft !== slideEl.offsetLeft) {
+            slider.scrollLeft = slideEl.offsetLeft;
+          }
+        }, 50);
+      });
+    } else {
+      slider.style.scrollSnapType = 'none';
+      slider.scrollTo({
+        left: slideEl.offsetLeft,
+        behavior: 'smooth'
+      });
+      requestAnimationFrame(() => {
+        setTimeout(() => {
+          slider.style.scrollSnapType = '';
+        }, 500);
+      });
+    }
   } else {
     const mainImg = container.querySelector('#tsukie-main-img');
     if(mainImg) mainImg.src = src;
@@ -1815,9 +1839,15 @@ window.tsukieScrollToImage = function(dotEl, index) {
   const slides = container.querySelectorAll('.tsukie-main-image-slide');
   if (slider && slides[index]) {
     const slideEl = slides[index];
+    slider.style.scrollSnapType = 'none';
     slider.scrollTo({
       left: slideEl.offsetLeft,
       behavior: 'smooth'
+    });
+    requestAnimationFrame(() => {
+      setTimeout(() => {
+        slider.style.scrollSnapType = '';
+      }, 500);
     });
   }
   container.tsukieCurrentImage = index;
@@ -4166,6 +4196,25 @@ function tsukieGetContext(el) {
   }
 })();
 
+// Secondary kickoff on full window load to guarantee correct layout offsets and snap corrections
+window.addEventListener('load', function() {
+  const container = document.querySelector('.tsukie-product') || document.body;
+  if (container) {
+    const ctx = tsukieGetContext(container);
+    if (ctx && ctx.tsukieProduct) {
+      const colorOptIdx = ctx.tsukieProduct.options.findIndex(opt => opt.toLowerCase() === 'color' || opt.toLowerCase() === 'colour');
+      if (colorOptIdx > -1) {
+        const selectedColor = ctx.tsukieSelectedOptions[colorOptIdx + 1];
+        if (selectedColor) {
+          if (typeof window.tsukieFilterImagesByColor === 'function') {
+            window.tsukieFilterImagesByColor(selectedColor, true);
+          }
+        }
+      }
+    }
+  }
+});
+
 // Touch Swipe Support for Mobile Gallery
 (function() {
   function initTouchSwipe() {
@@ -4353,10 +4402,34 @@ window.tsukieChangeImage = function(src, index, element, isInitial) {
   const slides = container.querySelectorAll('.tsukie-main-image-slide');
   if (slider && slides[index]) {
     const slideEl = slides[index];
-    slider.scrollTo({
-      left: slideEl.offsetLeft,
-      behavior: isInitial ? 'auto' : 'smooth'
-    });
+    if (isInitial) {
+      // Temporarily disable scroll snap on load to prevent Safari/WebKit snapback issues
+      slider.style.scrollSnapType = 'none';
+      slider.scrollLeft = slideEl.offsetLeft;
+      slider.scrollTo({
+        left: slideEl.offsetLeft,
+        behavior: 'auto'
+      });
+      requestAnimationFrame(() => {
+        setTimeout(() => {
+          slider.style.scrollSnapType = '';
+          if (slider.scrollLeft !== slideEl.offsetLeft) {
+            slider.scrollLeft = slideEl.offsetLeft;
+          }
+        }, 50);
+      });
+    } else {
+      slider.style.scrollSnapType = 'none';
+      slider.scrollTo({
+        left: slideEl.offsetLeft,
+        behavior: 'smooth'
+      });
+      requestAnimationFrame(() => {
+        setTimeout(() => {
+          slider.style.scrollSnapType = '';
+        }, 500);
+      });
+    }
   } else {
     const mainImg = container.querySelector('#tsukie-main-img');
     if(mainImg) mainImg.src = src;
@@ -4377,9 +4450,15 @@ window.tsukieScrollToImage = function(dotEl, index) {
   const slides = container.querySelectorAll('.tsukie-main-image-slide');
   if (slider && slides[index]) {
     const slideEl = slides[index];
+    slider.style.scrollSnapType = 'none';
     slider.scrollTo({
       left: slideEl.offsetLeft,
       behavior: 'smooth'
+    });
+    requestAnimationFrame(() => {
+      setTimeout(() => {
+        slider.style.scrollSnapType = '';
+      }, 500);
     });
   }
   container.tsukieCurrentImage = index;

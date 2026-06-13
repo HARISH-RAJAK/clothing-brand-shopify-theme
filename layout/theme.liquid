@@ -277,5 +277,74 @@
         });
       })();
     </script>
+
+    <!-- Global Safari Double-Tap Fix for Product Cards -->
+    <script>
+      (function() {
+        let touchStartX = 0;
+        let touchStartY = 0;
+        let isNavigating = false;
+
+        document.addEventListener('touchstart', function(e) {
+          const touch = e.changedTouches[0];
+          if (touch) {
+            touchStartX = touch.clientX;
+            touchStartY = touch.clientY;
+          }
+        }, { passive: true });
+
+        function handleProductCardNavigation(e, isTouch) {
+          if (isNavigating) return;
+
+          const card = e.target.closest('.tsukie-product-card');
+          if (!card) return;
+
+          // Exclude clicks on quick add form, button, and swatches
+          if (e.target.closest('.tsukie-quick-add-btn') || 
+              e.target.closest('.tsukie-quick-add-form') || 
+              e.target.closest('.tsukie-color-swatches') || 
+              e.target.closest('.tsukie-color-swatch')) {
+            return;
+          }
+
+          if (isTouch) {
+            const touch = e.changedTouches[0];
+            if (!touch) return;
+            const diffX = Math.abs(touch.clientX - touchStartX);
+            const diffY = Math.abs(touch.clientY - touchStartY);
+            // If scrolled/dragged more than 10px, treat as scroll, not click/tap
+            if (diffX > 10 || diffY > 10) return;
+          }
+
+          const link = card.querySelector('.tsukie-product-link');
+          if (link && link.href) {
+            isNavigating = true;
+            e.preventDefault();
+            e.stopPropagation();
+            window.location.href = link.href;
+            
+            // Reset flag after a delay in case navigation is cancelled or delayed
+            setTimeout(() => {
+              isNavigating = false;
+            }, 2000);
+          }
+        }
+
+        // Handle touch tap for mobile Safari / iPads
+        document.addEventListener('touchend', function(e) {
+          handleProductCardNavigation(e, true);
+        });
+
+        // Handle mouse/trackpad click for macOS Safari / desktops
+        document.addEventListener('mouseup', function(e) {
+          // Only left click
+          if (e.button !== 0) return;
+          // Ignore with modifier keys (like Cmd + click or Ctrl + click to open in new tab)
+          if (e.ctrlKey || e.shiftKey || e.metaKey || e.altKey) return;
+          
+          handleProductCardNavigation(e, false);
+        });
+      })();
+    </script>
   </body>
 </html>
