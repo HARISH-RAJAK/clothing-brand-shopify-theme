@@ -1,6 +1,5 @@
 <style>
 .tsukie-real-women {
-  background: #fdfbf7;
   padding: 80px 0;
   text-align: center;
 }
@@ -28,13 +27,13 @@
   font-weight: 600;
   line-height: 1.15;
   margin: 0 0 16px;
-  color: #1e2a38;
+  color: rgb(var(--color-foreground));
 }
 .tsukie-real-women-desc {
   font-family: 'Cormorant Garamond', serif;
   font-size: 18px;
   font-style: italic;
-  color: #5a5a5a;
+  color: rgb(var(--color-foreground) / 0.75);
   max-width: 600px;
   margin: 0 auto;
   line-height: 1.5;
@@ -137,7 +136,7 @@
 }
 </style>
 
-<div class="tsukie-real-women">
+<div class="tsukie-real-women color-{{ section.settings.color_scheme }} gradient">
   <div class="tsukie-real-women-inner">
     <div class="tsukie-real-women-head">
       <p class="tsukie-real-women-eyebrow">{{ section.settings.eyebrow }}</p>
@@ -268,6 +267,12 @@ document.addEventListener('DOMContentLoaded', function() {
       "id": "description",
       "label": "Description",
       "default": "Candid moments of real women styling our timeless silhouettes. Tag us at #TsukieWomen to get featured."
+    },
+    {
+      "type": "color_scheme",
+      "id": "color_scheme",
+      "label": "t:settings.color_scheme",
+      "default": "scheme-1"
     }
   ],
   "blocks": [
