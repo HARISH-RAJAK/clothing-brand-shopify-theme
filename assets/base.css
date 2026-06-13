@@ -5807,3 +5807,29 @@ button[name="add"]:hover,
 .shopify-payment-button__button--hidden {
   display: none !important;
 }
+
+/* AG Fix - Judge.me Card Background Override */
+.jdgm-carousel-wrapper,
+.jdgm-rev-widg { 
+  background: transparent !important; 
+}
+
+.jdgm-carousel-item__review,
+.jdgm-rev-widg .jdgm-rev,
+.jdgm-carousel__card { 
+  background: #FDFBF7 !important; 
+  background-color: #FDFBF7 !important;
+  border: 1px solid #EAE5DC !important;
+}
+
+/* Stars golden karo */
+.jdgm-star.jdgm--on { 
+  color: #D4C5A9 !important; 
+}
+
+/* Text navy blue karo */
+.jdgm-rev__body, 
+.jdgm-rev__author, 
+.jdgm-rev__title { 
+  color: #1E2A38 !important; 
+}
