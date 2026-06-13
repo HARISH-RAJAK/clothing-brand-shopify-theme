@@ -201,6 +201,29 @@
       {%- endif -%}
     </div>
   </product-recommendations>
+{%- else -%}
+  <script>
+    (function() {
+      const sectionId = {{ section.id | json }};
+      function hideTarget(selector) {
+        const el = document.querySelector(selector);
+        if (el) el.style.setProperty('display', 'none', 'important');
+      }
+      function runHide() {
+        if (sectionId === 'product_recommendations_UcJyfr') {
+          hideTarget('[id$="__custom_liquid_DjpTpA"]');
+          hideTarget('[id$="__divider_UNcRBV"]');
+        } else if (sectionId === 'style_it_with_recommendations') {
+          hideTarget('[id$="__custom_liquid_style_it_with_header"]');
+        } else if (sectionId === 'product_recommendations_qggXJq') {
+          hideTarget('[id$="__custom_liquid_fQbTBM"]');
+          hideTarget('[id$="__divider_gNTBjU"]');
+        }
+      }
+      runHide();
+      document.addEventListener('DOMContentLoaded', runHide);
+    })();
+  </script>
 {%- endif -%}
 
 {% stylesheet %}

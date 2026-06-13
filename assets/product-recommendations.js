@@ -98,6 +98,13 @@ class ProductRecommendations extends Component {
         if (result.data?.trim().length) {
           this.dataset.recommendationsPerformed = 'true';
           morphSection(sectionId, result.data, { mode: 'hydration', injectStylesheet: true });
+          
+          setTimeout(() => {
+            const items = this.querySelectorAll('.resource-list__item:not(.product-recommendations__skeleton-item)');
+            if (items.length === 0) {
+              this.#handleError(new Error('No actual recommendations rendered'));
+            }
+          }, 50);
         } else {
           this.#handleError(new Error('No recommendations available'));
         }
@@ -147,6 +154,22 @@ class ProductRecommendations extends Component {
     console.error('Product recommendations error:', error.message);
     this.classList.add('hidden');
     this.dataset.error = 'Error loading product recommendations';
+
+    const sectionId = this.dataset.sectionId;
+    if (sectionId === 'product_recommendations_UcJyfr') {
+      const heading = document.querySelector('[id$="__custom_liquid_DjpTpA"]');
+      if (heading) heading.style.setProperty('display', 'none', 'important');
+      const divider = document.querySelector('[id$="__divider_UNcRBV"]');
+      if (divider) divider.style.setProperty('display', 'none', 'important');
+    } else if (sectionId === 'style_it_with_recommendations') {
+      const heading = document.querySelector('[id$="__custom_liquid_style_it_with_header"]');
+      if (heading) heading.style.setProperty('display', 'none', 'important');
+    } else if (sectionId === 'product_recommendations_qggXJq') {
+      const heading = document.querySelector('[id$="__custom_liquid_fQbTBM"]');
+      if (heading) heading.style.setProperty('display', 'none', 'important');
+      const divider = document.querySelector('[id$="__divider_gNTBjU"]');
+      if (divider) divider.style.setProperty('display', 'none', 'important');
+    }
   }
 }
 
