@@ -14,7 +14,10 @@
 }
 
 #tsukie-insta-{{ section.id }} .tsukie-insta-handle {
-  display: inline-block;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  text-align: center;
   background: {{ section.settings.button_bg_color | default: '#1e2a38' }};
   color: {{ section.settings.button_text_color | default: '#a08766' }};
   padding: {{ section.settings.btn_padding_vertical }}px {{ section.settings.btn_padding_horizontal }}px;
@@ -26,6 +29,13 @@
   font-weight: 600;
   text-transform: lowercase;
   transition: transform 0.3s ease;
+  {%- if section.settings.button_width > 0 -%}
+    width: {{ section.settings.button_width }}px;
+    max-width: 100%;
+    box-sizing: border-box;
+  {%- else -%}
+    width: auto;
+  {%- endif -%}
 }
 
 #tsukie-insta-{{ section.id }} .tsukie-insta-handle:hover {
@@ -111,6 +121,16 @@
       "step": 2,
       "unit": "px",
       "default": 32
+    },
+    {
+      "type": "range",
+      "id": "button_width",
+      "label": "Button Width (0 for Auto)",
+      "min": 0,
+      "max": 500,
+      "step": 5,
+      "unit": "px",
+      "default": 0
     },
     {
       "type": "header",

@@ -889,7 +889,7 @@
         "button_text_color": "#a08766",
         "btn_font_size": 13,
         "btn_padding_vertical": 12,
-        "btn_padding_horizontal": 32,
+        "btn_padding_horizontal": 20,
         "padding_top": 10,
         "padding_bottom": 10,
         "padding_top_mobile": 50,
