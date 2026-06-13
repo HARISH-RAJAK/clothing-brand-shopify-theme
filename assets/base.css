@@ -5866,3 +5866,9 @@ button[name="add"]:hover,
 .announcement-bar .slideshow-control {
   display: none !important;
 }
+
+/* Product Card Media Background Color Fix */
+.tsukie-product-media {
+  background-color: #FDFBF6 !important;
+  background: #FDFBF6 !important;
+}
