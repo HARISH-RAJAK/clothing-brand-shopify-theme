@@ -52,7 +52,7 @@
         "slide_2"
       ],
       "settings": {
-        "autoplay": true,
+        "autoplay": false,
         "autoplay_speed": 5,
         "slide_effect": "default",
         "hover_effect": "none",
