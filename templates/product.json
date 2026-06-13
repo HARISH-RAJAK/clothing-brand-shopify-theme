@@ -101,7 +101,7 @@
       "name": "t:names.custom_liquid",
       "settings": {
         "custom_liquid": "<style>\n.tsukie-collection-head{\n  background:#f5f1ea;\n  padding:20px 0 0;\n  text-align:center;\n}\n.tsukie-collection-inner{\n  max-width:1400px;\n  margin:0 auto;\n  padding:0 40px;\n}\n.tsukie-collection-eyebrow{\n  color:#a08766;\n  font-size:10px;\n  letter-spacing:2.5px;\n  text-transform:uppercase;\n  margin:0 0 8px;\n  font-weight:500;\n  font-family:'Montserrat',sans-serif;\n}\n.tsukie-collection-heading{\n  font-family:'Playfair Display',serif;\n  font-size:52px;\n  font-style:italic;\n  font-weight:600;\n  line-height:1.15;\n  margin:0 0 16px;\n  padding-bottom:4px;\n  color:#1e2a38;\n  display:inline-block;\n}\n.tsukie-collection-subtext{\n  font-size:14px;\n  line-height:1.4;\n  margin:0 auto;\n  font-family:'Montserrat',sans-serif;\n  color:#6b6b6b;\n}\n\n@media(max-width:749px){\n  .tsukie-collection-head{padding:50px 0 0}\n  .tsukie-collection-inner{padding:0 20px}\n  .tsukie-collection-eyebrow{font-size:9px;margin:0 0 6px}\n  .tsukie-collection-heading{font-size:36px;margin:0 0 12px;line-height:1.2;padding-bottom:3px}\n  .tsukie-collection-subtext{font-size:13px}\n}\n</style>\n\n<div class=\"tsukie-collection-head\">\n  <div class=\"tsukie-collection-inner\">\n    <p class=\"tsukie-collection-eyebrow\">Loved By Our Community</p>\n    <h2 class=\"tsukie-collection-heading\">Style it with</h2>\n    <p class=\"tsukie-collection-subtext\">\n      Real experiences from women who wear Tsukie.\n    </p>\n  </div>\n</div>",
-        "color_scheme": "",
+        "color_scheme": "scheme-e5234ede-d196-4b3b-a9e2-6e7d24b8ca5c",
         "section_width": "full-width",
         "padding-block-start": 0,
         "padding-block-end": 0
