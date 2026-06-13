@@ -18,27 +18,37 @@
   endif
 %}
 
-{% capture accelerated_checkout_button %}
-  {% if product != blank and form_obj != blank %}
-    {{ form_obj | payment_button }}
+<div
+  class="accelerated-checkout-block"
+  ref="acceleratedCheckoutButtonContainer"
+  {{ block.shopify_attributes }}
+  {% if request.visual_preview_mode %}
+    data-shopify-visual-preview
   {% endif %}
-{% endcapture %}
-
-{% if accelerated_checkout_button != blank %}
-  <div
-    class="accelerated-checkout-block"
-    ref="acceleratedCheckoutButtonContainer"
-    {{ block.shopify_attributes }}
-    {% if request.visual_preview_mode %}
-      data-shopify-visual-preview
-    {% endif %}
-    {% unless can_add_to_cart %}
-      hidden
-    {% endunless %}
-  >
-    {{ accelerated_checkout_button }}
-  </div>
-{% endif %}
+  {% unless can_add_to_cart %}
+    hidden
+  {% endunless %}
+>
+  {% if product != blank and form_obj != blank %}
+    <button type="button" class="sr-headless-checkout" name="sr-headless-button" onclick="shiprocketCheckoutEvents.buyProduct(event)">
+      <div class="sr-d-flex flex-center">
+        <div class="sr-d-flex full-width flex-center">
+          <div class="sr-button-text-container">
+            <span class="sr-checkout-visible2">BUY NOW</span>
+          </div>
+          <img src="https://fastrr-boost-ui.pickrr.com/assets/images/boost_button/upi_options.svg" alt="Google Pay | Phone Pay | UPI" class="sr-pl-15 sr-checkout-visible sr-payment-icons">
+          <div class="loader5"></div>
+        </div>
+        <div class="sr-discount-label"><span></span></div>
+        <div class="sr-brand-badge-container">
+          <span class="sr-powered-by">
+            <img src="https://fastrr-boost-ui.pickrr.com/assets/images/boost_button/powered_by.svg" alt="">
+          </span>
+        </div>
+      </div>
+    </button>
+  {% endif %}
+</div>
 
 {% render 'buy-buttons-styles' %}
 
