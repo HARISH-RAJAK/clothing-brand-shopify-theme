@@ -94,7 +94,7 @@
         "padding-block-end": 0
       }
     },
-    "product_recommendations_fmKDb9": {
+    "product_recommendations_Qp3hgt": {
       "type": "product-recommendations",
       "blocks": {
         "static-product-card": {
@@ -115,7 +115,7 @@
             "padding-inline-end": 0
           },
           "blocks": {
-            "product_card_gallery_JmnVyy": {
+            "product_card_gallery_AQx3nr": {
               "type": "_product-card-gallery",
               "name": "t:names.product_card_media",
               "settings": {
@@ -131,7 +131,7 @@
               },
               "blocks": {}
             },
-            "product_title_WmNLx9": {
+            "product_title_j9Ge6P": {
               "type": "product-title",
               "name": "t:names.product_title",
               "settings": {
@@ -156,7 +156,7 @@
               },
               "blocks": {}
             },
-            "price_KxRaBR": {
+            "price_tw6TWR": {
               "type": "price",
               "name": "t:names.product_price",
               "settings": {
@@ -181,9 +181,9 @@
             }
           },
           "block_order": [
-            "product_card_gallery_JmnVyy",
-            "product_title_WmNLx9",
-            "price_KxRaBR"
+            "product_card_gallery_AQx3nr",
+            "product_title_j9Ge6P",
+            "price_tw6TWR"
           ]
         }
       },
@@ -195,10 +195,10 @@
         "subtext": "Real experiences from women who wear Tsukie.",
         "header_background_style": "none",
         "product": "{{ closest.product }}",
-        "recommendation_source": "metafield",
+        "recommendation_source": "recommendations",
         "recommendation_type": "related",
         "layout_type": "grid",
-        "carousel_on_mobile": false,
+        "carousel_on_mobile": true,
         "max_products": 4,
         "columns": 4,
         "mobile_columns": "2",
@@ -407,7 +407,6 @@
           ]
         }
       },
-      "disabled": true,
       "name": "t:names.product_recommendations",
       "settings": {
         "header_style": "none",
@@ -1208,7 +1207,7 @@
   "order": [
     "product_details",
     "custom_liquid_qpw3qM",
-    "product_recommendations_fmKDb9",
+    "product_recommendations_Qp3hgt",
     "custom_liquid_DjpTpA",
     "divider_QbiRbH",
     "custom_liquid_mYHLRp",
