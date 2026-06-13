@@ -1,0 +1,281 @@
+<!doctype html>
+<html
+  {% if request.design_mode %}
+    class="shopify-design-mode"
+  {% endif %}
+  lang="{{ request.locale.iso_code }}"
+>
+  <head>
+    {%- if settings.favicon != blank -%}
+      <link
+        rel="icon"
+        type="image/png"
+        href="{{ settings.favicon | image_url: width: 32, height: 32 }}"
+      >
+    {%- endif -%}
+
+    {% # theme-check-disable RemoteAsset %}
+    {% comment %} This a way to wait for main content to load when navigating to a new page so that the view transitions can work consistently {% endcomment %}
+    {% if settings.transition_to_main_product or settings.page_transition_enabled %}
+      <link
+        rel="expect"
+        href="#MainContent"
+        blocking="render"
+        id="view-transition-render-blocker"
+      >
+    {% endif %}
+
+    {%- render 'meta-tags' -%}
+    {%- render 'stylesheets' -%}
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,500;0,600;1,400;1,600&family=Cormorant+Garamond:ital,wght@0,300;0,400;0,500;1,300;1,400;1,500&family=Montserrat:wght@300;400;500;600&display=swap" rel="stylesheet">
+    {%- render 'fonts' -%}
+    {%- render 'scripts' -%}
+    {%- render 'theme-styles-variables' -%}
+    {%- render 'color-schemes' -%}
+
+    {% if request.design_mode %}
+      {%- render 'theme-editor' -%}
+    {% endif %}
+
+    {{ content_for_header }}
+    {% # theme-check-enable RemoteAsset %}
+    {%- render 'sr-checkout' -%}
+  </head>
+
+  <body class="page-width-{{ settings.page_width }} card-hover-effect-{{ settings.card_hover_effect }}">
+    {% render 'skip-to-content-link', href: '#MainContent', text: 'accessibility.skip_to_text' %}
+    <div id="header-group">
+      {% sections 'header-group' %}
+    </div>
+
+    <script>
+      // Inline header height and menu style calculations to prevent layout shift
+      // Note: Updates in calculateHeaderGroupHeight(), updateTransparentHeaderOffset() and setHeaderMenuStyle() utilities.js should be kept in sync with this function
+      (function setHeaderHeighCustomProperties() {
+        /*
+         * Header calculation functions for maintaining CSS variables
+         * Mimic calculateHeaderGroupHeight() in utilities.js
+         */
+        const header = document.querySelector('header-component');
+        const headerGroup = document.querySelector('#header-group');
+        const hasHeaderSection = headerGroup?.querySelector('.header-section');
+
+        if (!header || !headerGroup) return;
+
+        const headerTopRow = header.querySelector('.header__row--top');
+        const headerHeight = header.offsetHeight;
+
+        // Calculate the total height of the header group
+        let headerGroupHeight = 0;
+        const children = headerGroup.children;
+        for (let i = 0; i < children.length; i++) {
+          const element = children[i];
+          if (element === header || !(element instanceof HTMLElement)) continue;
+          headerGroupHeight += element.offsetHeight;
+        }
+
+        // Check for transparent header special case
+        if (header.hasAttribute('transparent') && header.parentElement?.nextElementSibling) {
+          headerGroupHeight += headerHeight;
+        }
+
+        // Set CSS variables
+        document.body.style.setProperty('--header-height', `${headerHeight}px`);
+        document.body.style.setProperty('--header-group-height', `${headerGroupHeight}px`);
+
+        if (headerTopRow) {
+          window.requestAnimationFrame(function () {
+            document.body.style.setProperty('--top-row-height', `${headerTopRow.offsetHeight}px`);
+          });
+        }
+
+        /**
+         * Updates CSS custom properties for transparent header offset calculation
+         * Mimic updateTransparentHeaderOffset() in utilities.js
+         */
+
+        if (!hasHeaderSection || !header?.hasAttribute('transparent')) {
+          document.body.style.setProperty('--transparent-header-offset-boolean', '0');
+          return;
+        }
+
+        const hasImmediateSection = hasHeaderSection.nextElementSibling?.classList.contains('shopify-section');
+
+        const shouldApplyOffset = !hasImmediateSection ? '1' : '0';
+        document.body.style.setProperty('--transparent-header-offset-boolean', shouldApplyOffset);
+      })();
+
+      (function setHeaderMenuStyle() {
+        const headerComponent = document.querySelector('#header-component');
+        if (headerComponent) {
+          const isTouchDevice = 'ontouchstart' in window && navigator.maxTouchPoints > 0;
+          const overflowList = headerComponent?.querySelector('overflow-list');
+          const hasReachedMinimum = overflowList && overflowList.hasAttribute('minimum-reached');
+          headerComponent.dataset.menuStyle = isTouchDevice || hasReachedMinimum ? 'drawer' : 'menu';
+        }
+      })();
+    </script>
+
+    <main
+      id="MainContent"
+      class="content-for-layout"
+      role="main"
+      data-page-transition-enabled="{{ settings.page_transition_enabled }}"
+      data-product-transition="{{ settings.transition_to_main_product }}"
+      data-template="{{ template }}"
+    >
+      {{ content_for_layout }}
+    </main>
+
+    <footer>
+      
+    </footer>
+
+    
+
+    {% if settings.quick_add or settings.mobile_quick_add %}
+      
+    {% endif %}
+
+    <!-- Global Tsukie Size Guide Modal -->
+    <div class="tsukie-size-guide-modal" id="tsukie-size-guide-modal" style="display:none;">
+      <div class="tsukie-size-guide-modal-overlay" onclick="tsukieCloseSizeGuide()"></div>
+      <div class="tsukie-size-guide-modal-content">
+        <button class="tsukie-size-guide-modal-close" onclick="tsukieCloseSizeGuide()">&times;</button>
+        <h3 class="tsukie-size-guide-modal-title">Size Guide</h3>
+        <div class="tsukie-size-guide-table-wrap">
+          <table>
+            <thead>
+              <tr>
+                <th>Size</th>
+                <th>Bust (in)</th>
+                <th>Waist (in)</th>
+                <th>Hips (in)</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td>XS</td>
+                <td>32</td>
+                <td>26</td>
+                <td>36</td>
+              </tr>
+              <tr>
+                <td>S</td>
+                <td>34</td>
+                <td>28</td>
+                <td>38</td>
+              </tr>
+              <tr>
+                <td>M</td>
+                <td>36</td>
+                <td>30</td>
+                <td>40</td>
+              </tr>
+              <tr>
+                <td>L</td>
+                <td>38</td>
+                <td>32</td>
+                <td>42</td>
+              </tr>
+              <tr>
+                <td>XL</td>
+                <td>40</td>
+                <td>34</td>
+                <td>44</td>
+              </tr>
+              <tr>
+                <td>XXL</td>
+                <td>42</td>
+                <td>36</td>
+                <td>46</td>
+              </tr>
+              <tr>
+                <td>3XL</td>
+                <td>44</td>
+                <td>38</td>
+                <td>48</td>
+              </tr>
+              <tr>
+                <td>4XL</td>
+                <td>46</td>
+                <td>40</td>
+                <td>50</td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+    </div>
+
+    <script>
+      function tsukieOpenSizeGuide(e) {
+        if (e) e.preventDefault();
+        const modal = document.getElementById('tsukie-size-guide-modal');
+        if (modal) modal.classList.add('open');
+      }
+      function tsukieCloseSizeGuide() {
+        const modal = document.getElementById('tsukie-size-guide-modal');
+        if (modal) modal.classList.remove('open');
+      }
+    </script>
+
+    <!-- Global price decimal removal (Antigravity global patch) -->
+    <script>
+      (function() {
+        function removeDecimals(node) {
+          if (node.nodeType === Node.TEXT_NODE) {
+            const parent = node.parentElement;
+            if (!parent) return;
+            
+            const ignoreTags = ['SCRIPT', 'STYLE', 'TEXTAREA', 'INPUT', 'SELECT'];
+            if (ignoreTags.includes(parent.tagName)) return;
+            
+            const text = node.nodeValue;
+            const isPriceContainer = parent.closest('[class*="price"], [class*="money"], [class*="amount"], [class*="cart"], [class*="total"], [class*="badge"], [class*="qty"], [class*="quantity"]');
+            
+            if (isPriceContainer || /Rs\b|₹|INR/i.test(text)) {
+              const regex = /(\d+)(?:\.\d{2})\b/g;
+              const newVal = text.replace(regex, '$1');
+              if (text !== newVal) {
+                node.nodeValue = newVal;
+              }
+            }
+          } else {
+            const ignoreTags = ['SCRIPT', 'STYLE', 'TEXTAREA', 'INPUT', 'SELECT'];
+            if (!ignoreTags.includes(node.nodeName)) {
+              for (let i = 0; i < node.childNodes.length; i++) {
+                removeDecimals(node.childNodes[i]);
+              }
+            }
+          }
+        }
+
+        if (document.readyState === 'loading') {
+          document.addEventListener('DOMContentLoaded', () => removeDecimals(document.body));
+        } else {
+          removeDecimals(document.body);
+        }
+
+        const observer = new MutationObserver(function(mutations) {
+          mutations.forEach(function(mutation) {
+            mutation.addedNodes.forEach(function(node) {
+              removeDecimals(node);
+            });
+            if (mutation.type === 'characterData') {
+              removeDecimals(mutation.target);
+            }
+          });
+        });
+
+        observer.observe(document.body, {
+          childList: true,
+          subtree: true,
+          characterData: true
+        });
+      })();
+    </script>
+  </body>
+</html>

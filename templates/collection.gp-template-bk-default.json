@@ -1,0 +1,271 @@
+/*
+ * ------------------------------------------------------------
+ * IMPORTANT: The contents of this file are auto-generated.
+ *
+ * This file may be updated by the Shopify admin theme editor
+ * or related systems. Please exercise caution as any changes
+ * made to this file may be overwritten.
+ * ------------------------------------------------------------
+ */
+{
+  "sections": {
+    "custom_liquid_PzyxTY": {
+      "type": "custom-liquid",
+      "name": "iems",
+      "settings": {
+        "custom_liquid": "<style>\n@import url('https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@1,400;1,600&family=Montserrat:wght@300;400;500;600&display=swap');\n\n.tsukie-collection-hero{\n  background:#f5f1ea;\n  padding:80px 0 70px;\n  position:relative;\n  overflow:hidden;\n}\n.tsukie-collection-inner{\n  max-width:1400px;\n  margin:0 auto;\n  padding:0 40px;\n  position:relative;\n  z-index:2;\n}\n.tsukie-collection-breadcrumb{\n  font-size:11px;\n  letter-spacing:2px;\n  text-transform:uppercase;\n  color:#a08766;\n  margin:0 0 20px;\n  font-weight:500;\n  font-family:'Montserrat',sans-serif;\n}\n.tsukie-collection-breadcrumb a{\n  color:#a08766;\n  text-decoration:none;\n}\n.tsukie-collection-breadcrumb span{\n  margin:0 8px;\n  color:#c4b59d;\n}\n.tsukie-collection-content{\n  display:flex;\n  align-items:flex-end;\n  justify-content:space-between;\n  gap:40px;\n}\n.tsukie-collection-text{\n  flex:1;\n}\n.tsukie-collection-title{\n  font-family:'Playfair Display',serif;\n  font-size:68px;\n  line-height:1;\n  font-weight:600;\n  font-style:italic;\n  margin:0 0 16px;\n  \ncolor:#1e2a38;\n  \n}\n.tsukie-collection-desc{\n  font-size:15px;\n  line-height:1.7;\n  color:#6b6b6b;\n  margin:0;\n  max-width:520px;\n  font-family:'Montserrat',sans-serif;\n}\n.tsukie-collection-count{\n  font-size:12px;\n  letter-spacing:2px;\n  text-transform:uppercase;\n  color:#1a1a1a;\n  font-weight:500;\n  white-space:nowrap;\n  padding-bottom:8px;\n  border-bottom:1px solid #1a1a1a;\n  font-family:'Montserrat',sans-serif;\n}\n.tsukie-collection-image{\n  position:absolute;\n  right:0;\n  top:0;\n  bottom:0;\n  width:35%;\n  opacity:0.15;\n}\n.tsukie-collection-image img{\n  width:100%;\n  height:100%;\n  object-fit:cover;\n}\n@media(max-width:989px){\n.tsukie-collection-content{flex-direction:column;align-items:flex-start;gap:20px}\n.tsukie-collection-image{display:none}\n}\n@media(max-width:749px){\n.tsukie-collection-hero{padding:60px 0 50px}\n.tsukie-collection-inner{padding:0 20px}\n.tsukie-collection-title{font-size:48px}\n.tsukie-collection-desc{font-size:14px}\n}\n</style>\n\n<div class=\"tsukie-collection-hero\">\n  {% if collection.image %}\n  <div class=\"tsukie-collection-image\">\n    <img \n      src=\"{{ collection.image | image_url: width: 800 }}\" \n      alt=\"{{ collection.title | escape }}\"\n      loading=\"lazy\"\n    >\n  </div>\n  {% endif %}\n  \n  <div class=\"tsukie-collection-inner\">\n    <div class=\"tsukie-collection-breadcrumb\">\n      <a href=\"/\">Home</a>\n      <span>/</span>\n      <a href=\"/collections\">Shop All</a>\n      <span>/</span>\n      {{ collection.title }}\n    </div>\n    \n    <div class=\"tsukie-collection-content\">\n      <div class=\"tsukie-collection-text\">\n        <h1 class=\"tsukie-collection-title\">{{ collection.title }}</h1>\n        {% if collection.description != blank %}\n        <p class=\"tsukie-collection-desc\">{{ collection.description | strip_html | truncate: 180 }}</p>\n        {% endif %}\n      </div>\n      \n      <div class=\"tsukie-collection-count\">\n        {{ collection.products_count }} {% if collection.products_count == 1 %}Item{% else %}Items{% endif %}\n      </div>\n    </div>\n  </div>\n</div>",
+        "color_scheme": "",
+        "section_width": "full-width",
+        "padding-block-start": 0,
+        "padding-block-end": 0
+      }
+    },
+    "custom_liquid_gxTVPP": {
+      "type": "custom-liquid",
+      "name": "t:names.custom_liquid",
+      "settings": {
+        "custom_liquid": "{% render 'tsukie-filters' %}",
+        "color_scheme": "scheme-e5234ede-d196-4b3b-a9e2-6e7d24b8ca5c",
+        "section_width": "full-width",
+        "padding-block-start": 0,
+        "padding-block-end": 6
+      }
+    },
+    "main": {
+      "type": "main-collection",
+      "blocks": {
+        "filters": {
+          "type": "filters",
+          "static": true,
+          "settings": {
+            "enable_filtering": false,
+            "filter_style": "horizontal",
+            "filter_width": "full-width",
+            "text_label_case": "default",
+            "show_swatch_label": true,
+            "show_filter_label": true,
+            "enable_sorting": false,
+            "enable_grid_density": false,
+            "inherit_color_scheme": false,
+            "color_scheme": "",
+            "padding-block-start": 8,
+            "padding-block-end": 8,
+            "padding-inline-start": 0,
+            "padding-inline-end": 0,
+            "facets_margin_bottom": 8,
+            "facets_margin_right": 20
+          },
+          "blocks": {}
+        },
+        "product-card": {
+          "type": "_product-card",
+          "static": true,
+          "settings": {
+            "product_card_gap": 8,
+            "inherit_color_scheme": true,
+            "color_scheme": "",
+            "border": "none",
+            "border_width": 1,
+            "border_opacity": 100,
+            "border_radius": 0,
+            "padding-block-start": 8,
+            "padding-block-end": 0,
+            "padding-inline-start": 0,
+            "padding-inline-end": 0
+          },
+          "blocks": {
+            "card-gallery": {
+              "type": "_product-card-gallery",
+              "settings": {
+                "image_ratio": "adapt",
+                "border": "none",
+                "border_width": 1,
+                "border_opacity": 100,
+                "border_radius": 0,
+                "padding-block-start": 0,
+                "padding-block-end": 0,
+                "padding-inline-start": 0,
+                "padding-inline-end": 0
+              },
+              "blocks": {}
+            },
+            "product_title_4nY4eT": {
+              "type": "product-title",
+              "name": "t:names.product_title",
+              "settings": {
+                "width": "100%",
+                "max_width": "normal",
+                "alignment": "left",
+                "type_preset": "rte",
+                "font": "var(--font-body--family)",
+                "font_size": "1rem",
+                "line_height": "normal",
+                "letter_spacing": "normal",
+                "case": "none",
+                "wrap": "pretty",
+                "color": "var(--color-foreground)",
+                "background": false,
+                "background_color": "#00000026",
+                "corner_radius": 0,
+                "padding-block-start": 4,
+                "padding-block-end": 0,
+                "padding-inline-start": 0,
+                "padding-inline-end": 0
+              },
+              "blocks": {}
+            },
+            "price_EzJzMm": {
+              "type": "price",
+              "settings": {
+                "show_sale_price_first": true,
+                "show_installments": false,
+                "show_tax_info": false,
+                "type_preset": "h6",
+                "width": "100%",
+                "alignment": "left",
+                "font": "var(--font-body--family)",
+                "font_size": "1rem",
+                "line_height": "normal",
+                "letter_spacing": "normal",
+                "case": "none",
+                "color": "var(--color-foreground)",
+                "padding-block-start": 0,
+                "padding-block-end": 0,
+                "padding-inline-start": 0,
+                "padding-inline-end": 0
+              },
+              "blocks": {}
+            },
+            "custom_liquid_fP8t6m": {
+              "type": "custom-liquid",
+              "name": "color picker",
+              "settings": {
+                "custom_liquid": "{% liquid\n  assign product_resource = closest.product\n  if request.visual_preview_mode and product_resource == blank\n    assign product_resource = collections.all.products.first\n  endif\n-%}\n\n{% unless product_resource == blank %}\n  {%- assign color_option = product_resource.options_with_values | where: 'name', 'Color' | first -%}\n  {%- if color_option == blank -%}\n    {%- assign color_option = product_resource.options_with_values | where: 'name', 'Colour' | first -%}\n  {%- endif -%}\n\n  {% if color_option and color_option.values.size > 1 %}\n    <style>\n    @import url('https://fonts.googleapis.com/css2?family=Montserrat:wght@400;500;600&display=swap');\n    \n    .tsukie-block-colorpicker{\n      margin-top:16px;\n      margin-bottom:16px;\n    }\n    .tsukie-block-color-label{\n      display: none;\n\n      display: none;\n\n      font-size:11px;\n      letter-spacing:2px;\n      text-transform:uppercase;\n      color:#1e2a38;\n      margin:0 0 12px;\n      font-weight:500;\n      font-family:'Montserrat',sans-serif;\n    }\n    .tsukie-block-color-label span{\n      color:#6b6b6b;\n      font-weight:400;\n      margin-left:4px;\n    }\n    .tsukie-block-swatches{\n      display:flex;\n      gap:6px;\n      align-items:center;\n      flex-wrap:wrap;\n    }\n    .tsukie-block-swatch{\n      width:18px;\n      height:18px;\n      border-radius:50%;\n      border:1px solid #c9c9c9;\n      cursor:pointer;\n      flex-shrink:0;\n      box-sizing:border-box;\n      background-color:var(--swatch-color);\n      padding:0;\n      transition:all 0.2s ease;\n      position:relative;\n    }\n    .tsukie-block-swatch:hover{\n      transform:scale(1.1);\n    }\n    .tsukie-block-swatch.active{\n      border:2px solid #1e2a38;\n    }\n    </style>\n\n    <div class=\"tsukie-block-colorpicker\">\n      <p class=\"tsukie-block-color-label\">\n        COLOR:<span id=\"tsukie-block-selected-{{ section.id }}\">{{ product_resource.selected_or_first_available_variant.option1 }}</span>\n      </p>\n      \n      <div class=\"tsukie-block-swatches\">\n        {% for value in color_option.values %}\n          {%- liquid\n            assign variant_for_color = blank\n            assign color_downcase = value | downcase\n            \n            for variant in product_resource.variants\n              if variant.option1 == value or variant.option2 == value or variant.option3 == value\n                assign variant_for_color = variant\n                break\n              endif\n            endfor\n            \n            assign bg_color = color_downcase | replace: ' ', ''\n            case color_downcase\n              when 'navy blue' \n                assign bg_color = '#001f3f'\n              when 'off white' \n                assign bg_color = '#f8f8f8'\n              when 'beige' \n                assign bg_color = '#f5f1ea'\n              when 'black' \n                assign bg_color = '#000000'\n              when 'white' \n                assign bg_color = '#ffffff'\n            endcase\n          -%}\n          \n          <button \n            class=\"tsukie-block-swatch {% if product_resource.selected_or_first_available_variant.id == variant_for_color.id %}active{% endif %}\"\n            data-variant-id=\"{{ variant_for_color.id }}\"\n            data-color-name=\"{{ value }}\"\n            type=\"button\"\n            style=\"--swatch-color: {{ bg_color }}\"\n            onclick=\"tsukieBlockColorSelect{{ section.id }}(this)\"\n            title=\"{{ value }}\"\n          >\n          </button>\n        {% endfor %}\n      </div>\n    </div>\n\n    <script>\n    function tsukieBlockColorSelect{{ section.id }}(btn){\n      document.querySelectorAll('#shopify-section-{{ section.id }} .tsukie-block-swatch').forEach(s => s.classList.remove('active'));\n      btn.classList.add('active');\n      \n      document.getElementById('tsukie-block-selected-{{ section.id }}').textContent = btn.dataset.colorName;\n      \n      let variantInput = document.querySelector('form[action*=\"/cart/add\"] input[name=\"id\"]');\n      if(variantInput && btn.dataset.variantId){\n        variantInput.value = btn.dataset.variantId;\n        variantInput.dispatchEvent(new Event('change', {bubbles: true}));\n      }\n    }\n    </script>\n  {% endif %}\n{% endunless %}"
+              },
+              "blocks": {}
+            }
+          },
+          "block_order": [
+            "card-gallery",
+            "product_title_4nY4eT",
+            "price_EzJzMm",
+            "custom_liquid_fP8t6m"
+          ]
+        }
+      },
+      "settings": {
+        "layout_type": "grid",
+        "product_card_size": "medium",
+        "mobile_product_card_size": "small",
+        "enable_infinite_scroll": true,
+        "products_per_page": 24,
+        "product_grid_width": "centered",
+        "full_width_on_mobile": true,
+        "columns_gap_horizontal": 16,
+        "columns_gap_vertical": 24,
+        "padding-inline-start": 0,
+        "padding-inline-end": 0,
+        "color_scheme": "scheme-e5234ede-d196-4b3b-a9e2-6e7d24b8ca5c",
+        "padding-block-start": 6,
+        "padding-block-end": 32
+      }
+    },
+    "divider_dJVYfB": {
+      "type": "divider",
+      "name": "t:names.divider_section",
+      "settings": {
+        "color_scheme": "scheme-e5234ede-d196-4b3b-a9e2-6e7d24b8ca5c",
+        "section_width": "full-width",
+        "thickness": 1,
+        "corner_radius": "square",
+        "width_percent": 100,
+        "alignment_horizontal": "center",
+        "padding-block-start": 16,
+        "padding-block-end": 16
+      }
+    },
+    "custom_liquid_H9kPzt": {
+      "type": "custom-liquid",
+      "name": "t:names.custom_liquid",
+      "settings": {
+        "custom_liquid": "<style>\n.tsukie-collection-head{\n  background:#f5f1ea;\n  padding:20px 0 0;\n  text-align:center;\n}\n.tsukie-collection-inner{\n  max-width:1400px;\n  margin:0 auto;\n  padding:0 40px;\n}\n.tsukie-collection-eyebrow{\n  color:#a08766;\n  font-size:10px;\n  letter-spacing:2.5px;\n  text-transform:uppercase;\n  margin:0 0 8px;\n  font-weight:500;\n  font-family:'Montserrat',sans-serif;\n}\n.tsukie-collection-heading{\n  font-family:'Playfair Display',serif;\n  font-size:52px;\n  font-style:italic;\n  font-weight:600;\n  line-height:1.15;\n  margin:0 0 16px;\n  padding-bottom:4px;\n  color:#1e2a38;\n  display:inline-block;\n}\n.tsukie-collection-subtext{\n  font-size:14px;\n  line-height:1.4;\n  margin:0 auto;\n  font-family:'Montserrat',sans-serif;\n  color:#6b6b6b;\n}\n\n@media(max-width:749px){\n  .tsukie-collection-head{padding:50px 0 0}\n  .tsukie-collection-inner{padding:0 20px}\n  .tsukie-collection-eyebrow{font-size:9px;margin:0 0 6px}\n  .tsukie-collection-heading{font-size:36px;margin:0 0 12px;line-height:1.2;padding-bottom:3px}\n  .tsukie-collection-subtext{font-size:13px}\n}\n</style>\n\n<div class=\"tsukie-collection-head\">\n  <div class=\"tsukie-collection-inner\">\n    <p class=\"tsukie-collection-eyebrow\">JUST EXPLORED</p>\n    <h2 class=\"tsukie-collection-heading\">Recently Viewed</h2>\n    <p class=\"tsukie-collection-subtext\">\n      Seen Before, Loved Again \n    </p>\n  </div>\n</div>",
+        "color_scheme": "",
+        "section_width": "full-width",
+        "padding-block-start": 0,
+        "padding-block-end": 0
+      }
+    },
+    "tsukie_recently_viewed_RrHd7p": {
+      "type": "tsukie-recently-viewed",
+      "custom_css": [
+        "{margin-bottom: 0 !important; padding-bottom: 0 !important;}"
+      ],
+      "name": "Recently Viewed Products",
+      "settings": {}
+    },
+    "1781101584a5d849e6": {
+      "type": "_blocks",
+      "blocks": {
+        "instafeed_app_block_B3Lnrq": {
+          "type": "shopify://apps/instafeed/blocks/app-block/c447db20-095d-4a10-9725-b5977662c9d5",
+          "settings": {
+            "title": "",
+            "title_color": "",
+            "title_size_v2": 0,
+            "alignment": "center",
+            "instafeed_margin_top": 1,
+            "instafeed_margin_bottom": 45,
+            "instafeed_margin_sides": 0,
+            "show_instagram_link": false,
+            "link_alignment": "left",
+            "link_color": "#000000",
+            "background_color": "",
+            "feed_id": "",
+            "html_area": ""
+          }
+        }
+      },
+      "block_order": [
+        "instafeed_app_block_B3Lnrq"
+      ],
+      "disabled": true,
+      "custom_css": [],
+      "settings": {
+        "content_direction": "column",
+        "vertical_on_mobile": true,
+        "horizontal_alignment": "flex-start",
+        "vertical_alignment": "center",
+        "align_baseline": false,
+        "horizontal_alignment_flex_direction_column": "flex-start",
+        "vertical_alignment_flex_direction_column": "center",
+        "gap": 12,
+        "section_width": "page-width",
+        "section_height": "",
+        "section_height_custom": 50,
+        "color_scheme": "scheme-e5234ede-d196-4b3b-a9e2-6e7d24b8ca5c",
+        "background_media": "none",
+        "video_position": "cover",
+        "background_image_position": "cover",
+        "border": "none",
+        "border_width": 1,
+        "border_opacity": 100,
+        "border_radius": 0,
+        "toggle_overlay": false,
+        "overlay_color": "#00000026",
+        "overlay_style": "solid",
+        "gradient_direction": "to top",
+        "padding-block-start": 0,
+        "padding-block-end": 0
+      }
+    }
+  },
+  "order": [
+    "custom_liquid_PzyxTY",
+    "custom_liquid_gxTVPP",
+    "main",
+    "divider_dJVYfB",
+    "custom_liquid_H9kPzt",
+    "tsukie_recently_viewed_RrHd7p",
+    "1781101584a5d849e6"
+  ]
+}
