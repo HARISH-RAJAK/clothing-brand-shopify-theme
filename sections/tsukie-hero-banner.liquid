@@ -45,6 +45,7 @@
   background-color: #f5f1ea;
   user-select: none;
   -webkit-user-select: none;
+  transition: height 0.4s cubic-bezier(0.4, 0, 0.2, 1);
 }
 .tsukie-hero-slider[style*="--hero-min-height: auto"] {
   height: auto;
@@ -53,6 +54,7 @@
 @media (max-width: 749px) {
   .tsukie-hero-slider {
     height: var(--hero-min-height-mobile, 450px) !important;
+    transition: height 0.4s cubic-bezier(0.4, 0, 0.2, 1);
   }
   .tsukie-hero-slider[style*="--hero-min-height-mobile: auto"] {
     height: auto !important;
@@ -69,6 +71,7 @@
   scroll-behavior: smooth;
   scrollbar-width: none;
   -ms-overflow-style: none;
+  -webkit-overflow-scrolling: touch;
 }
 .tsukie-hero-slides::-webkit-scrollbar {
   display: none;
@@ -85,6 +88,7 @@
   justify-content: center;
   position: relative;
   overflow: hidden;
+  will-change: transform;
 }
 
 /* Clickable Slide Wrapper */
@@ -116,6 +120,10 @@
   height: 100%;
   display: block;
   transition: transform 0.6s cubic-bezier(0.4, 0, 0.2, 1), filter 0.4s ease, opacity 0.4s ease;
+  will-change: transform, opacity;
+  backface-visibility: hidden;
+  -webkit-backface-visibility: hidden;
+  transform: translate3d(0,0,0);
 }
 .tsukie-hero-slide-image-wrap::before {
   content: '';
@@ -357,9 +365,9 @@
 
         <div class="tsukie-hero-slide-image-wrap">
           {% if block.settings.image != blank %}
-            <img class="tsukie-hero-image-desktop" src="{{ block.settings.image | image_url: width: 1920 }}" alt="{{ block.settings.image.alt | escape }}" loading="{% if forloop.first %}eager{% else %}lazy{% endif %}" width="{{ block.settings.image.width }}" height="{{ block.settings.image.height }}">
+            <img class="tsukie-hero-image-desktop" src="{{ block.settings.image | image_url: width: 1920 }}" alt="{{ block.settings.image.alt | escape }}" loading="eager" {% if forloop.first %}fetchpriority="high"{% endif %} width="{{ block.settings.image.width }}" height="{{ block.settings.image.height }}">
             {% if block.settings.mobile_image != blank %}
-              <img class="tsukie-hero-image-mobile" src="{{ block.settings.mobile_image | image_url: width: 750 }}" alt="{{ block.settings.mobile_image.alt | escape }}" loading="{% if forloop.first %}eager{% else %}lazy{% endif %}" width="{{ block.settings.mobile_image.width }}" height="{{ block.settings.mobile_image.height }}">
+              <img class="tsukie-hero-image-mobile" src="{{ block.settings.mobile_image | image_url: width: 750 }}" alt="{{ block.settings.mobile_image.alt | escape }}" loading="eager" {% if forloop.first %}fetchpriority="high"{% endif %} width="{{ block.settings.mobile_image.width }}" height="{{ block.settings.mobile_image.height }}">
             {% endif %}
           {% else %}
             <div class="tsukie-hero-image-placeholder">
@@ -410,11 +418,64 @@ document.addEventListener('DOMContentLoaded', function() {
   var slides = slider.querySelectorAll('.tsukie-hero-slide');
   var dots = slider.querySelectorAll('.tsukie-slider-dot');
 
-  if (slides.length < 2) return;
-
   var currentIndex = 0;
   var slideInterval;
   var speed = parseInt('{{ section.settings.autoplay_speed | default: 5 }}', 10) * 1000;
+  var scrollTimeout;
+
+  function adjustSliderHeight() {
+    var isMobile = window.innerWidth <= 749;
+    if (!isMobile) {
+      slider.style.removeProperty('--hero-min-height-mobile');
+      return;
+    }
+    
+    var activeSlide = slides[currentIndex];
+    if (!activeSlide) return;
+    
+    var img = activeSlide.querySelector('.tsukie-hero-image-mobile');
+    if (!img || img.style.display === 'none' || window.getComputedStyle(img).display === 'none') {
+      img = activeSlide.querySelector('.tsukie-hero-image-desktop');
+    }
+    if (!img) return;
+
+    function doUpdate() {
+      var naturalWidth = img.naturalWidth;
+      var naturalHeight = img.naturalHeight;
+      if (naturalWidth > 0 && naturalHeight > 0) {
+        var sliderWidth = slidesContainer.clientWidth;
+        var calculatedHeight = (sliderWidth * naturalHeight) / naturalWidth;
+        slider.style.setProperty('--hero-min-height-mobile', calculatedHeight + 'px', 'important');
+      }
+    }
+
+    if (img.complete) {
+      doUpdate();
+    } else {
+      img.addEventListener('load', doUpdate, { once: true });
+    }
+  }
+
+  function settleActiveSlide() {
+    var scrollLeft = slidesContainer.scrollLeft;
+    var slideWidth = slidesContainer.clientWidth;
+    if (slideWidth <= 0) return;
+    var activeIndex = Math.round(scrollLeft / slideWidth);
+    
+    if (activeIndex !== currentIndex || !slides[currentIndex].classList.contains('is-active')) {
+      slides.forEach(function(slide) {
+        slide.classList.remove('is-active');
+      });
+      dots.forEach(function(dot) {
+        dot.classList.remove('is-active');
+      });
+      
+      currentIndex = activeIndex;
+      if (slides[currentIndex]) slides[currentIndex].classList.add('is-active');
+      if (dots[currentIndex]) dots[currentIndex].classList.add('is-active');
+      adjustSliderHeight();
+    }
+  }
 
   function updateActiveSlide() {
     var scrollLeft = slidesContainer.scrollLeft;
@@ -422,13 +483,13 @@ document.addEventListener('DOMContentLoaded', function() {
     if (slideWidth <= 0) return;
     var activeIndex = Math.round(scrollLeft / slideWidth);
     
-    if (activeIndex !== currentIndex) {
-      if (slides[currentIndex]) slides[currentIndex].classList.remove('is-active');
-      if (dots[currentIndex]) dots[currentIndex].classList.remove('is-active');
-      currentIndex = activeIndex;
-      if (slides[currentIndex]) slides[currentIndex].classList.add('is-active');
-      if (dots[currentIndex]) dots[currentIndex].classList.add('is-active');
-    }
+    // Update dots instantly for responsiveness
+    dots.forEach(function(dot, idx) {
+      dot.classList.toggle('is-active', idx === activeIndex);
+    });
+
+    if (scrollTimeout) clearTimeout(scrollTimeout);
+    scrollTimeout = setTimeout(settleActiveSlide, 100);
   }
 
   function showSlide(index) {
@@ -438,6 +499,7 @@ document.addEventListener('DOMContentLoaded', function() {
       left: currentIndex * slideWidth,
       behavior: 'smooth'
     });
+    settleActiveSlide();
   }
 
   function startAutoPlay() {
@@ -451,23 +513,31 @@ document.addEventListener('DOMContentLoaded', function() {
     if (slideInterval) clearInterval(slideInterval);
   }
 
-  slidesContainer.addEventListener('scroll', updateActiveSlide);
-  window.addEventListener('resize', updateActiveSlide);
-
-  dots.forEach(function(dot) {
-    dot.addEventListener('click', function() {
-      showSlide(parseInt(this.getAttribute('data-index'), 10));
-      startAutoPlay();
+  if (slides.length > 1) {
+    slidesContainer.addEventListener('scroll', updateActiveSlide);
+    window.addEventListener('resize', function() {
+      updateActiveSlide();
+      adjustSliderHeight();
     });
-  });
 
-  // Pause autoplay on user interaction (touch/swipe)
-  slidesContainer.addEventListener('touchstart', stopAutoPlay, { passive: true });
-  slidesContainer.addEventListener('touchend', startAutoPlay, { passive: true });
+    dots.forEach(function(dot) {
+      dot.addEventListener('click', function() {
+        showSlide(parseInt(this.getAttribute('data-index'), 10));
+        startAutoPlay();
+      });
+    });
 
-  slider.addEventListener('mouseenter', stopAutoPlay);
-  slider.addEventListener('mouseleave', startAutoPlay);
+    // Pause autoplay on user interaction (touch/swipe)
+    slidesContainer.addEventListener('touchstart', stopAutoPlay, { passive: true });
+    slidesContainer.addEventListener('touchend', startAutoPlay, { passive: true });
 
+    slider.addEventListener('mouseenter', stopAutoPlay);
+    slider.addEventListener('mouseleave', startAutoPlay);
+  }
+
+  // Set initial height and play state
+  adjustSliderHeight();
+  window.addEventListener('load', adjustSliderHeight);
   startAutoPlay();
 });
 </script>
