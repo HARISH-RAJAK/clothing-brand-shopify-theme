@@ -42,6 +42,9 @@
       --tablet-last-row-count: {{ tablet_last_row_count }};
     "
   >
+    {%- if settings.logo != blank -%}
+      <img src="{{ settings.logo | image_url: width: 150 }}" alt="{{ shop.name }}" loading="lazy" style="max-width: 120px; height: auto; margin-bottom: 20px;">
+    {%- endif -%}
     {% content_for 'blocks' %}
   </div>
 </div>

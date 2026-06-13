@@ -5808,3 +5808,36 @@ button[name="add"]:hover,
   display: none !important;
 }
 
+
+/* Mobile Badge Dimensions Fix */
+@media (max-width: 749px) {
+  .tsukie-product-badge,
+  .card__badge .badge,
+  .price__badge-sale,
+  .badge {
+    font-size: 8px !important;
+    font-family: 'Montserrat', sans-serif !important;
+    font-weight: 600 !important;
+    padding: 3px 6px !important;
+    background: #1E2A38 !important;
+    color: #D4C5A9 !important;
+    line-height: 1 !important;
+    height: 16px !important;
+    text-transform: uppercase !important;
+    letter-spacing: 0.5px !important;
+    border-radius: 0 !important;
+    display: inline-flex !important;
+    align-items: center !important;
+  }
+}
+
+/* Desktop Product Card Background Fix */
+@media (min-width: 750px) {
+  .card__inner,
+  .card .media,
+  .card__content,
+  .product-card-wrapper .card__media {
+    background-color: #F5F1EA !important;
+    background: #F5F1EA !important;
+  }
+}
