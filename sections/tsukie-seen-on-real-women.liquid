@@ -1,5 +1,8 @@
 <style>
 .tsukie-real-women {
+  {%- if section.settings.custom_bg_color != blank and section.settings.custom_bg_color != 'rgba(0,0,0,0)' -%}
+    background: {{ section.settings.custom_bg_color }};
+  {%- endif -%}
   padding: 80px 0;
   text-align: center;
 }
@@ -273,6 +276,11 @@ document.addEventListener('DOMContentLoaded', function() {
       "id": "color_scheme",
       "label": "t:settings.color_scheme",
       "default": "scheme-1"
+    },
+    {
+      "type": "color",
+      "id": "custom_bg_color",
+      "label": "Custom Background Color (Overrides Scheme)"
     }
   ],
   "blocks": [
