@@ -1,11 +1,32 @@
+{%- style -%}
+  #tsukie-recently-viewed-{{ section.id }} .recently-viewed-inner {
+    padding-top: {{ section.settings.padding_top | default: 40 }}px !important;
+    padding-bottom: {{ section.settings.padding_bottom | default: 80 }}px !important;
+    padding-left: 40px !important;
+    padding-right: 40px !important;
+    margin-top: {{ section.settings.margin_top | default: 0 }}px !important;
+    margin-bottom: {{ section.settings.margin_bottom | default: 0 }}px !important;
+  }
+  @media (max-width: 749px) {
+    #tsukie-recently-viewed-{{ section.id }} .recently-viewed-inner {
+      padding-top: {{ section.settings.padding_top_mobile | default: 50 }}px !important;
+      padding-bottom: {{ section.settings.padding_bottom_mobile | default: 50 }}px !important;
+      padding-left: 16px !important;
+      padding-right: 16px !important;
+      margin-top: {{ section.settings.margin_top_mobile | default: 0 }}px !important;
+      margin-bottom: {{ section.settings.margin_bottom_mobile | default: 0 }}px !important;
+    }
+  }
+{%- endstyle -%}
+
 <div class="tsukie-recently-viewed" id="tsukie-recently-viewed-{{ section.id }}" style="display: none;">
-  <div class="recently-viewed-inner" style="max-width: 1400px; margin: 0 auto; padding: 40px 40px 80px; background: #f5f1ea;">
+  <div class="recently-viewed-inner" style="max-width: 1400px; margin: 0 auto; background: #f5f1ea;">
     
     {% if section.settings.header_style != 'none' %}
       {%- style -%}
         #tsukie-header-{{ section.id }} {
-          padding-top: 20px;
-          padding-bottom: 30px;
+          padding-top: {{ section.settings.header_padding_top | default: 20 }}px;
+          padding-bottom: {{ section.settings.header_padding_bottom | default: 30 }}px;
           text-align: center;
           position: relative;
           overflow: hidden;
@@ -94,8 +115,8 @@
 
         @media (max-width: 749px) {
           #tsukie-header-{{ section.id }} {
-            padding-top: 30px;
-            padding-bottom: 20px;
+            padding-top: {{ section.settings.header_padding_top_mobile | default: 30 }}px;
+            padding-bottom: {{ section.settings.header_padding_bottom_mobile | default: 20 }}px;
           }
           #tsukie-header-{{ section.id }} .tsukie-header-inner {
             padding: 0 20px;
@@ -264,9 +285,7 @@
   }
 }
 @media(max-width: 749px) {
-  #tsukie-recently-viewed-{{ section.id }} .recently-viewed-inner {
-    padding: 50px 16px !important;
-  }
+
   #tsukie-recently-viewed-{{ section.id }} ul.product-grid {
     display: flex !important;
     flex-wrap: nowrap !important;
@@ -521,6 +540,134 @@
       "id": "subtext",
       "label": "Subtext",
       "default": "Seen Before, Loved Again"
+    },
+    {
+      "type": "header",
+      "content": "Section Spacing (Granular)"
+    },
+    {
+      "type": "range",
+      "id": "padding_top",
+      "label": "Section Padding Top (Desktop)",
+      "min": 0,
+      "max": 120,
+      "step": 2,
+      "unit": "px",
+      "default": 40
+    },
+    {
+      "type": "range",
+      "id": "padding_bottom",
+      "label": "Section Padding Bottom (Desktop)",
+      "min": 0,
+      "max": 120,
+      "step": 2,
+      "unit": "px",
+      "default": 80
+    },
+    {
+      "type": "range",
+      "id": "padding_top_mobile",
+      "label": "Section Padding Top (Mobile)",
+      "min": 0,
+      "max": 120,
+      "step": 2,
+      "unit": "px",
+      "default": 50
+    },
+    {
+      "type": "range",
+      "id": "padding_bottom_mobile",
+      "label": "Section Padding Bottom (Mobile)",
+      "min": 0,
+      "max": 120,
+      "step": 2,
+      "unit": "px",
+      "default": 50
+    },
+    {
+      "type": "range",
+      "id": "margin_top",
+      "label": "Section Margin Top (Desktop)",
+      "min": -100,
+      "max": 100,
+      "step": 2,
+      "unit": "px",
+      "default": 0
+    },
+    {
+      "type": "range",
+      "id": "margin_bottom",
+      "label": "Section Margin Bottom (Desktop)",
+      "min": -100,
+      "max": 100,
+      "step": 2,
+      "unit": "px",
+      "default": 0
+    },
+    {
+      "type": "range",
+      "id": "margin_top_mobile",
+      "label": "Section Margin Top (Mobile)",
+      "min": -100,
+      "max": 100,
+      "step": 2,
+      "unit": "px",
+      "default": 0
+    },
+    {
+      "type": "range",
+      "id": "margin_bottom_mobile",
+      "label": "Section Margin Bottom (Mobile)",
+      "min": -100,
+      "max": 100,
+      "step": 2,
+      "unit": "px",
+      "default": 0
+    },
+    {
+      "type": "header",
+      "content": "Header Spacing"
+    },
+    {
+      "type": "range",
+      "id": "header_padding_top",
+      "label": "Header Padding Top (Desktop)",
+      "min": 0,
+      "max": 100,
+      "step": 2,
+      "unit": "px",
+      "default": 20
+    },
+    {
+      "type": "range",
+      "id": "header_padding_bottom",
+      "label": "Header Padding Bottom (Desktop)",
+      "min": 0,
+      "max": 100,
+      "step": 2,
+      "unit": "px",
+      "default": 30
+    },
+    {
+      "type": "range",
+      "id": "header_padding_top_mobile",
+      "label": "Header Padding Top (Mobile)",
+      "min": 0,
+      "max": 100,
+      "step": 2,
+      "unit": "px",
+      "default": 30
+    },
+    {
+      "type": "range",
+      "id": "header_padding_bottom_mobile",
+      "label": "Header Padding Bottom (Mobile)",
+      "min": 0,
+      "max": 100,
+      "step": 2,
+      "unit": "px",
+      "default": 20
     }
   ],
   "presets": [
