@@ -40,9 +40,9 @@
 }
 {%- endstyle -%}
 
-<div id="tsukie-insta-{{ section.id }}" class="tsukie-insta-section color-{{ section.settings.color_scheme }} section">
+<div id="tsukie-insta-{{ section.id }}" class="tsukie-insta-section color-{{ section.settings.color_scheme }}">
   <div class="section-background color-{{ section.settings.color_scheme }}"></div>
-  <div class="tsukie-insta-inner" style="position: relative; z-index: 2;">
+  <div class="tsukie-insta-inner section section--full-width" style="position: relative; z-index: 2;">
     <a href="{{ section.settings.button_link | default: 'https://www.instagram.com/tsukieofficial/' }}" target="_blank" class="tsukie-insta-handle">
       {{ section.settings.button_text | default: '@tsukieofficial' }}
     </a>
