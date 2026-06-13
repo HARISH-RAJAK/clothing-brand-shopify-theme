@@ -4151,20 +4151,17 @@ function tsukieGetContext(el) {
   if (container) {
     const ctx = tsukieGetContext(container);
     if (ctx && ctx.tsukieProduct) {
-      // Disabled: Prevent auto-scrolling/filtering on initial page load
-      /*
       const colorOptIdx = ctx.tsukieProduct.options.findIndex(opt => opt.toLowerCase() === 'color' || opt.toLowerCase() === 'colour');
       if (colorOptIdx > -1) {
         const selectedColor = ctx.tsukieSelectedOptions[colorOptIdx + 1];
         if (selectedColor) {
           setTimeout(() => {
             if (typeof window.tsukieFilterImagesByColor === 'function') {
-              window.tsukieFilterImagesByColor(selectedColor);
+              window.tsukieFilterImagesByColor(selectedColor, true);
             }
           }, 100);
         }
       }
-      */
     }
   }
 })();
@@ -4245,12 +4242,25 @@ window.tsukieCopyCode = function(el, code) {
     }
   });
 };
-window.tsukieFilterImagesByColor = function(colorValue) {
+window.tsukieFilterImagesByColor = function(colorValue, isInitial) {
   const container = document.querySelector('.tsukie-product') || document.body;
   if (!container) return;
   
   const enableFilter = {% if section.settings.enable_color_filter %}true{% else %}false{% endif %};
-  if (!enableFilter) return;
+  if (!enableFilter) {
+    // Ensure all elements are visible when filtering is disabled
+    container.querySelectorAll('.tsukie-thumb, .tsukie-main-image-slide, .tsukie-dot').forEach(el => {
+      el.style.display = '';
+      el.removeAttribute('data-visible-index');
+    });
+    const prevArrow = container.querySelector('.tsukie-carousel-nav.prev');
+    const nextArrow = container.querySelector('.tsukie-carousel-nav.next');
+    const dotsContainer = container.querySelector('.tsukie-carousel-dots');
+    if (prevArrow) prevArrow.style.display = '';
+    if (nextArrow) nextArrow.style.display = '';
+    if (dotsContainer) dotsContainer.style.removeProperty('display');
+    return;
+  }
 
   const cleanColor = colorValue ? colorValue.toLowerCase().trim() : '';
   if (!cleanColor) return;
@@ -4328,15 +4338,15 @@ window.tsukieFilterImagesByColor = function(colorValue) {
       const targetSlide = slides[firstVisibleIndex];
       const targetImg = targetSlide ? targetSlide.querySelector('img') : null;
       const src = targetImg ? targetImg.src : '';
-      window.tsukieChangeImage(src, firstVisibleIndex, container);
+      window.tsukieChangeImage(src, firstVisibleIndex, container, isInitial);
     }
   } else {
     const activeIndex = Array.from(thumbs).indexOf(activeThumb);
-    window.tsukieChangeImage('', activeIndex, container);
+    window.tsukieChangeImage('', activeIndex, container, isInitial);
   }
 };
 
-window.tsukieChangeImage = function(src, index, element) {
+window.tsukieChangeImage = function(src, index, element, isInitial) {
   const container = tsukieGetContext(element);
   if (!container) return;
   const slider = container.querySelector('.tsukie-main-image-slider');
@@ -4345,7 +4355,7 @@ window.tsukieChangeImage = function(src, index, element) {
     const slideEl = slides[index];
     slider.scrollTo({
       left: slideEl.offsetLeft,
-      behavior: 'smooth'
+      behavior: isInitial ? 'auto' : 'smooth'
     });
   } else {
     const mainImg = container.querySelector('#tsukie-main-img');
